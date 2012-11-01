@@ -4,7 +4,6 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-
 public class ModuleWeaver
 {
     IInjector injector;
@@ -39,6 +38,8 @@ public class ModuleWeaver
         {
             ProcessType(type);
         }
+
+        new ReferenceCleaner(ModuleDefinition, LogInfo).Execute();
     }
 
     IInjector GetInjector()
