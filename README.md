@@ -1,6 +1,6 @@
 ## This is an add-in for  [Fody](https://github.com/SimonCropp/Fody) 
 
-Change string comparisons to be case insensitive.
+Simplifies logging through a static class and some IL manipulation
 
 [Introduction to Fody](https://github.com/SimonCropp/Fody/wiki/SampleUsage)
 
