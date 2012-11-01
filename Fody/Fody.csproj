@@ -70,6 +70,7 @@
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
     <Compile Include="NLogInjector.cs" />
+    <Compile Include="ReferenceCleaner.cs" />
     <Compile Include="WeavingException.cs" />
   </ItemGroup>
   <ItemGroup>

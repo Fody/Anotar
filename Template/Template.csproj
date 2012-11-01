@@ -45,11 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyClass.cs" />
     <Compile Include="NLogTemplate.cs" />
     <Compile Include="Log4NetTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">
+      <Project>{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}</Project>
+      <Name>ReferenceAssembly</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
