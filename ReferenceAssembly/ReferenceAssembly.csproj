@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ReferenceAssembly</RootNamespace>
-    <AssemblyName>ReferenceAssembly</AssemblyName>
+    <RootNamespace>Anotar</RootNamespace>
+    <AssemblyName>Anotar</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile2</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Anotar.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Anotar.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
