@@ -8,8 +8,6 @@ namespace Anotar
         {
             throw new NotImplementedException();
         }
-
-
         public static void Debug(string format)
         {
             throw new NotImplementedException();

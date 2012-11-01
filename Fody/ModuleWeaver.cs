@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
-using Mono.Cecil.Rocks;
 using Mono.Cecil.Cil;
 
 
@@ -13,6 +12,10 @@ public class ModuleWeaver
     public IAssemblyResolver AssemblyResolver { get; set; }
     public Action<string> LogWarning { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
+    MethodReference concatMethod;
+    MethodReference formatMethod;
+    TypeReference exceptionType;
+    ArrayType objectArray;
 
     public ModuleWeaver()
     {
@@ -22,29 +25,52 @@ public class ModuleWeaver
 
     public void Execute()
     {
-        var nLogFactory = new NLogInjector
-            {
-                AssemblyResolver = AssemblyResolver
-            };
-        if (nLogFactory.IsCompat(ModuleDefinition))
-        {
-            injector = nLogFactory;
-        }
+        injector = GetInjector();
+        var stringType = ModuleDefinition.TypeSystem.String.Resolve();
+        concatMethod = ModuleDefinition.Import(stringType.FindMethod("Concat", "String", "String"));
+        formatMethod = ModuleDefinition.Import(stringType.FindMethod("Format", "String", "Object[]"));
+        objectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        if (injector == null)
-        {
-            //TODO:Log
-            return;
-        }
-
-        var msCoreReferenceFinder = new MsCoreReferenceFinder(this, ModuleDefinition.AssemblyResolver);
-        msCoreReferenceFinder.Execute();
+        var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
+        exceptionType = ModuleDefinition.Import(msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception"));
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => x.BaseType != null))
         {
             ProcessType(type);
         }
+    }
+
+    IInjector GetInjector()
+    {
+        var injectors = new List<IInjector>
+            {
+                new NLogInjector(),
+                new Log4NetInjector()
+            };
+
+        foreach (var injector1 in injectors)
+        {
+            var exsitingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => string.Equals(x.Name, injector1.ReferenceName, StringComparison.OrdinalIgnoreCase));
+
+            if (exsitingReference != null)
+            {
+                var reference = AssemblyResolver.Resolve(exsitingReference);
+                injector1.Init(reference, ModuleDefinition);
+                return injector1;
+            }
+        }
+
+        foreach (var injector1 in injectors)
+        {
+            var reference = AssemblyResolver.Resolve(injector1.ReferenceName);
+            if (reference != null)
+            {
+                injector1.Init(reference, ModuleDefinition);
+                return injector1;
+            }
+        }
+        throw new Exception("Could not resolve a logging framework");
     }
 
 
@@ -55,7 +81,20 @@ public class ModuleWeaver
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
-            ProcessMethod(method, fieldDefinition, ref foundUsage);
+            var methodProcessor = new MethodProcessor
+                {
+                    FoundUsageInType = x => foundUsage = x,
+                    LogWarning = LogWarning,
+                    method = method,
+                    concatMethod = concatMethod,
+                    exceptionType = exceptionType,
+                    fieldDefinition = fieldDefinition,
+                    objectArray = objectArray,
+                    stringType = ModuleDefinition.TypeSystem.String,
+                    injector = injector,
+                    formatMethod = formatMethod
+                };
+            methodProcessor.ProcessMethod();
         }
         if (foundUsage)
         {
@@ -72,151 +111,8 @@ public class ModuleWeaver
                 staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
                 type.Methods.Add(staticConstructor);
             }
-            injector.AddField(type,staticConstructor,fieldDefinition);
+            injector.AddField(type, staticConstructor, fieldDefinition);
             type.Fields.Add(fieldDefinition);
-        }
-    }
-
-    void ProcessMethod(MethodDefinition method, FieldDefinition fieldDefinition, ref bool foundUsage)
-    {
-        var ilProcessor = method.Body.GetILProcessor();
-
-        var instructions = method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
-
-        for (var index = 0; index < instructions.Count; index++)
-        {
-            var instruction = instructions[index];
-            var methodReference = instruction.Operand as MethodReference;
-            if (methodReference == null)
-            {
-                continue;
-            }
-            if (methodReference.DeclaringType.FullName != "Anotar.Log")
-            {
-                continue;
-            }
-            if (!foundUsage)
-            {
-                method.Body.InitLocals = true;
-                method.Body.SimplifyMacros();
-            }
-            foundUsage = true;
-
-            var variables = new List<VariableDefinition>();
-            foreach (var parameter in methodReference.Parameters)
-            {
-                var variable = new VariableDefinition(parameter.ParameterType);
-                method.Body.Variables.Add(variable);
-                variables .Add(variable);
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, variable));
-            }
-
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
-
-            foreach (var variable in variables)
-            {
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, variable));
-            }
-            if (methodReference.Name == "Debug")
-            {
-                var parameters = methodReference.Parameters;
-                if (parameters.Count == 0)
-                {
-                    instruction.Operand = injector.DebugMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String"))
-                {
-                    instruction.Operand = injector.DebugStringMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "object[]"))
-                {
-                    instruction.Operand = injector.DebugParamsMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "Exception"))
-                {
-                    instruction.Operand = injector.DebugStringExceptionMethod;
-                    continue;
-                }
-            }
-            if (methodReference.Name == "Info")
-            {
-                var parameters = methodReference.Parameters;
-                if (parameters.Count == 0)
-                {
-                    instruction.Operand = injector.InfoMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String"))
-                {
-                    instruction.Operand = injector.InfoStringMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "object[]"))
-                {
-                    instruction.Operand = injector.InfoParamsMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "Exception"))
-                {
-                    instruction.Operand = injector.InfoStringExceptionMethod;
-                    continue;
-                }
-            }
-            if (methodReference.Name == "Warn")
-            {
-                var parameters = methodReference.Parameters;
-                if (parameters.Count == 0)
-                {
-                    instruction.Operand = injector.WarnMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String"))
-                {
-                    instruction.Operand = injector.WarnStringMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "object[]"))
-                {
-                    instruction.Operand = injector.WarnParamsMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "Exception"))
-                {
-                    instruction.Operand = injector.WarnStringExceptionMethod;
-                    continue;
-                }
-            }
-            if (methodReference.Name == "Error")
-            {
-                var parameters = methodReference.Parameters;
-                if (parameters.Count == 0)
-                {
-                    instruction.Operand = injector.ErrorMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String"))
-                {
-                    instruction.Operand = injector.ErrorStringMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "object[]"))
-                {
-                    instruction.Operand = injector.ErrorParamsMethod;
-                    continue;
-                }
-                if (methodReference.IsMatch("String", "Exception"))
-                {
-                    instruction.Operand = injector.ErrorStringExceptionMethod;
-                    continue;
-                }
-            }
-        }
-        if (foundUsage)
-        {
-            method.Body.OptimizeMacros();
         }
     }
 }
