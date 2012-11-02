@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Anotar
 {
@@ -8,10 +9,11 @@ namespace Anotar
         {
             throw new NotImplementedException();
         }
-        public static void Debug(string format)
+        public static void Debug(string message)
         {
             throw new NotImplementedException();
         }
+        [StringFormatMethod("format")]
         public static void Debug(string format, params object[] args)
         {
             throw new NotImplementedException();
@@ -28,6 +30,7 @@ namespace Anotar
         {
             throw new NotImplementedException();
         }
+        [StringFormatMethod("format")]
         public static void Info(string format, params object[] args)
         {
             throw new NotImplementedException();
@@ -36,14 +39,15 @@ namespace Anotar
         {
             throw new NotImplementedException();
         }
-        public static void Warn(string message)
-        {
-            throw new NotImplementedException();
-        }
         public static void Warn()
         {
             throw new NotImplementedException();
         }
+        public static void Warn(string message)
+        {
+            throw new NotImplementedException();
+        }
+        [StringFormatMethod("format")]
         public static void Warn(string format, params object[] args)
         {
             throw new NotImplementedException();
@@ -60,6 +64,7 @@ namespace Anotar
         {
             throw new NotImplementedException();
         }
+        [StringFormatMethod("format")]
         public static void Error(string format, params object[] args)
         {
             throw new NotImplementedException();
