@@ -70,7 +70,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
 ### 1. Dont make me think
 
-When I am coding I often want to quickly add a line of logging code. If I dont already have the static `logger` field I have to jump back to the top of the file to add it. This breaks my train of thought. I know this is minor but it is still an annoyance.
+When I am coding I often want to quickly add a line of logging code. If I dont already have the static `logger` field I have to jump back to the top of the file to add it. This breaks my train of thought. I know this is minor but it is still an annoyance. Static logging methods are much less disruptive to call.
 
 ### 2. I want some extra information
 
