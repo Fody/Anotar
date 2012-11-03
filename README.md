@@ -66,6 +66,8 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         }
     }
     
+Note that after compilation the reference to Anotar will be removed so you don't need to deploy the assembly.
+    
 ## But why? What purpose does this serve?
 
 ### 1. Dont make me think
