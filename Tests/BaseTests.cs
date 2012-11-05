@@ -104,6 +104,7 @@ public abstract class BaseTests
         instance.WarnStringParams();
     }
 
+
     [Test]
     public void WarnStringException()
     {

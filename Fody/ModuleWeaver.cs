@@ -47,7 +47,8 @@ public class ModuleWeaver
         var injectors = new List<IInjector>
             {
                 new NLogInjector(),
-                new Log4NetInjector()
+                new Log4NetInjector(),
+                new MetroLogInjector()
             };
 
         foreach (var injector1 in injectors)

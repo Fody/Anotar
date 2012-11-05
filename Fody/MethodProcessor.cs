@@ -63,7 +63,13 @@ public class MethodProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
 
-            instruction.Operand = injector.GetNormalOperand(methodReference);
+            var normalOperand = injector.GetNormalOperand(methodReference);
+            //Hack: this should be in the injectors
+            if (normalOperand.Parameters.Count == 2)
+            {
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
+            }
+            instruction.Operand = normalOperand;
         }
         if (methodReference.IsMatch("String"))
         {
@@ -76,7 +82,13 @@ public class MethodProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, concatMethod));
 
-            instruction.Operand = injector.GetNormalOperand(methodReference);
+            var normalOperand = injector.GetNormalOperand(methodReference);
+            //Hack: this should be in the injectors
+            if (normalOperand.Parameters.Count == 2)
+            {
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
+            }
+            instruction.Operand = normalOperand;
         }
         if (methodReference.IsMatch("String", "Exception"))
         {
@@ -112,7 +124,13 @@ public class MethodProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, concatMethod));
 
-            instruction.Operand = injector.GetNormalOperand(methodReference);
+            var normalOperand = injector.GetNormalOperand(methodReference);
+            //Hack: this should be in the injectors
+            if (normalOperand.Parameters.Count == 2)
+            {
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
+            }
+            instruction.Operand = normalOperand;
         }
 
 

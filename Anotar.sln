@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceAssembly", "Refere
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyToProcessLog4Net", "AssemblyToProcess\AssemblyToProcessLog4Net.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyToProcessMetroLog", "AssemblyToProcess\AssemblyToProcessMetroLog.csproj", "{FB619D27-E000-434D-8167-54490A640444}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,16 @@ Global
 		{DCFDFA1D-B13A-4979-9560-91B527375418}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DCFDFA1D-B13A-4979-9560-91B527375418}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DCFDFA1D-B13A-4979-9560-91B527375418}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FB619D27-E000-434D-8167-54490A640444}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
