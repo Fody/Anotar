@@ -13,15 +13,15 @@ Nuget package http://nuget.org/packages/Anotar.Fody
     public static class Log
     {
         public static void Debug()
-        public static void Debug(string format)
+        public static void Debug(string message)
         public static void Debug(string format, params object[] args)
         public static void Debug(string message, Exception exception)
-        public static void Info(string message)
         public static void Info()
+        public static void Info(string message)
         public static void Info(string format, params object[] args)
         public static void Info(string message, Exception exception)
-        public static void Warn(string message)
         public static void Warn()
+        public static void Warn(string message)
         public static void Warn(string format, params object[] args)
         public static void Warn(string message, Exception exception)
         public static void Error()
@@ -79,8 +79,10 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 			logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
 		}
 	}
-    
-Note that after compilation the reference to Anotar will be removed so you don't need to deploy the assembly.
+
+## Nothing to deploy
+
+After compilation the reference to Anotar will be removed so you don't need to deploy the assembly.
     
 ## But why? What purpose does this serve?
 
