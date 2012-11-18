@@ -9,8 +9,8 @@
     <ProjectGuid>{DCFDFA1D-B13A-4979-9560-91B527375418}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssemblyToProcessLog4Net</RootNamespace>
-    <AssemblyName>AssemblyToProcessLog4Net</AssemblyName>
+    <RootNamespace>Log4NetAssemblyToProcess</RootNamespace>
+    <AssemblyName>Log4NetAssemblyToProcess</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

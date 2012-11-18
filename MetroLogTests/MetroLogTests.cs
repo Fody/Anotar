@@ -6,7 +6,7 @@ public class MetroLogTests:BaseTests
 {
 
     public MetroLogTests()
-        : base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugMetroLog\AssemblyToProcessMetroLog.dll"))
+		: base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugMetroLog\MetroLogAssemblyToProcess.dll"))
     {
     }
 

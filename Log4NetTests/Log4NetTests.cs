@@ -6,7 +6,7 @@ public class Log4NetTests:BaseTests
 {
 
     public Log4NetTests()
-        : base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugLog4Net\AssemblyToProcessLog4Net.dll"))
+		: base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugLog4Net\Log4NetAssemblyToProcess.dll"))
     {
     }
 

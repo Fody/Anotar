@@ -6,7 +6,7 @@ public class NLogTests:BaseTests
 {
 
     public NLogTests()
-        : base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugNlog\AssemblyToProcessNLog.dll"))
+		: base(Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugNlog\NLogAssemblyToProcess.dll"))
     {
     }
 
