@@ -42,7 +42,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
 ## What gets compiled
 
-### If you reference NLog
+### If you reference [NLog](http://nlog-project.org/)
 
     public class MyClass
     {
@@ -54,7 +54,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         }
     }
 
-### If you reference log4net
+### If you reference [log4net](http://logging.apache.org/log4net/)
 
     public class MyClass
     {
@@ -68,7 +68,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
     
     
 
-### If you reference MetroLog
+### If you reference [MetroLog](https://github.com/mbrit/MetroLog)
 
 	public class MyClass
 	{
