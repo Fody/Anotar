@@ -66,6 +66,20 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         }
     }
     
+    
+
+### If you reference MetroLog
+
+	public class MyClass
+	{
+		static MetroLog.ILogger logger = MetroLog.LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
+
+		void MyMethod()
+		{
+			logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+		}
+	}
+    
 Note that after compilation the reference to Anotar will be removed so you don't need to deploy the assembly.
     
 ## But why? What purpose does this serve?
@@ -76,7 +90,7 @@ When I am coding I often want to quickly add a line of logging code. If I dont a
 
 ### 2. I want some extra information
 
-Often when I am logging I want to know the method and line number I am logging from. I don't want to manually add this. So using IL I just prefix the message with the method name and line number.
+Often when I am logging I want to know the method and line number I am logging from. I don't want to manually add this. So using IL I just prefix the message with the method name and line number. Note that the line number is prefixed with '~'. The reason for this is that a single line of code can equate to multiple IL instructions. So I walk back up the instructions till I find one that has a line number and use that. Hence it is an approximation.
 
 ## Why not use CallerInfoAttributes
 

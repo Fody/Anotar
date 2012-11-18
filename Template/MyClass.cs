@@ -31,13 +31,13 @@ namespace AfterMetroLog
     {
         static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
 
-
         void MyMethod()
         {
             logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
         }
     }
 }
+
 namespace AfterLog4Net
 {
     public class MyClass
