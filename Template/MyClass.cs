@@ -1,5 +1,4 @@
 ﻿using Anotar;
-using MetroLog;
 
 namespace Before
 {
@@ -27,15 +26,15 @@ namespace AfterNlog
 
 namespace AfterMetroLog
 {
-    public class MyClass
-    {
-        static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
+	public class MyClass
+	{
+		static MetroLog.ILogger logger = MetroLog.LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
 
-        void MyMethod()
-        {
-            logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
-        }
-    }
+		void MyMethod()
+		{
+			logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+		}
+	}
 }
 
 namespace AfterLog4Net
