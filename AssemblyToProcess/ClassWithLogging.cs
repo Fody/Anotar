@@ -17,7 +17,7 @@ public class ClassWithLogging
     }
     public void DebugStringException()
     {
-        Log.Debug("TheMessage",new Exception());
+        Log.DebugException("TheMessage",new Exception());
     }
     public void Info()
     {
@@ -33,7 +33,7 @@ public class ClassWithLogging
     }
     public void InfoStringException()
     {
-        Log.Info("TheMessage", new Exception());
+        Log.InfoException("TheMessage", new Exception());
     }
     public void Warn()
     {
@@ -49,7 +49,7 @@ public class ClassWithLogging
     }
     public void WarnStringException()
     {
-        Log.Warn("TheMessage", new Exception());
+        Log.WarnException("TheMessage", new Exception());
     }
     public void Error()
     {
@@ -65,6 +65,6 @@ public class ClassWithLogging
     }
     public void ErrorStringException()
     {
-        Log.Error("TheMessage", new Exception());
+        Log.ErrorException("TheMessage", new Exception());
     }
 }

@@ -25,19 +25,19 @@ public static class InjectorExtentions
     }
     public static MethodReference GetExceptionOperand(this IInjector injector , MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+		if (methodReference.Name == "DebugException")
         {
                 return injector.DebugExceptionMethod;
         }
-        if (methodReference.Name == "Info")
+		if (methodReference.Name == "InfoException")
         {
                 return injector.InfoExceptionMethod;
         }
-        if (methodReference.Name == "Warn")
+		if (methodReference.Name == "WarnException")
         {
                 return injector.WarnExceptionMethod;
         }
-        if (methodReference.Name == "Error")
+		if (methodReference.Name == "ErrorException")
         {
                 return injector.ErrorExceptionMethod;
         }

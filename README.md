@@ -15,19 +15,19 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         public static void Debug()
         public static void Debug(string message)
         public static void Debug(string format, params object[] args)
-        public static void Debug(string message, Exception exception)
+        public static void DebugException(string message, Exception exception)
         public static void Info()
         public static void Info(string message)
         public static void Info(string format, params object[] args)
-        public static void Info(string message, Exception exception)
+        public static void InfoException(string message, Exception exception)
         public static void Warn()
         public static void Warn(string message)
         public static void Warn(string format, params object[] args)
-        public static void Warn(string message, Exception exception)
+        public static void WarnException(string message, Exception exception)
         public static void Error()
         public static void Error(string message)
         public static void Error(string format, params object[] args)
-        public static void Error(string message, Exception exception)
+        public static void ErrorException(string message, Exception exception)
     }
 
 ## Your Code

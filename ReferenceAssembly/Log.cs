@@ -38,7 +38,7 @@ namespace Anotar
 		/// </summary>
 		/// <param name="message">A <see langword="string" /> containing format items.</param>
 		/// <param name="exception">An exception to be logged.</param>
-        public static void Debug(string message, Exception exception)
+        public static void DebugException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +72,7 @@ namespace Anotar
 		/// </summary>
 		/// <param name="message">A <see langword="string" /> containing format items.</param>
 		/// <param name="exception">An exception to be logged.</param>
-        public static void Info(string message, Exception exception)
+        public static void InfoException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
@@ -106,7 +106,7 @@ namespace Anotar
 		/// </summary>
 		/// <param name="message">A <see langword="string" /> containing format items.</param>
 		/// <param name="exception">An exception to be logged.</param>
-        public static void Warn(string message, Exception exception)
+        public static void WarnException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
@@ -140,7 +140,7 @@ namespace Anotar
 		/// </summary>
 		/// <param name="message">A <see langword="string" /> containing format items.</param>
 		/// <param name="exception">An exception to be logged.</param>
-        public static void Error(string message, Exception exception)
+        public static void ErrorException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
