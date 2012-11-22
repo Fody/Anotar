@@ -3,7 +3,7 @@ using Mono.Cecil;
 
 public static class InjectorExtentions
 {
-    public static MethodReference GetNormalOperand(this IInjector injector , MethodReference methodReference)
+    public static MethodReference GetNormalOperand(this IInjector injector, MethodReference methodReference)
     {
         if (methodReference.Name == "Debug")
         {
@@ -23,23 +23,24 @@ public static class InjectorExtentions
         }
         throw new Exception("Invalid method name");
     }
-    public static MethodReference GetExceptionOperand(this IInjector injector , MethodReference methodReference)
+
+    public static MethodReference GetExceptionOperand(this IInjector injector, MethodReference methodReference)
     {
-		if (methodReference.Name == "DebugException")
+        if (methodReference.Name == "DebugException")
         {
-                return injector.DebugExceptionMethod;
+            return injector.DebugExceptionMethod;
         }
-		if (methodReference.Name == "InfoException")
+        if (methodReference.Name == "InfoException")
         {
-                return injector.InfoExceptionMethod;
+            return injector.InfoExceptionMethod;
         }
-		if (methodReference.Name == "WarnException")
+        if (methodReference.Name == "WarnException")
         {
-                return injector.WarnExceptionMethod;
+            return injector.WarnExceptionMethod;
         }
-		if (methodReference.Name == "ErrorException")
+        if (methodReference.Name == "ErrorException")
         {
-                return injector.ErrorExceptionMethod;
+            return injector.ErrorExceptionMethod;
         }
         throw new Exception("Invalid method name");
     }
