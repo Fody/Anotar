@@ -36,11 +36,13 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MetroLog">
-      <HintPath>..\packages\MetroLog.0.7.7\lib\net45\MetroLog.dll</HintPath>
+    <Reference Include="MetroLog, Version=0.6.2.0, Culture=neutral, PublicKeyToken=ba4ace74c3b410f3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MetroLog.0.8.1\lib\net45\MetroLog.dll</HintPath>
     </Reference>
-    <Reference Include="MetroLog.NetFx">
-      <HintPath>..\packages\MetroLog.0.7.7\lib\net45\MetroLog.NetFx.dll</HintPath>
+    <Reference Include="MetroLog.NetFx, Version=0.6.2.0, Culture=neutral, PublicKeyToken=ba4ace74c3b410f3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MetroLog.0.8.1\lib\net45\MetroLog.NetFx.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
