@@ -15,14 +15,14 @@ public partial class ModuleWeaver
                 {
                     FoundUsageInType = x => foundUsage = x,
                     LogWarning = LogWarning,
-                    method = method,
-                    concatMethod = concatMethod,
-                    exceptionType = exceptionType,
-                    fieldDefinition = fieldDefinition,
-                    objectArray = objectArray,
-                    stringType = ModuleDefinition.TypeSystem.String,
-                    injector = injector,
-                    formatMethod = formatMethod
+                    Method = method,
+                    ConcatMethod = concatMethod,
+                    ExceptionType = exceptionType,
+                    FieldDefinition = fieldDefinition,
+                    ObjectArray = objectArray,
+                    StringType = ModuleDefinition.TypeSystem.String,
+                    Injector = injector,
+                    FormatMethod = formatMethod
                 };
             methodProcessor.ProcessMethod();
         }

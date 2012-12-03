@@ -6,31 +6,38 @@ using Mono.Cecil.Cil;
 
 public class MethodProcessor
 {
-    public IInjector injector;
+    public IInjector Injector;
     public Action<string> LogWarning { get; set; }
-    public MethodReference concatMethod;
-    public MethodReference formatMethod;
-    public TypeReference exceptionType;
-    public TypeReference stringType;
-    public ArrayType objectArray;
-    public MethodDefinition method;
-    public FieldDefinition fieldDefinition;
+    public MethodReference ConcatMethod;
+    public MethodReference FormatMethod;
+    public TypeReference ExceptionType;
+    public TypeReference StringType;
+    public ArrayType ObjectArray;
+    public MethodDefinition Method;
+    public FieldDefinition FieldDefinition;
     public Action<bool> FoundUsageInType;
     bool foundUsageInMethod;
     ILProcessor ilProcessor;
 
     public void ProcessMethod()
     {
-         ilProcessor = method.Body.GetILProcessor();
-        var instructions = method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
-       
-        foreach (var instruction in instructions)
+        try
         {
-           ProcessInstruction(instruction);
+            ilProcessor = Method.Body.GetILProcessor();
+            var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
+
+            foreach (var instruction in instructions)
+            {
+                ProcessInstruction(instruction);
+            }
+            if (foundUsageInMethod)
+            {
+                Method.Body.OptimizeMacros();
+            }
         }
-        if (foundUsageInMethod)
+        catch (Exception exception)
         {
-            method.Body.OptimizeMacros();
+            throw new Exception(string.Format("Failed to process '{0}'.", Method.FullName), exception);
         }
     }
 
@@ -47,8 +54,8 @@ public class MethodProcessor
         }
         if (!foundUsageInMethod)
         {
-            method.Body.InitLocals = true;
-            method.Body.SimplifyMacros();
+            Method.Body.InitLocals = true;
+            Method.Body.SimplifyMacros();
         }
         foundUsageInMethod = true;
         FoundUsageInType(true);
@@ -60,10 +67,10 @@ public class MethodProcessor
 
         if (parameters.Count == 0)
         {
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
 
-            var normalOperand = injector.GetNormalOperand(methodReference);
+            var normalOperand = Injector.GetNormalOperand(methodReference);
             //Hack: this should be in the injectors
             if (normalOperand.Parameters.Count == 2)
             {
@@ -73,16 +80,16 @@ public class MethodProcessor
         }
         if (methodReference.IsMatch("String"))
         {
-            var messageVar = new VariableDefinition(stringType);
-            method.Body.Variables.Add(messageVar);
+            var messageVar = new VariableDefinition(StringType);
+            Method.Body.Variables.Add(messageVar);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, concatMethod));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
 
-            var normalOperand = injector.GetNormalOperand(methodReference);
+            var normalOperand = Injector.GetNormalOperand(methodReference);
             //Hack: this should be in the injectors
             if (normalOperand.Parameters.Count == 2)
             {
@@ -92,39 +99,39 @@ public class MethodProcessor
         }
         if (methodReference.IsMatch("String", "Exception"))
         {
-            var messageVar = new VariableDefinition(stringType);
-            var exceptionVar = new VariableDefinition(exceptionType);
-            method.Body.Variables.Add(exceptionVar);
-            method.Body.Variables.Add(messageVar);
+            var messageVar = new VariableDefinition(StringType);
+            var exceptionVar = new VariableDefinition(ExceptionType);
+            Method.Body.Variables.Add(exceptionVar);
+            Method.Body.Variables.Add(messageVar);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, concatMethod));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
 
-            instruction.Operand = injector.GetExceptionOperand(methodReference);
+            instruction.Operand = Injector.GetExceptionOperand(methodReference);
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var messageVar = new VariableDefinition(stringType);
-            var formatVar = new VariableDefinition(stringType);
-            var argsVar = new VariableDefinition(objectArray);
-            method.Body.Variables.Add(formatVar);
-            method.Body.Variables.Add(argsVar);
-            method.Body.Variables.Add(messageVar);
+            var messageVar = new VariableDefinition(StringType);
+            var formatVar = new VariableDefinition(StringType);
+            var argsVar = new VariableDefinition(ObjectArray);
+            Method.Body.Variables.Add(formatVar);
+            Method.Body.Variables.Add(argsVar);
+            Method.Body.Variables.Add(messageVar);
             
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, formatMethod));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, FormatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, fieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, concatMethod));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
 
-            var normalOperand = injector.GetNormalOperand(methodReference);
+            var normalOperand = Injector.GetNormalOperand(methodReference);
             //Hack: this should be in the injectors
             if (normalOperand.Parameters.Count == 2)
             {
@@ -141,10 +148,10 @@ public class MethodProcessor
         var sequencePoint = GetPreviousSequencePoint(instruction);
         if (sequencePoint == null)
         {
-            return string.Format("Method: {0}. ", method.Name);
+            return string.Format("Method: {0}. ", Method.Name);
         }
 
-        return string.Format("Method: {0}. Line: ~{1}. ", method.Name, sequencePoint.StartLine);
+        return string.Format("Method: {0}. Line: ~{1}. ", Method.Name, sequencePoint.StartLine);
     }
 
     static SequencePoint GetPreviousSequencePoint(Instruction instruction)
