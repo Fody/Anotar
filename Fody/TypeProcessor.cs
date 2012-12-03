@@ -11,6 +11,10 @@ public partial class ModuleWeaver
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
+            if (method.IsAbstract)
+            {
+                continue;
+            }
             var methodProcessor = new MethodProcessor
                 {
                     FoundUsageInType = x => foundUsage = x,

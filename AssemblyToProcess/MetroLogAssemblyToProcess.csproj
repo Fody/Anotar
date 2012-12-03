@@ -54,6 +54,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ForceMetroLogRef.cs" />
   </ItemGroup>
