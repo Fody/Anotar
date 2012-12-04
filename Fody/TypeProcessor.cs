@@ -11,7 +11,8 @@ public partial class ModuleWeaver
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
-            if (method.IsAbstract)
+            //skip for abstract and delegates
+            if (!method.HasBody)
             {
                 continue;
             }

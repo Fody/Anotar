@@ -57,6 +57,7 @@
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ForceMetroLogRef.cs" />
+    <Compile Include="MyDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">
