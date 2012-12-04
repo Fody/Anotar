@@ -50,6 +50,8 @@
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ForceNlogRef.cs" />
     <Compile Include="MyDelegate.cs" />
+    <Compile Include="MyEnum.cs" />
+    <Compile Include="MyInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">

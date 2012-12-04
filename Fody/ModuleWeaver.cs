@@ -32,8 +32,9 @@ public partial class ModuleWeaver
         exceptionType = ModuleDefinition.Import(msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception"));
         foreach (var type in ModuleDefinition
             .GetTypes()
-            .Where(x => x.BaseType != null))
+            .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))
         {
+
             ProcessType(type);
         }
         RemoveReference();
