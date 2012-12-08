@@ -19,6 +19,7 @@ public partial class ModuleWeaver
                 {
                     Method = method,
                     FieldDefinition = fieldDefinition,
+                    FormatMethod = formatMethod,
                     TypeSystem = ModuleDefinition.TypeSystem,
                     FoundUsageInType = x => foundUsage = x,
                     Injector = injector,

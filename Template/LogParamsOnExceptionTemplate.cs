@@ -48,7 +48,7 @@ namespace After
                 throw;
             }
         }
-        int Method1WithReturn(string param1, int param2)
+        int Method1WithReturn(string param1, int param2, ref int param3)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace After
             }
             catch (Exception exception)
             {
-                var message = string.Format("Exception occurred in SimpleClass.Method1. param1 '{0}', param2 '{1}'", new object[] { param1, param2 });
+                var message = string.Format("Exception occurred in SimpleClass.Method1. param1 '{0}', param2 '{1}'", new object[] {  param3 });
                 if (logger.IsDebugEnabled)
                 {
                     logger.DebugException(message, exception);
