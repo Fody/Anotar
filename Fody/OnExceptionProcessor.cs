@@ -98,21 +98,20 @@ class OnExceptionProcessor
 
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, exceptionVariable));
 
-        var stringBuilder = new StringBuilder("Exception occurred in SimpleClass.Method1." + Method.FullName);
-        var paramsToLog = GetParamsToLog().ToList();
-        for (var index = 0; index < paramsToLog.Count; index++)
-        {
-            stringBuilder.AppendFormat("param{0} '{{index}}',", index);
-        }
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldstr, stringBuilder.ToString()));
+
+        var messageLdstr = Instruction.Create(OpCodes.Ldstr,"");
+        body.Instructions.Add(messageLdstr);
         body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count));
         body.Instructions.Add(Instruction.Create(OpCodes.Newarr, TypeSystem.Object));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, paramsArray));
 
+        var stringBuilder = new StringBuilder("Exception occurred in SimpleClass.Method1." + Method.FullName);
+        var paramsToLog = GetParamsToLog().ToList();
         for (var index = 0; index < paramsToLog.Count; index++)
         {
             var parameterDefinition = Method.Parameters[index];
 
+            stringBuilder.AppendFormat("param{0} '{{index}}',", index);
             body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, index));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
@@ -123,7 +122,8 @@ class OnExceptionProcessor
             }
             body.Instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
         }
-        
+        messageLdstr.Operand = stringBuilder.ToString();
+
             body.Instructions.Add(Instruction.Create(OpCodes.Ldloc,paramsArray));
         body.Instructions.Add(Instruction.Create(OpCodes.Call, FormatMethod));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, messageVariable));
