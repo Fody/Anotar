@@ -5,7 +5,7 @@ public class OnException
 {
 
     [LogToErrorOnException]
-    public void ToError(string param1, int param2, ref int param3)
+    public void ToError(string param1, int param2, int param3)
     {
         throw new Exception("Foo");
     }

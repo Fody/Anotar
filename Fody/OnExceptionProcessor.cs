@@ -108,12 +108,12 @@ class OnExceptionProcessor
         body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count));
         body.Instructions.Add(Instruction.Create(OpCodes.Newarr, TypeSystem.Object));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, paramsArray));
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
 
         for (var index = 0; index < paramsToLog.Count; index++)
         {
             var parameterDefinition = Method.Parameters[index];
 
+            body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, index));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
             
@@ -122,9 +122,9 @@ class OnExceptionProcessor
                 body.Instructions.Add(Instruction.Create(OpCodes.Box, parameterDefinition.ParameterType));
             }
             body.Instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
-            body.Instructions.Add(Instruction.Create(OpCodes.Ldloc,paramsArray));
         }
-
+        
+            body.Instructions.Add(Instruction.Create(OpCodes.Ldloc,paramsArray));
         body.Instructions.Add(Instruction.Create(OpCodes.Call, FormatMethod));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, messageVariable));
 
@@ -156,7 +156,7 @@ class OnExceptionProcessor
                 // this iteration
                 continue;
             }
-            yield return parameterDefinition;
+            yield return  parameterDefinition;
         }
     }
 
