@@ -22,6 +22,7 @@ class OnExceptionProcessor
     public ModuleDefinition ModuleDefinition;
 
     public MethodReference FormatMethod;
+    VariableDefinition paramsArray;
 
     public void Process()
     {
@@ -91,7 +92,7 @@ class OnExceptionProcessor
         body.Variables.Add(exceptionVariable);
         var messageVariable = new VariableDefinition(TypeSystem.String);
         body.Variables.Add(messageVariable);
-        var paramsArray = new VariableDefinition(new ArrayType(TypeSystem.Object));
+         paramsArray = new VariableDefinition(new ArrayType(TypeSystem.Object));
         body.Variables.Add(paramsArray);
         var startNop = Instruction.Create(OpCodes.Nop);
         body.Instructions.Add(startNop);
@@ -105,13 +106,13 @@ class OnExceptionProcessor
         body.Instructions.Add(Instruction.Create(OpCodes.Newarr, TypeSystem.Object));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, paramsArray));
 
-        var stringBuilder = new StringBuilder("Exception occurred in SimpleClass.Method1." + Method.FullName);
+        var stringBuilder = new StringBuilder(string.Format("Exception occurred in '{0}.{1}'. ", Method.DeclaringType.Name, Method.Name));
         var paramsToLog = GetParamsToLog().ToList();
         for (var index = 0; index < paramsToLog.Count; index++)
         {
             var parameterDefinition = Method.Parameters[index];
 
-            stringBuilder.AppendFormat("param{0} '{{index}}',", index);
+            stringBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, index);
             body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, index));
             body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
