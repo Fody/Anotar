@@ -52,6 +52,7 @@
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs" />
     <Compile Include="MyInterface.cs" />
+    <Compile Include="OnException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">

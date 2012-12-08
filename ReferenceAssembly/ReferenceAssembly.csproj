@@ -44,6 +44,10 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="LogToDebugOnExceptionAttribute.cs" />
+    <Compile Include="LogToErrorOnExceptionAttribute.cs" />
+    <Compile Include="LogToInfoOnExceptionAttribute.cs" />
+    <Compile Include="LogToTraceOnExceptionAttribute.cs" />
     <Compile Include="StringFormatMethodAttribute.cs" />
     <None Include="FodyWeavers.xml" />
     <None Include="key.snk" />

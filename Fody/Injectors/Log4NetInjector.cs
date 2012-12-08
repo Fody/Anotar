@@ -12,25 +12,33 @@ public class Log4NetInjector : IInjector
         buildLoggerMethod = moduleDefinition.Import(getLoggerDefinition);
        var loggerTypeDefinition = reference.MainModule.Types.First(x => x.Name == "ILog");
 
-        DebugMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod( "Debug", "Object"));
+        DebugMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Object"));
+        IsDebugEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
         DebugExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Object", "Exception"));
         InfoMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Info", "Object"));
+        IsInfoEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsInfoEnabled"));
         InfoExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Info", "Object", "Exception"));
         WarnMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Warn", "Object"));
+        IsWarnEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
         WarnExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Warn", "Object", "Exception"));
         ErrorMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "Object"));
+        IsErrorEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
         ErrorExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "Object", "Exception"));
         LoggerType = moduleDefinition.Import(loggerTypeDefinition);
     }
 
 
     public MethodReference DebugMethod { get; set; }
+    public MethodReference IsDebugEnabledMethod { get; set; }
     public MethodReference DebugExceptionMethod { get; set; }
     public MethodReference InfoMethod { get; set; }
+    public MethodReference IsInfoEnabledMethod { get; set; }
     public MethodReference InfoExceptionMethod { get; set; }
     public MethodReference WarnMethod { get; set; }
+    public MethodReference IsWarnEnabledMethod { get; set; }
     public MethodReference WarnExceptionMethod { get; set; }
     public MethodReference ErrorMethod { get; set; }
+    public MethodReference IsErrorEnabledMethod { get; set; }
     public MethodReference ErrorExceptionMethod { get; set; }
 
     public TypeReference LoggerType { get; set; }

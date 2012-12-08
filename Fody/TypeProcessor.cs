@@ -7,7 +7,6 @@ public partial class ModuleWeaver
     void ProcessType(TypeDefinition type)
     {
         var fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, injector.LoggerType);
-
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
@@ -16,7 +15,17 @@ public partial class ModuleWeaver
             {
                 continue;
             }
-            var methodProcessor = new MethodProcessor
+            var onExceptionProcessor = new OnExceptionProcessor
+                {
+                    Method = method,
+                    FieldDefinition = fieldDefinition,
+                    TypeSystem = ModuleDefinition.TypeSystem,
+                    FoundUsageInType = x => foundUsage = x,
+                    Injector = injector,
+                    ExceptionReference = exceptionType,ModuleDefinition = ModuleDefinition
+                };
+            onExceptionProcessor.Process();
+            var logForwardingProcessor = new LogForwardingProcessor
                 {
                     FoundUsageInType = x => foundUsage = x,
                     LogWarning = LogWarning,
@@ -29,7 +38,7 @@ public partial class ModuleWeaver
                     Injector = injector,
                     FormatMethod = formatMethod
                 };
-            methodProcessor.ProcessMethod();
+            logForwardingProcessor.ProcessMethod();
         }
         if (foundUsage)
         {

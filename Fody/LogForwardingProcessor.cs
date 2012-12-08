@@ -4,7 +4,7 @@ using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using Mono.Cecil.Cil;
 
-public class MethodProcessor
+public class LogForwardingProcessor
 {
     public IInjector Injector;
     public Action<string> LogWarning { get; set; }

@@ -34,9 +34,10 @@ public partial class ModuleWeaver
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))
         {
-
             ProcessType(type);
         }
+
+        //TODO: ensure attributes dont exist on interfaces
         RemoveReference();
     }
 
