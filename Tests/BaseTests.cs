@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -6,6 +8,10 @@ using NUnit.Framework;
 public abstract class BaseTests
 {
     Assembly assembly;
+    public List<string> errors = new List<string>();
+    public List<string> debugs = new List<string>();
+    public List<string> infos = new List<string>();
+    public List<string> warns = new List<string>();
 
     protected BaseTests(string assemblyPath)
     {
@@ -15,6 +21,14 @@ public abstract class BaseTests
         assembly  = WeaverHelper.Weave(assemblyPath);
     }
 
+    [SetUp]
+    public void Setup()
+    {
+        errors.Clear();
+        debugs.Clear();
+        infos.Clear();
+        warns.Clear();
+    }
 
     [Test]
     public void Debug()
@@ -22,6 +36,82 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
+        Assert.AreEqual(1, debugs.Count);
+        Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
+    }
+    [Test]
+    public void OnExceptionToDebug()
+    {
+        Exception exception = null;
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        try
+        {
+            instance.ToDebug("x", 6); 
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        Assert.IsNotNull(exception);
+        Assert.AreEqual(1, debugs.Count);
+        Assert.IsTrue(debugs.First().StartsWith("Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+    }
+    [Test]
+    public void OnExceptionToInfo()
+    {
+        Exception exception = null;
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        try
+        {
+            instance.ToInfo("x", 6); 
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        Assert.IsNotNull(exception);
+        Assert.AreEqual(1, infos.Count);
+        Assert.IsTrue(infos.First().StartsWith("Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+    }
+    [Test]
+    public void OnExceptionToWarn()
+    {
+        Exception exception = null;
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        try
+        {
+            instance.ToWarn("x", 6); 
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        Assert.IsNotNull(exception);
+        Assert.AreEqual(1, warns.Count);
+        Assert.IsTrue(warns.First().StartsWith("Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+    }
+
+    [Test]
+    public void OnExceptionToError()
+    {
+        Exception exception = null;
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        try
+        {
+            instance.ToError("x", 6); 
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        Assert.IsNotNull(exception);
+        Assert.AreEqual(1, errors.Count);
+        Assert.IsTrue(errors.First().StartsWith("Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
     }
 
     [Test]
@@ -30,6 +120,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
+        Assert.AreEqual(1, debugs.Count);
+        Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -38,6 +130,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
+        Assert.AreEqual(1, debugs.Count);
+        Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -46,6 +140,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
+        Assert.AreEqual(1, debugs.Count);
+        Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
     }
 
     [Test]
@@ -54,6 +150,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
+        Assert.AreEqual(1, infos.Count);
+        Assert.IsTrue(infos.First().StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
     }
 
     [Test]
@@ -62,6 +160,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
+        Assert.AreEqual(1, infos.Count);
+        Assert.IsTrue(infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -70,6 +170,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
+        Assert.AreEqual(1, infos.Count);
+        Assert.IsTrue(infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -78,6 +180,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
+        Assert.AreEqual(1, infos.Count);
+        Assert.IsTrue(infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
     }
 
     [Test]
@@ -86,6 +190,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
+        Assert.AreEqual(1, warns.Count);
+        Assert.IsTrue(warns.First().StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
     }
 
     [Test]
@@ -94,6 +200,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
+        Assert.AreEqual(1, warns.Count);
+        Assert.IsTrue(warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
     }
 
     [Test]
@@ -102,6 +210,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
+        Assert.AreEqual(1, warns.Count);
+        Assert.IsTrue(warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
     }
 
 
@@ -111,6 +221,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
+        Assert.AreEqual(1, warns.Count);
+        Assert.IsTrue(warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
     }
 
     [Test]
@@ -119,6 +231,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
+        Assert.AreEqual(1, errors.Count);
+        Assert.IsTrue(errors.First().StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
     }
 
     [Test]
@@ -127,6 +241,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
+        Assert.AreEqual(1, errors.Count);
+        Assert.IsTrue(errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -135,6 +251,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
+        Assert.AreEqual(1, errors.Count);
+        Assert.IsTrue(errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -143,6 +261,8 @@ public abstract class BaseTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
+        Assert.AreEqual(1, errors.Count);
+        Assert.IsTrue(errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
     }
 
 

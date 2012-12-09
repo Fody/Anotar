@@ -55,6 +55,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionAppender.cs" />
     <Compile Include="Log4NetTests.cs" />
   </ItemGroup>
   <ItemGroup>

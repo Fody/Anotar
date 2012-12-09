@@ -7,7 +7,7 @@ namespace Before
     public class SimpleClass
     {
 
-        [LogToTraceOnException]
+        [LogToWarnOnException]
         void Method1(string param1, int param2)
         {
             //Do Stuff

@@ -55,6 +55,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionTarget.cs" />
     <Compile Include="NLogTests.cs" />
   </ItemGroup>
   <ItemGroup>

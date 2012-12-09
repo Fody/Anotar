@@ -3,7 +3,7 @@ using System;
 namespace Anotar
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToTraceOnExceptionAttribute : Attribute
+    public class LogToWarnOnExceptionAttribute : Attribute
     {
     }
 }

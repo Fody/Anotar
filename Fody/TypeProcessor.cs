@@ -23,7 +23,7 @@ public partial class ModuleWeaver
                     TypeSystem = ModuleDefinition.TypeSystem,
                     FoundUsageInType = x => foundUsage = x,
                     Injector = injector,
-                    ExceptionReference = exceptionType,ModuleDefinition = ModuleDefinition
+                    ExceptionReference = exceptionType,
                 };
             onExceptionProcessor.Process();
             var logForwardingProcessor = new LogForwardingProcessor

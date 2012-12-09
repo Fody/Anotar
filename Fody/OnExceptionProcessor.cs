@@ -18,12 +18,11 @@ class OnExceptionProcessor
     public TypeReference ExceptionReference;
     public IInjector Injector;
     MethodBody body;
-    public ModuleDefinition ModuleDefinition;
 
     public MethodReference FormatMethod;
     VariableDefinition paramsArray;
     StringBuilder messageBuilder;
-    int messageFormatIndex = 0;
+    int messageFormatIndex;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
 
@@ -65,7 +64,6 @@ class OnExceptionProcessor
     {
         body = Method.Body;
         body.SimplifyMacros();
-
 
         var ret = Instruction.Create(OpCodes.Ret);
         var leave = Instruction.Create(OpCodes.Leave, ret);
@@ -109,7 +107,7 @@ class OnExceptionProcessor
         body.Instructions.Add(Instruction.Create(OpCodes.Newarr, TypeSystem.Object));
         body.Instructions.Add(Instruction.Create(OpCodes.Stloc, paramsArray));
 
-        messageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}.{1}'. ", Method.DeclaringType.Name, Method.Name));
+        messageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}'. ", Method.FullName));
         foreach (var parameterDefinition in Method.Parameters)
         {
             ProcessParam(parameterDefinition);

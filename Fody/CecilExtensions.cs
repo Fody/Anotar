@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -16,15 +15,21 @@ public static class CecilExtensions
         }
     }
 
-    public static bool ContainsAttribute(this IEnumerable<CustomAttribute> attributes, string attributeName)
+    public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
     {
-        return attributes.Any(attribute => attribute.Constructor.DeclaringType.Name == attributeName);
+        var containsAttribute = attributes.FirstOrDefault(x => x.Constructor.DeclaringType.Name == attributeName);
+        if (containsAttribute != null)
+        {
+            attributes.Remove(containsAttribute);
+        }
+        return containsAttribute != null;
     }
+
     public static MethodDefinition FindMethod(this TypeDefinition typeDefinition, string method, params string[] paramTypes)
     {
         return typeDefinition.Methods.First(x => x.Name == method && x.IsMatch(paramTypes));
     }
-
+    
     public static bool IsMatch(this MethodReference methodReference, params string[] paramTypes)
     {
         if (methodReference.Parameters.Count != paramTypes.Length)

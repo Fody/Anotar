@@ -148,10 +148,10 @@ public class LogForwardingProcessor
         var sequencePoint = GetPreviousSequencePoint(instruction);
         if (sequencePoint == null)
         {
-            return string.Format("Method: {0}. ", Method.Name);
+            return string.Format("Method: '{0}'.", Method.FullName);
         }
 
-        return string.Format("Method: {0}. Line: ~{1}. ", Method.Name, sequencePoint.StartLine);
+        return string.Format("Method: '{0}'. Line: ~{1}.", Method.FullName, sequencePoint.StartLine);
     }
 
     static SequencePoint GetPreviousSequencePoint(Instruction instruction)

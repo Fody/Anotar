@@ -5,9 +5,9 @@ public class OnException
 {
 
     [LogToErrorOnException]
-    public void ToError(string param1, int param2, int param3)
+    public void ToError(string param1, int param2)
     {
-        throw new Exception("Foo");
+//        throw new Exception("Foo");
     }
     [LogToErrorOnException]
     public void WithRefs(
@@ -40,8 +40,8 @@ public class OnException
     {
         throw new Exception("Foo");
     }
-    [LogToTraceOnException]
-    public void ToTrace(string param1, int param2)
+    [LogToWarnOnException]
+    public void ToWarn(string param1, int param2)
     {
         throw new Exception("Foo");
     }

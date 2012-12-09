@@ -1,6 +1,7 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Pdb;
 
 public static class WeaverHelper
 {
@@ -23,7 +24,8 @@ public static class WeaverHelper
             var readerParameters = new ReaderParameters
                 {
                     ReadSymbols = true,
-                    SymbolStream = symbolStream
+                    SymbolStream = symbolStream,
+                    SymbolReaderProvider = new PdbReaderProvider()
                 };
             var moduleDefinition = ModuleDefinition.ReadModule(newAssembly, readerParameters);
 
