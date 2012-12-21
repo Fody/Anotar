@@ -36,8 +36,8 @@
     <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\SL40-WP" />
     <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\SL40-WP71" />
     <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\SL40-WP71" />
-    <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\portable-net4%2Bsl4%2Bwp7%2Bwin8" />	
-    <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\portable-net4%2Bsl4%2Bwp7%2Bwin8" />	
+    <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\portable-net4+sl4+wp7+win8" />	
+    <Copy SourceFiles="$(SolutionDir)ReferenceAssembly\bin\$(ConfigurationName)\Anotar.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\portable-net4+sl4+wp7+win8" />	
     <Copy SourceFiles="$(SolutionDir)NuGet\Anotar.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Fody\bin\$(ConfigurationName)\Anotar.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Fody\bin\$(ConfigurationName)\Anotar.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" />
