@@ -53,6 +53,7 @@
     <Compile Include="MyEnum.cs" />
     <Compile Include="MyInterface.cs" />
     <Compile Include="OnException.cs" />
+    <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">

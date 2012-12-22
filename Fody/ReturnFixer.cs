@@ -1,40 +1,66 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
-public static class ReturnFixer
+public class ReturnFixer
 {
-    public static Instruction MakeLastStatementReturn(this MethodDefinition method)
+    public MethodDefinition Method;
+    public Instruction NopForHandleEnd;
+    Collection<Instruction> instructions;
+    public Instruction NopBeforeReturn;
+    Instruction sealBranchesNop;
+
+
+    public void  MakeLastStatementReturn()
     {
-        FixHangingHandlerEnd(method);
-        if (method.MethodReturnType.ReturnType.Name == "Void")
+
+          instructions = Method.Body.Instructions;
+        FixHangingHandlerEnd();
+
+        sealBranchesNop = Instruction.Create(OpCodes.Nop);
+       instructions.Add(sealBranchesNop);
+
+        NopBeforeReturn = Instruction.Create(OpCodes.Nop);
+
+        foreach (var instruction in instructions)
         {
-            return WithNoReturn(method);
-            
+            var operand = instruction.Operand as Instruction;
+            if (operand != null)
+            {
+                if (operand.OpCode == OpCodes.Ret)
+                {
+                    instruction.Operand = sealBranchesNop;
+                }
+            }
         }
-        return WithReturnValue(method);
+
+        if (Method.MethodReturnType.ReturnType.Name == "Void")
+        {
+            WithNoReturn();
+            return;
+        }
+        WithReturnValue();
     }
 
-    static void FixHangingHandlerEnd(MethodDefinition method)
+    void FixHangingHandlerEnd()
     {
-        var nopForHandleEnd = Instruction.Create(OpCodes.Nop);
-        method.Body.Instructions.Add(nopForHandleEnd);
-        foreach (var handler in method.Body.ExceptionHandlers)
+        NopForHandleEnd = Instruction.Create(OpCodes.Nop);
+        Method.Body.Instructions.Add(NopForHandleEnd);
+        foreach (var handler in Method.Body.ExceptionHandlers)
         {
             if (handler.HandlerStart != null && handler.HandlerEnd == null)
             {
-                handler.HandlerEnd = nopForHandleEnd;
+                handler.HandlerEnd = NopForHandleEnd;
             }
         }
     }
 
-    static Instruction WithReturnValue(MethodDefinition method)
+
+   void WithReturnValue()
     {
-        var returnVariable = new VariableDefinition(method.MethodReturnType.ReturnType);
-        method.Body.Variables.Add(returnVariable);
-        var instructions = method.Body.Instructions;
 
-        var lastLdloc = Instruction.Create(OpCodes.Ldloc, returnVariable);
-
+        var returnVariable = new VariableDefinition(Method.MethodReturnType.ReturnType);
+        Method.Body.Variables.Add(returnVariable);
 
         for (var index = 0; index < instructions.Count; index++)
         {
@@ -43,28 +69,29 @@ public static class ReturnFixer
             {
                 instructions.Insert(index, Instruction.Create(OpCodes.Stloc, returnVariable));
                 instruction.OpCode = OpCodes.Br;
-                instruction.Operand = lastLdloc;
+                instruction.Operand = sealBranchesNop;
                 index++;
             }
         }
-        instructions.Add(lastLdloc);
+        instructions.Add(NopBeforeReturn);
+        instructions.Add( Instruction.Create(OpCodes.Ldloc, returnVariable));
         instructions.Add(Instruction.Create(OpCodes.Ret));
-        return lastLdloc;
+        
     }
-    static Instruction WithNoReturn(MethodDefinition method)
+
+    void WithNoReturn()
     {
-        var instructions = method.Body.Instructions;
-        var lastReturn = Instruction.Create(OpCodes.Ret);
 
         foreach (var instruction in instructions)
         {
             if (instruction.OpCode == OpCodes.Ret)
             {
                 instruction.OpCode = OpCodes.Br;
-                instruction.Operand = lastReturn;
+                instruction.Operand = sealBranchesNop;
             }
         }
-        instructions.Add(lastReturn);
-        return lastReturn;
+        instructions.Add(NopBeforeReturn);
+        instructions.Add(Instruction.Create(OpCodes.Ret));
     }
+
 }

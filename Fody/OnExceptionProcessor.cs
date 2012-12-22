@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Mono.Cecil;
@@ -69,8 +68,18 @@ class OnExceptionProcessor
         body.SimplifyMacros();
 
 
-        var statementReturn = Method.MakeLastStatementReturn();
+        
         var ilProcessor = body.GetILProcessor();
+
+
+        var returnFixer = new ReturnFixer
+            {
+                Method = Method
+            };
+        returnFixer.MakeLastStatementReturn();
+
+
+
 
 
         exceptionVariable = new VariableDefinition(ExceptionReference);
@@ -81,15 +90,15 @@ class OnExceptionProcessor
         body.Variables.Add(paramsArray);
 
 
-        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, statementReturn);
+        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, returnFixer.NopBeforeReturn);
 
         var methodBodyFirstInstruction = GetMethodBodyFirstInstruction();
 
         var catchInstructions = GetCatchInstructions().ToList();
 
-        ilProcessor.InsertBefore(statementReturn, tryCatchLeaveInstructions);
+        ilProcessor.InsertBefore(returnFixer.NopBeforeReturn, tryCatchLeaveInstructions);
 
-        ilProcessor.InsertBefore(statementReturn, catchInstructions);
+        ilProcessor.InsertBefore(returnFixer.NopBeforeReturn, catchInstructions);
 
         var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
             {
@@ -136,7 +145,7 @@ class OnExceptionProcessor
         }
         messageLdstr.Operand = messageBuilder.ToString();
 
-        yield return  Instruction.Create(OpCodes.Ldloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
         yield return Instruction.Create(OpCodes.Call, FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
@@ -166,10 +175,10 @@ class OnExceptionProcessor
             foreach (var instruction in AddWrite(Injector.IsErrorEnabledMethod, Injector.ErrorExceptionMethod))
             {
                 yield return instruction;
-            }        }
+            }
+        }
 
         yield return Instruction.Create(OpCodes.Rethrow);
-        
     }
 
     IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, MethodReference writeMethod)

@@ -10,11 +10,13 @@ public class OnException
     {
         throw new Exception("Foo");
     }
+
     [LogToErrorOnException]
     public object ToErrorWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
+
     [LogToErrorOnException]
     public void WithRefs(
         ref string param1,
@@ -41,6 +43,7 @@ public class OnException
     {
         throw new Exception("Foo");
     }
+
     [LogToErrorOnException]
     public object WithRefsWithReturn(
         ref string param1,
@@ -67,32 +70,38 @@ public class OnException
     {
         throw new Exception("Foo");
     }
+
     [LogToInfoOnException]
     public void ToInfo(string param1, int param2)
     {
         throw new Exception("Foo");
     }
+
     [LogToInfoOnException]
     public object ToInfoWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
+
     [LogToWarnOnException]
     public void ToWarn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
+
     [LogToWarnOnException]
     public object ToWarnWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
+
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {
         Debug.WriteLine("sdf");
         throw new Exception("Foo");
     }
+
     [LogToDebugOnException]
     public object ToDebugWithReturn(string param1, int param2)
     {
@@ -110,19 +119,7 @@ public class OnException
         }
         catch (Exception exception)
         {
-            throw  new Exception("Foo", exception);
-        }
-        finally
-        {
-            Debug.WriteLine("finally");
-        }
-    }
-
-    public object MethodWithHangingHandlerEnd()
-    {
-        try
-        {
-            throw new Exception("Foo");
+            throw new Exception("Foo", exception);
         }
         finally
         {
