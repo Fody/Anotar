@@ -51,7 +51,7 @@
     <ProjectReference Include="..\AssemblyToProcess\NLogAssemblyToProcess.csproj">
       <Project>{7dec4e2d-f872-434e-a267-0bad65299950}</Project>
       <Name>NLogAssemblyToProcess</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

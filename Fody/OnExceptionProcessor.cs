@@ -81,7 +81,7 @@ class OnExceptionProcessor
 
 
         var lastReturn = body.Instructions.Last();
-        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave_S, lastReturn);
+        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, lastReturn);
 
         var methodBodyFirstInstruction = GetMethodBodyFirstInstruction();
 
