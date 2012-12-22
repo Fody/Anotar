@@ -40,14 +40,7 @@ public abstract class BaseTests
         Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
     }
 
-    [Test]
-    public void OnExceptionToDebug()
-    {
-        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToDebug("x", 6);
-        CheckException(action, debugs, expected);
-    }
-
+    
     void CheckException(Action<dynamic> action, List<string> list, string expected)
     {
         Exception exception = null;
@@ -63,7 +56,24 @@ public abstract class BaseTests
         }
         Assert.IsNotNull(exception);
         Assert.AreEqual(1, list.Count);
-        Assert.IsTrue(list.First().StartsWith(expected));
+        var first = list.First();
+        Assert.IsTrue(first.StartsWith(expected),first);
+    }
+
+    [Test]
+    public void OnExceptionToDebug()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToDebug("x", 6);
+        CheckException(action, debugs, expected);
+    }
+
+    [Test]
+    public void OnExceptionToDebugWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
+        CheckException(action, debugs, expected);
     }
 
     [Test]
@@ -71,6 +81,13 @@ public abstract class BaseTests
     {
         var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
+        CheckException(action, infos, expected);
+    }
+    [Test]
+    public void OnExceptionToInfoWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
         CheckException(action, infos, expected);
     }
 
@@ -81,13 +98,26 @@ public abstract class BaseTests
         Action<dynamic> action = o => o.ToWarn("x", 6);
         CheckException(action, warns, expected);
     }
+    [Test]
+    public void OnExceptionToWarnWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
+        CheckException(action, warns, expected);
+    }
 
     [Test]
     public void OnExceptionToError()
     {
-        
         var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
+        CheckException(action, errors, expected);
+    }
+    [Test]
+    public void OnExceptionToErrorWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, errors, expected);
     }
 

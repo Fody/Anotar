@@ -86,8 +86,6 @@ class OnExceptionProcessor
 
         var catchInstructions = GetCatchInstructions().ToList();
 
-
-
         ilProcessor.InsertBefore(statementReturn, tryCatchLeaveInstructions);
 
         ilProcessor.InsertBefore(statementReturn, catchInstructions);
