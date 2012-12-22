@@ -65,9 +65,9 @@ class OnExceptionProcessor
     {
         body = Method.Body;
         body.SimplifyMacros();
-        
 
-        body.MakeLastStatementReturn();
+
+        var statementReturn = Method.MakeLastStatementReturn();
 
         var ilProcessor = body.GetILProcessor();
 
@@ -80,8 +80,7 @@ class OnExceptionProcessor
         body.Variables.Add(paramsArray);
 
 
-        var lastReturn = body.Instructions.Last();
-        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, lastReturn);
+        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, statementReturn);
 
         var methodBodyFirstInstruction = GetMethodBodyFirstInstruction();
 
@@ -89,9 +88,9 @@ class OnExceptionProcessor
 
 
 
-        ilProcessor.InsertBefore(lastReturn, tryCatchLeaveInstructions);
+        ilProcessor.InsertBefore(statementReturn, tryCatchLeaveInstructions);
 
-        ilProcessor.InsertBefore(lastReturn, catchInstructions);
+        ilProcessor.InsertBefore(statementReturn, catchInstructions);
 
         var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
             {

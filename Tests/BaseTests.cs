@@ -39,79 +39,56 @@ public abstract class BaseTests
         Assert.AreEqual(1, debugs.Count);
         Assert.IsTrue(debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
     }
+
     [Test]
     public void OnExceptionToDebug()
     {
+        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToDebug("x", 6);
+        CheckException(action, debugs, expected);
+    }
+
+    void CheckException(Action<dynamic> action, List<string> list, string expected)
+    {
         Exception exception = null;
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         try
         {
-            instance.ToDebug("x", 6); 
+            action(instance);
         }
         catch (Exception e)
         {
             exception = e;
         }
         Assert.IsNotNull(exception);
-        Assert.AreEqual(1, debugs.Count);
-        Assert.IsTrue(debugs.First().StartsWith("Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+        Assert.AreEqual(1, list.Count);
+        Assert.IsTrue(list.First().StartsWith(expected));
     }
+
     [Test]
     public void OnExceptionToInfo()
     {
-        Exception exception = null;
-        var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        try
-        {
-            instance.ToInfo("x", 6); 
-        }
-        catch (Exception e)
-        {
-            exception = e;
-        }
-        Assert.IsNotNull(exception);
-        Assert.AreEqual(1, infos.Count);
-        Assert.IsTrue(infos.First().StartsWith("Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+        var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInfo("x", 6);
+        CheckException(action, infos, expected);
     }
+
     [Test]
     public void OnExceptionToWarn()
     {
-        Exception exception = null;
-        var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
-
-        try
-        {
-            instance.ToWarn("x", 6); 
-        }
-        catch (Exception e)
-        {
-            exception = e;
-        }
-        Assert.IsNotNull(exception);
-        Assert.AreEqual(1, warns.Count);
-        Assert.IsTrue(warns.First().StartsWith("Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+        var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarn("x", 6);
+        CheckException(action, warns, expected);
     }
 
     [Test]
     public void OnExceptionToError()
     {
-        Exception exception = null;
-        var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        try
-        {
-            instance.ToError("x", 6); 
-        }
-        catch (Exception e)
-        {
-            exception = e;
-        }
-        Assert.IsNotNull(exception);
-        Assert.AreEqual(1, errors.Count);
-        Assert.IsTrue(errors.First().StartsWith("Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'"));   
+        
+        var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToError("x", 6);
+        CheckException(action, errors, expected);
     }
 
     [Test]
