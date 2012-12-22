@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 public static class ReturnFixer
 {
     public static Instruction MakeLastStatementReturn(this MethodDefinition method)
     {
+        FixHangingHandlerEnd(method);
         if (method.MethodReturnType.ReturnType.Name == "Void")
         {
             return WithNoReturn(method);
@@ -14,12 +14,23 @@ public static class ReturnFixer
         return WithReturnValue(method);
     }
 
+    static void FixHangingHandlerEnd(MethodDefinition method)
+    {
+        var nopForHandleEnd = Instruction.Create(OpCodes.Nop);
+        method.Body.Instructions.Add(nopForHandleEnd);
+        foreach (var handler in method.Body.ExceptionHandlers)
+        {
+            if (handler.HandlerStart != null && handler.HandlerEnd == null)
+            {
+                handler.HandlerEnd = nopForHandleEnd;
+            }
+        }
+    }
+
     static Instruction WithReturnValue(MethodDefinition method)
     {
         var returnVariable = new VariableDefinition(method.MethodReturnType.ReturnType);
         method.Body.Variables.Add(returnVariable);
-
-        var ilProcessor = method.Body.GetILProcessor();
         var instructions = method.Body.Instructions;
 
         var lastLdloc = Instruction.Create(OpCodes.Ldloc, returnVariable);
@@ -30,9 +41,9 @@ public static class ReturnFixer
             var instruction = instructions[index];
             if (instruction.OpCode == OpCodes.Ret)
             {
+                instructions.Insert(index, Instruction.Create(OpCodes.Stloc, returnVariable));
                 instruction.OpCode = OpCodes.Br;
                 instruction.Operand = lastLdloc;
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc,returnVariable));
                 index++;
             }
         }
@@ -44,14 +55,6 @@ public static class ReturnFixer
     {
         var instructions = method.Body.Instructions;
         var lastReturn = Instruction.Create(OpCodes.Ret);
-
-        //foreach (var exceptionHandler in method.Body.ExceptionHandlers)
-        //{
-        //    if (exceptionHandler.HandlerEnd == last)
-        //    {
-        //        exceptionHandler.HandlerEnd = secondLastInstruction;
-        //    }
-        //}
 
         foreach (var instruction in instructions)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Mono.Cecil;
@@ -64,11 +65,11 @@ class OnExceptionProcessor
     void ContinueProcessing()
     {
         body = Method.Body;
+
         body.SimplifyMacros();
 
 
         var statementReturn = Method.MakeLastStatementReturn();
-
         var ilProcessor = body.GetILProcessor();
 
 

@@ -8,12 +8,12 @@ public class OnException
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
-       throw new Exception("Foo");
+        throw new Exception("Foo");
     }
     [LogToErrorOnException]
     public object ToErrorWithReturn(string param1, int param2)
     {
-       throw new Exception("Foo");
+        throw new Exception("Foo");
     }
     [LogToErrorOnException]
     public void WithRefs(
@@ -99,8 +99,34 @@ public class OnException
         Debug.WriteLine("sdf");
         throw new Exception("Foo");
     }
-    public int Foo()
+
+    //TODO: add tests for these combos. for now it is ok to peverify it
+    [LogToDebugOnException]
+    public object ToDebugWithReturnAndTC(string param1, int param2)
     {
-        return 1;
+        try
+        {
+            throw new Exception("Foo");
+        }
+        catch (Exception exception)
+        {
+            throw  new Exception("Foo", exception);
+        }
+        finally
+        {
+            Debug.WriteLine("finally");
+        }
+    }
+
+    public object MethodWithHangingHandlerEnd()
+    {
+        try
+        {
+            throw new Exception("Foo");
+        }
+        finally
+        {
+            Debug.WriteLine("finally");
+        }
     }
 }
