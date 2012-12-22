@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Mono.Cecil;
@@ -64,21 +65,41 @@ class OnExceptionProcessor
     {
         body = Method.Body;
         body.SimplifyMacros();
+        
 
-        var ret = Instruction.Create(OpCodes.Ret);
-        var leave = Instruction.Create(OpCodes.Leave, ret);
+        body.MakeLastStatementReturn();
 
-        var write = AddCatch();
-        body.Instructions.Add(leave);
-        body.Instructions.Add(ret);
+        var ilProcessor = body.GetILProcessor();
+
+
+        exceptionVariable = new VariableDefinition(ExceptionReference);
+        body.Variables.Add(exceptionVariable);
+        messageVariable = new VariableDefinition(TypeSystem.String);
+        body.Variables.Add(messageVariable);
+        paramsArray = new VariableDefinition(new ArrayType(TypeSystem.Object));
+        body.Variables.Add(paramsArray);
+
+
+        var lastReturn = body.Instructions.Last();
+        var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave_S, lastReturn);
+
+        var methodBodyFirstInstruction = GetMethodBodyFirstInstruction();
+
+        var catchInstructions = GetCatchInstructions().ToList();
+
+
+
+        ilProcessor.InsertBefore(lastReturn, tryCatchLeaveInstructions);
+
+        ilProcessor.InsertBefore(lastReturn, catchInstructions);
 
         var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
             {
-                TryStart = FirstInstructionSkipCtor(),
-                TryEnd = write,
-                HandlerStart = write,
-                HandlerEnd = ret,
                 CatchType = ExceptionReference,
+                TryStart = methodBodyFirstInstruction,
+                TryEnd = tryCatchLeaveInstructions.Next,
+                HandlerStart = catchInstructions.First(),
+                HandlerEnd = catchInstructions.Last().Next
             };
 
         body.ExceptionHandlers.Add(handler);
@@ -87,72 +108,86 @@ class OnExceptionProcessor
         body.OptimizeMacros();
     }
 
-    Instruction AddCatch()
+    Instruction GetMethodBodyFirstInstruction()
     {
-        exceptionVariable = new VariableDefinition(ExceptionReference);
-        body.Variables.Add(exceptionVariable);
-        messageVariable = new VariableDefinition(TypeSystem.String);
-        body.Variables.Add(messageVariable);
-        paramsArray = new VariableDefinition(new ArrayType(TypeSystem.Object));
-        body.Variables.Add(paramsArray);
-        var startNop = Instruction.Create(OpCodes.Nop);
-        body.Instructions.Add(startNop);
+        if (Method.IsConstructor)
+        {
+            return body.Instructions.First(i => i.OpCode == OpCodes.Call).Next;
+        }
+        return body.Instructions.First();
+    }
 
-        body.Instructions.Add(Instruction.Create(OpCodes.Stloc, exceptionVariable));
+    IEnumerable<Instruction> GetCatchInstructions()
+    {
+        yield return Instruction.Create(OpCodes.Stloc, exceptionVariable);
 
 
         var messageLdstr = Instruction.Create(OpCodes.Ldstr, "");
-        body.Instructions.Add(messageLdstr);
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count));
-        body.Instructions.Add(Instruction.Create(OpCodes.Newarr, TypeSystem.Object));
-        body.Instructions.Add(Instruction.Create(OpCodes.Stloc, paramsArray));
+        yield return messageLdstr;
+        yield return Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count);
+        yield return Instruction.Create(OpCodes.Newarr, TypeSystem.Object);
+        yield return Instruction.Create(OpCodes.Stloc, paramsArray);
 
         messageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}'. ", Method.FullName));
         foreach (var parameterDefinition in Method.Parameters)
         {
-            ProcessParam(parameterDefinition);
+            foreach (var instruction in ProcessParam(parameterDefinition))
+            {
+                yield return instruction;
+            }
         }
         messageLdstr.Operand = messageBuilder.ToString();
 
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
-        body.Instructions.Add(Instruction.Create(OpCodes.Call, FormatMethod));
-        body.Instructions.Add(Instruction.Create(OpCodes.Stloc, messageVariable));
+        yield return  Instruction.Create(OpCodes.Ldloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Call, FormatMethod);
+        yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
         if (foundDebug)
         {
-            AddWrite(Injector.IsDebugEnabledMethod, Injector.DebugExceptionMethod);
+            foreach (var instruction in AddWrite(Injector.IsDebugEnabledMethod, Injector.DebugExceptionMethod))
+            {
+                yield return instruction;
+            }
         }
         if (foundInfo)
         {
-            AddWrite(Injector.IsInfoEnabledMethod, Injector.InfoExceptionMethod);
+            foreach (var instruction in AddWrite(Injector.IsInfoEnabledMethod, Injector.InfoExceptionMethod))
+            {
+                yield return instruction;
+            }
         }
         if (foundWarn)
         {
-            AddWrite(Injector.IsWarnEnabledMethod, Injector.WarnExceptionMethod);
+            foreach (var instruction in AddWrite(Injector.IsWarnEnabledMethod, Injector.WarnExceptionMethod))
+            {
+                yield return instruction;
+            }
         }
         if (foundError)
         {
-            AddWrite(Injector.IsErrorEnabledMethod, Injector.ErrorExceptionMethod);
-        }
+            foreach (var instruction in AddWrite(Injector.IsErrorEnabledMethod, Injector.ErrorExceptionMethod))
+            {
+                yield return instruction;
+            }        }
 
-        body.Instructions.Add(Instruction.Create(OpCodes.Rethrow));
-        return startNop;
+        yield return Instruction.Create(OpCodes.Rethrow);
+        
     }
 
-    void AddWrite(MethodReference isEnabledMethod, MethodReference writeMethod)
+    IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, MethodReference writeMethod)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
-        body.Instructions.Add(Instruction.Create(OpCodes.Callvirt, isEnabledMethod));
-        body.Instructions.Add(Instruction.Create(OpCodes.Brfalse_S, sectionNop));
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, messageVariable));
-        body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, exceptionVariable));
-        body.Instructions.Add(Instruction.Create(OpCodes.Callvirt, writeMethod));
-        body.Instructions.Add(sectionNop);
+        yield return Instruction.Create(OpCodes.Ldsfld, FieldDefinition);
+        yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
+        yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
+        yield return Instruction.Create(OpCodes.Ldsfld, FieldDefinition);
+        yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
+        yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
+        yield return Instruction.Create(OpCodes.Callvirt, writeMethod);
+        yield return sectionNop;
     }
 
-    void ProcessParam(ParameterDefinition parameterDefinition)
+    IEnumerable<Instruction> ProcessParam(ParameterDefinition parameterDefinition)
     {
 
         var paramMetaData = parameterDefinition.ParameterType.MetadataType;
@@ -161,12 +196,11 @@ class OnExceptionProcessor
             paramMetaData == MetadataType.IntPtr ||
             paramMetaData == MetadataType.Pointer)
         {
-            return;
+            yield break;
         }
-        var instructions = body.Instructions;
-        instructions.Add(Instruction.Create(OpCodes.Ldloc, paramsArray));
-        instructions.Add(Instruction.Create(OpCodes.Ldc_I4, messageFormatIndex));
-        instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+        yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Ldc_I4, messageFormatIndex);
+        yield return Instruction.Create(OpCodes.Ldarg, parameterDefinition);
 
 
         // Reset boolean flag variable to false
@@ -184,19 +218,19 @@ class OnExceptionProcessor
                     //Indirect load value of type int8 as int32 on the stack
                 case MetadataType.Boolean:
                 case MetadataType.SByte:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_I1));
+                    yield return Instruction.Create(OpCodes.Ldind_I1);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type int16 as int32 on the stack
                 case MetadataType.Int16:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_I2));
+                    yield return Instruction.Create(OpCodes.Ldind_I2);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type int32 as int32 on the stack
                 case MetadataType.Int32:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
+                    yield return Instruction.Create(OpCodes.Ldind_I4);
                     pointerToValueTypeVariable = true;
                     break;
 
@@ -204,45 +238,45 @@ class OnExceptionProcessor
                     // Indirect load value of type unsigned int64 as int64 on the stack (alias for ldind.i8)
                 case MetadataType.Int64:
                 case MetadataType.UInt64:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_I8));
+                    yield return Instruction.Create(OpCodes.Ldind_I8);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type unsigned int8 as int32 on the stack
                 case MetadataType.Byte:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_U1));
+                    yield return Instruction.Create(OpCodes.Ldind_U1);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type unsigned int16 as int32 on the stack
                 case MetadataType.UInt16:
                 case MetadataType.Char:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_U2));
+                    yield return Instruction.Create(OpCodes.Ldind_U2);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type unsigned int32 as int32 on the stack
                 case MetadataType.UInt32:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_U4));
+                    yield return Instruction.Create(OpCodes.Ldind_U4);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type float32 as F on the stack
                 case MetadataType.Single:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_R4));
+                    yield return Instruction.Create(OpCodes.Ldind_R4);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type float64 as F on the stack
                 case MetadataType.Double:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_R8));
+                    yield return Instruction.Create(OpCodes.Ldind_R8);
                     pointerToValueTypeVariable = true;
                     break;
 
                     // Indirect load value of type native int as native int on the stack
                 case MetadataType.IntPtr:
                 case MetadataType.UIntPtr:
-                    instructions.Add(Instruction.Create(OpCodes.Ldind_I));
+                    yield return Instruction.Create(OpCodes.Ldind_I);
                     pointerToValueTypeVariable = true;
                     break;
 
@@ -252,13 +286,13 @@ class OnExceptionProcessor
                     // instance to stack and then box it
                     if (referencedTypeSpec.ElementType.IsValueType)
                     {
-                        instructions.Add(Instruction.Create(OpCodes.Ldobj, referencedTypeSpec.ElementType));
+                        yield return Instruction.Create(OpCodes.Ldobj, referencedTypeSpec.ElementType);
                         pointerToValueTypeVariable = true;
                     }
                     else
                     {
                         // It is a reference type so just use reference the pointer
-                        instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+                        yield return Instruction.Create(OpCodes.Ldind_Ref);
                     }
                     break;
             }
@@ -266,7 +300,7 @@ class OnExceptionProcessor
             if (pointerToValueTypeVariable)
             {
                 // Box the dereferenced parameter type
-                instructions.Add(Instruction.Create(OpCodes.Box, referencedTypeSpec.ElementType));
+                yield return Instruction.Create(OpCodes.Box, referencedTypeSpec.ElementType);
             }
 
         }
@@ -279,26 +313,28 @@ class OnExceptionProcessor
             if (paramType.IsValueType)
             {
                 // Box the parameter type
-                instructions.Add(Instruction.Create(OpCodes.Box, paramType));
+                yield return Instruction.Create(OpCodes.Box, paramType);
             }
         }
 
         // Store parameter in object[] array
         // ------------------------------------------------------------
-        instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
+        yield return Instruction.Create(OpCodes.Stelem_Ref);
         messageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, messageFormatIndex);
 
         messageFormatIndex++;
     }
 
 
-    Instruction FirstInstructionSkipCtor()
+    
+}
+
+public static class ILProcessorExtensions
+{
+    public static void InsertBefore(this ILProcessor processor, Instruction target, IEnumerable<Instruction> instructions)
     {
-        if (Method.IsConstructor && !Method.IsStatic)
-        {
-            return body.Instructions.Skip(2).First();
-        }
-        return body.Instructions.First();
+        foreach (var instruction in instructions)
+            processor.InsertBefore(target, instruction);
     }
 
 }

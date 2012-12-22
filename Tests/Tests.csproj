@@ -72,6 +72,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssemblyToProcess\Log4NetAssemblyToProcess.csproj">
+      <Project>{dcfdfa1d-b13a-4979-9560-91b527375418}</Project>
+      <Name>Log4NetAssemblyToProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\MetroLogAssemblyToProcess.csproj">
+      <Project>{fb619d27-e000-434d-8167-54490a640444}</Project>
+      <Name>MetroLogAssemblyToProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyToProcess\NLogAssemblyToProcess.csproj">
+      <Project>{7dec4e2d-f872-434e-a267-0bad65299950}</Project>
+      <Name>NLogAssemblyToProcess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fody\Fody.csproj">
       <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
       <Name>Fody</Name>
