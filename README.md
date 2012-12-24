@@ -52,7 +52,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
         void MyMethod()
         {
-            logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
         }
     }
 
@@ -64,7 +64,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
         void MyMethod()
         {
-            logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
         }
     }
 
@@ -76,7 +76,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
         void MyMethod()
         {
-            logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
         }
     }
 
