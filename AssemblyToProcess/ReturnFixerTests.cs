@@ -19,6 +19,43 @@ public class ReturnFixerTests
 
     }
 
+    [LogToDebugOnException]
+    public void WithLdflda(decimal value)
+    {
+        if (value == 0.0m)
+        {
+            property1 = null;
+        }
+        else
+        {
+            property1 = value;
+        }
+    }
+    
+    [LogToDebugOnException]
+    public void WithTernary(decimal? value)
+    {
+        var newValue = value == 0.0m ? null : value;
+        if (property1 != newValue)
+        {
+            property1 = newValue;
+        }
+    }
+
+    decimal? property1;
+    [LogToDebugOnException]
+    public void WithLdfldaShortCircut(decimal value)
+    {
+        if (value == 0.0m)
+        {
+            if (property1 == null)
+            {
+                return;
+            }
+            property1 = null;
+        }
+    }
+
 
     [LogToDebugOnException]
     public void MethodWithHangingHandlerEnd2()
@@ -52,6 +89,20 @@ public class ReturnFixerTests
         {
             x++;
 
+        }
+    }
+
+    bool isInSomeMode;
+    string branchingReturnField;
+
+    [LogToDebugOnException]
+    public void BranchingReturn(string value)
+    {
+        branchingReturnField = value;
+        if (isInSomeMode)
+        {
+            Console.WriteLine("code here so 'if' does not get optimized away in release mode");
+            return;
         }
     }
 }
