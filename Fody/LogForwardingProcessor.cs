@@ -105,8 +105,6 @@ public class LogForwardingProcessor
             Method.Body.Variables.Add(messageVar);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
@@ -148,10 +146,10 @@ public class LogForwardingProcessor
         var sequencePoint = GetPreviousSequencePoint(instruction);
         if (sequencePoint == null)
         {
-            return string.Format("Method: '{0}'.", Method.FullName);
+            return string.Format("Method: '{0}'. ", Method.FullName);
         }
 
-        return string.Format("Method: '{0}'. Line: ~{1}.", Method.FullName, sequencePoint.StartLine);
+        return string.Format("Method: '{0}'. Line: ~{1}. ", Method.FullName, sequencePoint.StartLine);
     }
 
     static SequencePoint GetPreviousSequencePoint(Instruction instruction)
