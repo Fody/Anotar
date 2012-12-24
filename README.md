@@ -8,7 +8,9 @@ Simplifies logging through a static class and some IL manipulation
 
 Nuget package http://nuget.org/packages/Anotar.Fody 
 
-## Given this as a reference
+## Explicit Logging
+
+### Given this as a reference
 
     public static class Log
     {
@@ -30,7 +32,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         public static void ErrorException(string message, Exception exception)
     }
 
-## Your Code
+### Your Code
 
     public class MyClass
     {
@@ -40,9 +42,9 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         }
     }
 
-## What gets compiled
+### What gets compiled
 
-### If you reference [NLog](http://nlog-project.org/)
+#### If you reference [NLog](http://nlog-project.org/)
 
     public class MyClass
     {
@@ -54,7 +56,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
         }
     }
 
-### If you reference [log4net](http://logging.apache.org/log4net/)
+#### If you reference [log4net](http://logging.apache.org/log4net/)
 
     public class MyClass
     {
@@ -65,20 +67,62 @@ Nuget package http://nuget.org/packages/Anotar.Fody
             logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
         }
     }
+
+#### If you reference [MetroLog](https://github.com/mbrit/MetroLog)
+
+    public class MyClass
+    {
+        static MetroLog.ILogger logger = MetroLog.LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
+
+        void MyMethod()
+        {
+            logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
+        }
+    }
+
+
+## Exception Logging
+
+### Given these attributes
+
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToDebugOnExceptionAttribute : Attribute{}
     
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToInfoOnExceptionAttribute : Attribute{}
     
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToWarnOnExceptionAttribute : Attribute{}
+    
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToErrorOnExceptionAttribute : Attribute{}
+    
+### Your code
 
-### If you reference [MetroLog](https://github.com/mbrit/MetroLog)
+    [LogToErrorOnException]
+    public void MyMethod(string param1, int param2)
+    {
+        //Do Stuff
+    }
+    
+### What gets compiled
 
-	public class MyClass
-	{
-		static MetroLog.ILogger logger = MetroLog.LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
-
-		void MyMethod()
-		{
-			logger.Debug("Method: MyMethod. Line: ~12. TheMessage");
-		}
-	}
+    void MyMethod(string param1, int param2)
+    {
+        try
+        {
+            //Do Stuff
+        }
+        catch (Exception exception)
+        {
+            if (logger.IsErrorEnabled)
+            {
+                var message = string.Format("Exception occurred in SimpleClass.MyMethod. param1 '{0}', param2 '{1}'", param1, param2);
+                logger.ErrorException(message, exception);
+            }
+            throw;
+        }
+    }
 
 ## Nothing to deploy
 
