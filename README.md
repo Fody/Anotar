@@ -100,7 +100,7 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 ### Your code
 
     [LogToErrorOnException]
-    public void MyMethod(string param1, int param2)
+    void MyMethod(string param1, int param2)
     {
         //Do Stuff
     }
