@@ -48,26 +48,6 @@ namespace After
                 throw;
             }
         }
-        int Method1WithReturn(string param1, int param2, ref int param3)
-        {
-            try
-            {
-                return param2;
-            }
-            catch (Exception exception)
-            {
-                var message = string.Format("Exception occurred in SimpleClass.Method1. param1 '{0}', param2 '{1}'", new object[] {  param3 });
-                if (logger.IsDebugEnabled)
-                {
-                    logger.DebugException(message, exception);
-                }
-                if (logger.IsErrorEnabled)
-                {
-                    logger.Error(message, exception);
-                }
-                throw;
-            }
-        }
         void Method2(string param1, int param2)
         {
             try
@@ -84,5 +64,21 @@ namespace After
                 throw;
             }
         }
+    void MyMethod(string param1, int param2)
+    {
+        try
+        {
+            //Do Stuff
+        }
+        catch (Exception exception)
+        {
+            if (logger.IsErrorEnabled)
+            {
+                var message = string.Format("Exception occurred in SimpleClass.MyMethod. param1 '{0}', param2 '{1}'", param1, param2);
+                logger.ErrorException(message, exception);
+            }
+            throw;
+        }
+    }
     }
 }

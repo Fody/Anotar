@@ -25,22 +25,22 @@ public class NLogTests:BaseTests
     {
         if (eventInfo.Level == LogLevel.Error)
         {
-            errors.Add(eventInfo.FormattedMessage);
+            Errors.Add(eventInfo.FormattedMessage);
             return;
         }        
         if (eventInfo.Level == LogLevel.Warn)
         {
-            warns.Add(eventInfo.FormattedMessage);
+            Warns.Add(eventInfo.FormattedMessage);
             return;
         }        
         if (eventInfo.Level == LogLevel.Info)
         {
-            infos.Add(eventInfo.FormattedMessage);
+            Infos.Add(eventInfo.FormattedMessage);
             return;
         }
         if (eventInfo.Level == LogLevel.Debug)
         {
-            debugs.Add(eventInfo.FormattedMessage);
+            Debugs.Add(eventInfo.FormattedMessage);
             return;
         }        
 

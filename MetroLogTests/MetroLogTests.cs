@@ -24,22 +24,22 @@ public class MetroLogTests:BaseTests
     {
         if (eventInfo.Level == LogLevel.Error)
         {
-            errors.Add(eventInfo.Message);
+            Errors.Add(eventInfo.Message);
             return;
         }
         if (eventInfo.Level == LogLevel.Warn)
         {
-            warns.Add(eventInfo.Message);
+            Warns.Add(eventInfo.Message);
             return;
         }
         if (eventInfo.Level == LogLevel.Info)
         {
-            infos.Add(eventInfo.Message);
+            Infos.Add(eventInfo.Message);
             return;
         }
         if (eventInfo.Level == LogLevel.Debug)
         {
-            debugs.Add(eventInfo.Message);
+            Debugs.Add(eventInfo.Message);
             return;
         }
 

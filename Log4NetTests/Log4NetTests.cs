@@ -27,22 +27,22 @@ public class Log4NetTests:BaseTests
     {
         if (loggingEvent.Level == Level.Error)
         {
-            errors.Add(loggingEvent.RenderedMessage);
+            Errors.Add(loggingEvent.RenderedMessage);
             return;
         }
         if (loggingEvent.Level == Level.Warn)
         {
-            warns.Add(loggingEvent.RenderedMessage);
+            Warns.Add(loggingEvent.RenderedMessage);
             return;
         }
         if (loggingEvent.Level == Level.Info)
         {
-            infos.Add(loggingEvent.RenderedMessage);
+            Infos.Add(loggingEvent.RenderedMessage);
             return;
         }
         if (loggingEvent.Level == Level.Debug)
         {
-            debugs.Add(loggingEvent.RenderedMessage);
+            Debugs.Add(loggingEvent.RenderedMessage);
             return;
         }
 
