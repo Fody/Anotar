@@ -102,7 +102,7 @@ namespace Anotar
             throw new NotImplementedException();
         }
 		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Wanr</c> level.
+		/// Writes the diagnostic message and exception at the <c>Warn</c> level.
 		/// </summary>
 		/// <param name="message">A <see langword="string" /> containing format items.</param>
 		/// <param name="exception">An exception to be logged.</param>
