@@ -77,7 +77,7 @@ namespace Anotar
             throw new NotImplementedException();
         }
 		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
+        /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
         public static void Warn()
         {
@@ -111,7 +111,7 @@ namespace Anotar
             throw new NotImplementedException();
         }
 		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
+        /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
         public static void Error()
         {
