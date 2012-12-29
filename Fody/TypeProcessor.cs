@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -6,7 +7,17 @@ public partial class ModuleWeaver
 {
     void ProcessType(TypeDefinition type)
     {
-        var fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, injector.LoggerType);
+        var fieldDefinition = type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == injector.LoggerType.FullName);
+        Action foundAction;
+        if (fieldDefinition == null)
+        {
+            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, injector.LoggerType);
+            foundAction = () => InjectField(type, fieldDefinition);
+        }
+        else
+        {
+            foundAction = () => { };
+        }
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
@@ -15,6 +26,7 @@ public partial class ModuleWeaver
             {
                 continue;
             }
+
             var onExceptionProcessor = new OnExceptionProcessor
                 {
                     Method = method,
@@ -26,6 +38,7 @@ public partial class ModuleWeaver
                     ExceptionReference = exceptionType,
                 };
             onExceptionProcessor.Process();
+
             var logForwardingProcessor = new LogForwardingProcessor
                 {
                     FoundUsageInType = x => foundUsage = x,
@@ -40,24 +53,30 @@ public partial class ModuleWeaver
                     FormatMethod = formatMethod
                 };
             logForwardingProcessor.ProcessMethod();
+
         }
         if (foundUsage)
         {
-            var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
-            if (staticConstructor == null)
-            {
-                const MethodAttributes attributes = MethodAttributes.Static
-                                                    | MethodAttributes.SpecialName
-                                                    | MethodAttributes.RTSpecialName
-                                                    | MethodAttributes.HideBySig
-                                                    | MethodAttributes.Private;
-                staticConstructor = new MethodDefinition(".cctor", attributes, ModuleDefinition.TypeSystem.Void);
-
-                staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
-                type.Methods.Add(staticConstructor);
-            }
-            injector.AddField(type, staticConstructor, fieldDefinition);
-            type.Fields.Add(fieldDefinition);
+            foundAction();
         }
+    }
+
+    void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
+    {
+        var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
+        if (staticConstructor == null)
+        {
+            const MethodAttributes attributes = MethodAttributes.Static
+                                                | MethodAttributes.SpecialName
+                                                | MethodAttributes.RTSpecialName
+                                                | MethodAttributes.HideBySig
+                                                | MethodAttributes.Private;
+            staticConstructor = new MethodDefinition(".cctor", attributes, ModuleDefinition.TypeSystem.Void);
+
+            staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            type.Methods.Add(staticConstructor);
+        }
+        injector.AddField(type, staticConstructor, fieldDefinition);
+        type.Fields.Add(fieldDefinition);
     }
 }

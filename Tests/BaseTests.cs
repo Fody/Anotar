@@ -39,6 +39,16 @@ public abstract class BaseTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
     }
+    [Test]
+    public void ClassWithExistingField()
+    {
+        var type = assembly.GetType("ClassWithExistingField");
+        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
+    }
 
     
     void CheckException(Action<dynamic> action, List<string> list, string expected)

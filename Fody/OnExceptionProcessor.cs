@@ -79,9 +79,6 @@ class OnExceptionProcessor
         returnFixer.MakeLastStatementReturn();
 
 
-
-
-
         exceptionVariable = new VariableDefinition(ExceptionReference);
         body.Variables.Add(exceptionVariable);
         messageVariable = new VariableDefinition(TypeSystem.String);

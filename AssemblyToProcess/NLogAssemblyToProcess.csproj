@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassWithAbstract.cs" />
+    <Compile Include="ClassWithExistingField.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ForceNlogRef.cs" />
     <Compile Include="MyDelegate.cs" />
