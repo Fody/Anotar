@@ -49,7 +49,7 @@ public class NLogInjector : IInjector
 
     public IAssemblyResolver AssemblyResolver;
 
-    public void AddField(TypeDefinition type, MethodDefinition constructor, FieldDefinition fieldDefinition)
+    public void AddField(TypeDefinition type, MethodDefinition constructor, FieldReference fieldDefinition)
     {
         var instructions = constructor.Body.Instructions;
 

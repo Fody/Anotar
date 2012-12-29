@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericClass.cs" />
     <Compile Include="LogParamsOnExceptionTemplate.cs" />
     <Compile Include="MetroLogTemplate.cs" />
     <Compile Include="MyClass.cs" />

@@ -15,7 +15,7 @@ class OnExceptionProcessor
     bool foundInfo;
     bool foundWarn;
     bool foundError;
-    public FieldDefinition FieldDefinition;
+    public FieldReference Field;
     public TypeReference ExceptionReference;
     public IInjector Injector;
     MethodBody body;
@@ -181,10 +181,10 @@ class OnExceptionProcessor
     IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, MethodReference writeMethod)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
-        yield return Instruction.Create(OpCodes.Ldsfld, FieldDefinition);
+        yield return Instruction.Create(OpCodes.Ldsfld, Field);
         yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
-        yield return Instruction.Create(OpCodes.Ldsfld, FieldDefinition);
+        yield return Instruction.Create(OpCodes.Ldsfld, Field);
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
         yield return Instruction.Create(OpCodes.Callvirt, writeMethod);

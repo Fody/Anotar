@@ -47,4 +47,19 @@ public static class CecilExtensions
         }
         return true;
     }
+
+    public static FieldReference GetGeneric(this FieldDefinition definition)
+    {
+        if (definition.DeclaringType.HasGenericParameters)
+        {
+            var declaringType = new GenericInstanceType(definition.DeclaringType);
+            foreach (var parameter in definition.DeclaringType.GenericParameters)
+            {
+                declaringType.GenericArguments.Add(parameter);
+            }
+            return new FieldReference(definition.Name, definition.FieldType, declaringType);
+        }
+
+        return definition;
+    }
 }

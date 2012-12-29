@@ -14,7 +14,7 @@ public class LogForwardingProcessor
     public TypeReference StringType;
     public ArrayType ObjectArray;
     public MethodDefinition Method;
-    public FieldDefinition FieldDefinition;
+    public FieldReference Field;
     public Action<bool> FoundUsageInType;
     bool foundUsageInMethod;
     ILProcessor ilProcessor;
@@ -67,7 +67,7 @@ public class LogForwardingProcessor
 
         if (parameters.Count == 0)
         {
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
 
             var normalOperand = Injector.GetNormalOperand(methodReference);
@@ -84,7 +84,7 @@ public class LogForwardingProcessor
             Method.Body.Variables.Add(messageVar);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
@@ -105,7 +105,7 @@ public class LogForwardingProcessor
             Method.Body.Variables.Add(messageVar);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
@@ -124,7 +124,7 @@ public class LogForwardingProcessor
             
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, FormatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, FieldDefinition));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));

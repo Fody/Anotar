@@ -31,6 +31,16 @@ public abstract class BaseTests
     }
 
     [Test]
+    public void Generic()
+    {
+        var type = assembly.GetType("GenericClass`1");
+        var constructedType = type.MakeGenericType(typeof (string));
+        var instance = (dynamic)Activator.CreateInstance(constructedType);
+        instance.Debug();
+        var message = Debugs.First();
+        Assert.IsTrue(message.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
+    }
+    [Test]
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");

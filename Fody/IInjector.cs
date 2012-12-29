@@ -15,7 +15,7 @@ public interface IInjector
     MethodReference ErrorMethod { get; set; }
     MethodReference IsErrorEnabledMethod { get; set; }
     MethodReference ErrorExceptionMethod { get; set; }
-    void AddField(TypeDefinition type, MethodDefinition constructor, FieldDefinition fieldDefinition);
+    void AddField(TypeDefinition type, MethodDefinition constructor, FieldReference fieldDefinition);
     string ReferenceName { get; }
     void Init(AssemblyDefinition reference, ModuleDefinition moduleDefinition);
 }

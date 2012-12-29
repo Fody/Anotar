@@ -11,13 +11,17 @@ public partial class ModuleWeaver
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, injector.LoggerType);
+            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, injector.LoggerType)
+                {
+                    DeclaringType = type
+                };
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
         {
             foundAction = () => { };
         }
+        var fieldReference = fieldDefinition.GetGeneric();
         var foundUsage = false;
         foreach (var method in type.Methods)
         {
@@ -30,7 +34,7 @@ public partial class ModuleWeaver
             var onExceptionProcessor = new OnExceptionProcessor
                 {
                     Method = method,
-                    FieldDefinition = fieldDefinition,
+                    Field = fieldReference,
                     FormatMethod = formatMethod,
                     TypeSystem = ModuleDefinition.TypeSystem,
                     FoundUsageInType = x => foundUsage = x,
@@ -46,7 +50,7 @@ public partial class ModuleWeaver
                     Method = method,
                     ConcatMethod = concatMethod,
                     ExceptionType = exceptionType,
-                    FieldDefinition = fieldDefinition,
+                    Field = fieldReference,
                     ObjectArray = objectArray,
                     StringType = ModuleDefinition.TypeSystem.String,
                     Injector = injector,
@@ -76,7 +80,7 @@ public partial class ModuleWeaver
             staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             type.Methods.Add(staticConstructor);
         }
-        injector.AddField(type, staticConstructor, fieldDefinition);
+        injector.AddField(type, staticConstructor, fieldDefinition.GetGeneric());
         type.Fields.Add(fieldDefinition);
     }
 }

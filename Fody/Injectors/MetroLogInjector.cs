@@ -53,7 +53,7 @@ public class MetroLogInjector : IInjector
     public IAssemblyResolver AssemblyResolver;
     MethodReference getDefaultLogManager;
 
-    public void AddField(TypeDefinition type, MethodDefinition constructor, FieldDefinition fieldDefinition)
+    public void AddField(TypeDefinition type, MethodDefinition constructor, FieldReference fieldDefinition)
     {
         var instructions = constructor.Body.Instructions;
 
