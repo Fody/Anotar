@@ -1,8 +1,8 @@
-## This is an add-in for  [Fody](https://github.com/SimonCropp/Fody) 
+## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
 
 Simplifies logging through a static class and some IL manipulation
 
-[Introduction to Fody](https://github.com/SimonCropp/Fody/wiki/SampleUsage)
+[Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
 ## Nuget
 
