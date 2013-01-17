@@ -1,4 +1,3 @@
-using System;
 using Anotar;
 using NLog;
 

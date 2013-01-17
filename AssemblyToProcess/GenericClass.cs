@@ -1,4 +1,3 @@
-using System;
 using Anotar;
 
 public class GenericClass<T>

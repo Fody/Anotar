@@ -7,18 +7,22 @@ using NUnit.Framework;
 [TestFixture]
 public abstract class BaseTests
 {
+    readonly string beforeAssemblyPath;
     Assembly assembly;
     public List<string> Errors = new List<string>();
     public List<string> Debugs = new List<string>();
     public List<string> Infos = new List<string>();
     public List<string> Warns = new List<string>();
+    string afterAssemblyPath;
 
-    protected BaseTests(string assemblyPath)
+    protected BaseTests(string beforeAssemblyPath)
     {
+        this.beforeAssemblyPath = beforeAssemblyPath;
 #if (!DEBUG)
-        assemblyPath = assemblyPath.Replace("Debug", "Release");
+        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        assembly  = WeaverHelper.Weave(assemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
+        assembly = Assembly.LoadFile(afterAssemblyPath);
     }
 
     [SetUp]
@@ -297,7 +301,7 @@ public abstract class BaseTests
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(assembly.CodeBase.Remove(0, 8));
+        Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
 #endif
 

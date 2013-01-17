@@ -1,12 +1,11 @@
 using System.IO;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Pdb;
 
 public static class WeaverHelper
 {
 
-    public static Assembly Weave(string assemblyPath)
+    public static string Weave(string assemblyPath)
     {
         var newAssembly = assemblyPath.Replace(".dll", "2.dll");
         var oldpdb = assemblyPath.Replace(".dll", ".pdb");
@@ -38,7 +37,7 @@ public static class WeaverHelper
             weavingTask.Execute();
             moduleDefinition.Write(newAssembly);
 
-            return Assembly.LoadFile(newAssembly);
+            return newAssembly;
         }
     }
 }
