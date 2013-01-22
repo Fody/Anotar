@@ -11,6 +11,7 @@ public class LogForwardingProcessor
     public MethodReference ConcatMethod;
     public MethodReference FormatMethod;
     public TypeReference ExceptionType;
+    public bool LogMinimalMessage;
     public TypeReference StringType;
     public ArrayType ObjectArray;
     public MethodDefinition Method;
@@ -68,7 +69,7 @@ public class LogForwardingProcessor
         if (parameters.Count == 0)
         {
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
 
             var normalOperand = Injector.GetNormalOperand(methodReference);
             //Hack: this should be in the injectors
@@ -85,7 +86,7 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
 
@@ -106,7 +107,7 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
@@ -125,7 +126,7 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, FormatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessgaePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
 
@@ -141,8 +142,13 @@ public class LogForwardingProcessor
 
     }
 
-    string GetMessgaePrefix(Instruction instruction)
+    string GetMessagePrefix(Instruction instruction)
     {
+        //TODO: should prob wrap calls to this method and not concat an empty string. but this will do for now
+        if (LogMinimalMessage)
+        {
+            return string.Empty;
+        }
         var sequencePoint = GetPreviousSequencePoint(instruction);
         if (sequencePoint == null)
         {

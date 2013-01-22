@@ -11,6 +11,7 @@ public partial class ModuleWeaver
     public ModuleDefinition ModuleDefinition { get; set; }
     MethodReference concatMethod;
     MethodReference formatMethod;
+    bool logMinimalMessage;
     TypeReference exceptionType;
     ArrayType objectArray;
 
@@ -22,6 +23,12 @@ public partial class ModuleWeaver
 
     public void Execute()
     {
+        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
+        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
+        if (assemblyContainsAttribute || moduleContainsAttribute)
+        {
+            logMinimalMessage = true;
+        }
         injector = GetInjector();
         var stringType = ModuleDefinition.TypeSystem.String.Resolve();
         concatMethod = ModuleDefinition.Import(stringType.FindMethod("Concat", "String", "String"));

@@ -50,6 +50,7 @@ public partial class ModuleWeaver
                     Method = method,
                     ConcatMethod = concatMethod,
                     ExceptionType = exceptionType,
+                    LogMinimalMessage = logMinimalMessage,
                     Field = fieldReference,
                     ObjectArray = objectArray,
                     StringType = ModuleDefinition.TypeSystem.String,

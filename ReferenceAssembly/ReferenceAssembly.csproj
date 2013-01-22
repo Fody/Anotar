@@ -44,6 +44,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="LogMinimalMessageAttribute.cs" />
     <Compile Include="LogToDebugOnExceptionAttribute.cs" />
     <Compile Include="LogToErrorOnExceptionAttribute.cs" />
     <Compile Include="LogToInfoOnExceptionAttribute.cs" />
