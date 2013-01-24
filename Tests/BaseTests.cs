@@ -21,7 +21,7 @@ public abstract class BaseTests
 #if (!DEBUG)
         this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
     }
 

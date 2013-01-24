@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="BaseTests.cs" />
-    <Compile Include="LargeAssemblyTest.cs" />
     <Compile Include="MockAssemblyResolver.cs" />
     <Compile Include="Verifier.cs" />
     <Compile Include="WeaverHelper.cs" />
