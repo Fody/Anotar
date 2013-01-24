@@ -1,13 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using NLog;
+using NLog.Config;
 using NUnit.Framework;
 
+
 [TestFixture]
-public abstract class BaseTests
+public class MinimalOutputTests
 {
-    readonly string beforeAssemblyPath;
+    string beforeAssemblyPath;
     Assembly assembly;
     public List<string> Errors = new List<string>();
     public List<string> Debugs = new List<string>();
@@ -15,14 +19,48 @@ public abstract class BaseTests
     public List<string> Warns = new List<string>();
     string afterAssemblyPath;
 
-    protected BaseTests(string beforeAssemblyPath)
+    public MinimalOutputTests()
     {
-        this.beforeAssemblyPath = beforeAssemblyPath;
+        this.beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugMinimal\MinimalOutputAssemblyToProcess.dll");
 #if (!DEBUG)
         this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
         afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
+        var config = new LoggingConfiguration();
+        var target = new ActionTarget
+            {
+                Action = LogEvent
+            };
+
+        config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
+        config.AddTarget("debuger", target);
+        LogManager.Configuration = config;
+    }
+
+    void LogEvent(LogEventInfo eventInfo)
+    {
+        if (eventInfo.Level == LogLevel.Error)
+        {
+            Errors.Add(eventInfo.FormattedMessage);
+            return;
+        }        
+        if (eventInfo.Level == LogLevel.Warn)
+        {
+            Warns.Add(eventInfo.FormattedMessage);
+            return;
+        }        
+        if (eventInfo.Level == LogLevel.Info)
+        {
+            Infos.Add(eventInfo.FormattedMessage);
+            return;
+        }
+        if (eventInfo.Level == LogLevel.Debug)
+        {
+            Debugs.Add(eventInfo.FormattedMessage);
+            return;
+        }        
+
     }
 
     [SetUp]
@@ -41,9 +79,9 @@ public abstract class BaseTests
         var constructedType = type.MakeGenericType(typeof (string));
         var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
-        var message = Debugs.First();
-        Assert.IsTrue(message.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Debugs.First());
     }
+
     [Test]
     public void Debug()
     {
@@ -51,8 +89,9 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Debugs.First());
     }
+
     [Test]
     public void ClassWithExistingField()
     {
@@ -61,11 +100,10 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Debugs.First());
     }
 
-    
-    void CheckException(Action<dynamic> action, List<string> list, string expected)
+    void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");
@@ -107,6 +145,7 @@ public abstract class BaseTests
         Action<dynamic> action = o => o.ToInfo("x", 6);
         CheckException(action, Infos, expected);
     }
+
     [Test]
     public void OnExceptionToInfoWithReturn()
     {
@@ -122,6 +161,7 @@ public abstract class BaseTests
         Action<dynamic> action = o => o.ToWarn("x", 6);
         CheckException(action, Warns, expected);
     }
+
     [Test]
     public void OnExceptionToWarnWithReturn()
     {
@@ -137,6 +177,7 @@ public abstract class BaseTests
         Action<dynamic> action = o => o.ToError("x", 6);
         CheckException(action, Errors, expected);
     }
+
     [Test]
     public void OnExceptionToErrorWithReturn()
     {
@@ -152,7 +193,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Debugs.First());
     }
 
     [Test]
@@ -162,7 +203,8 @@ public abstract class BaseTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
+        Assert.AreEqual("TheMessage 1", Debugs.First());
+
     }
 
     [Test]
@@ -172,7 +214,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Debugs.First());
     }
 
     [Test]
@@ -182,7 +224,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Infos.First());
     }
 
     [Test]
@@ -192,7 +234,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Infos.First());
     }
 
     [Test]
@@ -202,7 +244,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
+        Assert.AreEqual("TheMessage 1", Infos.First());
     }
 
     [Test]
@@ -212,7 +254,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
+        Assert.AreEqual("TheMessage",Infos.First());
     }
 
     [Test]
@@ -222,7 +264,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Warns.First());
     }
 
     [Test]
@@ -232,7 +274,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Warns.First());
     }
 
     [Test]
@@ -242,9 +284,8 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
+        Assert.AreEqual("TheMessage 1", Warns.First());
     }
-
 
     [Test]
     public void WarnStringException()
@@ -253,7 +294,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Warns.First());
     }
 
     [Test]
@@ -263,7 +304,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Errors.First());
     }
 
     [Test]
@@ -273,7 +314,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
+        Assert.AreEqual(string.Empty, Errors.First());
     }
 
     [Test]
@@ -283,7 +324,7 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
+        Assert.AreEqual("TheMessage 1", Errors.First());
     }
 
     [Test]
@@ -293,16 +334,12 @@ public abstract class BaseTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+        Assert.AreEqual("TheMessage", Errors.First());
     }
 
-
-#if(DEBUG)
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-#endif
-
 }
