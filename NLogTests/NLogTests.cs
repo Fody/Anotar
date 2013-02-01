@@ -336,10 +336,12 @@ public class NLogTests
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
     }
-
+    
+#if (DEBUG)
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
+#endif
 }
