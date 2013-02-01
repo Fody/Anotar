@@ -34,7 +34,7 @@ class OnExceptionProcessor
 
         if (customAttributes.Any(_ => _.AttributeType.Name == "AsyncStateMachineAttribute"))
         {
-            ModuleWeaver.LogError(string.Format("Could not log exceptions for '{0}' since it is async.", Method.FullName));
+            ModuleWeaver.LogError(string.Format("Could not log exceptions for '{0}'. async methods are not currently supported. Feel free to submit a pull request if you want this feature.", Method.FullName));
             return;
         }
 
