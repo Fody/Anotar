@@ -314,7 +314,7 @@ public class MinimalOutputTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
-        Assert.AreEqual(string.Empty, Errors.First());
+        Assert.AreEqual("TheMessage", Errors.First());
     }
 
     [Test]

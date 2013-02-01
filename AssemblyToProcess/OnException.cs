@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Anotar;
 
 public class OnException
@@ -16,6 +17,14 @@ public class OnException
     {
         throw new Exception("Foo");
     }
+
+#if(DEBUG)
+    [LogToErrorOnException]
+    public async Task<DateTime> AsyncToErrorWithReturn(string param1, int param)
+    {
+        throw new Exception("Foo");
+    }
+#endif
 
     [LogToErrorOnException]
     public void WithRefs(

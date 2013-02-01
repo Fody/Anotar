@@ -8,6 +8,7 @@ public partial class ModuleWeaver
     public Action<string> LogInfo { get; set; }
     public IAssemblyResolver AssemblyResolver { get; set; }
     public Action<string> LogWarning { get; set; }
+    public Action<string> LogError { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
     MethodReference concatMethod;
     MethodReference formatMethod;
@@ -19,6 +20,7 @@ public partial class ModuleWeaver
     {
         LogInfo = s => { };
         LogWarning = s => { };
+        LogError = s => { };
     }
 
     public void Execute()

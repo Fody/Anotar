@@ -7,7 +7,6 @@ using Mono.Cecil.Cil;
 public class LogForwardingProcessor
 {
     public IInjector Injector;
-    public Action<string> LogWarning { get; set; }
     public MethodReference ConcatMethod;
     public MethodReference FormatMethod;
     public TypeReference ExceptionType;

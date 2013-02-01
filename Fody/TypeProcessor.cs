@@ -40,13 +40,13 @@ public partial class ModuleWeaver
                     FoundUsageInType = x => foundUsage = x,
                     Injector = injector,
                     ExceptionReference = exceptionType,
+                    ModuleWeaver = this
                 };
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
                 {
                     FoundUsageInType = x => foundUsage = x,
-                    LogWarning = LogWarning,
                     Method = method,
                     ConcatMethod = concatMethod,
                     ExceptionType = exceptionType,

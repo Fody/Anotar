@@ -133,6 +133,7 @@ public class Log4NetTests
         CheckException(action, Debugs, expected);
     }
 
+
     [Test]
     public void OnExceptionToDebugWithReturn()
     {

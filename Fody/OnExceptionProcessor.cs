@@ -26,11 +26,20 @@ class OnExceptionProcessor
     int messageFormatIndex;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
+    public ModuleWeaver ModuleWeaver;
 
     public void Process()
     {
         var customAttributes = Method.CustomAttributes;
+
+        if (customAttributes.Any(_ => _.AttributeType.Name == "AsyncStateMachineAttribute"))
+        {
+            ModuleWeaver.LogError(string.Format("Could not log exceptions for '{0}' since it is async.", Method.FullName));
+            return;
+        }
+
         var found = false;
+
         if (customAttributes.ContainsAttribute("LogToDebugOnExceptionAttribute"))
         {
             foundDebug = true;
