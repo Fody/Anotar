@@ -14,6 +14,10 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
     public static class Log
     {
+        public static void Trace()
+        public static void Trace(string message)
+        public static void Trace(string format, params object[] args)
+        public static void TraceException(string message, Exception exception)
         public static void Debug()
         public static void Debug(string message)
         public static void Debug(string format, params object[] args)
@@ -85,6 +89,9 @@ Nuget package http://nuget.org/packages/Anotar.Fody
 
 ### Given these attributes
 
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToTraceOnExceptionAttribute : Attribute{}
+    
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
     public class LogToDebugOnExceptionAttribute : Attribute{}
     
