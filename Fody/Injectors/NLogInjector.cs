@@ -13,6 +13,9 @@ public class NLogInjector : IInjector
         buildLoggerGenericMethod = moduleDefinition.Import(getLoggerGenericDefinition);
         var loggerTypeDefinition = reference.MainModule.Types.First(x => x.Name == "Logger");
 
+        TraceMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String"));
+        IsTraceEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled"));
+        TraceExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("TraceException", "String", "Exception"));
         DebugMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String"));
         IsDebugEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
         DebugExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("DebugException", "String", "Exception"));
@@ -28,6 +31,9 @@ public class NLogInjector : IInjector
         LoggerType = moduleDefinition.Import(loggerTypeDefinition);
     }
 
+    public MethodReference TraceMethod { get; set; }
+    public MethodReference IsTraceEnabledMethod { get; set; }
+    public MethodReference TraceExceptionMethod { get; set; }
     public MethodReference DebugMethod { get; set; }
     public MethodReference IsDebugEnabledMethod { get; set; }
     public MethodReference DebugExceptionMethod { get; set; }

@@ -5,6 +5,10 @@ public static class InjectorExtentions
 {
     public static MethodReference GetNormalOperand(this IInjector injector, MethodReference methodReference)
     {
+        if (methodReference.Name == "Trace")
+        {
+            return injector.TraceMethod;
+        }
         if (methodReference.Name == "Debug")
         {
             return injector.DebugMethod;
@@ -26,6 +30,10 @@ public static class InjectorExtentions
 
     public static MethodReference GetExceptionOperand(this IInjector injector, MethodReference methodReference)
     {
+        if (methodReference.Name == "TraceException")
+        {
+            return injector.TraceExceptionMethod;
+        }
         if (methodReference.Name == "DebugException")
         {
             return injector.DebugExceptionMethod;

@@ -9,6 +9,40 @@ namespace Anotar
     public static class Log
     {
 
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
+        public static void Trace()
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
+        /// <param name="message">The value to be written.</param>
+        public static void Trace(string message)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
+        public static void Trace(string format, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Trace</c> level.
+        /// </summary>
+        /// <param name="message">A <see langword="string" /> containing format items.</param>
+        /// <param name="exception">An exception to be logged.</param>
+        public static void TraceException(string message, Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>

@@ -10,7 +10,7 @@ public class Log4NetInjector : IInjector
         var logManagerType = reference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         buildLoggerMethod = moduleDefinition.Import(getLoggerDefinition);
-       var loggerTypeDefinition = reference.MainModule.Types.First(x => x.Name == "ILog");
+        var loggerTypeDefinition = reference.MainModule.Types.First(x => x.Name == "ILog");
 
         DebugMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Object"));
         IsDebugEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
@@ -28,6 +28,9 @@ public class Log4NetInjector : IInjector
     }
 
 
+    public MethodReference TraceMethod { get { return DebugMethod; } }
+    public MethodReference IsTraceEnabledMethod { get { return IsDebugEnabledMethod; } }
+    public MethodReference TraceExceptionMethod { get { return DebugExceptionMethod; } }
     public MethodReference DebugMethod { get; set; }
     public MethodReference IsDebugEnabledMethod { get; set; }
     public MethodReference DebugExceptionMethod { get; set; }

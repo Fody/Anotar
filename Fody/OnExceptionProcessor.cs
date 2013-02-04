@@ -12,6 +12,7 @@ class OnExceptionProcessor
     public TypeSystem TypeSystem;
     public Action<bool> FoundUsageInType;
     bool foundDebug;
+    bool foundTrace;
     bool foundInfo;
     bool foundWarn;
     bool foundError;
@@ -40,6 +41,11 @@ class OnExceptionProcessor
 
         var found = false;
 
+        if (customAttributes.ContainsAttribute("LogToTraceOnExceptionAttribute"))
+        {
+            foundTrace = true;
+            found = true;
+        }
         if (customAttributes.ContainsAttribute("LogToDebugOnExceptionAttribute"))
         {
             foundDebug = true;
@@ -155,6 +161,13 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Call, FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
+        if (foundTrace)
+        {
+            foreach (var instruction in AddWrite(Injector.IsTraceEnabledMethod, Injector.TraceExceptionMethod))
+            {
+                yield return instruction;
+            }
+        }
         if (foundDebug)
         {
             foreach (var instruction in AddWrite(Injector.IsDebugEnabledMethod, Injector.DebugExceptionMethod))

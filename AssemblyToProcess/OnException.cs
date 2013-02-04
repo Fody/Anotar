@@ -104,6 +104,19 @@ public class OnException
         throw new Exception("Foo");
     }
 
+    [LogToTraceOnException]
+    public void ToTrace(string param1, int param2)
+    {
+        Debug.WriteLine("sdf");
+        throw new Exception("Foo");
+    }
+
+    [LogToTraceOnException]
+    public object ToTraceWithReturn(string param1, int param2)
+    {
+        Debug.WriteLine("sdf");
+        throw new Exception("Foo");
+    }
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {

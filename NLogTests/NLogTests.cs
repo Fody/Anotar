@@ -14,6 +14,7 @@ public class NLogTests
     Assembly assembly;
     public List<string> Errors = new List<string>();
     public List<string> Debugs = new List<string>();
+    public List<string> Traces = new List<string>();
     public List<string> Infos = new List<string>();
     public List<string> Warns = new List<string>();
     string afterAssemblyPath;
@@ -33,7 +34,7 @@ public class NLogTests
                 Action = LogEvent
             };
 
-        config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
+        config.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, target));
         config.AddTarget("debuger", target);
         LogManager.Configuration = config;
     }
@@ -60,6 +61,11 @@ public class NLogTests
             Debugs.Add(eventInfo.FormattedMessage);
             return;
         }        
+        if (eventInfo.Level == LogLevel.Trace)
+        {
+            Traces.Add(eventInfo.FormattedMessage);
+            return;
+        }        
 
     }
 
@@ -67,6 +73,7 @@ public class NLogTests
     public void Setup()
     {
         Errors.Clear();
+        Traces.Clear();
         Debugs.Clear();
         Infos.Clear();
         Warns.Clear();
@@ -123,6 +130,22 @@ public class NLogTests
         Assert.IsTrue(first.StartsWith(expected),first);
     }
 
+
+    [Test]
+    public void OnExceptionToTrace()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToTrace(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToTrace("x", 6);
+        CheckException(action, Traces, expected);
+    }
+
+    [Test]
+    public void OnExceptionToTraceWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToTraceWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToTraceWithReturn("x", 6);
+        CheckException(action, Traces, expected);
+    }
     [Test]
     public void OnExceptionToDebug()
     {
@@ -186,6 +209,46 @@ public class NLogTests
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, Errors, expected);
     }
+
+    [Test]
+    public void Trace()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Trace();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::Trace()'. Line: ~"));
+    }
+    [Test]
+    public void TraceString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceString();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceString()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringParams();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceStringParams()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringException();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceStringException()'. Line: ~"));
+    }
+
 
     [Test]
     public void DebugString()

@@ -16,6 +16,9 @@ public class MetroLogInjector : IInjector
         buildLoggerMethod = moduleDefinition.Import(getLoggerDefinition);
         var loggerTypeDefinition = reference.MainModule.Types.First(x => x.Name == "ILogger");
 
+        TraceMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String", "Exception"));
+        IsTraceEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled"));
+        TraceExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String", "Exception"));
         DebugMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String", "Exception"));
         IsDebugEnabledMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
         DebugExceptionMethod = moduleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String", "Exception"));
@@ -32,6 +35,9 @@ public class MetroLogInjector : IInjector
     }
 
 
+    public MethodReference TraceMethod { get; set; }
+    public MethodReference IsTraceEnabledMethod { get; set; }
+    public MethodReference TraceExceptionMethod { get; set; }
     public MethodReference DebugMethod { get; set; }
     public MethodReference IsDebugEnabledMethod { get; set; }
     public MethodReference DebugExceptionMethod { get; set; }
