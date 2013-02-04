@@ -400,11 +400,9 @@ public class Log4NetTests
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
     }
 
-#if (DEBUG)
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-#endif
 }
