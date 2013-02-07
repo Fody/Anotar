@@ -145,6 +145,19 @@ When I am coding I often want to quickly add a line of logging code. If I dont a
 
 Often when I am logging I want to know the method and line number I am logging from. I don't want to manually add this. So using IL I just prefix the message with the method name and line number. Note that the line number is prefixed with '~'. The reason for this is that a single line of code can equate to multiple IL instructions. So I walk back up the instructions until I find one that has a line number and use that. Hence it is an approximation.
 
+## I don't want extra information
+
+If you don't want the method name and line number Anotar adds to log messages then create this class:
+
+    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module, AllowMultiple = false, Inherited = false)]
+    public class LogMinimalMessageAttribute : Attribute
+    {
+    }
+    
+And add this to AssemblyInfo.cs:
+
+    [assembly: LogMinimalMessage]
+
 ## Why not use CallerInfoAttributes
 
 The CallerInfoAttributes consist of  [CallerLineNumberAttribute](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callerlinenumberattribute.aspx),  [CallerFilePathAttribute](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callerfilepathattribute.aspx) and [CallerMemberNameAttribute](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callermembernameattribute.aspx). The allow you to pass information about the caller method to the callee method. 
