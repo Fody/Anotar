@@ -23,11 +23,11 @@ public class Log4NetTests
     public Log4NetTests()
     {
 
-        this.beforeAssemblyPath =Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugLog4Net\Log4NetAssemblyToProcess.dll");
+        beforeAssemblyPath =Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugLog4Net\Log4NetAssemblyToProcess.dll");
 #if (!DEBUG)
-        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var hierarchy = (Hierarchy)LogManager.GetRepository();
         hierarchy.Root.RemoveAllAppenders(); /*Remove any other appenders*/

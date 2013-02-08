@@ -21,11 +21,11 @@ public class MinimalOutputTests
 
     public MinimalOutputTests()
     {
-        this.beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugMinimal\MinimalOutputAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugMinimal\MinimalOutputAssemblyToProcess.dll");
 #if (!DEBUG)
-        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var config = new LoggingConfiguration();
         var target = new ActionTarget

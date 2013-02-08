@@ -22,11 +22,11 @@ public class NLogTests
     public NLogTests()
     {
 
-        this.beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugNlog\NLogAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugNlog\NLogAssemblyToProcess.dll");
 #if (!DEBUG)
-        this.beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-        afterAssemblyPath = WeaverHelper.Weave(this.beforeAssemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var config = new LoggingConfiguration();
         var target = new ActionTarget
