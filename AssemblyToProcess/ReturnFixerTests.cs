@@ -91,6 +91,34 @@ public class ReturnFixerTests
 
         }
     }
+    [LogToDebugOnException]
+    public int TryCatchFinally()
+    {
+        try
+        {
+            var dateTime = DateTime.Now;
+            return 2;
+        }
+        catch (Exception exception)
+        {
+            try
+            {
+
+                var dateTime = DateTime.Now;
+                return 1;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("sdfsd");
+                throw;
+            }
+            throw new Exception("sdf",exception);
+        }
+        finally
+        {
+         throw   new Exception("sdf");
+        }
+    }
 
     bool isInSomeMode;
     string branchingReturnField;
