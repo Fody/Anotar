@@ -64,7 +64,9 @@ public class NLogTests
         if (eventInfo.Level == LogLevel.Trace)
         {
             Traces.Add(eventInfo.FormattedMessage);
+// ReSharper disable RedundantJumpStatement
             return;
+// ReSharper restore RedundantJumpStatement
         }        
 
     }

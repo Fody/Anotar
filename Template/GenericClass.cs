@@ -6,7 +6,7 @@ public class GenericClass<T>
 
     static GenericClass()
     {
-        GenericClass<T>.AnotarLogger = LogManager.GetLogger("GenericClass`1");
+        AnotarLogger = LogManager.GetLogger("GenericClass`1");
     }
 
     public GenericClass()
@@ -15,6 +15,6 @@ public class GenericClass<T>
 
     public void Debug()
     {
-        GenericClass<T>.AnotarLogger.Debug("Method: 'System.Void GenericClass`1::Debug()'. Line: ~8. ");
+        AnotarLogger.Debug("Method: 'System.Void GenericClass`1::Debug()'. Line: ~8. ");
     }
 }

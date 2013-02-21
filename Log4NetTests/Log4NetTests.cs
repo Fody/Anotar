@@ -65,7 +65,9 @@ public class Log4NetTests
         if (loggingEvent.Level == Level.Trace)
         {
             Debugs.Add(loggingEvent.RenderedMessage);
+// ReSharper disable RedundantJumpStatement
             return;
+// ReSharper restore RedundantJumpStatement
         }
 
     }

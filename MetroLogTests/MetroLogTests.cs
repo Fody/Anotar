@@ -63,7 +63,9 @@ public class MetroLogTests
         if (eventInfo.Level == LogLevel.Trace)
         {
             Traces.Add(eventInfo.Message);
+// ReSharper disable RedundantJumpStatement
             return;
+// ReSharper restore RedundantJumpStatement
         }
 
     }
@@ -94,7 +96,7 @@ public class MetroLogTests
     public void ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.AreEqual((int) 1, (int) type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
+        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);

@@ -58,7 +58,9 @@ public class MinimalOutputTests
         if (eventInfo.Level == LogLevel.Debug)
         {
             Debugs.Add(eventInfo.FormattedMessage);
+// ReSharper disable RedundantJumpStatement
             return;
+// ReSharper restore RedundantJumpStatement
         }        
 
     }
