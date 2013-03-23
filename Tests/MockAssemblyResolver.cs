@@ -12,8 +12,16 @@ public class MockAssemblyResolver : IAssemblyResolver
         {
             return AssemblyDefinition.ReadAssembly(fileName);
         }
-        var codeBase = Assembly.Load(name.FullName).CodeBase.Replace("file:///", "");
-        return AssemblyDefinition.ReadAssembly(codeBase);
+        try
+        {
+            var assembly = Assembly.Load(name.FullName);
+            var codeBase = assembly.CodeBase.Replace("file:///", "");
+            return AssemblyDefinition.ReadAssembly(codeBase);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
     }
 
     public AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
