@@ -25,3 +25,4 @@
 *.dll binary
 *.exe binary
 *.snk binary
+*.pdb binary
