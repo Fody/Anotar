@@ -13,5 +13,8 @@
     <summary />
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, NLog, Log4Net, MetroLog</tags>
+    <dependencies>
+      <dependency id="Fody"/>
+    </dependencies>
   </metadata>
 </package>
