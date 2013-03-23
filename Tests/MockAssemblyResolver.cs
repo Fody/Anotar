@@ -26,15 +26,21 @@ public class MockAssemblyResolver : IAssemblyResolver
 
     public AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
     {
-
         throw new NotImplementedException();
     }
 
     public AssemblyDefinition Resolve(string fullName)
     {
-        var codeBase = Assembly.Load(fullName).CodeBase.Replace("file:///","");
+        try
+        {
+            var codeBase = Assembly.Load(fullName).CodeBase.Replace("file:///", "");
 
-        return AssemblyDefinition.ReadAssembly(codeBase);
+            return AssemblyDefinition.ReadAssembly(codeBase);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
     }
 
     public AssemblyDefinition Resolve(string fullName, ReaderParameters parameters)
