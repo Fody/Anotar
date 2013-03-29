@@ -8,6 +8,10 @@ Simplifies logging through a static class and some IL manipulation
 
 Nuget package http://nuget.org/packages/Anotar.Fody 
 
+To Install from the Nuget Package Manager Console 
+    
+    PM> Install-Package Anotar.Fody
+
 ## Explicit Logging
 
 ### Given this as a reference
