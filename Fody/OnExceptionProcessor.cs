@@ -22,7 +22,6 @@ class OnExceptionProcessor
 
     VariableDefinition paramsArray;
     StringBuilder messageBuilder;
-    int messageFormatIndex;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
 
@@ -224,8 +223,8 @@ class OnExceptionProcessor
         {
             yield break;
         }
-        yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
-        yield return Instruction.Create(OpCodes.Ldc_I4, messageFormatIndex);
+	    yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Ldc_I4, parameterDefinition.Index);
         yield return Instruction.Create(OpCodes.Ldarg, parameterDefinition);
 
 
@@ -346,9 +345,7 @@ class OnExceptionProcessor
         // Store parameter in object[] array
         // ------------------------------------------------------------
         yield return Instruction.Create(OpCodes.Stelem_Ref);
-        messageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, messageFormatIndex);
-
-        messageFormatIndex++;
+		messageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, parameterDefinition.Index);
     }
 
 
