@@ -14,6 +14,23 @@ public static class CecilExtensions
             index++;
         }
     }
+	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
+	{
+		while (true)
+		{
+
+			if (instruction.SequencePoint != null)
+			{
+				return instruction.SequencePoint;
+			}
+
+			instruction = instruction.Previous;
+			if (instruction == null)
+			{
+				return null;
+			}
+		}
+	}
 
     public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
     {

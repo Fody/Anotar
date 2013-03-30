@@ -87,8 +87,11 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
+
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             var normalOperand = Injector.GetNormalOperand(methodReference);
             //Hack: this should be in the injectors
             if (normalOperand.Parameters.Count == 2)
@@ -108,7 +111,11 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
+
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
 
             instruction.Operand = Injector.GetExceptionOperand(methodReference);
@@ -117,19 +124,24 @@ public class LogForwardingProcessor
         {
             var messageVar = new VariableDefinition(StringType);
             var formatVar = new VariableDefinition(StringType);
-            var argsVar = new VariableDefinition(ObjectArray);
             Method.Body.Variables.Add(formatVar);
-            Method.Body.Variables.Add(argsVar);
             Method.Body.Variables.Add(messageVar);
             
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, FormatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ConcatMethod));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
+
 
             var normalOperand = Injector.GetNormalOperand(methodReference);
+
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
+
             //Hack: this should be in the injectors
             if (normalOperand.Parameters.Count == 2)
             {
@@ -148,7 +160,7 @@ public class LogForwardingProcessor
         {
             return string.Empty;
         }
-        var sequencePoint = GetPreviousSequencePoint(instruction);
+        var sequencePoint = instruction.GetPreviousSequencePoint();
         if (sequencePoint == null)
         {
             return string.Format("Method: '{0}'. ", Method.FullName);
@@ -157,21 +169,4 @@ public class LogForwardingProcessor
         return string.Format("Method: '{0}'. Line: ~{1}. ", Method.FullName, sequencePoint.StartLine);
     }
 
-    static SequencePoint GetPreviousSequencePoint(Instruction instruction)
-    {
-        while (true)
-        {
-
-            if (instruction.SequencePoint != null)
-            {
-                return instruction.SequencePoint;
-            }
-
-            instruction = instruction.Previous;
-            if (instruction == null)
-            {
-                return null;
-            }
-        }
-    }
 }

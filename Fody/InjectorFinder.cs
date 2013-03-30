@@ -11,6 +11,7 @@ public partial class ModuleWeaver
             {
                 new NLogInjector(),
                 new Log4NetInjector(),
+                new SerilogInjector(),
                 new MetroLogInjector()
             };
 

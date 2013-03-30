@@ -38,7 +38,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -51,7 +52,6 @@
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithExistingField_Log4Net.cs" />
-    <Compile Include="ForceLog4NetRef.cs" />
     <Compile Include="GenericClass.cs" />
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs" />

@@ -9,10 +9,6 @@ public class GenericClass<T>
         AnotarLogger = LogManager.GetLogger("GenericClass`1");
     }
 
-    public GenericClass()
-    {
-    }
-
     public void Debug()
     {
         AnotarLogger.Debug("Method: 'System.Void GenericClass`1::Debug()'. Line: ~8. ");

@@ -19,7 +19,10 @@
     <None Include="uninstall.ps1" />
   </ItemGroup>
   <Target Name="Clean">
-    <RemoveDir Directories="$(SolutionDir)NuGetBuild" />
+	<ItemGroup>
+		<FilesToDelete Include="$(SolutionDir)NuGetBuild\**"/>
+	</ItemGroup>
+    <Delete Files="$(SolutionDir)NuGetBuild" />
   </Target>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
@@ -50,6 +53,9 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
       <Name>Fody</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -163,35 +163,35 @@ class OnExceptionProcessor
 
         if (foundTrace)
         {
-            foreach (var instruction in AddWrite(Injector.IsTraceEnabledMethod, Injector.TraceExceptionMethod))
+            foreach (var instruction in AddWrite(Injector.GetIsTraceEnabledInstructions(), Injector.TraceExceptionMethod))
             {
                 yield return instruction;
             }
         }
         if (foundDebug)
         {
-            foreach (var instruction in AddWrite(Injector.IsDebugEnabledMethod, Injector.DebugExceptionMethod))
+			foreach (var instruction in AddWrite(Injector.GetIsDebugEnabledInstructions(), Injector.DebugExceptionMethod))
             {
                 yield return instruction;
             }
         }
         if (foundInfo)
         {
-            foreach (var instruction in AddWrite(Injector.IsInfoEnabledMethod, Injector.InfoExceptionMethod))
+			foreach (var instruction in AddWrite(Injector.GetIsInfoEnabledInstructions(), Injector.InfoExceptionMethod))
             {
                 yield return instruction;
             }
         }
         if (foundWarn)
         {
-            foreach (var instruction in AddWrite(Injector.IsWarnEnabledMethod, Injector.WarnExceptionMethod))
+			foreach (var instruction in AddWrite(Injector.GetIsWarnEnabledInstructions(), Injector.WarnExceptionMethod))
             {
                 yield return instruction;
             }
         }
         if (foundError)
         {
-            foreach (var instruction in AddWrite(Injector.IsErrorEnabledMethod, Injector.ErrorExceptionMethod))
+            foreach (var instruction in AddWrite(Injector.GetIsErrorEnabledInstructions(), Injector.ErrorExceptionMethod))
             {
                 yield return instruction;
             }
@@ -200,11 +200,14 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Rethrow);
     }
 
-    IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, MethodReference writeMethod)
+    IEnumerable<Instruction> AddWrite(IEnumerable<Instruction> isEnabledInstructions, MethodReference writeMethod)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
         yield return Instruction.Create(OpCodes.Ldsfld, Field);
-        yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
+		foreach (var intruction in isEnabledInstructions)
+	    {
+			yield return intruction;
+	    }
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
         yield return Instruction.Create(OpCodes.Ldsfld, Field);
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
