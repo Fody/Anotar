@@ -10,11 +10,11 @@ public partial class ModuleWeaver
     public Action<string> LogWarning { get; set; }
     public Action<string> LogError { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
-    MethodReference concatMethod;
-    MethodReference formatMethod;
-    bool logMinimalMessage;
-    TypeReference exceptionType;
-    ArrayType objectArray;
+    public MethodReference ConcatMethod;
+	public MethodReference FormatMethod;
+    public bool LogMinimalMessage;
+    public TypeReference ExceptionType;
+    public ArrayType ObjectArray;
 
     public ModuleWeaver()
     {
@@ -29,16 +29,16 @@ public partial class ModuleWeaver
         var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
         if (assemblyContainsAttribute || moduleContainsAttribute)
         {
-            logMinimalMessage = true;
+            LogMinimalMessage = true;
         }
         injector = GetInjector();
         var stringType = ModuleDefinition.TypeSystem.String.Resolve();
-        concatMethod = ModuleDefinition.Import(stringType.FindMethod("Concat", "String", "String"));
-        formatMethod = ModuleDefinition.Import(stringType.FindMethod("Format", "String", "Object[]"));
-        objectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
+        ConcatMethod = ModuleDefinition.Import(stringType.FindMethod("Concat", "String", "String"));
+        FormatMethod = ModuleDefinition.Import(stringType.FindMethod("Format", "String", "Object[]"));
+        ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
         var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
-        exceptionType = ModuleDefinition.Import(msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception"));
+        ExceptionType = ModuleDefinition.Import(msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception"));
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))

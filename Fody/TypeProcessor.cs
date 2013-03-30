@@ -35,11 +35,8 @@ public partial class ModuleWeaver
                 {
                     Method = method,
                     Field = fieldReference,
-                    FormatMethod = formatMethod,
-                    TypeSystem = ModuleDefinition.TypeSystem,
                     FoundUsageInType = x => foundUsage = x,
                     Injector = injector,
-                    ExceptionReference = exceptionType,
                     ModuleWeaver = this
                 };
             onExceptionProcessor.Process();
@@ -48,14 +45,9 @@ public partial class ModuleWeaver
                 {
                     FoundUsageInType = x => foundUsage = x,
                     Method = method,
-                    ConcatMethod = concatMethod,
-                    ExceptionType = exceptionType,
-                    LogMinimalMessage = logMinimalMessage,
+					ModuleWeaver = this,
                     Field = fieldReference,
-                    ObjectArray = objectArray,
-                    StringType = ModuleDefinition.TypeSystem.String,
                     Injector = injector,
-                    FormatMethod = formatMethod
                 };
             logForwardingProcessor.ProcessMethod();
 

@@ -9,7 +9,6 @@ using Mono.Cecil.Rocks;
 class OnExceptionProcessor
 {
     public MethodDefinition Method;
-    public TypeSystem TypeSystem;
     public Action<bool> FoundUsageInType;
     bool foundDebug;
     bool foundTrace;
@@ -17,17 +16,15 @@ class OnExceptionProcessor
     bool foundWarn;
     bool foundError;
     public FieldReference Field;
-    public TypeReference ExceptionReference;
+	public ModuleWeaver ModuleWeaver { get; set; }
     public IInjector Injector;
     MethodBody body;
 
-    public MethodReference FormatMethod;
     VariableDefinition paramsArray;
     StringBuilder messageBuilder;
     int messageFormatIndex;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
-    public ModuleWeaver ModuleWeaver;
 
     public void Process()
     {
@@ -94,11 +91,11 @@ class OnExceptionProcessor
         returnFixer.MakeLastStatementReturn();
 
 
-        exceptionVariable = new VariableDefinition(ExceptionReference);
+		exceptionVariable = new VariableDefinition(ModuleWeaver.ExceptionType);
         body.Variables.Add(exceptionVariable);
-        messageVariable = new VariableDefinition(TypeSystem.String);
+		messageVariable = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
         body.Variables.Add(messageVariable);
-        paramsArray = new VariableDefinition(new ArrayType(TypeSystem.Object));
+		paramsArray = new VariableDefinition(new ArrayType(ModuleWeaver.ModuleDefinition.TypeSystem.Object));
         body.Variables.Add(paramsArray);
 
 
@@ -114,7 +111,7 @@ class OnExceptionProcessor
 
         var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
             {
-                CatchType = ExceptionReference,
+                CatchType = ModuleWeaver.ExceptionType,
                 TryStart = methodBodyFirstInstruction,
                 TryEnd = tryCatchLeaveInstructions.Next,
                 HandlerStart = catchInstructions.First(),
@@ -144,7 +141,7 @@ class OnExceptionProcessor
         var messageLdstr = Instruction.Create(OpCodes.Ldstr, "");
         yield return messageLdstr;
         yield return Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count);
-        yield return Instruction.Create(OpCodes.Newarr, TypeSystem.Object);
+		yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object);
         yield return Instruction.Create(OpCodes.Stloc, paramsArray);
 
         messageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}'. ", Method.FullName));
@@ -158,7 +155,7 @@ class OnExceptionProcessor
         messageLdstr.Operand = messageBuilder.ToString();
 
         yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
-        yield return Instruction.Create(OpCodes.Call, FormatMethod);
+		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
         if (foundTrace)
