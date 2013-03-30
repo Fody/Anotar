@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -14,6 +15,12 @@ public static class CecilExtensions
             index++;
         }
     }
+
+	public static void InsertBefore(this ILProcessor processor, Instruction target, IEnumerable<Instruction> instructions)
+	{
+		foreach (var instruction in instructions)
+			processor.InsertBefore(target, instruction);
+	}
 	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
 	{
 		while (true)

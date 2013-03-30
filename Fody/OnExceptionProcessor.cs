@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -20,8 +19,7 @@ class OnExceptionProcessor
     public IInjector Injector;
     MethodBody body;
 
-    VariableDefinition paramsArray;
-    StringBuilder messageBuilder;
+    VariableDefinition paramsArrayVariable;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
 
@@ -78,10 +76,7 @@ class OnExceptionProcessor
 
         body.SimplifyMacros();
 
-
-        
         var ilProcessor = body.GetILProcessor();
-
 
         var returnFixer = new ReturnFixer
             {
@@ -94,8 +89,8 @@ class OnExceptionProcessor
         body.Variables.Add(exceptionVariable);
 		messageVariable = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
         body.Variables.Add(messageVariable);
-		paramsArray = new VariableDefinition(new ArrayType(ModuleWeaver.ModuleDefinition.TypeSystem.Object));
-        body.Variables.Add(paramsArray);
+		paramsArrayVariable = new VariableDefinition(new ArrayType(ModuleWeaver.ModuleDefinition.TypeSystem.Object));
+        body.Variables.Add(paramsArrayVariable);
 
 
         var tryCatchLeaveInstructions = Instruction.Create(OpCodes.Leave, returnFixer.NopBeforeReturn);
@@ -141,19 +136,17 @@ class OnExceptionProcessor
         yield return messageLdstr;
         yield return Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count);
 		yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object);
-        yield return Instruction.Create(OpCodes.Stloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Stloc, paramsArrayVariable);
 
-        messageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}'. ", Method.FullName));
-        foreach (var parameterDefinition in Method.Parameters)
-        {
-            foreach (var instruction in ProcessParam(parameterDefinition))
-            {
-                yield return instruction;
-            }
-        }
-        messageLdstr.Operand = messageBuilder.ToString();
+	    var paramsFormatBuilder = new ParamsFormatBuilder(Method, paramsArrayVariable);
 
-        yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
+	    foreach (var instruction in paramsFormatBuilder.Instructions)
+	    {
+		    yield return instruction;
+	    }
+		messageLdstr.Operand = paramsFormatBuilder.MessageBuilder.ToString();
+
+        yield return Instruction.Create(OpCodes.Ldloc, paramsArrayVariable);
 		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
@@ -211,153 +204,4 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Callvirt, writeMethod);
         yield return sectionNop;
     }
-
-    IEnumerable<Instruction> ProcessParam(ParameterDefinition parameterDefinition)
-    {
-
-        var paramMetaData = parameterDefinition.ParameterType.MetadataType;
-        if (paramMetaData == MetadataType.UIntPtr ||
-            paramMetaData == MetadataType.FunctionPointer ||
-            paramMetaData == MetadataType.IntPtr ||
-            paramMetaData == MetadataType.Pointer)
-        {
-            yield break;
-        }
-	    yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
-        yield return Instruction.Create(OpCodes.Ldc_I4, parameterDefinition.Index);
-        yield return Instruction.Create(OpCodes.Ldarg, parameterDefinition);
-
-
-        // Reset boolean flag variable to false
-
-        // If aparameter is passed by reference then you need to use ldind
-        // ------------------------------------------------------------
-        var paramType = parameterDefinition.ParameterType;
-        if (paramType.IsByReference)
-        {
-            var referencedTypeSpec = (TypeSpecification) paramType;
-
-            var pointerToValueTypeVariable = false;
-            switch (referencedTypeSpec.ElementType.MetadataType)
-            {
-                    //Indirect load value of type int8 as int32 on the stack
-                case MetadataType.Boolean:
-                case MetadataType.SByte:
-                    yield return Instruction.Create(OpCodes.Ldind_I1);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type int16 as int32 on the stack
-                case MetadataType.Int16:
-                    yield return Instruction.Create(OpCodes.Ldind_I2);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type int32 as int32 on the stack
-                case MetadataType.Int32:
-                    yield return Instruction.Create(OpCodes.Ldind_I4);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type int64 as int64 on the stack
-                    // Indirect load value of type unsigned int64 as int64 on the stack (alias for ldind.i8)
-                case MetadataType.Int64:
-                case MetadataType.UInt64:
-                    yield return Instruction.Create(OpCodes.Ldind_I8);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type unsigned int8 as int32 on the stack
-                case MetadataType.Byte:
-                    yield return Instruction.Create(OpCodes.Ldind_U1);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type unsigned int16 as int32 on the stack
-                case MetadataType.UInt16:
-                case MetadataType.Char:
-                    yield return Instruction.Create(OpCodes.Ldind_U2);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type unsigned int32 as int32 on the stack
-                case MetadataType.UInt32:
-                    yield return Instruction.Create(OpCodes.Ldind_U4);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type float32 as F on the stack
-                case MetadataType.Single:
-                    yield return Instruction.Create(OpCodes.Ldind_R4);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type float64 as F on the stack
-                case MetadataType.Double:
-                    yield return Instruction.Create(OpCodes.Ldind_R8);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                    // Indirect load value of type native int as native int on the stack
-                case MetadataType.IntPtr:
-                case MetadataType.UIntPtr:
-                    yield return Instruction.Create(OpCodes.Ldind_I);
-                    pointerToValueTypeVariable = true;
-                    break;
-
-                default:
-                    // Need to check if it is a value type instance, in which case
-                    // we use ldobj instruction to copy the contents of value type
-                    // instance to stack and then box it
-                    if (referencedTypeSpec.ElementType.IsValueType)
-                    {
-                        yield return Instruction.Create(OpCodes.Ldobj, referencedTypeSpec.ElementType);
-                        pointerToValueTypeVariable = true;
-                    }
-                    else
-                    {
-                        // It is a reference type so just use reference the pointer
-                        yield return Instruction.Create(OpCodes.Ldind_Ref);
-                    }
-                    break;
-            }
-
-            if (pointerToValueTypeVariable)
-            {
-                // Box the dereferenced parameter type
-                yield return Instruction.Create(OpCodes.Box, referencedTypeSpec.ElementType);
-            }
-
-        }
-        else
-        {
-
-            // If it is a value type then you need to box the instance as we are going 
-            // to add it to an array which is of type object (reference type)
-            // ------------------------------------------------------------
-            if (paramType.IsValueType)
-            {
-                // Box the parameter type
-                yield return Instruction.Create(OpCodes.Box, paramType);
-            }
-        }
-
-        // Store parameter in object[] array
-        // ------------------------------------------------------------
-        yield return Instruction.Create(OpCodes.Stelem_Ref);
-		messageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, parameterDefinition.Index);
-    }
-
-
-    
-}
-
-public static class ILProcessorExtensions
-{
-    public static void InsertBefore(this ILProcessor processor, Instruction target, IEnumerable<Instruction> instructions)
-    {
-        foreach (var instruction in instructions)
-            processor.InsertBefore(target, instruction);
-    }
-
 }
