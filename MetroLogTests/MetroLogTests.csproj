@@ -33,6 +33,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MetroLogAssemblyToProcess\MetroLogAssemblyToProcess.csproj">
+      <Project>{fb619d27-e000-434d-8167-54490a640444}</Project>
+      <Name>MetroLogAssemblyToProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroLogFody\MetroLogFody.csproj">
+      <Project>{4F579111-5CF3-4ECC-AFCA-397820C3A495}</Project>
+      <Name>MetroLogFody</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tests\Tests.csproj">
       <Project>{5A86453B-96FB-4B6E-A283-225BB9F753D3}</Project>
       <Name>Tests</Name>
@@ -42,6 +50,21 @@
     </Reference>
     <Reference Include="MetroLog.NetFx">
       <HintPath>..\packages\MetroLog.0.8.1\lib\net45\MetroLog.NetFx.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -54,15 +77,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <ProjectReference Include="..\AssemblyToProcess\MetroLogAssemblyToProcess.csproj">
-      <Project>{FB619D27-E000-434D-8167-54490A640444}</Project>
-      <Name>MetroLogAssemblyToProcess</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionTarget.cs" />
     <Compile Include="MetroLogTests.cs" />
+    <Compile Include="WeaverHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

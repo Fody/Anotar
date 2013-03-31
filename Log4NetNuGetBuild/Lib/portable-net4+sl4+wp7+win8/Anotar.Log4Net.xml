@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Anotar.Log4Net</name>
+    </assembly>
+    <members>
+        <member name="T:Anotar.Log">
+            <summary>
+            Provides logging functions.
+            </summary>
+        </member>
+        <member name="M:Anotar.Log.Trace(System.String)">
+            <summary>
+            Writes the diagnostic message at the <c>Trace</c> level.
+            </summary>
+            <param name="message">The value to be written.</param>
+        </member>
+        <member name="M:Anotar.Log.Trace(System.String,System.Object[])">
+            <summary>
+            Writes the diagnostic message at the <c>Trace</c> level.
+            </summary>
+            <param name="format">A <see langword="string" /> containing format items.</param>
+            <param name="args">Arguments to format.</param>
+        </member>
+        <member name="M:Anotar.Log.TraceException(System.String,System.Exception)">
+            <summary>
+            Writes the diagnostic message and exception at the <c>Trace</c> level.
+            </summary>
+            <param name="message">A <see langword="string" /> containing format items.</param>
+            <param name="exception">An exception to be logged.</param>
+        </member>
+        <member name="M:Anotar.Log.Debug">
+            <summary>
+            Writes the diagnostic message at the <c>Debug</c> level.
+            </summary>
+        </member>
+        <member name="M:Anotar.Log.Debug(System.String)">
+            <summary>
+            Writes the diagnostic message at the <c>Debug</c> level.
+            </summary>
+            <param name="message">The value to be written.</param>
+        </member>
+        <member name="M:Anotar.Log.Debug(System.String,System.Object[])">
+            <summary>
+            Writes the diagnostic message at the <c>Debug</c> level.
+            </summary>
+            <param name="format">A <see langword="string" /> containing format items.</param>
+            <param name="args">Arguments to format.</param>
+        </member>
+        <member name="M:Anotar.Log.DebugException(System.String,System.Exception)">
+            <summary>
+            Writes the diagnostic message and exception at the <c>Debug</c> level.
+            </summary>
+            <param name="message">A <see langword="string" /> containing format items.</param>
+            <param name="exception">An exception to be logged.</param>
+        </member>
+        <member name="M:Anotar.Log.Info">
+            <summary>
+            Writes the diagnostic message at the <c>Info</c> level.
+            </summary>
+        </member>
+        <member name="M:Anotar.Log.Info(System.String)">
+            <summary>
+            Writes the diagnostic message at the <c>Info</c> level.
+            </summary>
+            <param name="message">The value to be written.</param>
+        </member>
+        <member name="M:Anotar.Log.Info(System.String,System.Object[])">
+            <summary>
+            Writes the diagnostic message at the <c>Info</c> level.
+            </summary>
+            <param name="format">A <see langword="string" /> containing format items.</param>
+            <param name="args">Arguments to format.</param>
+        </member>
+        <member name="M:Anotar.Log.InfoException(System.String,System.Exception)">
+            <summary>
+            Writes the diagnostic message and exception at the <c>Info</c> level.
+            </summary>
+            <param name="message">A <see langword="string" /> containing format items.</param>
+            <param name="exception">An exception to be logged.</param>
+        </member>
+        <member name="M:Anotar.Log.Warn">
+            <summary>
+            Writes the diagnostic message at the <c>Warn</c> level.
+            </summary>
+        </member>
+        <member name="M:Anotar.Log.Warn(System.String)">
+            <summary>
+            Writes the diagnostic message at the <c>Warn</c> level.
+            </summary>
+            <param name="message">The value to be written.</param>
+        </member>
+        <member name="M:Anotar.Log.Warn(System.String,System.Object[])">
+            <summary>
+            Writes the diagnostic message at the <c>Warn</c> level.
+            </summary>
+            <param name="format">A <see langword="string" /> containing format items.</param>
+            <param name="args">Arguments to format.</param>
+        </member>
+        <member name="M:Anotar.Log.WarnException(System.String,System.Exception)">
+            <summary>
+            Writes the diagnostic message and exception at the <c>Warn</c> level.
+            </summary>
+            <param name="message">A <see langword="string" /> containing format items.</param>
+            <param name="exception">An exception to be logged.</param>
+        </member>
+        <member name="M:Anotar.Log.Error">
+            <summary>
+            Writes the diagnostic message at the <c>Error</c> level.
+            </summary>
+        </member>
+        <member name="M:Anotar.Log.Error(System.String)">
+            <summary>
+            Writes the diagnostic message at the <c>Error</c> level.
+            </summary>
+            <param name="message">The value to be written.</param>
+        </member>
+        <member name="M:Anotar.Log.Error(System.String,System.Object[])">
+            <summary>
+            Writes the diagnostic message at the <c>Error</c> level.
+            </summary>
+            <param name="format">A <see langword="string" /> containing format items.</param>
+            <param name="args">Arguments to format.</param>
+        </member>
+        <member name="M:Anotar.Log.ErrorException(System.String,System.Exception)">
+            <summary>
+            Writes the diagnostic message and exception at the <c>Error</c> level.
+            </summary>
+            <param name="message">A <see langword="string" /> containing format items.</param>
+            <param name="exception">An exception to be logged.</param>
+        </member>
+        <member name="T:JetBrains.Annotations.StringFormatMethodAttribute">
+            <summary>
+            Not for external use.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Annotations.StringFormatMethodAttribute.#ctor(System.String)">
+            <summary>
+            Not for external use.
+            </summary>
+        </member>
+    </members>
+</doc>

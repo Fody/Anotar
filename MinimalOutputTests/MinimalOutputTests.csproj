@@ -51,14 +51,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AssemblyToProcess\MinimalOutputAssemblyToProcess.csproj">
-      <Project>{77b33489-f11a-467a-a363-ffa017a573e1}</Project>
-      <Name>MinimalOutputAssemblyToProcess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">
-      <Project>{9c9f7f26-edcf-4d95-9f6a-af8504528d95}</Project>
-      <Name>ReferenceAssembly</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tests\Tests.csproj">
       <Project>{5A86453B-96FB-4B6E-A283-225BB9F753D3}</Project>
       <Name>Tests</Name>

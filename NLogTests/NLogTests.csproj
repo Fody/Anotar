@@ -33,10 +33,26 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NLogFody\NLogFody.csproj">
+      <Project>{29AD34AB-9416-4E53-95CA-9B00072D8802}</Project>
+      <Name>NLogFody</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tests\Tests.csproj">
       <Project>{5A86453B-96FB-4B6E-A283-225BB9F753D3}</Project>
       <Name>Tests</Name>
     </ProjectReference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\Lib\Cecil\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
@@ -51,15 +67,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <ProjectReference Include="..\AssemblyToProcess\NLogAssemblyToProcess.csproj">
-      <Project>{7dec4e2d-f872-434e-a267-0bad65299950}</Project>
-      <Name>NLogAssemblyToProcess</Name>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionTarget.cs" />
     <Compile Include="NLogTests.cs" />
+    <Compile Include="WeaverHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

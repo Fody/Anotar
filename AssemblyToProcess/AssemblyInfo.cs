@@ -1,4 +1,0 @@
-﻿
-using Anotar;
-
-[assembly: LogMinimalMessage]

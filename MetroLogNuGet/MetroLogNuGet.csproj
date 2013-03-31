@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{01802DCF-E7D0-4618-9209-5B1D5F9005EF}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <ConfigurationName>Debug</ConfigurationName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <ConfigurationName>Release</ConfigurationName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Anotar.MetroLog.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="install.ps1" />
+    <None Include="uninstall.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetroLogFody\MetroLogFody.csproj">
+      <Project>{4F579111-5CF3-4ECC-AFCA-397820C3A495}</Project>
+      <Name>MetroLogFody</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj">
+      <Project>{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}</Project>
+      <Name>MetroLogReferenceAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="Clean">
+    <ItemGroup>
+      <FilesToDelete Include="$(SolutionDir)MetroLogNuGetBuild\**" />
+    </ItemGroup>
+    <Delete Files="$(SolutionDir)MetroLogNuGetBuild" />
+  </Target>
+  <Target Name="Build" DependsOnTargets="NuGetBuild" />
+  <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
+  <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="NuGetBuild" DependsOnTargets="Clean">
+    <MakeDir Directories="$(SolutionDir)MetroLogNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.dll" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
+    <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.xml" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
+    <Copy SourceFiles="$(SolutionDir)MetroLogNuGet\Anotar.MetroLog.nuspec" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.dll" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.pdb" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
+    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
+    <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)MetroLogNuGetBuild" MetadataAssembly="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.dll" />
+  </Target>
+</Project>

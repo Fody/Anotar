@@ -22,7 +22,7 @@ public class NLogTests
     public NLogTests()
     {
 
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\DebugNlog\NLogAssemblyToProcess.dll");
+		beforeAssemblyPath = Path.GetFullPath(@"..\..\..\NLogAssemblyToProcess\bin\Debug\NLogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
