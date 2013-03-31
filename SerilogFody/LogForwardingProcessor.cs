@@ -63,10 +63,9 @@ public class LogForwardingProcessor
         {
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-
-            var normalOperand = ModuleWeaver.GetNormalOperand(methodReference);
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
-            instruction.Operand = normalOperand;
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object));
+            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
         }
         if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
@@ -102,12 +101,12 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
 			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
 
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
             instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
