@@ -42,7 +42,7 @@ public class LogForwardingProcessor
         {
             return;
         }
-        if (methodReference.DeclaringType.FullName != "Anotar.Log")
+        if (methodReference.DeclaringType.FullName != "Anotar.Serilog.Log")
         {
             return;
         }
@@ -64,24 +64,6 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
 
-            var normalOperand = ModuleWeaver.GetNormalOperand(methodReference);
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
-            instruction.Operand = normalOperand;
-        }
-        if (methodReference.IsMatch("String"))
-        {
-			var messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-            Method.Body.Variables.Add(messageVar);
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             var normalOperand = ModuleWeaver.GetNormalOperand(methodReference);
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
             instruction.Operand = normalOperand;

@@ -5,27 +5,27 @@ public class AttributeFinder
 	public AttributeFinder(MethodDefinition method)
 	{
 		var customAttributes = method.CustomAttributes;
-		if (customAttributes.ContainsAttribute("LogToTraceOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToTraceOnExceptionAttribute"))
 		{
 			FoundTrace = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("LogToDebugOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToDebugOnExceptionAttribute"))
 		{
 			FoundDebug = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("LogToInfoOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToInfoOnExceptionAttribute"))
 		{
 			FoundInfo = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("LogToWarnOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToWarnOnExceptionAttribute"))
 		{
 			FoundWarn = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("LogToErrorOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToErrorOnExceptionAttribute"))
 		{
 			FoundError = true;
 			Found = true;

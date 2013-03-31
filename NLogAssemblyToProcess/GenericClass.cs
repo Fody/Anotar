@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.NLog;
 
 public class GenericClass<T>
 {

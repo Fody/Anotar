@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.MetroLog;
 
 public class GenericClass<T>
 {

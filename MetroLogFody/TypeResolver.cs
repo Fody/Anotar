@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
 
 public partial class ModuleWeaver
 {
@@ -32,46 +30,25 @@ public partial class ModuleWeaver
 		ErrorMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Exception"));
 		isErrorEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
 		ErrorExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Exception"));
+		FatalMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Exception"));
+		isFatalEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
+		FatalExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Exception"));
 		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
     }
 
-
-
-	public IEnumerable<Instruction> GetIsTraceEnabledInstructions()
-	{
-		yield return Instruction.Create(OpCodes.Callvirt, isTraceEnabledMethod);
-	}
-
 	public MethodReference TraceMethod;
 	public MethodReference TraceExceptionMethod;
-	public IEnumerable<Instruction> GetIsDebugEnabledInstructions()
-	{
-		yield return Instruction.Create(OpCodes.Callvirt, isDebugEnabledMethod);
-	}
 
 	public MethodReference DebugMethod;
 	public MethodReference DebugExceptionMethod;
 	public MethodReference InfoMethod;
-	public IEnumerable<Instruction> GetIsInfoEnabledInstructions()
-	{
-		yield return Instruction.Create(OpCodes.Callvirt, isInfoEnabledMethod);
-	}
-
 	public MethodReference InfoExceptionMethod;
 	public MethodReference WarnMethod;
-	public IEnumerable<Instruction> GetIsWarnEnabledInstructions()
-	{
-		yield return Instruction.Create(OpCodes.Callvirt, isWarnEnabledMethod);
-	}
-
 	public MethodReference WarnExceptionMethod;
 	public MethodReference ErrorMethod;
-	public IEnumerable<Instruction> GetIsErrorEnabledInstructions()
-	{
-		yield return Instruction.Create(OpCodes.Callvirt, isErrorEnabledMethod);
-	}
-
 	public MethodReference ErrorExceptionMethod;
+	public MethodReference FatalMethod;
+	public MethodReference FatalExceptionMethod;
 
 	public TypeReference LoggerType;
 
@@ -83,5 +60,6 @@ public partial class ModuleWeaver
    public MethodReference isInfoEnabledMethod;
    public MethodReference isWarnEnabledMethod;
    public MethodReference isErrorEnabledMethod;
+   public MethodReference isFatalEnabledMethod;
    public MethodReference isDebugEnabledMethod;
 }

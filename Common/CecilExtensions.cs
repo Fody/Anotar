@@ -57,7 +57,7 @@ public static class CecilExtensions
 
     public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
     {
-        var containsAttribute = attributes.FirstOrDefault(x => x.Constructor.DeclaringType.Name == attributeName);
+        var containsAttribute = attributes.FirstOrDefault(x => x.Constructor.DeclaringType.FullName == attributeName);
         if (containsAttribute != null)
         {
             attributes.Remove(containsAttribute);

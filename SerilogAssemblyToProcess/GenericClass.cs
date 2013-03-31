@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.Serilog;
 
 public class GenericClass<T>
 {

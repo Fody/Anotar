@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.Log4Net;
 using log4net;
 
 public class ClassWithExistingField

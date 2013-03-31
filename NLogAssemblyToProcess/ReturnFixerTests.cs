@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using Anotar;
+using Anotar.NLog;
 
 public class ReturnFixerTests
 {

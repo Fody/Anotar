@@ -1,9 +1,9 @@
 using System;
 
-namespace Anotar.NLog
+namespace Anotar.MetroLog
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToWarnOnExceptionAttribute : Attribute
+    public class LogToFatalOnExceptionAttribute : Attribute
     {
     }
 }

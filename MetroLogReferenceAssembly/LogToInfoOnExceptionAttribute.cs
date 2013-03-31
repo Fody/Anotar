@@ -1,7 +1,6 @@
 using System;
 
-
-namespace Anotar
+namespace Anotar.MetroLog
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
     public class LogToInfoOnExceptionAttribute : Attribute

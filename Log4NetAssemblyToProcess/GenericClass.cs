@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.Log4Net;
 
 public class GenericClass<T>
 {

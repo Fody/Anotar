@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.NLog;
 using NLog;
 
 public class ClassWithExistingField

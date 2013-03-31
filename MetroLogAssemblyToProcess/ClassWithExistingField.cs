@@ -1,4 +1,4 @@
-using Anotar;
+using Anotar.MetroLog;
 using MetroLog;
 
 public class ClassWithExistingField

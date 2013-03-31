@@ -12,7 +12,7 @@ public class	ClassWithExistingField
 
 	public void Debug()
 	{
-	 	Anotar.Log.Debug();
+	 	Anotar.Serilog.Log.Debug();
 	}
   
 }

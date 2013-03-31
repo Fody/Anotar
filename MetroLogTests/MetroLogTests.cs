@@ -12,6 +12,7 @@ public class MetroLogTests
     string beforeAssemblyPath;
     Assembly assembly;
     public List<string> Errors = new List<string>();
+    public List<string> Fatals = new List<string>();
     public List<string> Debugs = new List<string>();
     public List<string> Traces = new List<string>();
     public List<string> Infos = new List<string>();
@@ -36,10 +37,16 @@ public class MetroLogTests
         LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Warn, target);
         LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Info, target);
         LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Error, target);
+        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Fatal, target);
     }
 
     void LogEvent(LogEventInfo eventInfo)
     {
+        if (eventInfo.Level == LogLevel.Fatal)
+        {
+			Fatals.Add(eventInfo.Message);
+            return;
+        }
         if (eventInfo.Level == LogLevel.Error)
         {
             Errors.Add(eventInfo.Message);
@@ -78,6 +85,7 @@ public class MetroLogTests
         Debugs.Clear();
         Infos.Clear();
         Warns.Clear();
+        Fatals.Clear();
     }
 
     [Test]
@@ -200,6 +208,22 @@ public class MetroLogTests
         var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, Errors, expected);
+    }
+
+    [Test]
+    public void OnExceptionToFatal()
+    {
+		var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+		Action<dynamic> action = o => o.ToFatal("x", 6);
+		CheckException(action, Fatals, expected);
+    }
+
+    [Test]
+	public void OnExceptionToFatalWithReturn()
+    {
+		var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
+		CheckException(action, Fatals, expected);
     }
 
     [Test]
@@ -398,6 +422,46 @@ public class MetroLogTests
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void Fatal()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.Fatal();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
+    }
+
+    [Test]
+	public void FatalString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalString();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+    }
+
+    [Test]
+	public void FatalStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalStringParams();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+    }
+
+    [Test]
+	public void FatalStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalStringException();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
     }
 
     [Test]

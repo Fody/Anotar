@@ -1,5 +1,5 @@
 using System;
-using Anotar;
+using Anotar.NLog;
 
 public class ClassWithLogging
 {

@@ -18,6 +18,7 @@ public class Log4NetTests
     public List<string> Debugs = new List<string>();
     public List<string> Infos = new List<string>();
     public List<string> Warns = new List<string>();
+    public List<string> Fatals = new List<string>();
     string afterAssemblyPath;
 
     public Log4NetTests()
@@ -42,6 +43,11 @@ public class Log4NetTests
     }
     void LogEvent(LoggingEvent loggingEvent)
     {
+        if (loggingEvent.Level == Level.Fatal)
+        {
+            Fatals.Add(loggingEvent.RenderedMessage);
+            return;
+        }
         if (loggingEvent.Level == Level.Error)
         {
             Errors.Add(loggingEvent.RenderedMessage);
@@ -75,6 +81,7 @@ public class Log4NetTests
     [SetUp]
     public void Setup()
     {
+        Fatals.Clear();
         Errors.Clear();
         Debugs.Clear();
         Infos.Clear();
@@ -195,6 +202,22 @@ public class Log4NetTests
         var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, Errors, expected);
+    }
+
+    [Test]
+    public void OnExceptionToFatal()
+    {
+		var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+		Action<dynamic> action = o => o.ToFatal("x", 6);
+		CheckException(action, Fatals, expected);
+    }
+
+    [Test]
+	public void OnExceptionToFatalWithReturn()
+    {
+		var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
+		CheckException(action, Fatals, expected);
     }
 
 
@@ -346,6 +369,36 @@ public class Log4NetTests
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalString();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+    }
+
+    [Test]
+	public void FatalStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalStringParams();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+    }
+
+    [Test]
+	public void FatalStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+		instance.FatalStringException();
+		Assert.AreEqual(1, Fatals.Count);
+		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
     }
 
     [Test]

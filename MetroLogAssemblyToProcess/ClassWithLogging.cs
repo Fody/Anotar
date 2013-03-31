@@ -1,5 +1,5 @@
 using System;
-using Anotar;
+using Anotar.MetroLog;
 
 public class ClassWithLogging
 {
@@ -82,5 +82,21 @@ public class ClassWithLogging
     public void ErrorStringException()
     {
         Log.ErrorException("TheMessage", new Exception());
+    }
+    public void Fatal()
+    {
+		Log.Fatal();
+    }
+	public void FatalString()
+    {
+		Log.Fatal("TheMessage");
+    }
+	public void FatalStringParams()
+    {
+		Log.Fatal("TheMessage {0}", 1);
+    }
+	public void FatalStringException()
+    {
+		Log.FatalException("TheMessage", new Exception());
     }
 }

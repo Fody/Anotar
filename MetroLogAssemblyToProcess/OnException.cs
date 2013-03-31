@@ -1,10 +1,21 @@
 using System;
 using System.Diagnostics;
-using Anotar;
+using Anotar.MetroLog;
 
 public class OnException
 {
 
+    [LogToFatalOnException]
+	public void ToFatal(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
+
+	[LogToFatalOnException]
+	public object ToFatalWithReturn(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
