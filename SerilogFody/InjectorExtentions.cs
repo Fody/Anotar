@@ -30,23 +30,23 @@ public partial class ModuleWeaver
 
     public MethodReference GetExceptionOperand( MethodReference methodReference)
     {
-        if (methodReference.Name == "DebugException")
+        if (methodReference.Name == "Debug")
         {
             return DebugExceptionMethod;
         }
-        if (methodReference.Name == "InfoException")
+        if (methodReference.Name == "Info")
         {
             return InfoExceptionMethod;
         }
-        if (methodReference.Name == "WarnException")
+        if (methodReference.Name == "Warn")
         {
             return WarnExceptionMethod;
 		}
-		if (methodReference.Name == "ErrorException")
+		if (methodReference.Name == "Error")
 		{
 			return ErrorExceptionMethod;
 		}
-		if (methodReference.Name == "FatalException")
+		if (methodReference.Name == "Fatal")
 		{
 			return FatalExceptionMethod;
 		}

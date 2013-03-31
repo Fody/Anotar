@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroLog">
-      <HintPath>..\packages\MetroLog.0.8.1.1\lib\net45\MetroLog.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroLog.NetFx">
-      <HintPath>..\packages\MetroLog.0.8.1.1\lib\net45\MetroLog.NetFx.dll</HintPath>
-    </Reference>
     <Reference Include="Serilog">
       <HintPath>..\packages\Serilog.0.1.10\lib\net45\Serilog.dll</HintPath>
     </Reference>

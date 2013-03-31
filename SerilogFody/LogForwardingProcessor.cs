@@ -68,14 +68,17 @@ public class LogForwardingProcessor
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
             instruction.Operand = normalOperand;
         }
-        if (methodReference.IsMatch("String", "Exception"))
+        if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
 			var messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
 			var exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+			var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
             Method.Body.Variables.Add(exceptionVar);
             Method.Body.Variables.Add(messageVar);
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
+            Method.Body.Variables.Add(paramsVar);
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
@@ -84,8 +87,8 @@ public class LogForwardingProcessor
 
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
 
             instruction.Operand = ModuleWeaver.GetExceptionOperand(methodReference);
         }
