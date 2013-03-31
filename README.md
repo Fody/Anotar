@@ -4,6 +4,13 @@ Simplifies logging through a static class and some IL manipulation
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
+## Supported Logging Libraries
+
+* [NLog](http://nlog-project.org/) 
+* [Log4Net](http://logging.apache.org/log4net/) 
+* [Serilog](http://serilog.net/)
+* [MetroLog](https://github.com/mbrit/MetroLog)
+
 ## Nuget
 
  * NLog package http://nuget.org/packages/Anotar.NLog.Fody 

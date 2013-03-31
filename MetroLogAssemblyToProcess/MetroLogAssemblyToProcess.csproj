@@ -38,16 +38,12 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroLog, Version=0.6.2.0, Culture=neutral, PublicKeyToken=ba4ace74c3b410f3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MetroLog.0.8.1\lib\net45\MetroLog.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroLog.NetFx, Version=0.6.2.0, Culture=neutral, PublicKeyToken=ba4ace74c3b410f3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MetroLog.0.8.1\lib\net45\MetroLog.NetFx.dll</HintPath>
+    <Reference Include="MetroLog">
+      <HintPath>..\Packages\MetroLog.0.8.1.1\lib\portable-net45+wp8+win8\MetroLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
