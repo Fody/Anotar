@@ -16,6 +16,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
@@ -25,6 +26,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message and exception at the <c>Trace</c> level.
         /// </summary>
@@ -42,6 +44,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -51,6 +54,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Debug</c> level.
 		/// </summary>
@@ -60,6 +64,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
@@ -67,6 +72,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
@@ -77,6 +83,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Info</c> level.
 		/// </summary>
@@ -86,6 +93,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -93,6 +101,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -103,6 +112,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Warn</c> level.
 		/// </summary>
@@ -112,6 +122,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -119,6 +130,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -129,6 +141,7 @@ namespace Anotar.NLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Error</c> level.
 		/// </summary>

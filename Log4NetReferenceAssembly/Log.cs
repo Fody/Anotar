@@ -15,6 +15,7 @@ namespace Anotar.Log4Net
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
@@ -24,6 +25,7 @@ namespace Anotar.Log4Net
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message and exception at the <c>Trace</c> level.
         /// </summary>

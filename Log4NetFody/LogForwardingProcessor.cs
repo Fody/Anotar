@@ -63,6 +63,7 @@ public class LogForwardingProcessor
         {
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldnull));
 
             var normalOperand = ModuleWeaver.GetNormalOperand(methodReference);
             instruction.Operand = normalOperand;
@@ -86,23 +87,24 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-			var messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-			var formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            var formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
             Method.Body.Variables.Add(formatVar);
-            Method.Body.Variables.Add(messageVar);
+            Method.Body.Variables.Add(paramsVar);
 
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+            
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
+			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-            var normalOperand = ModuleWeaver.GetNormalOperand(methodReference);
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            instruction.Operand = normalOperand;
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
+            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
         }
 
 
