@@ -1,12 +1,13 @@
 using System;
 
-namespace Anotar.Log4Net
+namespace Anotar.Serilog
 {
+
     /// <summary>
-    /// If an <see cref="Exception"/> occurs in the applied method then log it to <c>Debug</c>.
+    /// If an <see cref="Exception"/> occurs in the applied method then log it to <c>Warning</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToDebugOnExceptionAttribute : Attribute
+    public class LogToWarningOnExceptionAttribute : Attribute
     {
     }
 }

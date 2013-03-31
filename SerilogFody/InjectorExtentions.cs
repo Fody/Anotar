@@ -9,11 +9,11 @@ public partial class ModuleWeaver
         {
             return DebugMethod;
         }
-        if (methodReference.Name == "Info")
+        if (methodReference.Name == "Information")
         {
             return InfoMethod;
         }
-        if (methodReference.Name == "Warn")
+        if (methodReference.Name == "Warning")
         {
             return WarnMethod;
         }
@@ -34,11 +34,11 @@ public partial class ModuleWeaver
         {
             return DebugExceptionMethod;
         }
-        if (methodReference.Name == "Info")
+        if (methodReference.Name == "Information")
         {
             return InfoExceptionMethod;
         }
-        if (methodReference.Name == "Warn")
+        if (methodReference.Name == "Warning")
         {
             return WarnExceptionMethod;
 		}

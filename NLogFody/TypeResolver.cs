@@ -27,6 +27,9 @@ public partial class ModuleWeaver
         ErrorMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Object[]"));
 		isErrorEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
 		ErrorExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("ErrorException", "String", "Exception"));
+        FatalMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Object[]"));
+        isFatalEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
+        FatalExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("FatalException", "String", "Exception"));
 		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
     }
 
@@ -39,7 +42,9 @@ public partial class ModuleWeaver
 	public MethodReference WarnMethod;
 	public MethodReference WarnExceptionMethod;
 	public MethodReference ErrorMethod;
-	public MethodReference ErrorExceptionMethod;
+    public MethodReference ErrorExceptionMethod;
+	public MethodReference FatalMethod;
+	public MethodReference FatalExceptionMethod;
 
 	public TypeReference LoggerType;
 
@@ -49,5 +54,6 @@ public partial class ModuleWeaver
 	public MethodReference isInfoEnabledMethod;
 	public MethodReference isWarnEnabledMethod;
 	public MethodReference isErrorEnabledMethod;
+	public MethodReference isFatalEnabledMethod;
 
 }

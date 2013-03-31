@@ -85,25 +85,25 @@ public class OnException
         throw new Exception("Foo");
     }
 
-    [LogToInfoOnException]
+    [LogToInformationOnException]
     public void ToInfo(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToInfoOnException]
+    [LogToInformationOnException]
     public object ToInfoWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToWarnOnException]
+    [LogToWarningOnException]
     public void ToWarn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToWarnOnException]
+    [LogToWarningOnException]
     public object ToWarnWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");

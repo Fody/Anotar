@@ -43,7 +43,7 @@ namespace Anotar.Serilog
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
-        public static void Info()
+        public static void Information()
         {
             throw new NotImplementedException();
         }
@@ -53,7 +53,7 @@ namespace Anotar.Serilog
 		/// <param name="format">A <see langword="string" /> containing format items.</param>
 		/// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
-        public static void Info(string format, params object[] args)
+        public static void Information(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace Anotar.Serilog
         /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
-        public static void Info(Exception exception, string format, params object[] args)
+        public static void Information(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +73,7 @@ namespace Anotar.Serilog
 		/// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
-        public static void Warn()
+        public static void Warning()
         {
             throw new NotImplementedException();
         }
@@ -84,7 +84,7 @@ namespace Anotar.Serilog
 		/// <param name="format">A <see langword="string" /> containing format items.</param>
 		/// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
-        public static void Warn(string format, params object[] args)
+        public static void Warning(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
@@ -96,7 +96,7 @@ namespace Anotar.Serilog
         /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
-        public static void Warn(Exception exception, string format, params object[] args)
+        public static void Warning(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
         }

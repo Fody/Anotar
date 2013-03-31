@@ -146,6 +146,13 @@ class OnExceptionProcessor
                 yield return instruction;
             }
         }
+		if (attributeFinder.FoundFatal)
+        {
+			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod,ModuleWeaver.isFatalEnabledMethod))
+            {
+                yield return instruction;
+            }
+        }
 
         yield return Instruction.Create(OpCodes.Rethrow);
     }

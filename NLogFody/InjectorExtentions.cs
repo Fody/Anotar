@@ -25,6 +25,10 @@ public partial class ModuleWeaver
         {
             return ErrorMethod;
         }
+        if (methodReference.Name == "Fatal")
+        {
+            return FatalMethod;
+        }
         throw new Exception("Invalid method name");
     }
 
@@ -49,6 +53,10 @@ public partial class ModuleWeaver
         if (methodReference.Name == "ErrorException")
         {
             return ErrorExceptionMethod;
+        }
+        if (methodReference.Name == "FatalException")
+        {
+            return FatalExceptionMethod;
         }
         throw new Exception("Invalid method name");
     }

@@ -6,38 +6,52 @@ Simplifies logging through a static class and some IL manipulation
 
 ## Nuget
 
-Nuget package http://nuget.org/packages/Anotar.Fody 
+ * NLog package http://nuget.org/packages/Anotar.NLog.Fody 
 
-To Install from the Nuget Package Manager Console 
-    
-    PM> Install-Package Anotar.Fody
+    PM> Install-Package Anotar.NLog.Fody
+ 
+ * MetroLog package http://nuget.org/packages/Anotar.MetroLog.Fody 
+
+    PM> Install-Package Anotar.MetroLog.Fody
+ 
+ * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody 
+
+    PM> Install-Package Anotar.Log4Net.Fody
+ 
+ * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody 
+
+    PM> Install-Package Anotar.Serilog.Fody
+ 
+## What happened to the old "Anotar.Fody" package
+
+There were too many lossy abstractions happening between Anotar and the target logging libraries. So the new packages make better use of the individual libraries features. You should remove the `Anotar.Fody` package and switch to the package that targets your logging framework of choice.
 
 ## Explicit Logging
+
+This example is targeting the [NLog](http://nlog-project.org/).
 
 ### Given this as a reference
 
     public static class Log
     {
         public static void Trace()
-        public static void Trace(string message)
         public static void Trace(string format, params object[] args)
         public static void TraceException(string message, Exception exception)
         public static void Debug()
-        public static void Debug(string message)
         public static void Debug(string format, params object[] args)
         public static void DebugException(string message, Exception exception)
         public static void Info()
-        public static void Info(string message)
         public static void Info(string format, params object[] args)
         public static void InfoException(string message, Exception exception)
         public static void Warn()
-        public static void Warn(string message)
         public static void Warn(string format, params object[] args)
         public static void WarnException(string message, Exception exception)
         public static void Error()
-        public static void Error(string message)
         public static void Error(string format, params object[] args)
-        public static void ErrorException(string message, Exception exception)
+        public static void ErrorException(string message, Exception exception))
+        public static void Fatal()
+        public static void Fatal(string format, params object[] args)
+        public static void FatalException(string message, Exception exception)
     }
 
 ### Your Code
@@ -52,7 +66,6 @@ To Install from the Nuget Package Manager Console
 
 ### What gets compiled
 
-#### If you reference [NLog](http://nlog-project.org/)
 
     public class MyClass
     {
@@ -64,49 +77,31 @@ To Install from the Nuget Package Manager Console
         }
     }
 
-#### If you reference [log4net](http://logging.apache.org/log4net/)
-
-    public class MyClass
-    {
-        static log4net.ILog logger = log4net.LogManager.GetLogger("MyClass");
-
-        void MyMethod()
-        {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
-        }
-    }
-
-#### If you reference [MetroLog](https://github.com/mbrit/MetroLog)
-
-    public class MyClass
-    {
-        static MetroLog.ILogger logger = MetroLog.LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
-
-        void MyMethod()
-        {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
-        }
-    }
 
 
 ## Exception Logging
 
+This example is targeting the [NLog](http://nlog-project.org/).
+
 ### Given these attributes
 
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToTraceOnExceptionAttribute : Attribute{}
+    public class LogToTraceOnExceptionAttribute 
     
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToDebugOnExceptionAttribute : Attribute{}
+    public class LogToDebugOnExceptionAttribute 
     
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToInfoOnExceptionAttribute : Attribute{}
+    public class LogToInfoOnExceptionAttribute     
     
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToWarnOnExceptionAttribute : Attribute{}
+    public class LogToWarnOnExceptionAttribute    
     
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToErrorOnExceptionAttribute : Attribute{}
+    public class LogToErrorOnExceptionAttribute 
+    
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    public class LogToFatalOnExceptionAttribute 
     
 ### Your code
 
@@ -137,7 +132,7 @@ To Install from the Nuget Package Manager Console
 
 ## Nothing to deploy
 
-After compilation the reference to Anotar will be removed so you don't need to deploy the assembly.
+After compilation the reference to the Anotar assemblies will be removed so you don't need to deploy the assembly.
     
 ## But why? What purpose does this serve?
 

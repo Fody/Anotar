@@ -10,12 +10,12 @@ public class AttributeFinder
 			FoundDebug = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToInfoOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToInformationOnExceptionAttribute"))
 		{
 			FoundInfo = true;
 			Found = true;
 		}
-		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToWarnOnExceptionAttribute"))
+		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToWarningOnExceptionAttribute"))
 		{
 			FoundWarn = true;
 			Found = true;

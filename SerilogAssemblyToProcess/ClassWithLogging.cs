@@ -21,35 +21,35 @@ public class ClassWithLogging
     }
     public void Info()
     {
-        Log.Info();
+        Log.Information();
     }
     public void InfoString()
     {
-        Log.Info("TheMessage");
+        Log.Information("TheMessage");
     }
     public void InfoStringParams()
     {
-        Log.Info("TheMessage {0}", 1);
+        Log.Information("TheMessage {0}", 1);
     }
     public void InfoStringException()
     {
-        Log.Info(new Exception(), "TheMessage");
+        Log.Information(new Exception(), "TheMessage");
     }
     public void Warn()
     {
-        Log.Warn();
+        Log.Warning();
     }
     public void WarnString()
     {
-        Log.Warn("TheMessage");
+        Log.Warning("TheMessage");
     }
     public void WarnStringParams()
     {
-        Log.Warn("TheMessage {0}", 1);
+        Log.Warning("TheMessage {0}", 1);
     }
     public void WarnStringException()
     {
-        Log.Warn(new Exception(), "TheMessage");
+        Log.Warning(new Exception(), "TheMessage");
     }
     public void Error()
     {

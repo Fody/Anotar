@@ -30,6 +30,11 @@ public class AttributeFinder
 			FoundError = true;
 			Found = true;
 		}
+		if (customAttributes.ContainsAttribute("Anotar.NLog.LogToFatalOnExceptionAttribute"))
+		{
+			FoundFatal = true;
+			Found = true;
+		}
 
 	}
 
@@ -42,6 +47,7 @@ public class AttributeFinder
 	public bool FoundWarn;
 
 	public bool FoundError;
+    public bool FoundFatal;
 
 	public bool FoundTrace;
 }

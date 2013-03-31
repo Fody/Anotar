@@ -16,6 +16,17 @@ public class OnException
     {
         throw new Exception("Foo");
     }
+    [LogToFatalOnException]
+    public void ToFatal(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
+
+    [LogToFatalOnException]
+    public object ToFatalWithReturn(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
 
     [LogToErrorOnException]
     public void WithRefs(
