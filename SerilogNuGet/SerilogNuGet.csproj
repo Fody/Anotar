@@ -24,9 +24,9 @@
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)SerilogNuGetBuild\**" />
+      <FilesToDelete Include="$(SolutionDir)SerilogNuGetBuild\**\*.*" />
     </ItemGroup>
-    <Delete Files="$(SolutionDir)SerilogNuGetBuild" />
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />

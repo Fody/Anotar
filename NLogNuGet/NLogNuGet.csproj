@@ -30,9 +30,9 @@
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NLogNuGetBuild\**" />
+      <FilesToDelete Include="$(SolutionDir)NLogNuGetBuild\**\*.*" />
     </ItemGroup>
-    <Delete Files="$(SolutionDir)NLogNuGetBuild" />
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />

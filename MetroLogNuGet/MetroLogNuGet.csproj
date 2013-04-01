@@ -30,9 +30,9 @@
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)MetroLogNuGetBuild\**" />
+      <FilesToDelete Include="$(SolutionDir)MetroLogNuGetBuild\**\*.*" />
     </ItemGroup>
-    <Delete Files="$(SolutionDir)MetroLogNuGetBuild" />
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />

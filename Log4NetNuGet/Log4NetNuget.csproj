@@ -32,7 +32,7 @@
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)Log4NetNuGetBuild\**\*.*" />
     </ItemGroup>
-    <Delete Files="$(SolutionDir)Log4NetNuGetBuild" />
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
