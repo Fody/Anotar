@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-public sealed class EventSink : ILogEventSink
+public class EventSink : ILogEventSink
 {
 	
     public Action<LogEvent> Action;

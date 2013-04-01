@@ -2,7 +2,7 @@
 using log4net.Appender;
 using log4net.Core;
 
-public sealed class ActionAppender : AppenderSkeleton
+public class ActionAppender : AppenderSkeleton
 {
     public Action<LoggingEvent> Action;
 

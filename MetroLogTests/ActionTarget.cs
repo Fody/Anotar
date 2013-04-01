@@ -2,7 +2,7 @@
 using MetroLog;
 using MetroLog.Targets;
 
-public sealed class ActionTarget : SyncTarget
+public class ActionTarget : SyncTarget
 {
     public Action<LogEventInfo> Action;
 

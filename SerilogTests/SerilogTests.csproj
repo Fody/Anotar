@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionTarget.cs" />
+    <Compile Include="EventSink.cs" />
     <Compile Include="SerilogTests.cs" />
     <Compile Include="WeaverHelper.cs" />
   </ItemGroup>
