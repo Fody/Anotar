@@ -184,4 +184,8 @@ You can vote for [Compatibility between `params` with CallerInfoAttributes](http
 
 This is not designed as a logging toolkit abstraction. By that I mean it is not designed to help you avoid a reference to a library or make it easier for you switch logging frameworks. So this means it is targeted at people logging from applications or services. Not for people trying to expose logging functionality from their library.
 
+    
+## Icon
+
+Icon courtesy of [The Noun Project](http://thenounproject.com)
 
