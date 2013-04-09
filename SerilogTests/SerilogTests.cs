@@ -34,9 +34,10 @@ public class SerilogTests
 			{
 				Action = LogEvent
 			};
+
 		Log.Logger = new LoggerConfiguration()
-			.MinimumLevel(LogEventLevel.Verbose)
-			.WithSink(eventSink)
+			.MinimumLevel.Verbose()
+			.WriteTo.Sink(eventSink)
 			.CreateLogger();
 	}
 
@@ -83,7 +84,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(constructedType);
 		instance.Debug();
 		var message = Debugs.First();
-		Assert.IsTrue(message.MessageTemplate.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
+		Assert.IsTrue(message.MessageTemplate.Text.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
 	}
 
 	[Test]
@@ -93,7 +94,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Debug();
 		Assert.AreEqual(1, Debugs.Count);
-		Assert.IsTrue(Debugs.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
 	}
 
 	[Test]
@@ -104,7 +105,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Debug();
 		Assert.AreEqual(1, Debugs.Count);
-		Assert.IsTrue(Debugs.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
 	}
 
 	void CheckException(Action<object> action, List<LogEvent> list, string expected)
@@ -123,7 +124,7 @@ public class SerilogTests
 		Assert.IsNotNull(exception);
 		Assert.AreEqual(1, list.Count);
 		var first = list.First();
-		Assert.IsTrue(first.MessageTemplate.StartsWith(expected), first.MessageTemplate);
+        Assert.IsTrue(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
 	}
 
 
@@ -214,7 +215,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.DebugString();
 		Assert.AreEqual(1, Debugs.Count);
-		Assert.IsTrue(Debugs.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
 	}
 
 	[Test]
@@ -224,7 +225,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.DebugStringParams();
 		Assert.AreEqual(1, Debugs.Count);
-		Assert.IsTrue(Debugs.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
 	}
 
 	[Test]
@@ -234,7 +235,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.DebugStringException();
 		Assert.AreEqual(1, Debugs.Count);
-		Assert.IsTrue(Debugs.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
 	}
 
 	[Test]
@@ -244,7 +245,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Info();
 		Assert.AreEqual(1, Infos.Count);
-		Assert.IsTrue(Infos.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
+        Assert.IsTrue(Infos.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
 	}
 
 	[Test]
@@ -254,7 +255,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.InfoString();
 		Assert.AreEqual(1, Infos.Count);
-		Assert.IsTrue(Infos.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
+        Assert.IsTrue(Infos.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
 	}
 
 	[Test]
@@ -264,7 +265,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.InfoStringParams();
 		Assert.AreEqual(1, Infos.Count);
-		Assert.IsTrue(Infos.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
+        Assert.IsTrue(Infos.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
 	}
 
 	[Test]
@@ -274,7 +275,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.InfoStringException();
 		Assert.AreEqual(1, Infos.Count);
-		Assert.IsTrue(Infos.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
+        Assert.IsTrue(Infos.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
 	}
 
 	[Test]
@@ -284,7 +285,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Warn();
 		Assert.AreEqual(1, Warns.Count);
-		Assert.IsTrue(Warns.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
+        Assert.IsTrue(Warns.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
 	}
 
 	[Test]
@@ -294,7 +295,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.WarnString();
 		Assert.AreEqual(1, Warns.Count);
-		Assert.IsTrue(Warns.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
+        Assert.IsTrue(Warns.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
 	}
 
 	[Test]
@@ -304,7 +305,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.WarnStringParams();
 		Assert.AreEqual(1, Warns.Count);
-		Assert.IsTrue(Warns.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
+        Assert.IsTrue(Warns.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
 	}
 
 	[Test]
@@ -314,7 +315,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.WarnStringException();
 		Assert.AreEqual(1, Warns.Count);
-		Assert.IsTrue(Warns.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
+        Assert.IsTrue(Warns.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
 	}
 
 	[Test]
@@ -324,7 +325,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Error();
 		Assert.AreEqual(1, Errors.Count);
-		Assert.IsTrue(Errors.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
+        Assert.IsTrue(Errors.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
 	}
 
 	[Test]
@@ -334,7 +335,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.ErrorString();
 		Assert.AreEqual(1, Errors.Count);
-		Assert.IsTrue(Errors.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
+        Assert.IsTrue(Errors.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
 	}
 
 	[Test]
@@ -344,7 +345,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.ErrorStringParams();
 		Assert.AreEqual(1, Errors.Count);
-		Assert.IsTrue(Errors.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
+        Assert.IsTrue(Errors.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
 	}
 
 	[Test]
@@ -354,7 +355,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.ErrorStringException();
 		Assert.AreEqual(1, Errors.Count);
-		Assert.IsTrue(Errors.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+        Assert.IsTrue(Errors.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
 	}
 
 	[Test]
@@ -364,7 +365,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.Fatal();
 		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
 	}
 
 	[Test]
@@ -374,7 +375,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.FatalString();
 		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
 	}
 
 	[Test]
@@ -384,7 +385,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.FatalStringParams();
 		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
 	}
 
 	[Test]
@@ -394,7 +395,7 @@ public class SerilogTests
 		var instance = (dynamic) Activator.CreateInstance(type);
 		instance.FatalStringException();
 		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().MessageTemplate.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().MessageTemplate.Text.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
 	}
 
 	[Test]
