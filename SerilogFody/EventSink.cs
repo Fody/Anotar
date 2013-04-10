@@ -1,7 +1,9 @@
 ﻿using System;
+using Scalpel;
 using Serilog.Core;
 using Serilog.Events;
 
+[Remove]
 public class EventSink : ILogEventSink
 {
 	

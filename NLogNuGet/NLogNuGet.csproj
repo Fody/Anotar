@@ -4,6 +4,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6638E0E5-DF3F-4EDE-88E8-0D8436969144}</ProjectGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <ConfigurationName>Debug</ConfigurationName>
@@ -11,10 +13,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <ConfigurationName>Release</ConfigurationName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <ConfigurationName>Deployable</ConfigurationName>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="Anotar.NLog.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="app.config" />
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>

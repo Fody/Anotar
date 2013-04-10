@@ -1,7 +1,9 @@
 ﻿using System;
 using MetroLog;
 using MetroLog.Targets;
+using Scalpel;
 
+[Remove]
 public class ActionTarget : SyncTarget
 {
     public Action<LogEventInfo> Action;
