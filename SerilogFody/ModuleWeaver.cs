@@ -52,7 +52,7 @@ public partial class ModuleWeaver
     void FindExceptionType()
     {
         var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
-        var exceptionType = msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception");
+        var exceptionType = msCoreLibDefinition.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
         if (exceptionType == null)
         {
             var systemRuntimeDefinition = AssemblyResolver.Resolve("System.Runtime");

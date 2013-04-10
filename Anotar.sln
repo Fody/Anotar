@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogReferenceAssembly", "NL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerilogReferenceAssembly", "SerilogReferenceAssembly\SerilogReferenceAssembly.csproj", "{16057ACC-E523-403B-825D-57DDAEDC1CE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{CE49C03E-FB7D-4291-A0E2-E1540D037184}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogAssemblyToProcess", "MetroLogAssemblyToProcess\MetroLogAssemblyToProcess.csproj", "{FB619D27-E000-434D-8167-54490A640444}"
 EndProject
 Global
@@ -273,21 +271,6 @@ Global
 		{16057ACC-E523-403B-825D-57DDAEDC1CE6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{16057ACC-E523-403B-825D-57DDAEDC1CE6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{16057ACC-E523-403B-825D-57DDAEDC1CE6}.Release|x86.ActiveCfg = Release|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Deployable|Any CPU.ActiveCfg = Deployable|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Deployable|Any CPU.Build.0 = Deployable|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Deployable|Mixed Platforms.ActiveCfg = Deployable|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Deployable|Mixed Platforms.Build.0 = Deployable|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Deployable|x86.ActiveCfg = Deployable|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{CE49C03E-FB7D-4291-A0E2-E1540D037184}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB619D27-E000-434D-8167-54490A640444}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
