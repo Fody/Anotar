@@ -26,12 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Log4NetFody\Log4NetFody.csproj">
-      <Project>{C3578A7B-09A6-4444-9383-0DEAFA4958BD}</Project>
-      <Name>Log4NetFody</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\Log4NetReferenceAssembly\Log4NetReferenceAssembly.csproj">
-      <Project>{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}</Project>
-      <Name>Log4NetReferenceAssembly</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Clean">

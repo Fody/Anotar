@@ -25,8 +25,12 @@
     <None Include="uninstall.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SerilogFody\SerilogFody.csproj" />
-    <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj" />
+    <ProjectReference Include="..\SerilogFody\SerilogFody.csproj" >
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj" >
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>

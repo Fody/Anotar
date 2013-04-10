@@ -26,12 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NLogFody\NLogFody.csproj">
-      <Project>{29AD34AB-9416-4E53-95CA-9B00072D8802}</Project>
-      <Name>NLogFody</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\NLogReferenceAssembly\NLogReferenceAssembly.csproj">
-      <Project>{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}</Project>
-      <Name>NLogReferenceAssembly</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Clean">

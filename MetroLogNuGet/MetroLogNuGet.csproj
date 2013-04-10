@@ -26,12 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetroLogFody\MetroLogFody.csproj">
-      <Project>{4F579111-5CF3-4ECC-AFCA-397820C3A495}</Project>
-      <Name>MetroLogFody</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj">
-      <Project>{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}</Project>
-      <Name>MetroLogReferenceAssembly</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Clean">
