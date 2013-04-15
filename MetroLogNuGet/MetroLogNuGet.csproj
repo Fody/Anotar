@@ -24,14 +24,6 @@
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetroLogFody\MetroLogFody.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)MetroLogNuGetBuild\**\*.*" />

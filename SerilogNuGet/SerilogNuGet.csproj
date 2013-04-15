@@ -24,18 +24,6 @@
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SerilogFody\SerilogFody.csproj">
-      <Project>{963a8d05-334f-4d09-afb5-e9c1a46d1131}</Project>
-      <Name>SerilogFody</Name>
-	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj">
-      <Project>{16057ACC-E523-403B-825D-57DDAEDC1CE6}</Project>
-      <Name>SerilogReferenceAssembly</Name>
-	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)SerilogNuGetBuild\**\*.*" />

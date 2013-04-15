@@ -23,18 +23,6 @@
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NLogFody\NLogFody.csproj">
-      <Project>{29ad34ab-9416-4e53-95ca-9b00072d8802}</Project>
-      <Name>NLogFody</Name>
-	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\NLogReferenceAssembly\NLogReferenceAssembly.csproj">
-      <Project>{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}</Project>
-      <Name>NLogReferenceAssembly</Name>
-	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)NLogNuGetBuild\**\*.*" />

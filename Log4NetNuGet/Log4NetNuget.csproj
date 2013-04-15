@@ -24,14 +24,6 @@
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Log4NetFody\Log4NetFody.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\Log4NetReferenceAssembly\Log4NetReferenceAssembly.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)Log4NetNuGetBuild\**\*.*" />

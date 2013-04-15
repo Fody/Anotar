@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetAssemblyToProcess", "Log4NetAssemblyToProcess\Log4NetAssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetNuget", "Log4NetNuGet\Log4NetNuget.csproj", "{63786CE5-D899-43DF-AD4E-C2CA3BAC3FC2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95} = {9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}
+		{C3578A7B-09A6-4444-9383-0DEAFA4958BD} = {C3578A7B-09A6-4444-9383-0DEAFA4958BD}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetReferenceAssembly", "Log4NetReferenceAssembly\Log4NetReferenceAssembly.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
 EndProject
@@ -14,14 +18,26 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogReferenceAssembly", "MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj", "{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogNuGet", "MetroLogNuGet\MetroLogNuGet.csproj", "{01802DCF-E7D0-4618-9209-5B1D5F9005EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4F579111-5CF3-4ECC-AFCA-397820C3A495} = {4F579111-5CF3-4ECC-AFCA-397820C3A495}
+		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6} = {C57B07DF-F89A-427D-9E73-FA9F7E3455A6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogAssemblyToProcess", "NLogAssemblyToProcess\NLogAssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogFody", "NLogFody\NLogFody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogNuGet", "NLogNuGet\NLogNuGet.csproj", "{6638E0E5-DF3F-4EDE-88E8-0D8436969144}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7} = {C1B99F92-63D3-4F01-B8FE-6DF359B407F7}
+		{29AD34AB-9416-4E53-95CA-9B00072D8802} = {29AD34AB-9416-4E53-95CA-9B00072D8802}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerilogNuGet", "SerilogNuGet\SerilogNuGet.csproj", "{73F726A2-19B2-4791-A1DE-3205D0621178}"
+	ProjectSection(ProjectDependencies) = postProject
+		{963A8D05-334F-4D09-AFB5-E9C1A46D1131} = {963A8D05-334F-4D09-AFB5-E9C1A46D1131}
+		{16057ACC-E523-403B-825D-57DDAEDC1CE6} = {16057ACC-E523-403B-825D-57DDAEDC1CE6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerilogAssemblyToProcess", "SerilogAssemblyToProcess\SerilogAssemblyToProcess.csproj", "{A83DF669-A96F-4494-B962-A91841ABCFB8}"
 EndProject
