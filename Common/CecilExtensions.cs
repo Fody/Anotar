@@ -37,6 +37,11 @@ public static class CecilExtensions
 		foreach (var instruction in instructions)
 			processor.InsertBefore(target, instruction);
 	}
+	public static void InsertAfter(this ILProcessor processor, Instruction target, params Instruction[] instructions)
+	{
+		foreach (var instruction in instructions.Reverse())
+			processor.InsertAfter(target, instruction);
+	}
 	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
 	{
 		while (true)

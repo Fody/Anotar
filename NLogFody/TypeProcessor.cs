@@ -13,7 +13,8 @@ public partial class ModuleWeaver
         {
             fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LoggerType)
                 {
-                    DeclaringType = type
+                    DeclaringType = type,
+                    IsStatic = true,
                 };
             foundAction = () => InjectField(type, fieldDefinition);
         }

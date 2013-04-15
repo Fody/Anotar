@@ -60,12 +60,14 @@ public class LogForwardingProcessor
         instruction.OpCode = OpCodes.Callvirt;
 
 	    if (parameters.Count == 0)
-	    {
-		    ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object));
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+        {
+            var fieldAssignment = Instruction.Create(OpCodes.Ldsfld, Field);
+            ilProcessor.Replace(instruction, fieldAssignment);
+            ilProcessor.InsertAfter(fieldAssignment,
+                                    Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
+                                    Instruction.Create(OpCodes.Ldc_I4_0),
+                                    Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
+                                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)));
 	    }
 	    if (methodReference.IsMatch("String", "Exception"))
         {
