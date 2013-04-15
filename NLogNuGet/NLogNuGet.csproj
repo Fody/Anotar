@@ -5,7 +5,6 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6638E0E5-DF3F-4EDE-88E8-0D8436969144}</ProjectGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <ConfigurationName>Debug</ConfigurationName>
@@ -26,10 +25,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NLogFody\NLogFody.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{29ad34ab-9416-4e53-95ca-9b00072d8802}</Project>
+      <Name>NLogFody</Name>
+	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\NLogReferenceAssembly\NLogReferenceAssembly.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}</Project>
+      <Name>NLogReferenceAssembly</Name>
+	  <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Clean">
