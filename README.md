@@ -37,30 +37,6 @@ There were too many lossy abstractions happening between Anotar and the target l
 
 This example is targeting the [NLog](http://nlog-project.org/).
 
-### Given this as a reference
-
-    public static class Log
-    {
-        public static void Trace()
-        public static void Trace(string format, params object[] args)
-        public static void TraceException(string message, Exception exception)
-        public static void Debug()
-        public static void Debug(string format, params object[] args)
-        public static void DebugException(string message, Exception exception)
-        public static void Info()
-        public static void Info(string format, params object[] args)
-        public static void InfoException(string message, Exception exception)
-        public static void Warn()
-        public static void Warn(string format, params object[] args)
-        public static void WarnException(string message, Exception exception)
-        public static void Error()
-        public static void Error(string format, params object[] args)
-        public static void ErrorException(string message, Exception exception))
-        public static void Fatal()
-        public static void Fatal(string format, params object[] args)
-        public static void FatalException(string message, Exception exception)
-    }
-
 ### Your Code
 
     public class MyClass
@@ -73,10 +49,11 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
 ### What gets compiled
 
+#### In NLog
 
     public class MyClass
     {
-        static NLog.Logger logger = NLog.LogManager.GetLogger("MyClass");
+        static Logger logger = LogManager.GetLogger("MyClass");
 
         void MyMethod()
         {
@@ -84,31 +61,52 @@ This example is targeting the [NLog](http://nlog-project.org/).
         }
     }
 
+#### In Log4Net
 
+    public class MyClass
+    {
+        static ILog logger = LogManager.GetLogger("MyClass");
+
+        void MyMethod()
+        {
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
+        }
+    }
+
+#### In MetroLog
+
+    public class MyClass
+    {
+        static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
+
+        void MyMethod()
+        {
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~24. ");
+        }
+    }
+    
+#### In Serilog
+
+    public class MyClass
+    {
+        static ILogger logger = Log.ForContext<MyClass>();
+
+        void MyMethod()
+        {
+            logger
+                .ForContext("MethodName", "System.Void MyClass::Debug()")
+                .ForContext("LineNumber", "8")
+                .Debug("{Text:l}");
+        }
+    }
+
+### Other Log Overloads in Explicit Logging
+
+There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
+
+Each of these methods has the expected 'message', 'params' and 'exception' overloads. 
 
 ## Exception Logging
-
-This example is targeting the [NLog](http://nlog-project.org/).
-
-### Given these attributes
-
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToTraceOnExceptionAttribute 
-    
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToDebugOnExceptionAttribute 
-    
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToInfoOnExceptionAttribute     
-    
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToWarnOnExceptionAttribute    
-    
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToErrorOnExceptionAttribute 
-    
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToFatalOnExceptionAttribute 
     
 ### Your code
 
@@ -119,6 +117,8 @@ This example is targeting the [NLog](http://nlog-project.org/).
     }
     
 ### What gets compiled
+
+#### In NLog
 
     void MyMethod(string param1, int param2)
     {
@@ -183,7 +183,6 @@ You can vote for [Compatibility between `params` with CallerInfoAttributes](http
 ## Who is this targeting?
 
 This is not designed as a logging toolkit abstraction. By that I mean it is not designed to help you avoid a reference to a library or make it easier for you switch logging frameworks. So this means it is targeted at people logging from applications or services. Not for people trying to expose logging functionality from their library.
-
     
 ## Icon
 
