@@ -113,35 +113,35 @@ class OnExceptionProcessor
 
 		if (attributeFinder.FoundDebug)
         {
-			foreach (var instruction in AddWrite( ModuleWeaver.DebugExceptionMethod, ModuleWeaver.debugLevel))
+			foreach (var instruction in AddWrite( ModuleWeaver.DebugExceptionMethod, ModuleWeaver.DebugLevel))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundInfo)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.infoLevel))
+			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.InfoLevel))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundWarn)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.warningLevel))
+			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.WarningLevel))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundError)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.errorLevel))
+			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.ErrorLevel))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundFatal)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.fatalLevel))
+			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.FatalLevel))
             {
                 yield return instruction;
             }
@@ -155,7 +155,7 @@ class OnExceptionProcessor
         var sectionNop = Instruction.Create(OpCodes.Nop);
 		yield return Instruction.Create(OpCodes.Ldsfld, Field);
 		yield return Instruction.Create(OpCodes.Ldc_I4, level);
-		yield return Instruction.Create(OpCodes.Callvirt, ModuleWeaver.isEnabledMethod);
+		yield return Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod);
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
         yield return Instruction.Create(OpCodes.Ldsfld, Field);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);

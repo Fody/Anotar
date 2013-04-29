@@ -11,7 +11,6 @@ public partial class ModuleWeaver
     public ModuleDefinition ModuleDefinition { get; set; }
     public MethodReference ConcatMethod;
 	public MethodReference FormatMethod;
-    public bool LogMinimalMessage;
     public TypeReference ExceptionType;
     public ArrayType ObjectArray;
 
@@ -24,12 +23,6 @@ public partial class ModuleWeaver
 
     public void Execute()
     {
-        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
-        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
-        if (assemblyContainsAttribute || moduleContainsAttribute)
-        {
-            LogMinimalMessage = true;
-		}
 		FindReference();
 		Init();
         var stringType = ModuleDefinition.TypeSystem.String.Resolve();

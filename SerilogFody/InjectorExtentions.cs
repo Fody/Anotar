@@ -7,23 +7,23 @@ public partial class ModuleWeaver
     {
         if (methodReference.Name == "Debug")
         {
-            return DebugMethod;
+            return debugMethod;
         }
         if (methodReference.Name == "Information")
         {
-            return InfoMethod;
+            return infoMethod;
         }
         if (methodReference.Name == "Warning")
         {
-            return WarnMethod;
+            return warnMethod;
         }
         if (methodReference.Name == "Error")
         {
-            return ErrorMethod;
+            return errorMethod;
         }
         if (methodReference.Name == "Fatal")
         {
-			return FatalMethod;
+			return fatalMethod;
         }
         throw new Exception("Invalid method name");
     }

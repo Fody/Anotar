@@ -7,11 +7,11 @@ public partial class ModuleWeaver
 {
     void ProcessType(TypeDefinition type)
     {
-        var fieldDefinition = type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == LoggerType.FullName);
+        var fieldDefinition = type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == loggerType.FullName);
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LoggerType)
+            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, loggerType)
                 {
                     DeclaringType = type
                 };

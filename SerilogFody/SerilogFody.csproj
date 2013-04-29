@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="AttributeFinder.cs" />
     <Compile Include="EventSink.cs" />
+    <Compile Include="LogEventExtensions.cs" />
     <Compile Include="ReferenceFinder.cs" />
     <Compile Include="SerilogTests.cs" />
     <Compile Include="TypeResolver.cs" />
