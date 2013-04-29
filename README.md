@@ -81,7 +81,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
         void MyMethod()
         {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~24. ");
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~24. TheMessage");
         }
     }
     
@@ -96,7 +96,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
             logger
                 .ForContext("MethodName", "System.Void MyClass::Debug()")
                 .ForContext("LineNumber", "8")
-                .Debug("{Text:l}");
+                .Debug("TheMessage");
         }
     }
 
