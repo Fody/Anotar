@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Anotar.Serilog;
 
 public class ClassWithLogging
@@ -82,5 +83,9 @@ public class ClassWithLogging
 	public void FatalStringException()
     {
 		Log.Fatal(new Exception(), "TheMessage");
+    }
+    public async void AsyncMethod()
+    {
+        Trace.WriteLine("Foo");
     }
 }

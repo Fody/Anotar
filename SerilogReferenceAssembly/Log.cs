@@ -2,7 +2,6 @@
 // ReSharper disable UnusedParameter.Global
 using System;
 using JetBrains.Annotations;
-using Se;
 
 namespace Anotar.Serilog
 {

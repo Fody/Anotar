@@ -21,13 +21,12 @@ class OnExceptionProcessor
 	public void Process()
     {
 
-		Method.ThrowIfIsAsync();
-
 	    attributeFinder = new AttributeFinder(Method);
 		if (!attributeFinder.Found)
         {
             return;
         }
+        Method.ThrowIfIsAsync();
 
         FoundUsageInType();
         ContinueProcessing();
