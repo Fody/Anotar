@@ -91,6 +91,7 @@ public class ReturnFixerTests
 
         }
     }
+#pragma warning disable 168
     [LogToDebugOnException]
     public int TryCatchFinally()
     {
@@ -119,6 +120,7 @@ public class ReturnFixerTests
          throw   new Exception("sdf");
         }
     }
+#pragma warning restore 168
 
     bool isInSomeMode;
     string branchingReturnField;

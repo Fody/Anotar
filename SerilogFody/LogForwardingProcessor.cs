@@ -79,7 +79,7 @@ public class LogForwardingProcessor
                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
-                                  Instruction.Create(OpCodes.Ldstr, "{Text:l}"),
+                                  Instruction.Create(OpCodes.Ldstr, ""),
                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                   Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))

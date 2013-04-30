@@ -91,12 +91,14 @@ public class ReturnFixerTests
 
         }
     }
+#pragma warning disable 168
     [LogToDebugOnException]
     public int TryCatchFinally()
     {
         try
         {
             var dateTime = DateTime.Now;
+
             return 2;
         }
         catch (Exception exception)
@@ -119,6 +121,7 @@ public class ReturnFixerTests
          throw   new Exception("sdf");
         }
     }
+#pragma warning restore 168
 
     bool isInSomeMode;
     string branchingReturnField;

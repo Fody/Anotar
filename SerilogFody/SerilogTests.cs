@@ -86,7 +86,7 @@ public class SerilogTests
         var logEvent = Debugs.Single();
         Assert.AreEqual("7", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void GenericClass`1::Debug()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 	}
 
 	[Test]
@@ -98,7 +98,7 @@ public class SerilogTests
         var logEvent = Debugs.Single();
         Assert.AreEqual("8", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Debug()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 	}
 
 	[Test]
@@ -112,7 +112,7 @@ public class SerilogTests
 	    var logEvent = Debugs.First();
         Assert.AreEqual("15", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithExistingField::Debug()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 	}
 
 	void CheckException(Action<object> action, List<LogEvent> list, string expected)
@@ -261,7 +261,7 @@ public class SerilogTests
         var logEvent = Infos.Single();
         Assert.AreEqual("24", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Info()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 	}
 
 	[Test]
@@ -311,7 +311,7 @@ public class SerilogTests
         var logEvent = Warns.Single();
         Assert.AreEqual("40", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Warn()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
 	[Test]
@@ -359,7 +359,7 @@ public class SerilogTests
         var logEvent = Errors.Single();
         Assert.AreEqual("56", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Error()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 	}
 
 	[Test]
@@ -407,7 +407,7 @@ public class SerilogTests
         var logEvent = Fatals.Single();
         Assert.AreEqual("72", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Fatal()", logEvent.Value("MethodName"));
-        Assert.AreEqual("{Text:l}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
 
 	}
 
