@@ -100,6 +100,9 @@
     <Compile Include="..\Common\ReturnFixer.cs">
       <Link>ReturnFixer.cs</Link>
     </Compile>
+    <Compile Include="..\Common\WeaverHelper.cs">
+      <Link>WeaverHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Common\WeavingException.cs">
       <Link>WeavingException.cs</Link>
     </Compile>
@@ -124,7 +127,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs" />
     <Compile Include="TypeResolver.cs" />
     <Compile Include="ReferenceCleaner.cs" />
-    <Compile Include="WeaverHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

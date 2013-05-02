@@ -112,6 +112,9 @@
     <Compile Include="..\Common\Verifier.cs">
       <Link>Verifier.cs</Link>
     </Compile>
+    <Compile Include="..\Common\WeaverHelper.cs">
+      <Link>WeaverHelper.cs</Link>
+    </Compile>
     <Compile Include="ActionTarget.cs" />
     <Compile Include="AttributeFinder.cs" />
     <Compile Include="MetroLogTests.cs" />
@@ -124,7 +127,6 @@
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
     <Compile Include="ReferenceCleaner.cs" />
-    <Compile Include="WeaverHelper.cs" />
     <Compile Include="WeavingException.cs" />
   </ItemGroup>
   <ItemGroup>
