@@ -47,7 +47,8 @@ namespace Anotar.Log4Net
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
 		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <param name="args">Arguments to format.</param>
+        [StringFormatMethod("format")]
         public static void Debug(string format, params object[] args)
         {
             throw new NotImplementedException();
