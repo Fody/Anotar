@@ -16,7 +16,7 @@ public static class Verifier
         Assert.AreEqual(TrimLineNumbers(before), TrimLineNumbers(after), message);
     }
 
-    public static string Validate(string assemblyPath2)
+    static string Validate(string assemblyPath2)
     {
         var exePath = GetPathToPEVerify();
         var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath2 + "\"")

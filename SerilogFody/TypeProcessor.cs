@@ -58,7 +58,7 @@ public partial class ModuleWeaver
 
     void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
 	{
-		var staticConstructor = type.GetStaticContructor();
+		var staticConstructor = type.GetStaticConstructor();
 	    var genericInstanceMethod = new GenericInstanceMethod(forContextDefinition);
 	    genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
 	    var instructions = staticConstructor.Body.Instructions;

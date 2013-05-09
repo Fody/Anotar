@@ -15,7 +15,7 @@ public static class CecilExtensions
             index++;
         }
     }
-	public static MethodDefinition GetStaticContructor(this TypeDefinition type)
+	public static MethodDefinition GetStaticConstructor(this TypeDefinition type)
 	{
 		var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
 		if (staticConstructor == null)
