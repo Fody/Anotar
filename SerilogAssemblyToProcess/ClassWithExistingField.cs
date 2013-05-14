@@ -1,7 +1,8 @@
+using Anotar.Serilog;
 using Serilog;
 using Log = Serilog.Log;
 
-public class	ClassWithExistingField
+public class ClassWithExistingField
 {
     static ILogger existingLogger;
 
@@ -12,7 +13,7 @@ public class	ClassWithExistingField
 
 	public void Debug()
 	{
-	 	Anotar.Serilog.Log.Debug();
+	 	LogTo.Debug();
 	}
   
 }

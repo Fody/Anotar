@@ -2,5 +2,5 @@
 <Weavers>
   <Stamp />
   <Caseless />
-  <Scalpel RemoveReferences='log4net|Microsoft.Build.Utilities.v4.0'/>
+  <Scalpel RemoveReferences='NLog|Microsoft.Build.Utilities.v4.0'/>
 </Weavers>

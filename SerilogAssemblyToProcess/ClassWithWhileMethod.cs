@@ -11,6 +11,6 @@ public class ClassWithWhileMethod
             Trace.WriteLine("dfg");
             break;
         }
-        Log.Information();
+        LogTo.Information();
     }
 }

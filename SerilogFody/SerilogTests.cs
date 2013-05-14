@@ -10,364 +10,383 @@ using Serilog.Events;
 [TestFixture]
 public class SerilogTests
 {
-	string beforeAssemblyPath;
-	Assembly assembly;
-	public List<LogEvent> Errors = new List<LogEvent>();
-	public List<LogEvent> Fatals = new List<LogEvent>();
-	public List<LogEvent> Debugs = new List<LogEvent>();
-	public List<LogEvent> Infos = new List<LogEvent>();
-	public List<LogEvent> Warns = new List<LogEvent>();
-	string afterAssemblyPath;
+    string beforeAssemblyPath;
+    Assembly assembly;
+    List<LogEvent> errors;
+    List<LogEvent> fatals;
+    List<LogEvent> debugs;
+    List<LogEvent> infos;
+    List<LogEvent> warns;
+    string afterAssemblyPath;
 
-	public SerilogTests()
-	{
-
-		beforeAssemblyPath = Path.GetFullPath(@"..\..\..\SerilogAssemblyToProcess\bin\Debug\SerilogAssemblyToProcess.dll");
+    public SerilogTests()
+    {
+        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\SerilogAssemblyToProcess\bin\Debug\SerilogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-		afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
-		assembly = Assembly.LoadFile(afterAssemblyPath);
+        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
+        assembly = Assembly.LoadFile(afterAssemblyPath);
+    }
 
+    void LogEvent(LogEvent eventInfo)
+    {
+        if (eventInfo.Level == LogEventLevel.Debug)
+        {
+            debugs.Add(eventInfo);
+        }
+        if (eventInfo.Level == LogEventLevel.Fatal)
+        {
+            fatals.Add(eventInfo);
+        }
+        if (eventInfo.Level == LogEventLevel.Error)
+        {
+            errors.Add(eventInfo);
+        }
+        if (eventInfo.Level == LogEventLevel.Information)
+        {
+            infos.Add(eventInfo);
+        }
+        if (eventInfo.Level == LogEventLevel.Warning)
+        {
+            warns.Add(eventInfo);
+        }
 
-		var eventSink = new EventSink
-			{
-				Action = LogEvent
-			};
+    }
 
-		Log.Logger = new LoggerConfiguration()
-			.MinimumLevel.Verbose()
-			.WriteTo.Sink(eventSink)
-			.CreateLogger();
-	}
+    [SetUp]
+    public void Setup()
+    {
+        var eventSink = new EventSink
+            {
+                Action = LogEvent
+            };
 
-	void LogEvent(LogEvent eventInfo)
-	{
-		if (eventInfo.Level == LogEventLevel.Debug)
-		{
-			Debugs.Add(eventInfo);
-		}
-		if (eventInfo.Level == LogEventLevel.Fatal)
-		{
-			Fatals.Add(eventInfo);
-		}
-		if (eventInfo.Level == LogEventLevel.Error)
-		{
-			Errors.Add(eventInfo);
-		}
-		if (eventInfo.Level == LogEventLevel.Information)
-		{
-			Infos.Add(eventInfo);
-		}
-		if (eventInfo.Level == LogEventLevel.Warning)
-		{
-			Warns.Add(eventInfo);
-		}
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .WriteTo.Sink(eventSink)
+            .CreateLogger();
 
-	}
+        errors = new List<LogEvent>();
+        fatals = new List<LogEvent>();
+        debugs = new List<LogEvent>();
+        infos = new List<LogEvent>();
+        warns = new List<LogEvent>();
+    }
 
-	[SetUp]
-	public void Setup()
-	{
-		Fatals.Clear();
-		Errors.Clear();
-		Debugs.Clear();
-		Infos.Clear();
-		Warns.Clear();
-	}
-
-	[Test]
-	public void Generic()
-	{
-		var type = assembly.GetType("GenericClass`1");
-		var constructedType = type.MakeGenericType(typeof (string));
-		var instance = (dynamic) Activator.CreateInstance(constructedType);
+    [Test]
+    public void Generic()
+    {
+        var type = assembly.GetType("GenericClass`1");
+        var constructedType = type.MakeGenericType(typeof (string));
+        var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
-        var logEvent = Debugs.Single();
+        var logEvent = debugs.Single();
         Assert.AreEqual("7", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void GenericClass`1::Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void Debug()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
-		instance.Debug();
-        var logEvent = Debugs.Single();
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Debug();
+        var logEvent = debugs.Single();
         Assert.AreEqual("9", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void ClassWithExistingField()
-	{
-		var type = assembly.GetType("ClassWithExistingField");
-		Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-		var instance = (dynamic) Activator.CreateInstance(type);
-		instance.Debug();
-		Assert.AreEqual(1, Debugs.Count);
-	    var logEvent = Debugs.First();
-        Assert.AreEqual("15", logEvent.Value("LineNumber"));
+    [Test]
+    public void WithOldLogging()
+    {
+        var type = assembly.GetType("ClassWithOldLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Debug();
+        var logEvent = debugs.Single();
+        Assert.AreEqual("7", logEvent.Value("LineNumber"));
+        Assert.AreEqual("System.Void ClassWithOldLogging::Debug()", logEvent.Value("MethodName"));
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
+    }
+
+    [Test]
+    public void WithStaticConstructor()
+    {
+        var type = assembly.GetType("ClassWithStaticConstructor");
+        type.GetMethod("StaticMethod", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
+        var message = (string) type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+        Assert.AreEqual("Foo", message);
+    }
+
+    [Test]
+    public void ClassWithExistingField()
+    {
+        var type = assembly.GetType("ClassWithExistingField");
+        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, debugs.Count);
+        var logEvent = debugs.First();
+        Assert.AreEqual("16", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithExistingField::Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	void CheckException(Action<object> action, List<LogEvent> list, string expected)
-	{
-		Exception exception = null;
-		var type = assembly.GetType("OnException");
-		var instance = (dynamic) Activator.CreateInstance(type);
-		try
-		{
-			action(instance);
-		}
-		catch (Exception e)
-		{
-			exception = e;
-		}
-		Assert.IsNotNull(exception);
-		Assert.AreEqual(1, list.Count);
-		var first = list.First();
+    void CheckException(Action<object> action, List<LogEvent> list, string expected)
+    {
+        Exception exception = null;
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        try
+        {
+            action(instance);
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        Assert.IsNotNull(exception);
+        Assert.AreEqual(1, list.Count);
+        var first = list.First();
         Assert.IsTrue(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
-	}
+    }
 
 
-	[Test]
-	public void OnExceptionToDebug()
-	{
-		var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToDebug("x", 6);
-		CheckException(action, Debugs, expected);
-	}
+    [Test]
+    public void OnExceptionToDebug()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToDebug("x", 6);
+        CheckException(action, debugs, expected);
+    }
 
-	[Test]
-	public void OnExceptionToDebugWithReturn()
-	{
-		var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
-		CheckException(action, Debugs, expected);
-	}
+    [Test]
+    public void OnExceptionToDebugWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
+        CheckException(action, debugs, expected);
+    }
 
-	[Test]
-	public void OnExceptionToInfo()
-	{
-		var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToInfo("x", 6);
-		CheckException(action, Infos, expected);
-	}
+    [Test]
+    public void OnExceptionToInfo()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInfo("x", 6);
+        CheckException(action, infos, expected);
+    }
 
-	[Test]
-	public void OnExceptionToInfoWithReturn()
-	{
-		var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-		CheckException(action, Infos, expected);
-	}
+    [Test]
+    public void OnExceptionToInfoWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
+        CheckException(action, infos, expected);
+    }
 
-	[Test]
-	public void OnExceptionToWarn()
-	{
-		var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToWarn("x", 6);
-		CheckException(action, Warns, expected);
-	}
+    [Test]
+    public void OnExceptionToWarn()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarn("x", 6);
+        CheckException(action, warns, expected);
+    }
 
-	[Test]
-	public void OnExceptionToWarnWithReturn()
-	{
-		var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-		CheckException(action, Warns, expected);
-	}
+    [Test]
+    public void OnExceptionToWarnWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
+        CheckException(action, warns, expected);
+    }
 
-	[Test]
-	public void OnExceptionToError()
-	{
-		var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToError("x", 6);
-		CheckException(action, Errors, expected);
-	}
+    [Test]
+    public void OnExceptionToError()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToError("x", 6);
+        CheckException(action, errors, expected);
+    }
 
-	[Test]
-	public void OnExceptionToErrorWithReturn()
-	{
-		var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
-		CheckException(action, Errors, expected);
-	}
+    [Test]
+    public void OnExceptionToErrorWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
+        CheckException(action, errors, expected);
+    }
 
-	[Test]
-	public void OnExceptionToFatal()
-	{
-		var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatal("x", 6);
-		CheckException(action, Fatals, expected);
-	}
+    [Test]
+    public void OnExceptionToFatal()
+    {
+        var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatal("x", 6);
+        CheckException(action, fatals, expected);
+    }
 
-	[Test]
-	public void OnExceptionToFatalWithReturn()
-	{
-		var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-		CheckException(action, Fatals, expected);
-	}
+    [Test]
+    public void OnExceptionToFatalWithReturn()
+    {
+        var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
+        CheckException(action, fatals, expected);
+    }
 
-	[Test]
-	public void DebugString()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void DebugString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
-        var logEvent = Debugs.Single();
+        var logEvent = debugs.Single();
         Assert.AreEqual("13", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::DebugString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void DebugStringParams()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
-		instance.DebugStringParams();
-        var logEvent = Debugs.Single();
+    [Test]
+    public void DebugStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringParams();
+        var logEvent = debugs.Single();
         Assert.AreEqual("17", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::DebugStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void DebugStringException()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
-		instance.DebugStringException();
-        var logEvent = Debugs.Single();
+    [Test]
+    public void DebugStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringException();
+        var logEvent = debugs.Single();
         Assert.AreEqual("21", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::DebugStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void Info()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void Info()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
-        var logEvent = Infos.Single();
+        var logEvent = infos.Single();
         Assert.AreEqual("25", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Info()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void InfoString()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void InfoString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
-        var logEvent = Infos.Single();
+        var logEvent = infos.Single();
         Assert.AreEqual("29", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::InfoString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
-	[Test]
-	public void InfoStringParams()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void InfoStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
-        var logEvent = Infos.Single();
+        var logEvent = infos.Single();
         Assert.AreEqual("33", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::InfoStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
 
-	}
+    }
 
-	[Test]
-	public void InfoStringException()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void InfoStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        var logEvent = Infos.Single();
+        var logEvent = infos.Single();
         Assert.AreEqual("37", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::InfoStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
 
-	}
+    }
 
-	[Test]
-	public void Warn()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void Warn()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
-        var logEvent = Warns.Single();
+        var logEvent = warns.Single();
         Assert.AreEqual("41", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Warn()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
-	[Test]
-	public void WarnString()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void WarnString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
-        var logEvent = Warns.Single();
+        var logEvent = warns.Single();
         Assert.AreEqual("45", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::WarnString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void WarnStringParams()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void WarnStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
-        var logEvent = Warns.Single();
+        var logEvent = warns.Single();
         Assert.AreEqual("49", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::WarnStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void WarnStringException()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void WarnStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
-        var logEvent = Warns.Single();
+        var logEvent = warns.Single();
         Assert.AreEqual("53", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::WarnStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void Error()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void Error()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
-        var logEvent = Errors.Single();
+        var logEvent = errors.Single();
         Assert.AreEqual("57", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Error()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void ErrorString()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void ErrorString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
-        var logEvent = Errors.Single();
+        var logEvent = errors.Single();
         Assert.AreEqual("61", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::ErrorString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
@@ -379,76 +398,76 @@ public class SerilogTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
-        var logEvent = Errors.Single();
+        var logEvent = errors.Single();
         Assert.AreEqual("65", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::ErrorStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
     }
 
     [Test]
-	public void ErrorStringException()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    public void ErrorStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
-        var logEvent = Errors.Single();
+        var logEvent = errors.Single();
         Assert.AreEqual("69", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::ErrorStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void Fatal()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void Fatal()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
-        var logEvent = Fatals.Single();
+        var logEvent = fatals.Single();
         Assert.AreEqual("73", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::Fatal()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
 
-	}
+    }
 
-	[Test]
-	public void FatalString()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void FatalString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
-        var logEvent = Fatals.Single();
+        var logEvent = fatals.Single();
         Assert.AreEqual("77", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::FatalString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
-	[Test]
-	public void FatalStringParams()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void FatalStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
-        var logEvent = Fatals.Single();
+        var logEvent = fatals.Single();
         Assert.AreEqual("81", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::FatalStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void FatalStringException()
-	{
-		var type = assembly.GetType("ClassWithLogging");
-		var instance = (dynamic) Activator.CreateInstance(type);
+    [Test]
+    public void FatalStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
-        var logEvent = Fatals.Single();
+        var logEvent = fatals.Single();
         Assert.AreEqual("85", logEvent.Value("LineNumber"));
         Assert.AreEqual("System.Void ClassWithLogging::FatalStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-	}
+    }
 
-	[Test]
-	public void PeVerify()
-	{
-		Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
-	}
+    [Test]
+    public void PeVerify()
+    {
+        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+    }
 }

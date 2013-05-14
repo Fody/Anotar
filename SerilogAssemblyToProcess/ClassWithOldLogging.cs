@@ -1,10 +1,9 @@
 using Anotar.Serilog;
 
-public class GenericClass<T>
+public class ClassWithOldLogging
 {
     public void Debug()
     {
-        LogTo.Debug();
+        Log.Debug();
     }
 }
-

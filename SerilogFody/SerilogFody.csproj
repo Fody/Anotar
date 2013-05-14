@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <FodyPath>..\packages\Fody.1.13.6.1</FodyPath>
+    <FodyPath>..\packages\Fody.1.13.8.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,18 +79,20 @@
     </Reference>
     <Reference Include="Serilog, Version=0.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.0.2.8\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.0.2.10\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=0.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.0.2.8\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\packages\Serilog.0.2.10\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <None Include="Fody.targets" />
-    <None Include="FodyWeavers.xml" />
+    <None Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AsyncChecker.cs">

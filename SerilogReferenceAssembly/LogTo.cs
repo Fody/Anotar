@@ -7,8 +7,7 @@ namespace Anotar.Serilog
 	/// <summary>
 	/// Provides logging functions.
 	/// </summary>
-    [Obsolete("Please use Anotar.Serilog.LogTo instead. This was done to avoid a name conflict with the new Serilog.Log class.")]
-    public static class Log
+    public static class LogTo
     {
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.

@@ -62,8 +62,34 @@ public partial class ModuleWeaver
 	    var genericInstanceMethod = new GenericInstanceMethod(forContextDefinition);
 	    genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
 	    var instructions = staticConstructor.Body.Instructions;
-	    instructions.Insert(0, Instruction.Create(OpCodes.Call, genericInstanceMethod));
-	    instructions.Insert(1, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
 		type.Fields.Add(fieldDefinition);
+
+        var returns = instructions.Where(_ => _.OpCode == OpCodes.Ret)
+            .ToList();
+
+        var ilProcessor = staticConstructor.Body.GetILProcessor();
+        if (type.HasGenericParameters)
+        {
+            foreach (var ret in returns)
+            {
+                var newReturn = Instruction.Create(OpCodes.Ret);
+                ilProcessor.InsertAfter(ret, newReturn);
+                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
+                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+                ret.OpCode = OpCodes.Nop;
+            }
+        }
+        else
+        {
+            foreach (var ret in returns)
+            {
+                var newReturn = Instruction.Create(OpCodes.Ret);
+                ilProcessor.InsertAfter(ret, newReturn);
+                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Ldstr, type.FullName));
+                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
+                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
+                ret.OpCode = OpCodes.Nop;
+            }
+        }
     }
 }
