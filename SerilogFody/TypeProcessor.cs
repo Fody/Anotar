@@ -2,6 +2,7 @@
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 public partial class ModuleWeaver
 {
@@ -57,39 +58,27 @@ public partial class ModuleWeaver
     }
 
     void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
-	{
-		var staticConstructor = type.GetStaticConstructor();
-	    var genericInstanceMethod = new GenericInstanceMethod(forContextDefinition);
-	    genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
-	    var instructions = staticConstructor.Body.Instructions;
-		type.Fields.Add(fieldDefinition);
+    {
+
+        var staticConstructor = type.GetStaticConstructor();
+        staticConstructor.Body.SimplifyMacros();
+        var genericInstanceMethod = new GenericInstanceMethod(forContextDefinition);
+        genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
+        var instructions = staticConstructor.Body.Instructions;
+        type.Fields.Add(fieldDefinition);
 
         var returns = instructions.Where(_ => _.OpCode == OpCodes.Ret)
-            .ToList();
+                                  .ToList();
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
-        if (type.HasGenericParameters)
+        foreach (var ret in returns)
         {
-            foreach (var ret in returns)
-            {
-                var newReturn = Instruction.Create(OpCodes.Ret);
-                ilProcessor.InsertAfter(ret, newReturn);
-                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
-                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-                ret.OpCode = OpCodes.Nop;
-            }
+            var newReturn = Instruction.Create(OpCodes.Ret);
+            ilProcessor.InsertAfter(ret, newReturn);
+            ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
+            ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+            ret.OpCode = OpCodes.Nop;
         }
-        else
-        {
-            foreach (var ret in returns)
-            {
-                var newReturn = Instruction.Create(OpCodes.Ret);
-                ilProcessor.InsertAfter(ret, newReturn);
-                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Ldstr, type.FullName));
-                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
-                ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
-                ret.OpCode = OpCodes.Nop;
-            }
-        }
+        staticConstructor.Body.OptimizeMacros();
     }
 }
