@@ -35,8 +35,8 @@
   <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)Log4NetNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
-    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\net40" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\net40" />
     <Copy SourceFiles="$(SolutionDir)Log4NetNuget\Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Log4NetFody\bin\$(ConfigurationName)\Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Log4NetFody\bin\$(ConfigurationName)\Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />

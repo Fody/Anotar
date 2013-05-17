@@ -35,8 +35,8 @@
   <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net45+win8+wp8" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net45+win8+wp8" />
     <Copy SourceFiles="$(SolutionDir)SerilogNuGet\Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)SerilogFody\bin\$(ConfigurationName)\Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)SerilogFody\bin\$(ConfigurationName)\Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />

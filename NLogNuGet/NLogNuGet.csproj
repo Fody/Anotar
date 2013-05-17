@@ -34,8 +34,8 @@
   <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7+win8" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7" />
     <Copy SourceFiles="$(SolutionDir)NLogNuGet\Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
