@@ -31,7 +31,7 @@ public class ClassWithStaticConstructor
 
     static void LogEvent(LogEvent eventInfo)
     {
-        Message = eventInfo.RenderedMessage;
+        Message = eventInfo.MessageTemplate.Text;
     }
 
     public static void StaticMethod()
