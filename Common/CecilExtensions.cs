@@ -15,7 +15,27 @@ public static class CecilExtensions
             index++;
         }
     }
-	public static MethodDefinition GetStaticConstructor(this TypeDefinition type)
+
+    public static void CheckForDynamicUsagesOf(this MethodDefinition methodDefinition, string methodNameToCheckFor)
+    {
+        foreach (var instruction in methodDefinition.Body.Instructions)
+        {
+            if (instruction.OpCode == OpCodes.Ldtoken)
+            {
+                var memberReference = instruction.Operand as MemberReference;
+                if (memberReference != null)
+                {
+                    if (memberReference.FullName == methodNameToCheckFor)
+                    {
+                        //TODO: sequence point
+                        throw new WeavingException(string.Format("'typeof' usages and passing `dynamic' params is not supported. '{0}'.", methodDefinition.FullName));
+                    }
+                }
+            }
+        }
+    }
+
+    public static MethodDefinition GetStaticConstructor(this TypeDefinition type)
 	{
 		var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
 		if (staticConstructor == null)

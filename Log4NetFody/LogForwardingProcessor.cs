@@ -15,6 +15,7 @@ public class LogForwardingProcessor
 
 	public void ProcessMethod()
     {
+        Method.CheckForDynamicUsagesOf("Anotar.Log4Net.Log");
         try
         {
             ilProcessor = Method.Body.GetILProcessor();

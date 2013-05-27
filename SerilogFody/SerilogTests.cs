@@ -245,7 +245,6 @@ public class SerilogTests
         Assert.AreEqual("System.Void ClassWithLogging::DebugString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
-
     [Test]
     public void DebugStringParams()
     {

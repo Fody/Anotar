@@ -15,9 +15,11 @@ public class LogForwardingProcessor
 
 	public void ProcessMethod()
     {
+	    Method.CheckForDynamicUsagesOf("Anotar.Serilog.LogTo");
         try
         {
             processor = Method.Body.GetILProcessor();
+         
             var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
 
             foreach (var instruction in instructions)
@@ -34,6 +36,8 @@ public class LogForwardingProcessor
             throw new Exception(string.Format("Failed to process '{0}'.", Method.FullName), exception);
         }
     }
+
+
 
     void ProcessInstruction(Instruction instruction)
     {
