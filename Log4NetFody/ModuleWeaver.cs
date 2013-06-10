@@ -24,8 +24,8 @@ public partial class ModuleWeaver
 
     public void Execute()
     {
-        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
-        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("LogMinimalMessageAttribute");
+        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute");
+        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute");
         if (assemblyContainsAttribute || moduleContainsAttribute)
         {
             LogMinimalMessage = true;
