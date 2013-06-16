@@ -1,3 +1,5 @@
+![Icon](https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png)
+
 ## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
 
 Simplifies logging through a static class and some IL manipulation
