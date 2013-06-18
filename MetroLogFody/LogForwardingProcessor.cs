@@ -13,6 +13,10 @@ public class LogForwardingProcessor
     ILProcessor ilProcessor;
 	public ModuleWeaver ModuleWeaver;
 
+    VariableDefinition messageVar;
+    VariableDefinition paramsVar;
+    VariableDefinition exceptionVar;
+
 	public void ProcessMethod()
     {
         Method.CheckForDynamicUsagesOf("Anotar.MetroLog.Log");
@@ -60,7 +64,7 @@ public class LogForwardingProcessor
 
         instruction.OpCode = OpCodes.Callvirt;
 
-	    if (parameters.Count == 0)
+        if (parameters.Count == 0)
         {
             var fieldAssignment = Instruction.Create(OpCodes.Ldsfld, Field);
             ilProcessor.Replace(instruction, fieldAssignment);
@@ -69,49 +73,114 @@ public class LogForwardingProcessor
                                     Instruction.Create(OpCodes.Ldc_I4_0),
                                     Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
                                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)));
-	    }
-	    if (methodReference.IsMatch("String", "Exception"))
+        }
+        if (methodReference.IsMatch("String", "Exception"))
         {
-			var messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-			var exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
-            Method.Body.Variables.Add(exceptionVar);
-            Method.Body.Variables.Add(messageVar);
+            if (messageVar == null)
+            {
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
+            }
+            if (exceptionVar == null)
+            {
+                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+                Method.Body.Variables.Add(exceptionVar);
+            }
+
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
+            
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
 			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
-
-			ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
-
-			instruction.Operand = ModuleWeaver.GetExceptionOperand(methodReference);
+            instruction.Operand = ModuleWeaver.GetExceptionOperand(methodReference);
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-            var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-            Method.Body.Variables.Add(formatVar);
-            Method.Body.Variables.Add(paramsVar);
+            var stringInstruction = FindStringInstruction(instruction);
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+            if (stringInstruction != null)
+            {
+                stringInstruction.Operand = GetMessagePrefix(instruction) + (string)stringInstruction.Operand;
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+                ilProcessor.InsertBefore(stringInstruction, Instruction.Create(OpCodes.Ldsfld, Field));
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+            }
+            else
+            {
+                if (messageVar == null)
+                {
+                    messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                    Method.Body.Variables.Add(messageVar);
+                }
+                if (paramsVar == null)
+                {
+                    paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                    Method.Body.Variables.Add(paramsVar);
+                }
+
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
+
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
+
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
+
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
+                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+            }
         }
 
 
+    }
+
+    bool IsBasicLogCall(Instruction instruction)
+    {
+        var previous = instruction.Previous;
+        if (previous.OpCode != OpCodes.Newarr || ((TypeReference)previous.Operand).FullName != "System.Object")
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldc_I4)
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldstr)
+            return false;
+
+        return true;
+    }
+
+    Instruction FindStringInstruction(Instruction call)
+    {
+        if (IsBasicLogCall(call))
+            return call.Previous.Previous.Previous;
+
+        var previous = call.Previous;
+        if (previous.OpCode != OpCodes.Ldloc)
+            return null;
+
+        var variable = (VariableDefinition)previous.Operand;
+
+        while (previous != null && (previous.OpCode != OpCodes.Stloc || previous.Operand != variable))
+        {
+            previous = previous.Previous;
+        }
+
+        if (previous == null)
+            return null;
+
+        if (IsBasicLogCall(previous))
+            return previous.Previous.Previous.Previous;
+
+        return null;
     }
 
     string GetMessagePrefix(Instruction instruction)

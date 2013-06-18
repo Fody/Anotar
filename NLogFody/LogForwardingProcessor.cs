@@ -13,9 +13,9 @@ public class LogForwardingProcessor
     ILProcessor ilProcessor;
 	public ModuleWeaver ModuleWeaver;
 
-    private VariableDefinition formatVar;
-    private VariableDefinition paramsVar;
-    private VariableDefinition exceptionVar;
+    VariableDefinition messageVar;
+    VariableDefinition paramsVar;
+    VariableDefinition exceptionVar;
 
     public void ProcessMethod()
     {
@@ -76,12 +76,11 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("String", "Exception"))
         {
-            if (formatVar == null)
+            if (messageVar == null)
             {
-                formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                Method.Body.Variables.Add(formatVar);
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
             }
-
             if (exceptionVar == null)
             {
                 exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
@@ -89,12 +88,12 @@ public class LogForwardingProcessor
             }
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
             
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
+            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
 
             ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
@@ -114,12 +113,11 @@ public class LogForwardingProcessor
             }
             else
             {
-                if (formatVar == null)
+                if (messageVar == null)
                 {
-                    formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                    Method.Body.Variables.Add(formatVar);
+                    messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                    Method.Body.Variables.Add(messageVar);
                 }
-
                 if (paramsVar == null)
                 {
                     paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
@@ -127,12 +125,12 @@ public class LogForwardingProcessor
                 }
 
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
 
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
 
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
