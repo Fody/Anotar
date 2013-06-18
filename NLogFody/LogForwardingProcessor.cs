@@ -13,7 +13,10 @@ public class LogForwardingProcessor
     ILProcessor ilProcessor;
 	public ModuleWeaver ModuleWeaver;
 
-	public void ProcessMethod()
+    private VariableDefinition formatVar;
+    private VariableDefinition paramsVar;
+
+    public void ProcessMethod()
     {
         Method.CheckForDynamicUsagesOf("Anotar.NLog.Log");
         try
@@ -103,21 +106,27 @@ public class LogForwardingProcessor
             }
             else
             {
-                var formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                Method.Body.Variables.Add(formatVar);
-                Method.Body.Variables.Add(paramsVar);
+                if (formatVar == null)
+                {
+                    formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                    Method.Body.Variables.Add(formatVar);                    
+                }
+
+                if (paramsVar == null)
+                {
+                    paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                    Method.Body.Variables.Add(paramsVar);
+                }
 
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
 
+                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
+
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
 
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
                 ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
                 instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
             }
