@@ -60,6 +60,7 @@
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithExistingField.cs" />
     <Compile Include="ClassWithLogging.cs" />
+    <Compile Include="ClassWithMultipleLoggings.cs" />
     <Compile Include="ClassWithOldLogging.cs" />
     <Compile Include="ClassWithStaticConstructor.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />

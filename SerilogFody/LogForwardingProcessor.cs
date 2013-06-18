@@ -13,6 +13,10 @@ public class LogForwardingProcessor
     ILProcessor processor;
 	public ModuleWeaver ModuleWeaver;
 
+    VariableDefinition messageVar;
+    VariableDefinition paramsVar;
+    VariableDefinition exceptionVar;
+
 	public void ProcessMethod()
     {
 	    Method.CheckForDynamicUsagesOf("Anotar.Serilog.LogTo");
@@ -36,8 +40,6 @@ public class LogForwardingProcessor
             throw new Exception(string.Format("Failed to process '{0}'.", Method.FullName), exception);
         }
     }
-
-
 
     void ProcessInstruction(Instruction instruction)
     {
@@ -80,7 +82,7 @@ public class LogForwardingProcessor
                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
                                   Instruction.Create(OpCodes.Ldstr, "LineNumber"),
-                                  Instruction.Create(OpCodes.Ldstr, lineNumber), 
+                                  Instruction.Create(OpCodes.Ldstr, lineNumber),
                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
@@ -93,30 +95,32 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
-            var formatVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-            var exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
-            var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-            Method.Body.Variables.Add(exceptionVar);
-            Method.Body.Variables.Add(formatVar);
-            Method.Body.Variables.Add(paramsVar);
+            if (messageVar == null)
+            {
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
+            }
+            if (exceptionVar == null)
+            {
+                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+                Method.Body.Variables.Add(exceptionVar);
+            }
+            if (paramsVar == null)
+            {
+                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                Method.Body.Variables.Add(paramsVar);
+            }
+
             processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, formatVar));
+            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
             processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
+
             processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "MethodName"));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, Method.FullName));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
-
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "LineNumber"));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, lineNumber));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
-
+            AddPropertyContexts(instruction, lineNumber);
 
             processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, formatVar));
+            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
             processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
 
             instruction.Operand = ModuleWeaver.GetExceptionOperand(methodReference);
@@ -124,33 +128,100 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var messageTemplateVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-            var paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-            Method.Body.Variables.Add(messageTemplateVar);
-            Method.Body.Variables.Add(paramsVar);
+            var stringInstruction = FindStringInstruction(instruction);
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageTemplateVar));
+            if (stringInstruction != null)
+            {
+                processor.InsertBefore(stringInstruction, Instruction.Create(OpCodes.Ldsfld, Field));
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
+                AddPropertyContexts(stringInstruction, lineNumber);
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "MethodName"));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, Method.FullName));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
+                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+                return;
+            }
+            else
+            {
+                if (messageVar == null)
+                {
+                    messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                    Method.Body.Variables.Add(messageVar);
+                }
+                if (paramsVar == null)
+                {
+                    paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                    Method.Body.Variables.Add(paramsVar);
+                }
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "LineNumber"));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, lineNumber));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
+                processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
+                processor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
 
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageTemplateVar));
-            processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
-            return;
+                processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
+
+                AddPropertyContexts(instruction, lineNumber);
+
+                processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
+                processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
+                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+                return;
+            }
         }
 
         throw new NotImplementedException();
+    }
+
+    private void AddPropertyContexts(Instruction instruction, string lineNumber)
+    {
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "MethodName"));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, Method.FullName));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
+
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, "LineNumber"));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, lineNumber));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldc_I4_0));
+        processor.InsertBefore(instruction, Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition));
+    }
+
+    bool IsBasicLogCall(Instruction instruction)
+    {
+        var previous = instruction.Previous;
+        if (previous.OpCode != OpCodes.Newarr || ((TypeReference)previous.Operand).FullName != "System.Object")
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldc_I4)
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldstr)
+            return false;
+
+        return true;
+    }
+
+    Instruction FindStringInstruction(Instruction call)
+    {
+        if (IsBasicLogCall(call))
+            return call.Previous.Previous.Previous;
+
+        var previous = call.Previous;
+        if (previous.OpCode != OpCodes.Ldloc)
+            return null;
+
+        var variable = (VariableDefinition)previous.Operand;
+
+        while (previous != null && (previous.OpCode != OpCodes.Stloc || previous.Operand != variable))
+        {
+            previous = previous.Previous;
+        }
+
+        if (previous == null)
+            return null;
+
+        if (IsBasicLogCall(previous))
+            return previous.Previous.Previous.Previous;
+
+        return null;
     }
 
     string GetLineNumber(Instruction instruction)
