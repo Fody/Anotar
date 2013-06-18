@@ -24,6 +24,7 @@ public class Log4NetTests
     public Log4NetTests()
     {
 
+        AppDomainAssemblyFinder.Attach();
 		beforeAssemblyPath = Path.GetFullPath(@"..\..\..\Log4NetAssemblyToProcess\bin\Debug\Log4NetAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");

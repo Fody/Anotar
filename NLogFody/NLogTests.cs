@@ -23,6 +23,7 @@ public class NLogTests
     public NLogTests()
     {
 
+        AppDomainAssemblyFinder.Attach();
 		beforeAssemblyPath = Path.GetFullPath(@"..\..\..\NLogAssemblyToProcess\bin\Debug\NLogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");

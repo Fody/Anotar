@@ -21,6 +21,7 @@ public class SerilogTests
 
     public SerilogTests()
     {
+        AppDomainAssemblyFinder.Attach();
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\SerilogAssemblyToProcess\bin\Debug\SerilogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");

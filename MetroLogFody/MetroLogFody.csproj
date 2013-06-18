@@ -93,6 +93,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common\AppDomainAssemblyFinder.cs">
+      <Link>AppDomainAssemblyFinder.cs</Link>
+    </Compile>
     <Compile Include="..\Common\AsyncChecker.cs">
       <Link>AsyncChecker.cs</Link>
     </Compile>
