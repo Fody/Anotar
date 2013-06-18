@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using Microsoft.Build.Utilities;
 using NUnit.Framework;
 using Scalpel;
 

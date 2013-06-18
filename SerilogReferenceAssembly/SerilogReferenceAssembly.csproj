@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Serilog">
-      <HintPath>..\packages\Serilog.0.5.4\lib\portable-net45+win8+wp8\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.0.6.1\lib\portable-net45+win8+wp8\Serilog.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
