@@ -62,6 +62,7 @@
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithExistingField.cs" />
+    <Compile Include="ClassWithMultipleLoggings.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />
     <Compile Include="GenericClass.cs" />
     <Compile Include="MyDelegate.cs" />
