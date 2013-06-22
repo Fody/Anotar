@@ -7,22 +7,6 @@ public class ClassWithLogging
     {
         System.Diagnostics.Trace.WriteLine("Foo");
     }
-    public void Trace()
-    {
-        Log.Trace();
-    }
-    public void TraceString()
-    {
-        Log.Trace("TheMessage");
-    }
-    public void TraceStringParams()
-    {
-        Log.Trace("TheMessage {0}", 1);
-    }
-    public void TraceStringException()
-    {
-        Log.Trace(new Exception(), "TheMessage");
-    }
     public void Debug()
     {
         Log.Debug();
@@ -55,21 +39,21 @@ public class ClassWithLogging
     {
         Log.Information(new Exception(), "TheMessage");
     }
-    public void Warn()
+    public void Warning()
     {
-        Log.Warn();
+        Log.Warning();
     }
-    public void WarnString()
+    public void WarningString()
     {
-        Log.Warn("TheMessage");
+        Log.Warning("TheMessage");
     }
-    public void WarnStringParams()
+    public void WarningStringParams()
     {
-        Log.Warn("TheMessage {0}", 1);
+        Log.Warning("TheMessage {0}", 1);
     }
-    public void WarnStringException()
+    public void WarningStringException()
     {
-        Log.Warn(new Exception(),"TheMessage");
+        Log.Warning(new Exception(), "TheMessage");
     }
     public void Error()
     {

@@ -3,10 +3,10 @@ using System;
 namespace Anotar.Custom
 {
     /// <summary>
-    /// If an <see cref="Exception"/> occurs in the applied method then log it to <c>Info</c>.
+    /// If an <see cref="Exception"/> occurs in the applied method then log it to <c>Information</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
-    public class LogToInfoOnExceptionAttribute : Attribute
+    public class LogToInformationOnExceptionAttribute : Attribute
     {
     }
 }

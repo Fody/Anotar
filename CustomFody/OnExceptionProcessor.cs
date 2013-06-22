@@ -109,13 +109,6 @@ class OnExceptionProcessor
 		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
-		if (attributeFinder.FoundTrace)
-        {
-            foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod, ModuleWeaver.isTraceEnabledMethod))
-            {
-                yield return instruction;
-            }
-        }
 		if (attributeFinder.FoundDebug)
         {
 			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.isDebugEnabledMethod))
@@ -123,16 +116,16 @@ class OnExceptionProcessor
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundInfo)
+		if (attributeFinder.FoundInformation)
         {
 			foreach (var instruction in AddWrite(ModuleWeaver.InformationExceptionMethod, ModuleWeaver.isInformationEnabledMethod))
             {
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundWarn)
+		if (attributeFinder.FoundWarning)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.isWarnEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.WarningExceptionMethod, ModuleWeaver.isWarningEnabledMethod))
             {
                 yield return instruction;
             }

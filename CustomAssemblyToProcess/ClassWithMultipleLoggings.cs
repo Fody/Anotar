@@ -8,7 +8,7 @@ public class ClassWithMultipleLoggings
     {
         Log.Debug("Debug");
         Log.Information("Info");
-        Log.Warn("Warn");
+        Log.Warning("Warn");
     }
 
     public void LogWithArgs()
@@ -17,13 +17,13 @@ public class ClassWithMultipleLoggings
 
         Log.Debug("Debug", args);
         Log.Information("Info", args);
-        Log.Warn("Warn", args);
+        Log.Warning("Warn", args);
     }
 
     public void LogErrors()
     {
         Log.Debug(new Exception(), "Debug");
         Log.Information(new Exception(), "Info");
-        Log.Warn(new Exception(), "Warn");
+        Log.Warning(new Exception(), "Warn");
     }
 }

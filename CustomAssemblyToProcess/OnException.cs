@@ -82,43 +82,30 @@ public class OnException
         throw new Exception("Foo");
     }
 
-    [LogToInfoOnException]
-    public void ToInfo(string param1, int param2)
+    [LogToInformationOnException]
+    public void ToInformation(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToInfoOnException]
-    public object ToInfoWithReturn(string param1, int param2)
+    [LogToInformationOnException]
+    public object ToInformationWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToWarnOnException]
-    public void ToWarn(string param1, int param2)
+    [LogToWarningOnException]
+    public void ToWarning(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToWarnOnException]
-    public object ToWarnWithReturn(string param1, int param2)
+    [LogToWarningOnException]
+    public object ToWarningWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-    [LogToTraceOnException]
-    public void ToTrace(string param1, int param2)
-    {
-        Debug.WriteLine("aString");
-        throw new Exception("Foo");
-    }
-
-    [LogToTraceOnException]
-    public object ToTraceWithReturn(string param1, int param2)
-    {
-        Debug.WriteLine("aString");
-        throw new Exception("Foo");
-    }
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {

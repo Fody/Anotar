@@ -38,7 +38,7 @@ public class CustomTests
         var constructedType = type.MakeGenericType(typeof (string));
         var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
-        var message = LoggerFactory.Debugs.First();
+        var message = LoggerFactory.DebugEntries.First();
         Assert.IsTrue(message.Format.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
     }
 
@@ -48,8 +48,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, LoggerFactory.Debugs.Count);
-        Assert.IsTrue(LoggerFactory.Debugs.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
     }
 
     [Test]
@@ -59,8 +59,8 @@ public class CustomTests
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, LoggerFactory.Debugs.Count);
-        Assert.IsTrue(LoggerFactory.Debugs.First().Format.StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
     }
 
     void CheckException(Action<object> action, List<LogEntry> list, string expected)
@@ -85,26 +85,11 @@ public class CustomTests
 
 
     [Test]
-    public void OnExceptionToTrace()
-    {
-        var expected = "Exception occurred in 'System.Void OnException::ToTrace(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToTrace("x", 6);
-        CheckException(action, LoggerFactory.Traces, expected);
-    }
-
-    [Test]
-    public void OnExceptionToTraceWithReturn()
-    {
-        var expected = "Exception occurred in 'System.Object OnException::ToTraceWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToTraceWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Traces, expected);
-    }
-    [Test]
     public void OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
-        CheckException(action, LoggerFactory.Debugs, expected);
+        CheckException(action, LoggerFactory.DebugEntries, expected);
     }
 
     [Test]
@@ -112,39 +97,39 @@ public class CustomTests
     {
         var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Debugs, expected);
+        CheckException(action, LoggerFactory.DebugEntries, expected);
     }
 
     [Test]
-    public void OnExceptionToInfo()
+    public void OnExceptionToInformation()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, LoggerFactory.Infos, expected);
+        var expected = "Exception occurred in 'System.Void OnException::ToInformation(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInformation("x", 6);
+        CheckException(action, LoggerFactory.InformationEntries, expected);
     }
 
     [Test]
-    public void OnExceptionToInfoWithReturn()
+    public void OnExceptionToInformationWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Infos, expected);
+        var expected = "Exception occurred in 'System.Object OnException::ToInformationWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToInformationWithReturn("x", 6);
+        CheckException(action, LoggerFactory.InformationEntries, expected);
     }
 
     [Test]
-    public void OnExceptionToWarn()
+    public void OnExceptionToWarning()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToWarn("x", 6);
-        CheckException(action, LoggerFactory.Warns, expected);
+        var expected = "Exception occurred in 'System.Void OnException::ToWarning(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarning("x", 6);
+        CheckException(action, LoggerFactory.WarningEntries, expected);
     }
 
     [Test]
-    public void OnExceptionToWarnWithReturn()
+    public void OnExceptionToWarningWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-        Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Warns, expected);
+        var expected = "Exception occurred in 'System.Object OnException::ToWarningWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToWarningWithReturn("x", 6);
+        CheckException(action, LoggerFactory.WarningEntries, expected);
     }
 
     [Test]
@@ -152,7 +137,7 @@ public class CustomTests
     {
         var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
-        CheckException(action, LoggerFactory.Errors, expected);
+        CheckException(action, LoggerFactory.ErrorEntries, expected);
     }
 
     [Test]
@@ -160,14 +145,14 @@ public class CustomTests
     {
         var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Errors, expected);
+        CheckException(action, LoggerFactory.ErrorEntries, expected);
     }
     [Test]
     public void OnExceptionToFatal()
     {
         var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
-        CheckException(action, LoggerFactory.Fatals, expected);
+        CheckException(action, LoggerFactory.FatalEntries, expected);
     }
 
     [Test]
@@ -175,46 +160,7 @@ public class CustomTests
     {
         var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-        CheckException(action, LoggerFactory.Fatals, expected);
-    }
-
-    [Test]
-    public void Trace()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Trace();
-        Assert.AreEqual(1, LoggerFactory.Traces.Count);
-        Assert.IsTrue(LoggerFactory.Traces.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Trace()'. Line: ~"));
-    }
-    [Test]
-    public void TraceString()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.TraceString();
-        Assert.AreEqual(1, LoggerFactory.Traces.Count);
-        Assert.IsTrue(LoggerFactory.Traces.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::TraceString()'. Line: ~"));
-    }
-
-    [Test]
-    public void TraceStringParams()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.TraceStringParams();
-        Assert.AreEqual(1, LoggerFactory.Traces.Count);
-        Assert.IsTrue(LoggerFactory.Traces.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::TraceStringParams()'. Line: ~"));
-    }
-
-    [Test]
-    public void TraceStringException()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.TraceStringException();
-        Assert.AreEqual(1, LoggerFactory.Traces.Count);
-        Assert.IsTrue(LoggerFactory.Traces.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::TraceStringException()'. Line: ~"));
+        CheckException(action, LoggerFactory.FatalEntries, expected);
     }
 
 
@@ -224,8 +170,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
-        Assert.AreEqual(1, LoggerFactory.Debugs.Count);
-        Assert.IsTrue(LoggerFactory.Debugs.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -234,8 +180,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
-        Assert.AreEqual(1, LoggerFactory.Debugs.Count);
-        Assert.IsTrue(LoggerFactory.Debugs.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -244,8 +190,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
-        Assert.AreEqual(1, LoggerFactory.Debugs.Count);
-        Assert.IsTrue(LoggerFactory.Debugs.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
     }
 
     [Test]
@@ -254,8 +200,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Information();
-        Assert.AreEqual(1, LoggerFactory.Infos.Count);
-        Assert.IsTrue(LoggerFactory.Infos.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Information()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Information()'. Line: ~"));
     }
 
     [Test]
@@ -264,8 +210,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationString();
-        Assert.AreEqual(1, LoggerFactory.Infos.Count);
-        Assert.IsTrue(LoggerFactory.Infos.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationString()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationString()'. Line: ~"));
     }
 
     [Test]
@@ -274,8 +220,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationStringParams();
-        Assert.AreEqual(1, LoggerFactory.Infos.Count);
-        Assert.IsTrue(LoggerFactory.Infos.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationStringParams()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -284,48 +230,48 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationStringException();
-        Assert.AreEqual(1, LoggerFactory.Infos.Count);
-        Assert.IsTrue(LoggerFactory.Infos.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationStringException()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::InformationStringException()'. Line: ~"));
     }
 
     [Test]
-    public void Warn()
+    public void Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Warn();
-        Assert.AreEqual(1, LoggerFactory.Warns.Count);
-        Assert.IsTrue(LoggerFactory.Warns.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
+        instance.Warning();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Warning()'. Line: ~"));
     }
 
     [Test]
-    public void WarnString()
+    public void WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnString();
-        Assert.AreEqual(1, LoggerFactory.Warns.Count);
-        Assert.IsTrue(LoggerFactory.Warns.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
+        instance.WarningString();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarningString()'. Line: ~"));
     }
 
     [Test]
-    public void WarnStringParams()
+    public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnStringParams();
-        Assert.AreEqual(1, LoggerFactory.Warns.Count);
-        Assert.IsTrue(LoggerFactory.Warns.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
+        instance.WarningStringParams();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarningStringParams()'. Line: ~"));
     }
 
     [Test]
-    public void WarnStringException()
+    public void WarningStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnStringException();
-        Assert.AreEqual(1, LoggerFactory.Warns.Count);
-        Assert.IsTrue(LoggerFactory.Warns.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
+        instance.WarningStringException();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::WarningStringException()'. Line: ~"));
     }
 
     [Test]
@@ -334,8 +280,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
-        Assert.AreEqual(1, LoggerFactory.Errors.Count);
-        Assert.IsTrue(LoggerFactory.Errors.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
     }
 
     [Test]
@@ -344,8 +290,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
-        Assert.AreEqual(1, LoggerFactory.Errors.Count);
-        Assert.IsTrue(LoggerFactory.Errors.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -354,8 +300,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
-        Assert.AreEqual(1, LoggerFactory.Errors.Count);
-        Assert.IsTrue(LoggerFactory.Errors.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -364,8 +310,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
-        Assert.AreEqual(1, LoggerFactory.Errors.Count);
-        Assert.IsTrue(LoggerFactory.Errors.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
     }
     
     [Test]
@@ -374,8 +320,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Fatal();
-        Assert.AreEqual(1, LoggerFactory.Fatals.Count);
-        Assert.IsTrue(LoggerFactory.Fatals.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
     }
 
     [Test]
@@ -384,8 +330,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalString();
-        Assert.AreEqual(1, LoggerFactory.Fatals.Count);
-        Assert.IsTrue(LoggerFactory.Fatals.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
     }
 
     [Test]
@@ -394,8 +340,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringParams();
-        Assert.AreEqual(1, LoggerFactory.Fatals.Count);
-        Assert.IsTrue(LoggerFactory.Fatals.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -404,8 +350,8 @@ public class CustomTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringException();
-        Assert.AreEqual(1, LoggerFactory.Fatals.Count);
-        Assert.IsTrue(LoggerFactory.Fatals.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
     }
     
     [Test]

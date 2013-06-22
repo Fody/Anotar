@@ -61,9 +61,8 @@
     <Compile Include="LogMinimalMessageAttribute.cs" />
     <Compile Include="LogToDebugOnExceptionAttribute.cs" />
     <Compile Include="LogToErrorOnExceptionAttribute.cs" />
-    <Compile Include="LogToInfoOnExceptionAttribute.cs" />
-    <Compile Include="LogToTraceOnExceptionAttribute.cs" />
-    <Compile Include="LogToWarnOnExceptionAttribute.cs" />
+    <Compile Include="LogToInformationOnExceptionAttribute.cs" />
+    <Compile Include="LogToWarningOnExceptionAttribute.cs" />
     <Compile Include="StringFormatMethodAttribute.cs" />
     <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />

@@ -31,10 +31,10 @@ Simplifies logging through a static class and some IL manipulation
 
     PM> Install-Package Anotar.Serilog.Fody
  
-## What happened to the old "Anotar.Fody" package
+ * Custom package http://nuget.org/packages/Anotar.Custom.Fody 
 
-There were too many lossy abstractions happening between Anotar and the target logging libraries. So the new packages make better use of the individual libraries features. You should remove the `Anotar.Fody` package and switch to the package that targets your logging framework of choice.
-
+    PM> Install-Package Anotar.Custom.Fody
+ 
 ## Explicit Logging
 
 This example is targeting the [NLog](http://nlog-project.org/).
@@ -102,6 +102,18 @@ This example is targeting the [NLog](http://nlog-project.org/).
         }
     }
 
+#### In Custom
+
+    public class MyClass
+    {
+        static Logger logger = LoggerFactory.GetLogger<MyClass>();
+
+        void MyMethod()
+        {
+            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
+        }
+    }
+
 ### Other Log Overloads in Explicit Logging
 
 There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
@@ -138,6 +150,71 @@ Each of these methods has the expected 'message', 'params' and 'exception' overl
             throw;
         }
     }
+
+
+## Custom Logging
+
+The custom logging variant exist for several reasons
+
+  1. Projects targeting an obscure logging libraries i.e. not NLog, MetroLog, SeriLog or Log4Net.
+  2. Projects that have their own logging custom logging libraries
+  3. Projects that support multiple different logging libraries
+  
+It works by allowing you to have custom logger construction and a custom logger instance.
+
+### Expected factory and instance formats
+
+#### Factory
+
+The Logger Factory is responsible for building an instance of a logger. 
+
+It should have a static method GetLogger. Namespace doesnt matter.
+
+    public class LoggerFactory
+    {
+        public static Logger GetLogger<T>()
+        {
+            return new Logger();
+        }
+    }
+    
+#### Instance
+
+The Logger instance is responsible for building an instance of a logger. 
+
+It should take the following form. Namespace doesnt matter.
+
+    public class Logger
+    {
+        public void Debug(string format, params object[] args){}
+        public void Debug(Exception exception, string format, params object[] args){}
+        public bool IsDebugEnabled { get }
+        public void Information(string format, params object[] args){}
+        public void Information(Exception exception, string format, params object[] args){}
+        public bool IsInformationEnabled { get  }
+        public void Warning(string format, params object[] args){}
+        public void Warning(Exception exception, string format, params object[] args){}
+        public bool IsWarningEnabled { get }
+        public void Error(string format, params object[] args){}
+        public void Error(Exception exception, string format, params object[] args){}
+        public bool IsErrorEnabled { get  }
+        public void Fatal(string format, params object[] args){}
+        public void Fatal(Exception exception, string format, params object[] args){}
+        public bool IsFatalEnabled { get  }
+    }
+        
+### Discovery
+
+#### Current Assembly
+
+If `LoggerFactory` and `Logger` exist in the current assembly they will be picked up automatically.
+
+#### Other Assembly
+
+If `LoggerFactory` and `Logger` exist in a different assembly You will need to use a `[LoggerFactoryAttribute]` to tell Anotar where to look.
+
+[assembly: LoggerFactoryAttribute(typeof(MyUtilsLibrary.LoggerFactory))]
+
 
 ## Nothing to deploy
 
