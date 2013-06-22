@@ -168,7 +168,11 @@ It works by allowing you to have custom logger construction and a custom logger 
 
 The Logger Factory is responsible for building an instance of a logger. 
 
-It should have a static method GetLogger. Namespace doesnt matter.
+  * Named `LoggerFactory`.
+  * Namespace doesnt matter.
+  * Have a static method GetLogger. 
+  
+For example
 
     public class LoggerFactory
     {
@@ -182,7 +186,13 @@ It should have a static method GetLogger. Namespace doesnt matter.
 
 The Logger instance is responsible for building an instance of a logger. 
 
-It should take the following form. Namespace doesnt matter.
+  * Name doesnt matter. It will be derived from the return type of `LoggerFactory.GetLogger`.
+  * Must not be generic.
+  * Namespace doesnt matter.
+  * Can be either an interface, a concrete class or an abstract class.
+  * Must contain the members listed below.
+  
+For example
 
     public class Logger
     {
