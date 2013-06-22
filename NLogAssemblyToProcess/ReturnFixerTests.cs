@@ -44,7 +44,7 @@ public class ReturnFixerTests
 
     decimal? property1;
     [LogToDebugOnException]
-    public void WithLdfldaShortCircut(decimal value)
+    public void WithLdfldaShortCircuit(decimal value)
     {
         if (value == 0.0m)
         {
@@ -111,14 +111,14 @@ public class ReturnFixerTests
             }
             catch (Exception)
             {
-                Debug.WriteLine("sdfsd");
+                Debug.WriteLine("aString");
                 throw;
             }
-            throw new Exception("sdf",exception);
+            throw new Exception("aString", exception);
         }
         finally
         {
-         throw   new Exception("sdf");
+            throw new Exception("aString");
         }
     }
 #pragma warning restore 168

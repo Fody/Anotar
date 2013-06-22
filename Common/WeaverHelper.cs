@@ -10,17 +10,17 @@ public static class WeaverHelper
     public static string Weave(string assemblyPath)
     {
         var newAssembly = assemblyPath.Replace(".dll", "2.dll");
-        var oldpdb = assemblyPath.Replace(".dll", ".pdb");
-        var newpdb = assemblyPath.Replace(".dll", "2.pdb");
+        var oldPdb = assemblyPath.Replace(".dll", ".pdb");
+        var newPdb = assemblyPath.Replace(".dll", "2.pdb");
         File.Copy(assemblyPath, newAssembly, true);
-        File.Copy(oldpdb, newpdb, true);
+        File.Copy(oldPdb, newPdb, true);
 
         var assemblyResolver = new MockAssemblyResolver
             {
                 Directory = Path.GetDirectoryName(assemblyPath)
             };
 
-        using (var symbolStream = File.OpenRead(newpdb))
+        using (var symbolStream = File.OpenRead(newPdb))
         {
             var readerParameters = new ReaderParameters
                 {

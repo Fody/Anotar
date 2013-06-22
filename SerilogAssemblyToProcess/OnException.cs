@@ -112,14 +112,14 @@ public class OnException
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
 
     [LogToDebugOnException]
     public object ToDebugWithReturn(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
 

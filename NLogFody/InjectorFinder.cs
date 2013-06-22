@@ -8,11 +8,11 @@ public partial class ModuleWeaver
 
 	void FindReference()
 	{
-		var exsitingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "NLog");
+		var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "NLog");
 
-		if (exsitingReference != null)
+		if (existingReference != null)
 		{
-			NLogReference = AssemblyResolver.Resolve(exsitingReference);
+			NLogReference = AssemblyResolver.Resolve(existingReference);
 			return;
 		}
 		var reference = AssemblyResolver.Resolve("NLog");
@@ -21,7 +21,7 @@ public partial class ModuleWeaver
 			NLogReference = reference;
 			return;
 		}
-		throw new Exception("Could not resolve a refernce to NLog.dll.");
+		throw new Exception("Could not resolve a reference to NLog.dll.");
 	}
 
 }

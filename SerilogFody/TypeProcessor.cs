@@ -71,13 +71,13 @@ public partial class ModuleWeaver
                                   .ToList();
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
-        foreach (var ret in returns)
+        foreach (var returnInstruction in returns)
         {
             var newReturn = Instruction.Create(OpCodes.Ret);
-            ilProcessor.InsertAfter(ret, newReturn);
+            ilProcessor.InsertAfter(returnInstruction, newReturn);
             ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
             ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-            ret.OpCode = OpCodes.Nop;
+            returnInstruction.OpCode = OpCodes.Nop;
         }
         staticConstructor.Body.OptimizeMacros();
     }

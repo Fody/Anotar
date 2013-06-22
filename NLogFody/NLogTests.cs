@@ -37,7 +37,7 @@ public class NLogTests
             };
 
         config.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, target));
-        config.AddTarget("debuger", target);
+        config.AddTarget("debugger", target);
         LogManager.Configuration = config;
     }
 

@@ -7,7 +7,7 @@ public class ClassWithWhileMethod
     {
         while (true)
         {
-            Trace.WriteLine("dfg");
+            Trace.WriteLine("aString");
             break;
         }
         Log.Info();

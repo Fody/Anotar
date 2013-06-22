@@ -8,11 +8,11 @@ public partial class ModuleWeaver
 
 	void FindReference()
 	{
-		var exsitingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "MetroLog");
+		var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "MetroLog");
 
-		if (exsitingReference != null)
+		if (existingReference != null)
 		{
-			MetroLogReference = AssemblyResolver.Resolve(exsitingReference);
+			MetroLogReference = AssemblyResolver.Resolve(existingReference);
 			return;
 		}
 		var reference = AssemblyResolver.Resolve("MetroLog");

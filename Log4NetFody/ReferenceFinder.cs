@@ -8,11 +8,11 @@ public partial class ModuleWeaver
 
 	void FindReference()
 	{
-		var exsitingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Log4Net");
+		var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Log4Net");
 
-		if (exsitingReference != null)
+		if (existingReference != null)
 		{
-			Log4NetReference = AssemblyResolver.Resolve(exsitingReference);
+			Log4NetReference = AssemblyResolver.Resolve(existingReference);
 			return;
 		}
 		var reference = AssemblyResolver.Resolve("Log4Net");
@@ -21,7 +21,7 @@ public partial class ModuleWeaver
 			Log4NetReference = reference;
 			return;
 		}
-		throw new Exception("Could not resolve a refernce to Log4Net.dll.");
+		throw new Exception("Could not resolve a reference to Log4Net.dll.");
 	}
 
 }

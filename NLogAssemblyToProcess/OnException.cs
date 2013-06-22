@@ -109,27 +109,27 @@ public class OnException
     [LogToTraceOnException]
     public void ToTrace(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
 
     [LogToTraceOnException]
     public object ToTraceWithReturn(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
 
     [LogToDebugOnException]
     public object ToDebugWithReturn(string param1, int param2)
     {
-        Debug.WriteLine("sdf");
+        Debug.WriteLine("aString");
         throw new Exception("Foo");
     }
 

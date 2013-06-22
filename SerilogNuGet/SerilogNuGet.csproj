@@ -20,7 +20,6 @@
     <None Include="Anotar.Serilog.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="app.config" />
     <None Include="install.ps1" />
     <None Include="uninstall.ps1" />
   </ItemGroup>

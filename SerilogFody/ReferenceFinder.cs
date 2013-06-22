@@ -8,11 +8,11 @@ public partial class ModuleWeaver
 
 	void FindReference()
 	{
-		var exsitingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Serilog");
+		var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Serilog");
 
-		if (exsitingReference != null)
+		if (existingReference != null)
 		{
-			SerilogReference = AssemblyResolver.Resolve(exsitingReference);
+			SerilogReference = AssemblyResolver.Resolve(existingReference);
 			return;
 		}
 		var reference = AssemblyResolver.Resolve("Serilog");
