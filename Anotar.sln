@@ -52,6 +52,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomReferenceAssembly", "CustomReferenceAssembly\CustomReferenceAssembly.csproj", "{9F5A653C-EE47-4865-8A37-DF447F5FA3CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomNuGet", "CustomNuGet\CustomNuGet.csproj", "{B3C6E573-5BD2-479C-A9B6-B16E36FFF951}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F5A653C-EE47-4865-8A37-DF447F5FA3CB} = {9F5A653C-EE47-4865-8A37-DF447F5FA3CB}
+		{4517D06F-06BB-4003-BA4C-E2F85F77E4B7} = {4517D06F-06BB-4003-BA4C-E2F85F77E4B7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomFody", "CustomFody\CustomFody.csproj", "{4517D06F-06BB-4003-BA4C-E2F85F77E4B7}"
 EndProject
