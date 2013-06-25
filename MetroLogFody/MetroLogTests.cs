@@ -22,16 +22,16 @@ public class MetroLogTests
     public MetroLogTests()
     {
         AppDomainAssemblyFinder.Attach();
-		beforeAssemblyPath = Path.GetFullPath(@"..\..\..\MetroLogAssemblyToProcess\bin\Debug\MetroLogAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\MetroLogAssemblyToProcess\bin\Debug\MetroLogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var target = new ActionTarget
-        {
-            Action = LogEvent
-        };
+                     {
+                         Action = LogEvent
+                     };
 
         LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Trace, target);
         LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Debug, target);
@@ -45,7 +45,7 @@ public class MetroLogTests
     {
         if (eventInfo.Level == LogLevel.Fatal)
         {
-			Fatals.Add(eventInfo.Message);
+            Fatals.Add(eventInfo.Message);
             return;
         }
         if (eventInfo.Level == LogLevel.Error)
@@ -94,7 +94,7 @@ public class MetroLogTests
     {
         var type = assembly.GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof (string));
-        var instance = (dynamic)Activator.CreateInstance(constructedType);
+        var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
         Assert.IsTrue(message.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
@@ -106,7 +106,7 @@ public class MetroLogTests
     {
         var type = assembly.GetType("ClassWithExistingField");
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
@@ -128,7 +128,7 @@ public class MetroLogTests
         Assert.IsNotNull(exception);
         Assert.AreEqual(1, list.Count);
         var first = list.First();
-        Assert.IsTrue(first.StartsWith(expected),first);
+        Assert.IsTrue(first.StartsWith(expected), first);
     }
 
     [Test]
@@ -214,33 +214,34 @@ public class MetroLogTests
     [Test]
     public void OnExceptionToFatal()
     {
-		var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatal("x", 6);
-		CheckException(action, Fatals, expected);
+        var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatal("x", 6);
+        CheckException(action, Fatals, expected);
     }
 
     [Test]
-	public void OnExceptionToFatalWithReturn()
+    public void OnExceptionToFatalWithReturn()
     {
-		var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-		CheckException(action, Fatals, expected);
+        var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
+        CheckException(action, Fatals, expected);
     }
 
     [Test]
     public void Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Trace();
         Assert.AreEqual(1, Traces.Count);
         Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::Trace()'. Line: ~"));
     }
+
     [Test]
     public void TraceString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceString();
         Assert.AreEqual(1, Traces.Count);
         Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceString()'. Line: ~"));
@@ -260,7 +261,7 @@ public class MetroLogTests
     public void TraceStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringException();
         Assert.AreEqual(1, Traces.Count);
         Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceStringException()'. Line: ~"));
@@ -270,16 +271,17 @@ public class MetroLogTests
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
     }
+
     [Test]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
@@ -299,7 +301,7 @@ public class MetroLogTests
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
@@ -309,7 +311,7 @@ public class MetroLogTests
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, Infos.Count);
         Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
@@ -319,7 +321,7 @@ public class MetroLogTests
     public void InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, Infos.Count);
         Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
@@ -329,7 +331,7 @@ public class MetroLogTests
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, Infos.Count);
         Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
@@ -339,7 +341,7 @@ public class MetroLogTests
     public void InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, Infos.Count);
         Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
@@ -349,7 +351,7 @@ public class MetroLogTests
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
@@ -359,7 +361,7 @@ public class MetroLogTests
     public void WarnString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
@@ -369,7 +371,7 @@ public class MetroLogTests
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
@@ -379,7 +381,7 @@ public class MetroLogTests
     public void WarnStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
@@ -389,7 +391,7 @@ public class MetroLogTests
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
@@ -399,7 +401,7 @@ public class MetroLogTests
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
@@ -409,7 +411,7 @@ public class MetroLogTests
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
@@ -419,7 +421,7 @@ public class MetroLogTests
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
@@ -429,45 +431,45 @@ public class MetroLogTests
     public void Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.Fatal();
-		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Fatal();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
     }
 
     [Test]
-	public void FatalString()
+    public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalString();
-		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalString();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
     }
 
     [Test]
-	public void FatalStringParams()
+    public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalStringParams();
-		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringParams();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
     }
 
     [Test]
-	public void FatalStringException()
+    public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalStringException();
-		Assert.AreEqual(1, Fatals.Count);
-		Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringException();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
     }
 
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
+        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="ClassWithOldLogging.cs" />
     <Compile Include="ClassWithStaticConstructor.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />
+    <Compile Include="ClassWithException.cs" />
     <Compile Include="GenericClass.cs" />
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs" />

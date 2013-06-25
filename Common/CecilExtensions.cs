@@ -6,13 +6,14 @@ using Mono.Collections.Generic;
 
 public static class CecilExtensions
 {
-    public static void BeforeLast(this Collection<Instruction> collection, params Instruction[] instructions)
+    public static void Replace(this Collection<Instruction> collection, Instruction instruction, IEnumerable<Instruction> instructions)
     {
-        var index = collection.Count - 1;
-        foreach (var instruction in instructions)
+        var indexOf = collection.IndexOf(instruction);
+        collection.RemoveAt(indexOf);
+        foreach (var instruction1 in instructions)
         {
-            collection.Insert(index, instruction);
-            index++;
+            collection.Insert(indexOf, instruction1);
+            indexOf++;
         }
     }
 
@@ -57,10 +58,15 @@ public static class CecilExtensions
 		foreach (var instruction in instructions)
 			processor.InsertBefore(target, instruction);
 	}
-	public static void InsertAfter(this ILProcessor processor, Instruction target, params Instruction[] instructions)
+    public static void InsertAfter(this Collection<Instruction> collection, Instruction target, params Instruction[] instructions)
 	{
-		foreach (var instruction in instructions.Reverse())
-			processor.InsertAfter(target, instruction);
+        var indexOf = collection.IndexOf(target);
+        indexOf++;
+        for (var index = 0; index < instructions.Length; index++)
+        {
+            var instruction = instructions[index];
+            collection.Insert(index+indexOf, instruction);
+        }
 	}
 	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
 	{

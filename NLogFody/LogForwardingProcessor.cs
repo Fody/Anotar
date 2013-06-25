@@ -10,7 +10,6 @@ public class LogForwardingProcessor
     public FieldReference Field;
     public Action FoundUsageInType;
     bool foundUsageInMethod;
-    ILProcessor ilProcessor;
 	public ModuleWeaver ModuleWeaver;
 
     VariableDefinition messageVar;
@@ -22,7 +21,6 @@ public class LogForwardingProcessor
         Method.CheckForDynamicUsagesOf("Anotar.NLog.Log");
         try
         {
-            ilProcessor = Method.Body.GetILProcessor();
             var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
 
             foreach (var instruction in instructions)
@@ -63,16 +61,18 @@ public class LogForwardingProcessor
         var parameters = methodReference.Parameters;
 
         instruction.OpCode = OpCodes.Callvirt;
-
+        var instructions = Method.Body.Instructions;
         if (parameters.Count == 0)
         {
-            var fieldAssignment = Instruction.Create(OpCodes.Ldsfld, Field);
-            ilProcessor.Replace(instruction, fieldAssignment);
-            ilProcessor.InsertAfter(fieldAssignment,
-                                    Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
-                                    Instruction.Create(OpCodes.Ldc_I4_0),
-                                    Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
-                                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)));
+            instructions.Replace(instruction, new[]
+                                              {
+                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
+                                                  Instruction.Create(OpCodes.Ldc_I4_0),
+                                                  Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
+                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
+                                              });
+            return;
         }
         if (methodReference.IsMatch("String", "Exception"))
         {
@@ -87,57 +87,61 @@ public class LogForwardingProcessor
                 Method.Body.Variables.Add(exceptionVar);
             }
 
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, exceptionVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-            
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-
-            ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, exceptionVar));
-            instruction.Operand = ModuleWeaver.GetExceptionOperand(methodReference);
+            instructions.Replace(instruction, new[]
+                                              {
+                                                  Instruction.Create(OpCodes.Stloc, exceptionVar),
+                                                  Instruction.Create(OpCodes.Stloc, messageVar),
+                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
+                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
+                                                  Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                                                  Instruction.Create(OpCodes.Ldloc, exceptionVar),
+                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference)),
+                                              });
+            return;
         }
-        if (methodReference.IsMatch("String", "Object[]"))
+         if (methodReference.IsMatch("String", "Object[]"))
         {
             var stringInstruction = FindStringInstruction(instruction);
 
             if (stringInstruction != null)
             {
-                stringInstruction.Operand = GetMessagePrefix(instruction) + (string)stringInstruction.Operand;
+                var operand = GetMessagePrefix(instruction) + (string) stringInstruction.Operand;
+                instructions.Replace(stringInstruction, new[]
+                                                  {
+                                                      Instruction.Create(OpCodes.Ldsfld, Field),
+                                                      Instruction.Create(stringInstruction.OpCode, operand),
 
-                ilProcessor.InsertBefore(stringInstruction, Instruction.Create(OpCodes.Ldsfld, Field));
+                                                  });
 
                 instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+                return;
             }
-            else
+            if (messageVar == null)
             {
-                if (messageVar == null)
-                {
-                    messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                    Method.Body.Variables.Add(messageVar);
-                }
-                if (paramsVar == null)
-                {
-                    paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                    Method.Body.Variables.Add(paramsVar);
-                }
-
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, paramsVar));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Stloc, messageVar));
-
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldsfld, Field));
-
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, messageVar));
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod));
-
-                ilProcessor.InsertBefore(instruction, Instruction.Create(OpCodes.Ldloc, paramsVar));
-                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
             }
-        }
+            if (paramsVar == null)
+            {
+                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                Method.Body.Variables.Add(paramsVar);
+            }
 
+            instructions.Replace(instruction, new[]
+                                              {
+                                                  Instruction.Create(OpCodes.Stloc, paramsVar),
+                                                  Instruction.Create(OpCodes.Stloc, messageVar),
+                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
+                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
+                                                  Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                                                  Instruction.Create(OpCodes.Ldloc, paramsVar),
+                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                                              });
+             return;
+        }
+        throw new NotImplementedException();
 
     }
 

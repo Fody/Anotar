@@ -34,13 +34,6 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
     <OutputPath>bin\Deployable\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -63,6 +56,7 @@
     <Compile Include="ClassWithExistingField.cs" />
     <Compile Include="ClassWithMultipleLoggings.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />
+    <Compile Include="ClassWithException.cs" />
     <Compile Include="GenericClass.cs" />
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs" />

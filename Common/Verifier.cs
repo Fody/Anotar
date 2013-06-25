@@ -19,6 +19,10 @@ public static class Verifier
     static string Validate(string assemblyPath2)
     {
         var exePath = GetPathToPEVerify();
+        if (!File.Exists(exePath))
+        {
+            return string.Empty;
+        }
         var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath2 + "\"")
         {
             RedirectStandardOutput = true,
