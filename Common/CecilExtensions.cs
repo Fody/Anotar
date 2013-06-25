@@ -58,16 +58,50 @@ public static class CecilExtensions
 		foreach (var instruction in instructions)
 			processor.InsertBefore(target, instruction);
 	}
-    public static void InsertAfter(this Collection<Instruction> collection, Instruction target, params Instruction[] instructions)
-	{
-        var indexOf = collection.IndexOf(target);
-        indexOf++;
-        for (var index = 0; index < instructions.Length; index++)
+
+
+    public static bool IsBasicLogCall(this Instruction instruction)
+    {
+        var previous = instruction.Previous;
+        if (previous.OpCode != OpCodes.Newarr || ((TypeReference)previous.Operand).FullName != "System.Object")
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldc_I4)
+            return false;
+
+        previous = previous.Previous;
+        if (previous.OpCode != OpCodes.Ldstr)
+            return false;
+
+        return true;
+    }
+
+    public static Instruction FindStringInstruction(this Instruction call)
+    {
+        if (IsBasicLogCall(call))
+            return call.Previous.Previous.Previous;
+
+        var previous = call.Previous;
+        if (previous.OpCode != OpCodes.Ldloc)
+            return null;
+
+        var variable = (VariableDefinition)previous.Operand;
+
+        while (previous != null && (previous.OpCode != OpCodes.Stloc || previous.Operand != variable))
         {
-            var instruction = instructions[index];
-            collection.Insert(index+indexOf, instruction);
+            previous = previous.Previous;
         }
-	}
+
+        if (previous == null)
+            return null;
+
+        if (IsBasicLogCall(previous))
+            return previous.Previous.Previous.Previous;
+
+        return null;
+    }
+
 	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
 	{
 		while (true)

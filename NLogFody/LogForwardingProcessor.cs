@@ -102,7 +102,7 @@ public class LogForwardingProcessor
         }
          if (methodReference.IsMatch("String", "Object[]"))
         {
-            var stringInstruction = FindStringInstruction(instruction);
+            var stringInstruction = instruction.FindStringInstruction();
 
             if (stringInstruction != null)
             {
@@ -145,47 +145,6 @@ public class LogForwardingProcessor
 
     }
 
-    bool IsBasicLogCall(Instruction instruction)
-    {
-        var previous = instruction.Previous;
-        if (previous.OpCode != OpCodes.Newarr || ((TypeReference)previous.Operand).FullName != "System.Object")
-            return false;
-
-        previous = previous.Previous;
-        if (previous.OpCode != OpCodes.Ldc_I4)
-            return false;
-
-        previous = previous.Previous;
-        if (previous.OpCode != OpCodes.Ldstr)
-            return false;
-
-        return true;
-    }
-
-    Instruction FindStringInstruction(Instruction call)
-    {
-        if (IsBasicLogCall(call))
-            return call.Previous.Previous.Previous;
-
-        var previous = call.Previous;
-        if (previous.OpCode != OpCodes.Ldloc)
-            return null;
-
-        var variable = (VariableDefinition)previous.Operand;
-
-        while (previous != null && (previous.OpCode != OpCodes.Stloc || previous.Operand != variable))
-        {
-            previous = previous.Previous;
-        }
-
-        if (previous == null)
-            return null;
-
-        if (IsBasicLogCall(previous))
-            return previous.Previous.Previous.Previous;
-
-        return null;
-    }
 
     string GetMessagePrefix(Instruction instruction)
     {
