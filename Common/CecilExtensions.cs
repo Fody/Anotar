@@ -191,4 +191,9 @@ public static class CecilExtensions
 
         return definition;
     }
+
+    public static bool IsCompilerGenerated(this ICustomAttributeProvider value)
+    {
+        return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
+    }
 }

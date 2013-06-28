@@ -61,8 +61,14 @@ public partial class ModuleWeaver
 		var staticConstructor = type.GetStaticConstructor();
 	    var instructions = staticConstructor.Body.Instructions;
 
+        var logName = type.FullName;
+        if (type.IsCompilerGenerated() && type.IsNested)
+        {
+            logName = type.DeclaringType.FullName;
+        }
+
 	    instructions.Insert(0, Instruction.Create(OpCodes.Call, getDefaultLogManager));
-	    instructions.Insert(1, Instruction.Create(OpCodes.Ldstr, type.FullName));
+        instructions.Insert(1, Instruction.Create(OpCodes.Ldstr, logName));
 	    instructions.Insert(2, Instruction.Create(OpCodes.Ldnull));
 	    instructions.Insert(3, Instruction.Create(OpCodes.Callvirt, buildLoggerMethod));
 	    instructions.Insert(4, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
