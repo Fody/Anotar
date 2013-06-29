@@ -35,6 +35,10 @@ Simplifies logging through a static class and some IL manipulation
 
     PM> Install-Package Anotar.Custom.Fody
  
+ * Custom package http://nuget.org/packages/Anotar.Catel.Fody 
+
+    PM> Install-Package Anotar.Catel.Fody
+ 
 ## Explicit Logging
 
 This example is targeting the [NLog](http://nlog-project.org/).
@@ -59,7 +63,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
         void MyMethod()
         {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
+            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
         }
     }
 
@@ -71,7 +75,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
         void MyMethod()
         {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
+            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
         }
     }
 
@@ -83,7 +87,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
         void MyMethod()
         {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~24. TheMessage");
+            logger.Debug("Method: 'Void :MyMethod()'. Line: ~24. TheMessage");
         }
     }
     
@@ -96,7 +100,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
         void MyMethod()
         {
             logger
-                .ForContext("MethodName", "System.Void MyClass::Debug()")
+                .ForContext("MethodName", "Void Debug()")
                 .ForContext("LineNumber", "8")
                 .Debug("TheMessage");
         }
@@ -110,7 +114,19 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
         void MyMethod()
         {
-            logger.Debug("Method: 'System.Void MyClass::MyMethod()'. Line: ~12. TheMessage");
+            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+        }
+    }
+
+#### In Catel
+
+    public class MyClass
+    {
+        static ILog logger = LoggerManage.GetCurrentClassLogger();
+
+        void MyMethod()
+        {
+            logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
         }
     }
 

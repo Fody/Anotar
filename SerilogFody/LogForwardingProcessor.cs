@@ -77,7 +77,7 @@ public class LogForwardingProcessor
                                               {
                                                   Instruction.Create(OpCodes.Ldsfld, Field),
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.FullName),
+                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
                                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
@@ -121,7 +121,7 @@ public class LogForwardingProcessor
                                                   Instruction.Create(OpCodes.Ldsfld, Field),
 
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.FullName),
+                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
                                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
@@ -151,7 +151,7 @@ public class LogForwardingProcessor
                                                             Instruction.Create(OpCodes.Ldsfld, Field),
 
                                                             Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                            Instruction.Create(OpCodes.Ldstr, Method.FullName),
+                                                            Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
                                                             Instruction.Create(OpCodes.Ldc_I4_0),
                                                             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 
@@ -185,7 +185,7 @@ public class LogForwardingProcessor
                                                   Instruction.Create(OpCodes.Ldsfld, Field),
 
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.FullName),
+                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
                                                   Instruction.Create(OpCodes.Ldc_I4_0),
                                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
 

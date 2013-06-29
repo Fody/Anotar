@@ -97,7 +97,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
-        Assert.IsTrue(message.StartsWith("Method: 'System.Void GenericClass`1::Debug()'. Line: ~"));
+        Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
     [Test]
@@ -107,7 +107,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithExistingField::Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
     void CheckException(Action<object> action, List<string> list, string expected)
@@ -144,7 +144,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToTrace()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToTrace(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToTrace(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToTrace("x", 6);
         CheckException(action, Traces, expected);
     }
@@ -152,14 +152,14 @@ public class NLogTests
     [Test]
     public void OnExceptionToTraceWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToTraceWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToTraceWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToTraceWithReturn("x", 6);
         CheckException(action, Traces, expected);
     }
     [Test]
     public void OnExceptionToDebug()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, Debugs, expected);
     }
@@ -167,7 +167,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToDebugWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
         CheckException(action, Debugs, expected);
     }
@@ -175,7 +175,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToInfo()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
         CheckException(action, Infos, expected);
     }
@@ -183,7 +183,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToInfoWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
         CheckException(action, Infos, expected);
     }
@@ -191,7 +191,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToWarn()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
         CheckException(action, Warns, expected);
     }
@@ -199,7 +199,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToWarnWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
         CheckException(action, Warns, expected);
     }
@@ -207,7 +207,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToError()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
         CheckException(action, Errors, expected);
     }
@@ -215,14 +215,14 @@ public class NLogTests
     [Test]
     public void OnExceptionToErrorWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, Errors, expected);
     }
     [Test]
     public void OnExceptionToFatal()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
         CheckException(action, Fatals, expected);
     }
@@ -230,7 +230,7 @@ public class NLogTests
     [Test]
     public void OnExceptionToFatalWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, Fatals, expected);
     }
@@ -242,7 +242,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Trace();
         Assert.AreEqual(1, Traces.Count);
-        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::Trace()'. Line: ~"));
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void Trace()'. Line: ~"));
     }
     [Test]
     public void TraceString()
@@ -251,7 +251,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceString();
         Assert.AreEqual(1, Traces.Count);
-        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceString()'. Line: ~"));
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceString()'. Line: ~"));
     }
 
     [Test]
@@ -261,7 +261,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceStringParams();
         Assert.AreEqual(1, Traces.Count);
-        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceStringParams()'. Line: ~"));
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -271,7 +271,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceStringException();
         Assert.AreEqual(1, Traces.Count);
-        Assert.IsTrue(Traces.First().StartsWith("Method: 'System.Void ClassWithLogging::TraceStringException()'. Line: ~"));
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringException()'. Line: ~"));
     }
 
 
@@ -282,7 +282,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugString()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -292,7 +292,7 @@ public class NLogTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringParams()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -302,7 +302,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'System.Void ClassWithLogging::DebugStringException()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
     }
 
     [Test]
@@ -312,7 +312,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::Info()'. Line: ~"));
+        Assert.IsTrue(Infos.First().StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -322,7 +322,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoString()'. Line: ~"));
+        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -332,7 +332,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringParams()'. Line: ~"));
+        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -342,7 +342,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'System.Void ClassWithLogging::InfoStringException()'. Line: ~"));
+        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]
@@ -352,7 +352,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::Warn()'. Line: ~"));
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void Warn()'. Line: ~"));
     }
 
     [Test]
@@ -362,7 +362,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnString()'. Line: ~"));
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnString()'. Line: ~"));
     }
 
     [Test]
@@ -372,7 +372,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringParams()'. Line: ~"));
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -382,7 +382,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, Warns.Count);
-        Assert.IsTrue(Warns.First().StartsWith("Method: 'System.Void ClassWithLogging::WarnStringException()'. Line: ~"));
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
     }
 
     [Test]
@@ -392,7 +392,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::Error()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void Error()'. Line: ~"));
     }
 
     [Test]
@@ -402,7 +402,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorString()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -412,7 +412,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringParams()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -422,7 +422,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("Method: 'System.Void ClassWithLogging::ErrorStringException()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
     }
     
     [Test]
@@ -432,7 +432,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Fatal();
         Assert.AreEqual(1, Fatals.Count);
-        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::Fatal()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void Fatal()'. Line: ~"));
     }
 
     [Test]
@@ -442,7 +442,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalString();
         Assert.AreEqual(1, Fatals.Count);
-        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalString()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalString()'. Line: ~"));
     }
 
     [Test]
@@ -452,7 +452,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringParams();
         Assert.AreEqual(1, Fatals.Count);
-        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringParams()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -462,7 +462,7 @@ public class NLogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringException();
         Assert.AreEqual(1, Fatals.Count);
-        Assert.IsTrue(Fatals.First().StartsWith("Method: 'System.Void ClassWithLogging::FatalStringException()'. Line: ~"));
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringException()'. Line: ~"));
     }
     
     [Test]

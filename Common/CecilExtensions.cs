@@ -16,6 +16,16 @@ public static class CecilExtensions
             indexOf++;
         }
     }
+    public static string DisplayName(this MethodDefinition method)
+    {
+        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.Name));
+        return string.Format("{0} {1}({2})", method.ReturnType.Name, method.Name, paramNames);
+    }
+    public static string DisplayNameWithType(this MethodDefinition method)
+    {
+        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.Name));
+        return string.Format("{0} {1}::{2}({3})", method.ReturnType.Name, method.DeclaringType.FullName, method.Name, paramNames);
+    }
 
     public static void CheckForDynamicUsagesOf(this MethodDefinition methodDefinition, string methodNameToCheckFor)
     {

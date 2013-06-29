@@ -84,7 +84,7 @@ public class SerilogTests
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual("7", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void GenericClass`1::Debug()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -96,7 +96,7 @@ public class SerilogTests
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual("9", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::Debug()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -108,7 +108,7 @@ public class SerilogTests
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual("7", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithOldLogging::Debug()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -131,7 +131,7 @@ public class SerilogTests
         Assert.AreEqual(1, debugs.Count);
         var logEvent = debugs.First();
         Assert.AreEqual("16", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithExistingField::Debug()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -158,7 +158,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToDebug()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToDebug(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, debugs, expected);
     }
@@ -166,7 +166,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToDebugWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToDebugWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
         CheckException(action, debugs, expected);
     }
@@ -174,7 +174,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToInfo()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToInfo(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
         CheckException(action, infos, expected);
     }
@@ -182,7 +182,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToInfoWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToInfoWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
         CheckException(action, infos, expected);
     }
@@ -190,7 +190,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToWarn()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToWarn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
         CheckException(action, warns, expected);
     }
@@ -198,7 +198,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToWarnWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToWarnWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
         CheckException(action, warns, expected);
     }
@@ -206,7 +206,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToError()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToError(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
         CheckException(action, errors, expected);
     }
@@ -214,7 +214,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToErrorWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToErrorWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, errors, expected);
     }
@@ -222,7 +222,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToFatal()
     {
-        var expected = "Exception occurred in 'System.Void OnException::ToFatal(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
         CheckException(action, fatals, expected);
     }
@@ -230,7 +230,7 @@ public class SerilogTests
     [Test]
     public void OnExceptionToFatalWithReturn()
     {
-        var expected = "Exception occurred in 'System.Object OnException::ToFatalWithReturn(System.String,System.Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, fatals, expected);
     }
@@ -243,7 +243,7 @@ public class SerilogTests
         instance.DebugString();
         var logEvent = debugs.Single();
         Assert.AreEqual("13", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::DebugString()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void DebugString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
     [Test]
@@ -254,7 +254,7 @@ public class SerilogTests
         instance.DebugStringParams();
         var logEvent = debugs.Single();
         Assert.AreEqual("17", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::DebugStringParams()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void DebugStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
     }
 
@@ -266,7 +266,7 @@ public class SerilogTests
         instance.DebugStringException();
         var logEvent = debugs.Single();
         Assert.AreEqual("21", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::DebugStringException()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void DebugStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -278,7 +278,7 @@ public class SerilogTests
         instance.Info();
         var logEvent = infos.Single();
         Assert.AreEqual("25", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::Info()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Info()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -290,7 +290,7 @@ public class SerilogTests
         instance.InfoString();
         var logEvent = infos.Single();
         Assert.AreEqual("29", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::InfoString()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void InfoString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -302,7 +302,7 @@ public class SerilogTests
         instance.InfoStringParams();
         var logEvent = infos.Single();
         Assert.AreEqual("33", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::InfoStringParams()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void InfoStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
 
     }
@@ -315,7 +315,7 @@ public class SerilogTests
         instance.InfoStringException();
         var logEvent = infos.Single();
         Assert.AreEqual("37", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::InfoStringException()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void InfoStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
 
     }
@@ -328,7 +328,7 @@ public class SerilogTests
         instance.Warn();
         var logEvent = warns.Single();
         Assert.AreEqual("41", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::Warn()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Warn()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -340,7 +340,7 @@ public class SerilogTests
         instance.WarnString();
         var logEvent = warns.Single();
         Assert.AreEqual("45", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::WarnString()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void WarnString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -352,7 +352,7 @@ public class SerilogTests
         instance.WarnStringParams();
         var logEvent = warns.Single();
         Assert.AreEqual("49", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::WarnStringParams()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void WarnStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
     }
 
@@ -364,7 +364,7 @@ public class SerilogTests
         instance.WarnStringException();
         var logEvent = warns.Single();
         Assert.AreEqual("53", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::WarnStringException()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void WarnStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -376,7 +376,7 @@ public class SerilogTests
         instance.Error();
         var logEvent = errors.Single();
         Assert.AreEqual("57", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::Error()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Error()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
 
@@ -388,7 +388,7 @@ public class SerilogTests
         instance.ErrorString();
         var logEvent = errors.Single();
         Assert.AreEqual("61", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::ErrorString()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void ErrorString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -400,7 +400,7 @@ public class SerilogTests
         instance.ErrorStringParams();
         var logEvent = errors.Single();
         Assert.AreEqual("65", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::ErrorStringParams()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void ErrorStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
     }
 
@@ -412,7 +412,7 @@ public class SerilogTests
         instance.ErrorStringException();
         var logEvent = errors.Single();
         Assert.AreEqual("69", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::ErrorStringException()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void ErrorStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -424,7 +424,7 @@ public class SerilogTests
         instance.Fatal();
         var logEvent = fatals.Single();
         Assert.AreEqual("73", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::Fatal()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void Fatal()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
 
     }
@@ -437,7 +437,7 @@ public class SerilogTests
         instance.FatalString();
         var logEvent = fatals.Single();
         Assert.AreEqual("77", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::FatalString()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void FatalString()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
@@ -449,7 +449,7 @@ public class SerilogTests
         instance.FatalStringParams();
         var logEvent = fatals.Single();
         Assert.AreEqual("81", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::FatalStringParams()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void FatalStringParams()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
     }
 
@@ -461,7 +461,7 @@ public class SerilogTests
         instance.FatalStringException();
         var logEvent = fatals.Single();
         Assert.AreEqual("85", logEvent.Value("LineNumber"));
-        Assert.AreEqual("System.Void ClassWithLogging::FatalStringException()", logEvent.Value("MethodName"));
+        Assert.AreEqual("Void FatalStringException()", logEvent.Value("MethodName"));
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
     }
 
