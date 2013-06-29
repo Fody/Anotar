@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassWithAbstract.cs" />
+    <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
     <Compile Include="ClassWithExistingField_NLog.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithMultipleLoggings.cs" />

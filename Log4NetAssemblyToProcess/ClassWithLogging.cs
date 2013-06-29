@@ -4,10 +4,6 @@ using Anotar.Log4Net;
 
 public class ClassWithLogging
 {
-    public async void AsyncMethod()
-    {
-        Trace.WriteLine("Foo");
-    }
     public void Debug()
     {
         Log.Debug();
