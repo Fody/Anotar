@@ -24,7 +24,7 @@
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NLogNuGetBuild\**\*.*" />
+      <FilesToDelete Include="$(SolutionDir)CatelNuGetBuild\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
@@ -32,14 +32,14 @@
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
   <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
-    <MakeDir Directories="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Lib\portable-net4+sl4+wp7" />
-    <Copy SourceFiles="$(SolutionDir)NLogNuGet\Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
-    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
-    <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)NLogNuGetBuild" MetadataAssembly="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.dll" />
+    <MakeDir Directories="$(SolutionDir)CatelNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.dll" DestinationFolder="$(SolutionDir)CatelNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.xml" DestinationFolder="$(SolutionDir)CatelNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)CatelNuGet\Anotar.Catel.nuspec" DestinationFolder="$(SolutionDir)CatelNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)CatelFody\bin\$(ConfigurationName)\Anotar.Catel.Fody.dll" DestinationFolder="$(SolutionDir)CatelNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)CatelFody\bin\$(ConfigurationName)\Anotar.Catel.Fody.pdb" DestinationFolder="$(SolutionDir)CatelNuGetBuild" />
+    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)CatelNuGetBuild\Tools" />
+    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)CatelNuGetBuild\Tools" />
+    <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)CatelNuGetBuild" MetadataAssembly="$(SolutionDir)CatelFody\bin\$(ConfigurationName)\Anotar.Catel.Fody.dll" />
   </Target>
 </Project>
