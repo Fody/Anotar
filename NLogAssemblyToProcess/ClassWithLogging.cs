@@ -3,10 +3,6 @@ using Anotar.NLog;
 
 public class ClassWithLogging
 {
-    public async void AsyncMethod()
-    {
-        System.Diagnostics.Trace.WriteLine("Foo");
-    }
     public void Trace()
     {
         Log.Trace();

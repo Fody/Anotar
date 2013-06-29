@@ -75,7 +75,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
-        Assert.IsTrue(message.StartsWith("[GenericClass`1] Method: 'Void Debug()'. Line: ~"));
+        Assert.IsTrue(message.Split(']').Last().StartsWith(" Method: 'Void Debug()'. Line: ~"), message);
     }
 
     [Test]
@@ -338,5 +338,44 @@ public class CatelTests
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
+    }
+
+
+
+    [Test]
+    public void AsyncMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void AsyncMethod()'. Line: ~"));
+    }
+    [Test]
+    public void EnumeratorMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
+    }
+    [Test]
+    public void DelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+    }
+    [Test]
+    public void LambdaMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.LambdaMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
     }
 }

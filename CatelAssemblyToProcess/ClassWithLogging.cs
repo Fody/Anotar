@@ -3,10 +3,6 @@ using Anotar.Catel;
 
 public class ClassWithLogging
 {
-    public async void AsyncMethod()
-    {
-        System.Diagnostics.Trace.WriteLine("Foo");
-    }
     public void Debug()
     {
         LogTo.Debug();

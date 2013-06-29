@@ -68,6 +68,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelFody", "CatelFody\CatelFody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelNuGet", "CatelNuGet\CatelNuGet.csproj", "{0B1938E6-61EE-4D40-B428-013FD9AFC5D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC} = {4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}
+		{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B} = {C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelReferenceAssembly", "CatelReferenceAssembly\CatelReferenceAssembly.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
 EndProject

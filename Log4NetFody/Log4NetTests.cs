@@ -31,14 +31,12 @@ public class Log4NetTests
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var hierarchy = (Hierarchy)LogManager.GetRepository();
-        hierarchy.Root.RemoveAllAppenders(); /*Remove any other appenders*/
+        hierarchy.Root.RemoveAllAppenders(); 
 
         var target = new ActionAppender
         {
             Action = LogEvent
         };
-
-
         BasicConfigurator.Configure(target);
     }
     void LogEvent(LoggingEvent loggingEvent)
@@ -406,4 +404,46 @@ public class Log4NetTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
+
+
+
+
+
+    [Test]
+    public void AsyncMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
+    }
+    [Test]
+    public void EnumeratorMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
+    }
+    [Test]
+    public void DelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+    }
+    [Test]
+    public void LambdaMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.LambdaMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
+    }
+
 }

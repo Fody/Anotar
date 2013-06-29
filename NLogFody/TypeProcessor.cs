@@ -62,19 +62,25 @@ public partial class ModuleWeaver
 		var staticConstructor = type.GetStaticConstructor();
 		var instructions = staticConstructor.Body.Instructions;
 
-       if (type.HasGenericParameters)
-        {
-            instructions.Insert(0, Instruction.Create(OpCodes.Call, buildLoggerGenericMethod));
-			instructions.Insert(1, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-        }
-        else
-        {
-            instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, type.FullName));
-            instructions.Insert(1, Instruction.Create(OpCodes.Call, buildLoggerMethod));
-            instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
-        }
+	    if (type.HasGenericParameters)
+	    {
+	        instructions.Insert(0, Instruction.Create(OpCodes.Call, buildLoggerGenericMethod));
+	        instructions.Insert(1, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+	    }
+	    else
+	    {
+	        var logName = type.FullName;
+	        if (type.IsCompilerGenerated() && type.IsNested)
+	        {
+	            logName = type.DeclaringType.FullName;
+	        }
 
-		type.Fields.Add(fieldDefinition);
+	        instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
+	        instructions.Insert(1, Instruction.Create(OpCodes.Call, buildLoggerMethod));
+	        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
+	    }
+
+	    type.Fields.Add(fieldDefinition);
 	}
 
 

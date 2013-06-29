@@ -359,4 +359,42 @@ public class CustomTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
+
+
+
+    [Test]
+    public void AsyncMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncMethod();
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
+    }
+    [Test]
+    public void EnumeratorMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        var message = LoggerFactory.DebugEntries.First().Format;
+        Assert.IsTrue(message.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), message);
+    }
+    [Test]
+    public void DelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DelegateMethod();
+        var message = LoggerFactory.DebugEntries.First().Format;
+        Assert.IsTrue(message.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), message);
+    }
+    [Test]
+    public void LambdaMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.LambdaMethod();
+        var message = LoggerFactory.DebugEntries.First().Format;
+        Assert.IsTrue(message.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), message);
+    }
 }

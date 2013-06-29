@@ -18,13 +18,59 @@ public static class CecilExtensions
     }
     public static string DisplayName(this MethodDefinition method)
     {
-        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.Name));
-        return string.Format("{0} {1}({2})", method.ReturnType.Name, method.Name, paramNames);
+        method = GetActualMethod(method);
+        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.DisplayName()));
+        return string.Format("{0} {1}({2})", method.ReturnType.DisplayName(), method.Name, paramNames);
     }
-    public static string DisplayNameWithType(this MethodDefinition method)
+    public static string DisplayName(this TypeReference typeReference)
     {
-        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.Name));
-        return string.Format("{0} {1}::{2}({3})", method.ReturnType.Name, method.DeclaringType.FullName, method.Name, paramNames);
+        var genericInstanceType = typeReference as GenericInstanceType;
+        if (genericInstanceType != null && genericInstanceType.HasGenericArguments)
+        {
+            return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(c => c.DisplayName())) + ">";
+        }
+            return typeReference.Name;
+    }
+
+    static MethodDefinition GetActualMethod(MethodDefinition method)
+    {
+        var isTypeCompilerGenerated = method.DeclaringType.IsCompilerGenerated();
+        if (isTypeCompilerGenerated)
+        {
+            var rootType = method.DeclaringType.DeclaringType;
+            if (rootType != null)
+            {
+                foreach (var parentClassMethod in rootType.Methods)
+                {
+                    if (method.DeclaringType.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                    {
+                        return parentClassMethod;
+                    }
+                    if (method.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                    {
+                        return parentClassMethod;
+                    }
+                }
+            }
+        }
+
+        var isMethodCompilerGenerated = method.IsCompilerGenerated();
+        if (isMethodCompilerGenerated)
+        {
+            foreach (var parentClassMethod in method.DeclaringType.Methods)
+            {
+                if (method.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                {
+                    return parentClassMethod;
+                }
+            }
+        }
+        return method;
+    }
+
+    public static bool IsCompilerGenerated(this ICustomAttributeProvider value)
+    {
+        return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
     }
 
     public static void CheckForDynamicUsagesOf(this MethodDefinition methodDefinition, string methodNameToCheckFor)
