@@ -279,10 +279,6 @@ So this makes it a little difficult to use with other runtimes.
 Logging APIs all make use of `params` to pass arguments to a `string.Format`. Since you cant use `params` with CallerInfoAttributes most logging APIs choose not to use these attributes.
 
 You can vote for [Compatibility between `params` with CallerInfoAttributes](http://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/2762025-caller-membername-filepath-linenumber-of-net-4-5-) 
-
-## Who is this targeting?
-
-This is not designed as a logging toolkit abstraction. By that I mean it is not designed to help you avoid a reference to a library or make it easier for you switch logging frameworks. So this means it is targeted at people logging from applications or services. Not for people trying to expose logging functionality from their library.
     
 ## Icon
 
