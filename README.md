@@ -241,7 +241,7 @@ If `LoggerFactory` and `Logger` exist in the current assembly they will be picke
 
 If `LoggerFactory` and `Logger` exist in a different assembly You will need to use a `[LoggerFactoryAttribute]` to tell Anotar where to look.
 
-[assembly: LoggerFactoryAttribute(typeof(MyUtilsLibrary.LoggerFactory))]
+    [assembly: LoggerFactoryAttribute(typeof(MyUtilsLibrary.LoggerFactory))]
 
 
 ## Nothing to deploy
