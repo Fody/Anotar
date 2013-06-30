@@ -37,7 +37,7 @@ Simplifies logging through a static class and some IL manipulation
 
     PM> Install-Package Anotar.Custom.Fody
  
- * Custom package http://nuget.org/packages/Anotar.Catel.Fody 
+ * Catel package http://nuget.org/packages/Anotar.Catel.Fody 
 
     PM> Install-Package Anotar.Catel.Fody
  
