@@ -108,6 +108,19 @@ This example is targeting the [NLog](http://nlog-project.org/).
         }
     }
 
+#### In Catel
+
+    public class MyClass
+    {
+        static ILog logger = LogManager.GetLogger(typeof(MyClass));
+
+        void MyMethod()
+        {
+            logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
+        }
+    }
+
+
 #### In Custom
 
     public class MyClass
@@ -119,19 +132,6 @@ This example is targeting the [NLog](http://nlog-project.org/).
             logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
         }
     }
-
-#### In Catel
-
-    public class MyClass
-    {
-        static ILog logger = LoggerManage.GetCurrentClassLogger();
-
-        void MyMethod()
-        {
-            logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
-        }
-    }
-
 ### Other Log Overloads in Explicit Logging
 
 There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
