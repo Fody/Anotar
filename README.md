@@ -12,6 +12,8 @@ Simplifies logging through a static class and some IL manipulation
 * [Log4Net](http://logging.apache.org/log4net/) 
 * [Serilog](http://serilog.net/)
 * [MetroLog](https://github.com/mbrit/MetroLog)
+* [Catel](http://www.catelproject.com/)
+* Custom (for frameworks/toolkits with custom logging)
 
 ## Nuget
 
