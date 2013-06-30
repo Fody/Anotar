@@ -174,7 +174,7 @@ Each of these methods has the expected 'message', 'params' and 'exception' overl
 
 The custom logging variant exist for several reasons
 
-  1. Projects targeting an obscure logging libraries i.e. not NLog, MetroLog, SeriLog or Log4Net.
+  1. Projects targeting an obscure logging libraries i.e. not NLog, MetroLog, SeriLog or Log4Net. Or wraps a logging library with a custom API.
   2. Projects that have their own logging custom logging libraries
   3. Projects that support multiple different logging libraries
   
