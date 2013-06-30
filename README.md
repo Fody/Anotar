@@ -260,14 +260,7 @@ Often when I am logging I want to know the method and line number I am logging f
 
 ## I don't want extra information
 
-If you don't want the method name and line number Anotar adds to log messages then create this class:
-
-    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module, AllowMultiple = false, Inherited = false)]
-    public class LogMinimalMessageAttribute : Attribute
-    {
-    }
-    
-And add this to AssemblyInfo.cs:
+If you don't want the extra information, method name and line number, then add this to AssemblyInfo.cs:
 
     [assembly: LogMinimalMessage]
 
