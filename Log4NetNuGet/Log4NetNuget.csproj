@@ -19,8 +19,6 @@
     <None Include="Anotar.Log4Net.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="install.ps1" />
-    <None Include="uninstall.ps1" />
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
@@ -38,8 +36,8 @@
     <Copy SourceFiles="$(SolutionDir)Log4NetNuget\Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Log4NetFody\bin\$(ConfigurationName)\Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)Log4NetFody\bin\$(ConfigurationName)\Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
-    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
     <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)Log4NetNuGetBuild" MetadataAssembly="$(SolutionDir)Log4NetFody\bin\$(ConfigurationName)\Anotar.Log4Net.Fody.dll" />
   </Target>
 </Project>

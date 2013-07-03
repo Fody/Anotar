@@ -19,8 +19,6 @@
     <None Include="Anotar.NLog.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="install.ps1" />
-    <None Include="uninstall.ps1" />
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
@@ -38,8 +36,8 @@
     <Copy SourceFiles="$(SolutionDir)NLogNuGet\Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NLogNuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
-    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NLogNuGetBuild\Tools" />
     <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)NLogNuGetBuild" MetadataAssembly="$(SolutionDir)NLogFody\bin\$(ConfigurationName)\Anotar.NLog.Fody.dll" />
   </Target>
 </Project>

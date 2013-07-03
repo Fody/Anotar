@@ -20,8 +20,6 @@
     <None Include="Anotar.MetroLog.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="install.ps1" />
-    <None Include="uninstall.ps1" />
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
@@ -39,8 +37,8 @@
     <Copy SourceFiles="$(SolutionDir)MetroLogNuGet\Anotar.MetroLog.nuspec" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.dll" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.pdb" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
-    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Tools" />
     <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)MetroLogNuGetBuild" MetadataAssembly="$(SolutionDir)MetroLogFody\bin\$(ConfigurationName)\Anotar.MetroLog.Fody.dll" />
   </Target>
 </Project>

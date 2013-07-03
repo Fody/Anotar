@@ -20,8 +20,6 @@
     <None Include="Anotar.Serilog.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="install.ps1" />
-    <None Include="uninstall.ps1" />
   </ItemGroup>
   <Target Name="Clean">
     <ItemGroup>
@@ -39,8 +37,8 @@
     <Copy SourceFiles="$(SolutionDir)SerilogNuGet\Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)SerilogFody\bin\$(ConfigurationName)\Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)SerilogFody\bin\$(ConfigurationName)\Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(ProjectDir)install.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
-    <Copy SourceFiles="$(ProjectDir)uninstall.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
     <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)SerilogNuGetBuild" MetadataAssembly="$(SolutionDir)SerilogFody\bin\$(ConfigurationName)\Anotar.Serilog.Fody.dll" />
   </Target>
 </Project>
