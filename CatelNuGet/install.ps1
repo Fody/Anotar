@@ -14,7 +14,7 @@ function RemoveForceProjectLevelHack($project)
 
 function Update-FodyConfig($addinName, $project)
 {
-	
+	"Update-FodyConfig " + $addinName
     $fodyWeaversPath = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($project.FullName), "FodyWeavers.xml")
 
 	$FodyLastProjectPath = $env:FodyLastProjectPath
