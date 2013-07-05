@@ -74,6 +74,17 @@ function Fix-ReferencesCopyLocal($package, $project)
     }
 }
 
+function UnlockWeaversXml($project)
+{
+    $fodyWeaversProjectItem = $project.ProjectItems.Item("FodyWeavers.xml");
+    if ($fodyWeaversProjectItem)
+    {
+        $fodyWeaversProjectItem.Save()
+    }   
+}
+
+UnlockWeaversXml($project)
+
 RemoveForceProjectLevelHack $project
 
 Update-FodyConfig $package.Id.Replace(".Fody", "") $project

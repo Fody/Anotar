@@ -31,5 +31,15 @@ function Update-FodyConfig($addinName, $project)
 }
 
 
+function UnlockWeaversXml($project)
+{
+    $fodyWeaversProjectItem = $project.ProjectItems.Item("FodyWeavers.xml");
+    if ($fodyWeaversProjectItem)
+    {
+        $fodyWeaversProjectItem.Save()
+    }   
+}
+
+UnlockWeaversXml($project)
 
 Update-FodyConfig $package.Id.Replace(".Fody", "") $project
