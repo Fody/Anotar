@@ -26,4 +26,14 @@ public class ClassWithMultipleLoggings
         Log.InfoException("Info", new Exception());
         Log.WarnException("Warn", new Exception());
     }
+
+    public void LogThrowLog(bool dothrow)
+    {
+        Log.Info("Doing something");
+
+        if (dothrow)
+            throw new Exception();
+
+        Log.Info("Doing something");
+    }
 }
