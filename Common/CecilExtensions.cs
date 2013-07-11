@@ -8,6 +8,15 @@ public static class CecilExtensions
 {
     public static void Replace(this Collection<Instruction> collection, Instruction instruction, IEnumerable<Instruction> instructions)
     {
+        // Any instructions pointing to the instruction to be replaced
+        // need to point to the new instruction instead.
+        var newInstruction = instructions.First();
+        foreach (var item in collection)
+        {
+            if (item.Operand == instruction)
+                item.Operand = newInstruction;
+        }
+
         var indexOf = collection.IndexOf(instruction);
         collection.RemoveAt(indexOf);
         foreach (var instruction1 in instructions)
