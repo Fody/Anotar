@@ -68,13 +68,13 @@
       <HintPath>..\packages\Scalpel.Fody.0.12.0.0\Lib\NET40\Scalpel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Serilog, Version=0.6.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+    <Reference Include="Serilog, Version=0.8.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.0.6.3\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.0.8.3\lib\net45\Serilog.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog.FullNetFx, Version=0.6.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+    <Reference Include="Serilog.FullNetFx, Version=0.8.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.0.6.3\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\packages\Serilog.0.8.3\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AppDomainAssemblyFinder.cs">
-      <Link>AppDomainAssemblyFinder.cs</Link>
+      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
     </Compile>
     <Compile Include="..\Common\AsyncChecker.cs">
       <Link>AsyncChecker.cs</Link>
@@ -108,16 +108,16 @@
       <Link>WeavingException.cs</Link>
     </Compile>
     <Compile Include="..\Common\AssemblyExtensions.cs">
-      <Link>AssemblyExtensions.cs</Link>
+      <Link>TestHelpers\AssemblyExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Common\MockAssemblyResolver.cs">
-      <Link>MockAssemblyResolver.cs</Link>
+      <Link>TestHelpers\MockAssemblyResolver.cs</Link>
     </Compile>
     <Compile Include="..\Common\Verifier.cs">
-      <Link>Verifier.cs</Link>
+      <Link>TestHelpers\Verifier.cs</Link>
     </Compile>
     <Compile Include="AttributeFinder.cs" />
-    <Compile Include="EventSink.cs" />
+    <Compile Include="TestHelpers\EventSink.cs" />
     <Compile Include="LogEventExtensions.cs" />
     <Compile Include="ReferenceFinder.cs" />
     <Compile Include="SerilogTests.cs" />
