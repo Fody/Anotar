@@ -51,7 +51,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
     {
         void MyMethod()
         {
-            Log.Debug("TheMessage");
+            LogTo.Debug("TheMessage");
         }
     }
 
