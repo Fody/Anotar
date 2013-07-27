@@ -5,9 +5,8 @@ namespace Anotar.NLog
 {
 	/// <summary>
 	/// Provides logging functions.
-    /// </summary>
-    [ObsoleteEx(Replacement = "LogTo", TreatAsErrorFromVersion = "2.1")]
-    public static class Log
+	/// </summary>
+    public static class LogTo
     {
 
         /// <summary>

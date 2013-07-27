@@ -7,271 +7,295 @@ public class ClassWithException
     {
         try
         {
-        System.Diagnostics.Trace.WriteLine("Foo");
+            System.Diagnostics.Trace.WriteLine("Foo");
         }
         catch
         {
 
         }
     }
+
     public void Trace()
     {
         try
         {
-        Log.Trace();
+            LogTo.Trace();
         }
         catch
         {
 
         }
     }
+
     public void TraceString()
     {
         try
         {
-        Log.Trace("TheMessage");
+            LogTo.Trace("TheMessage");
         }
         catch
         {
 
         }
     }
+
     public void TraceStringParams()
     {
         try
         {
-        Log.Trace("TheMessage {0}", 1);
+            LogTo.Trace("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
+
     public void TraceStringException()
     {
         try
         {
-        Log.TraceException("TheMessage", new Exception());
+            LogTo.TraceException("TheMessage", new Exception());
         }
         catch
         {
 
         }
     }
+
     public void Debug()
     {
         try
         {
-        Log.Debug();
+            LogTo.Debug();
         }
         catch
         {
 
         }
     }
+
     public void DebugString()
     {
         try
         {
-        Log.Debug("TheMessage");
+            LogTo.Debug("TheMessage");
         }
         catch
         {
 
         }
     }
+
     public void DebugStringParams()
     {
         try
         {
-        Log.Debug("TheMessage {0}",1);
+            LogTo.Debug("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
+
     public void DebugStringException()
     {
         try
         {
-        Log.DebugException("TheMessage",new Exception());
+            LogTo.DebugException("TheMessage", new Exception());
         }
         catch
         {
 
         }
     }
+
     public void Info()
     {
         try
         {
-        Log.Info();
+            LogTo.Info();
         }
         catch
         {
 
         }
     }
+
     public void InfoString()
     {
         try
         {
-        Log.Info("TheMessage");
+            LogTo.Info("TheMessage");
         }
         catch
         {
 
         }
     }
+
     public void InfoStringParams()
     {
         try
         {
-        Log.Info("TheMessage {0}", 1);
+            LogTo.Info("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
+
     public void InfoStringException()
     {
         try
         {
-        Log.InfoException("TheMessage", new Exception());
+            LogTo.InfoException("TheMessage", new Exception());
         }
         catch
         {
 
         }
     }
+
     public void Warn()
     {
         try
         {
-        Log.Warn();
+            LogTo.Warn();
         }
         catch
         {
 
         }
     }
+
     public void WarnString()
     {
         try
         {
-        Log.Warn("TheMessage");
+            LogTo.Warn("TheMessage");
         }
         catch
         {
 
         }
     }
+
     public void WarnStringParams()
     {
         try
         {
-        Log.Warn("TheMessage {0}", 1);
+            LogTo.Warn("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
+
     public void WarnStringException()
     {
         try
         {
-        Log.WarnException("TheMessage", new Exception());
+            LogTo.WarnException("TheMessage", new Exception());
         }
         catch
         {
 
         }
     }
+
     public void Error()
     {
         try
         {
-        Log.Error();
+            LogTo.Error();
         }
         catch
         {
 
         }
     }
+
     public void ErrorString()
     {
         try
         {
-        Log.Error("TheMessage");
+            LogTo.Error("TheMessage");
         }
         catch
         {
 
         }
     }
+
     public void ErrorStringParams()
     {
         try
         {
-        Log.Error("TheMessage {0}", 1);
+            LogTo.Error("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
+
     public void ErrorStringException()
     {
         try
         {
-        Log.ErrorException("TheMessage", new Exception());
+            LogTo.ErrorException("TheMessage", new Exception());
         }
         catch
         {
 
         }
     }
+
     public void Fatal()
     {
         try
         {
-		Log.Fatal();
+            LogTo.Fatal();
         }
         catch
         {
 
         }
     }
-	public void FatalString()
+
+    public void FatalString()
     {
         try
         {
-            Log.Fatal("TheMessage");
+            LogTo.Fatal("TheMessage");
         }
         catch
         {
 
         }
     }
-	public void FatalStringParams()
+
+    public void FatalStringParams()
     {
         try
         {
-		Log.Fatal("TheMessage {0}", 1);
+            LogTo.Fatal("TheMessage {0}", 1);
         }
         catch
         {
 
         }
     }
-	public void FatalStringException()
+
+    public void FatalStringException()
     {
         try
         {
-		Log.FatalException("TheMessage", new Exception());
+            LogTo.FatalException("TheMessage", new Exception());
         }
         catch
         {

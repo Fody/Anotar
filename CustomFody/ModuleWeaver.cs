@@ -47,7 +47,7 @@ public partial class ModuleWeaver
             ProcessType(type);
         }
 
-        //TODO: ensure attributes dont exist on interfaces
+        //TODO: ensure attributes don't exist on interfaces
         RemoveReference();
     }
 

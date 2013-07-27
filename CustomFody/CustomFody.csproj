@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AppDomainAssemblyFinder.cs">
-      <Link>NewFolder1\AppDomainAssemblyFinder.cs</Link>
+      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
     </Compile>
     <Compile Include="..\Common\AsyncChecker.cs">
       <Link>AsyncChecker.cs</Link>
@@ -107,13 +107,13 @@
       <Link>WeavingException.cs</Link>
     </Compile>
     <Compile Include="..\Common\AssemblyExtensions.cs">
-      <Link>NewFolder1\AssemblyExtensions.cs</Link>
+      <Link>TestHelpers\AssemblyExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Common\MockAssemblyResolver.cs">
       <Link>TestHelpers\MockAssemblyResolver.cs</Link>
     </Compile>
     <Compile Include="..\Common\Verifier.cs">
-      <Link>NewFolder1\Verifier.cs</Link>
+      <Link>TestHelpers\Verifier.cs</Link>
     </Compile>
     <Compile Include="AttributeFinder.cs" />
     <Compile Include="CustomTests.cs" />

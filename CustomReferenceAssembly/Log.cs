@@ -5,7 +5,8 @@ namespace Anotar.Custom
 {
     /// <summary>
 	/// Provides logging functions.
-	/// </summary>
+    /// </summary>
+    [ObsoleteEx(Replacement = "LogTo", TreatAsErrorFromVersion = "2.1")]
     public static class Log
     {
 

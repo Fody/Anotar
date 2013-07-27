@@ -44,7 +44,7 @@ class ParamsFormatBuilder
 
         // Reset boolean flag variable to false
 
-        // If aparameter is passed by reference then you need to use ldind
+        // If a parameter is passed by reference then you need to use Ldind
         // ------------------------------------------------------------
         var paramType = parameterDefinition.ParameterType;
         if (paramType.IsByReference)
@@ -121,7 +121,7 @@ class ParamsFormatBuilder
 
                 default:
                     // Need to check if it is a value type instance, in which case
-                    // we use ldobj instruction to copy the contents of value type
+                    // we use Ldobj instruction to copy the contents of value type
                     // instance to stack and then box it
                     if (referencedTypeSpec.ElementType.IsValueType)
                     {
@@ -138,7 +138,7 @@ class ParamsFormatBuilder
 
             if (pointerToValueTypeVariable)
             {
-                // Box the dereferenced parameter type
+                // Box the de-referenced parameter type
                 yield return Instruction.Create(OpCodes.Box, referencedTypeSpec.ElementType);
             }
 

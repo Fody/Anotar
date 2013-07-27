@@ -5,82 +5,82 @@ public class ClassWithLogging
 {
     public void Debug()
     {
-        Log.Debug();
+        LogTo.Debug();
     }
     public void DebugString()
     {
-        Log.Debug("TheMessage");
+        LogTo.Debug("TheMessage");
     }
     public void DebugStringParams()
     {
-        Log.Debug("TheMessage {0}",1);
+        LogTo.Debug("TheMessage {0}",1);
     }
     public void DebugStringException()
     {
-        Log.DebugException("TheMessage",new Exception());
+        LogTo.DebugException("TheMessage",new Exception());
     }
     public void Info()
     {
-        Log.Info();
+        LogTo.Info();
     }
     public void InfoString()
     {
-        Log.Info("TheMessage");
+        LogTo.Info("TheMessage");
     }
     public void InfoStringParams()
     {
-        Log.Info("TheMessage {0}", 1);
+        LogTo.Info("TheMessage {0}", 1);
     }
     public void InfoStringException()
     {
-        Log.InfoException("TheMessage", new Exception());
+        LogTo.InfoException("TheMessage", new Exception());
     }
     public void Warn()
     {
-        Log.Warn();
+        LogTo.Warn();
     }
     public void WarnString()
     {
-        Log.Warn("TheMessage");
+        LogTo.Warn("TheMessage");
     }
     public void WarnStringParams()
     {
-        Log.Warn("TheMessage {0}", 1);
+        LogTo.Warn("TheMessage {0}", 1);
     }
     public void WarnStringException()
     {
-        Log.WarnException("TheMessage", new Exception());
+        LogTo.WarnException("TheMessage", new Exception());
     }
     public void Error()
     {
-        Log.Error();
+        LogTo.Error();
     }
     public void ErrorString()
     {
-        Log.Error("TheMessage");
+        LogTo.Error("TheMessage");
     }
     public void ErrorStringParams()
     {
-        Log.Error("TheMessage {0}", 1);
+        LogTo.Error("TheMessage {0}", 1);
     }
     public void ErrorStringException()
     {
-        Log.ErrorException("TheMessage", new Exception());
+        LogTo.ErrorException("TheMessage", new Exception());
     }
     public void Fatal()
     {
-		Log.Fatal();
+		LogTo.Fatal();
     }
 	public void FatalString()
     {
-		Log.Fatal("TheMessage");
+		LogTo.Fatal("TheMessage");
     }
 	public void FatalStringParams()
     {
-		Log.Fatal("TheMessage {0}", 1);
+		LogTo.Fatal("TheMessage {0}", 1);
     }
 	public void FatalStringException()
     {
-		Log.FatalException("TheMessage", new Exception());
+		LogTo.FatalException("TheMessage", new Exception());
     }
 }

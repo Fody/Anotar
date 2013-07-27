@@ -46,7 +46,7 @@ public class LogForwardingProcessor
             return;
         }
         var declaringTypeName = methodReference.DeclaringType.FullName;
-        if (declaringTypeName != "Anotar.Serilog.Log" && declaringTypeName != "Anotar.Serilog.LogTo")
+        if (declaringTypeName != "Anotar.Serilog.LogTo")
         {
             return;
         }

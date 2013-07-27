@@ -7,26 +7,26 @@ public class ClassWithCompilerGeneratedClasses
 {
     public async void AsyncMethod()
     {
-        Log.Debug("Foo");
+        LogTo.Debug("Foo");
     }
 
     public IEnumerable<int> EnumeratorMethod()
     {
         yield return 1;
-        Log.Debug("Foo");
+        LogTo.Debug("Foo");
         yield return 2;
     }
 
     public void DelegateMethod()
     {
-        Action action = () => Log.Debug("Foo");
+        Action action = () => LogTo.Debug("Foo");
         action();
     }
 
     public void LambdaMethod()
     {
         var x = 0;
-        Action<string> log = l => Log.Debug(l, x);
+        Action<string> log = l => LogTo.Debug(l, x);
         log("Foo {0}");
     }
 }

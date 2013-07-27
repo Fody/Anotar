@@ -6,34 +6,34 @@ public class ClassWithMultipleLoggings
 {
     public void LogNoArgs()
     {
-        Log.Debug("Debug");
-        Log.Info("Info");
-        Log.Warn("Warn");
+        LogTo.Debug("Debug");
+        LogTo.Info("Info");
+        LogTo.Warn("Warn");
     }
 
     public void LogWithArgs()
     {
         var args = new object[] { 1 };
 
-        Log.Debug("Debug", args);
-        Log.Info("Info", args);
-        Log.Warn("Warn", args);
+        LogTo.Debug("Debug", args);
+        LogTo.Info("Info", args);
+        LogTo.Warn("Warn", args);
     }
 
     public void LogErrors()
     {
-        Log.DebugException("Debug", new Exception());
-        Log.InfoException("Info", new Exception());
-        Log.WarnException("Warn", new Exception());
+        LogTo.DebugException("Debug", new Exception());
+        LogTo.InfoException("Info", new Exception());
+        LogTo.WarnException("Warn", new Exception());
     }
 
-    public void LogThrowLog(bool dothrow)
+    public void LogThrowLog(bool doThrow)
     {
-        Log.Info("Doing something");
+        LogTo.Info("Doing something");
 
-        if (dothrow)
+        if (doThrow)
             throw new Exception();
 
-        Log.Info("Doing something");
+        LogTo.Info("Doing something");
     }
 }

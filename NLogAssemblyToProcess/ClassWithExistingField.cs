@@ -12,6 +12,6 @@ public class ClassWithExistingField
 
     public void Debug()
     {
-        Log.Debug();
+        LogTo.Debug();
     }
 }

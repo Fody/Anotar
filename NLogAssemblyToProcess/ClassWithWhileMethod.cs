@@ -10,6 +10,6 @@ public class ClassWithWhileMethod
             Trace.WriteLine("aString");
             break;
         }
-        Log.Info();
+        LogTo.Info();
     }
 }

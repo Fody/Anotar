@@ -134,7 +134,7 @@ public class OnException
         throw new Exception("Foo");
     }
 
-    //TODO: add tests for these combos. for now it is ok to peverify it
+    //TODO: add tests for these combos. for now it is ok to peVerify it
     [LogToDebugOnException]
     public object ToDebugWithReturnAndTC(string param1, int param2)
     {

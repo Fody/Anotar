@@ -1,4 +1,4 @@
-﻿
+﻿using Serilog.Events;
 // ReSharper disable UnusedParameter.Global
 using System;
 
@@ -103,7 +103,7 @@ namespace Anotar.Serilog
         }
 
 		/// <summary>
-        /// Writes the diagnostic message at the <see cref="Serilog.e.LogEventLevel."/>  level.
+        /// Writes the diagnostic message at the <see cref="LogEventLevel"/>  level.
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>

@@ -19,7 +19,7 @@ public class LogForwardingProcessor
 
     public void ProcessMethod()
     {
-        Method.CheckForDynamicUsagesOf("Anotar.Custom.Log");
+        Method.CheckForDynamicUsagesOf("Anotar.Custom.LogTo");
         try
         {
             processor = Method.Body.GetILProcessor();
@@ -47,7 +47,7 @@ public class LogForwardingProcessor
         {
             return;
         }
-        if (methodReference.DeclaringType.FullName != "Anotar.Custom.Log")
+        if (methodReference.DeclaringType.FullName != "Anotar.Custom.LogTo")
         {
             return;
         }

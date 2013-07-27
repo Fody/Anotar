@@ -18,7 +18,7 @@ public class LogForwardingProcessor
 
 	public void ProcessMethod()
     {
-        Method.CheckForDynamicUsagesOf("Anotar.MetroLog.Log");
+        Method.CheckForDynamicUsagesOf("Anotar.MetroLog.LogTo");
         try
         {
             var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
@@ -45,7 +45,7 @@ public class LogForwardingProcessor
         {
             return;
         }
-        if (methodReference.DeclaringType.FullName != "Anotar.MetroLog.Log")
+        if (methodReference.DeclaringType.FullName != "Anotar.MetroLog.LogTo")
         {
             return;
         }
