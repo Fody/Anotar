@@ -51,7 +51,7 @@ class OnExceptionProcessor
         body.Variables.Add(exceptionVariable);
 		messageVariable = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
         body.Variables.Add(messageVariable);
-		paramsArrayVariable = new VariableDefinition(new ArrayType(ModuleWeaver.ModuleDefinition.TypeSystem.Object));
+		paramsArrayVariable = new VariableDefinition(ModuleWeaver.ObjectArray);
         body.Variables.Add(paramsArrayVariable);
 
 

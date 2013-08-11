@@ -5,14 +5,13 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}</ProjectGuid>
+    <ProjectGuid>{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Anotar.NLog</RootNamespace>
-    <AssemblyName>Anotar.NLog</AssemblyName>
+    <RootNamespace>Anotar.CommonLogging</RootNamespace>
+    <AssemblyName>Anotar.CommonLogging</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile2</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <FodyPath>..\packages\Fody.1.14.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -23,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Anotar.NLog.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Anotar.CommonLogging.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Anotar.NLog.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Anotar.CommonLogging.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -44,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
     <OutputPath>bin\Deployable\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\Anotar.NLog.xml</DocumentationFile>
+    <DocumentationFile>bin\Deployable\Anotar.CommonLogging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

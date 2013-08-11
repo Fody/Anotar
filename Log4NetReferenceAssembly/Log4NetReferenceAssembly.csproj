@@ -56,7 +56,6 @@
     </Compile>
     <Compile Include="LogTo.cs" />
     <Compile Include="LogToFatalOnExceptionAttribute.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="LogMinimalMessageAttribute.cs" />
     <Compile Include="LogToDebugOnExceptionAttribute.cs" />
     <Compile Include="LogToErrorOnExceptionAttribute.cs" />

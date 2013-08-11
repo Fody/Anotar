@@ -1,0 +1,4 @@
+interface MyInterface
+{
+    void MyMethod();
+}

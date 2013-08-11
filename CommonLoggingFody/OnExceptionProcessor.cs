@@ -21,7 +21,6 @@ class OnExceptionProcessor
 	public void Process()
     {
 
-
 	    attributeFinder = new AttributeFinder(Method);
 		if (!attributeFinder.Found)
         {
@@ -111,13 +110,6 @@ class OnExceptionProcessor
 		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
-		if (attributeFinder.FoundTrace)
-        {
-            foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod, ModuleWeaver.isTraceEnabledMethod))
-            {
-                yield return instruction;
-            }
-        }
 		if (attributeFinder.FoundDebug)
         {
 			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.isDebugEnabledMethod))
@@ -134,21 +126,21 @@ class OnExceptionProcessor
         }
 		if (attributeFinder.FoundWarn)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.isWarnEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod,ModuleWeaver.isWarnEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundError)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod,ModuleWeaver.isErrorEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.isErrorEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundFatal)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod,ModuleWeaver.isFatalEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.isFatalEnabledMethod))
             {
                 yield return instruction;
             }
@@ -157,15 +149,16 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Rethrow);
     }
 
-	IEnumerable<Instruction> AddWrite(MethodReference writeMethod, MethodReference isEnabledMethod)
-	{
+    IEnumerable<Instruction> AddWrite(MethodReference writeMethod, MethodReference isEnabledMethod)
+    {
         var sectionNop = Instruction.Create(OpCodes.Nop);
-		yield return Instruction.Create(OpCodes.Ldsfld, Field);
+        yield return Instruction.Create(OpCodes.Ldsfld, Field);
 		yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
         yield return Instruction.Create(OpCodes.Ldsfld, Field);
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
+        yield return Instruction.Create(OpCodes.Ldnull);
         yield return Instruction.Create(OpCodes.Callvirt, writeMethod);
         yield return sectionNop;
     }
