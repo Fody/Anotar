@@ -132,6 +132,20 @@ This example is targeting the [NLog](http://nlog-project.org/).
             logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
         }
     }
+
+
+#### In CommonLogging
+
+    public class MyClass
+    {
+        static ILog logger = LoggerManager.GetLogger("MyClass")();
+
+        void MyMethod()
+        {
+            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+        }
+    }
+    
 ### Other Log Overloads in Explicit Logging
 
 There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
@@ -204,11 +218,11 @@ For example
 
 The Logger instance is responsible for building an instance of a logger. 
 
-  * Name doesnt matter. It will be derived from the return type of `LoggerFactory.GetLogger`.
+  * Name doesn't matter. It will be derived from the return type of `LoggerFactory.GetLogger`.
   * Must not be generic.
-  * Namespace doesnt matter.
+  * Namespace doesn't matter.
   * Can be either an interface, a concrete class or an abstract class.
-  * Must contain the members listed below.
+  * Can contain the members listed below. All members are optional. However an build error will be thrown if you attempt to use one of the members that doesn't exist. So for example if you call `LogTo.Debug` and `Logger.Debug` (with the same parameters) doesn't.
   
 For example
 
