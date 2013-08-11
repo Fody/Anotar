@@ -180,7 +180,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void DebugString()'. Line: ~"));
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -190,7 +191,9 @@ public class CommonLoggingTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void DebugStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -200,8 +203,24 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
     }
+
+    [Test]
+    public void DebugStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
+    }    
+    
     [Test]
     public void Trace()
     {
@@ -209,7 +228,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Trace();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
-        Assert.IsTrue(actionAdapter.Traces.First().Format.StartsWith("Method: 'void Trace()'. Line: ~"));
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Trace()'. Line: ~"));
     }
 
     [Test]
@@ -219,7 +239,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceString();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
-        Assert.IsTrue(actionAdapter.Traces.First().Format.StartsWith("Method: 'void TraceString()'. Line: ~"));
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceString()'. Line: ~"));
     }
 
     [Test]
@@ -229,7 +250,9 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceStringParams();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
-        Assert.IsTrue(actionAdapter.Traces.First().Format.StartsWith("Method: 'void TraceStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -239,8 +262,24 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.TraceStringException();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
-        Assert.IsTrue(actionAdapter.Traces.First().Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
     }
+
+    [Test]
+    public void TraceStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
+    }
+
     [Test]
     public void Info()
     {
@@ -248,7 +287,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, actionAdapter.Infos.Count);
-        Assert.IsTrue(actionAdapter.Infos.First().Format.StartsWith("Method: 'void Info()'. Line: ~"));
+        var logEvent = actionAdapter.Infos.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -258,7 +298,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, actionAdapter.Infos.Count);
-        Assert.IsTrue(actionAdapter.Infos.First().Format.StartsWith("Method: 'void InfoString()'. Line: ~"));
+        var logEvent = actionAdapter.Infos.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -268,7 +309,9 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, actionAdapter.Infos.Count);
-        Assert.IsTrue(actionAdapter.Infos.First().Format.StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Infos.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -278,7 +321,22 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, actionAdapter.Infos.Count);
-        Assert.IsTrue(actionAdapter.Infos.First().Format.StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Infos.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InfoStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Infos.Count);
+        var logEvent = actionAdapter.Infos.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -288,7 +346,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, actionAdapter.Warns.Count);
-        Assert.IsTrue(actionAdapter.Warns.First().Format.StartsWith("Method: 'void Warn()'. Line: ~"));
+        var logEvent = actionAdapter.Warns.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Warn()'. Line: ~"));
     }
 
     [Test]
@@ -298,7 +357,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, actionAdapter.Warns.Count);
-        Assert.IsTrue(actionAdapter.Warns.First().Format.StartsWith("Method: 'void WarnString()'. Line: ~"));
+        var logEvent = actionAdapter.Warns.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnString()'. Line: ~"));
     }
 
     [Test]
@@ -308,7 +368,9 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, actionAdapter.Warns.Count);
-        Assert.IsTrue(actionAdapter.Warns.First().Format.StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Warns.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -318,7 +380,22 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, actionAdapter.Warns.Count);
-        Assert.IsTrue(actionAdapter.Warns.First().Format.StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Warns.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarnStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarnStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Warns.Count);
+        var logEvent = actionAdapter.Warns.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -328,7 +405,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void Error()'. Line: ~"));
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Error()'. Line: ~"));
     }
 
     [Test]
@@ -338,7 +416,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void ErrorString()'. Line: ~"));
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -348,7 +427,9 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -358,7 +439,22 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -368,7 +464,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
 		instance.FatalString();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
-        Assert.IsTrue(actionAdapter.Fatals.First().Format.StartsWith("Method: 'void FatalString()'. Line: ~"));
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalString()'. Line: ~"));
     }
 
     [Test]
@@ -378,17 +475,34 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
 		instance.FatalStringParams();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
-        Assert.IsTrue(actionAdapter.Fatals.First().Format.StartsWith("Method: 'void FatalStringParams()'. Line: ~"));
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
-	public void FatalStringException()
+    public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalStringException();
+        instance.FatalStringException();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
-        Assert.IsTrue(actionAdapter.Fatals.First().Format.StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.FatalStringExceptionParams();
+        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringExceptionParams()'. Line: ~"));
+        Assert.AreEqual(1, logEvent.Args.First());
     }
 
     [Test]
@@ -396,10 +510,6 @@ public class CommonLoggingTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-
-
-
-
 
     [Test]
     public void AsyncMethod()
@@ -410,6 +520,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
     }
+
     [Test]
     public void EnumeratorMethod()
     {
@@ -417,7 +528,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), actionAdapter.Debugs.First().Format);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), logEvent.Format);
     }
     [Test]
     public void DelegateMethod()
@@ -426,7 +538,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DelegateMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), actionAdapter.Debugs.First().Format);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), logEvent.Format);
     }
     [Test]
     public void LambdaMethod()
@@ -435,7 +548,8 @@ public class CommonLoggingTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.LambdaMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), actionAdapter.Debugs.First().Format);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), logEvent.Format);
     }
 
 }

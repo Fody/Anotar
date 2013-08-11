@@ -19,6 +19,10 @@ public class ClassWithLogging
     {
         LogTo.DebugException("TheMessage",new Exception());
     }
+    public void DebugStringExceptionParams()
+    {
+        LogTo.DebugException("TheMessage",new Exception(),1);
+    }
     public void Info()
     {
         LogTo.Info();
@@ -34,6 +38,10 @@ public class ClassWithLogging
     public void InfoStringException()
     {
         LogTo.InfoException("TheMessage", new Exception());
+    }
+    public void InfoStringExceptionParams()
+    {
+        LogTo.InfoException("TheMessage", new Exception(),1);
     }
     public void Warn()
     {
@@ -51,6 +59,10 @@ public class ClassWithLogging
     {
         LogTo.WarnException("TheMessage", new Exception());
     }
+    public void WarnStringExceptionParams()
+    {
+        LogTo.WarnException("TheMessage", new Exception(),1);
+    }
     public void Trace()
     {
         LogTo.Trace();
@@ -66,6 +78,10 @@ public class ClassWithLogging
     public void TraceStringException()
     {
         LogTo.TraceException("TheMessage", new Exception());
+    }
+    public void TraceStringExceptionParams()
+    {
+        LogTo.TraceException("TheMessage", new Exception(),1);
     }
     public void Error()
     {
@@ -83,6 +99,10 @@ public class ClassWithLogging
     {
         LogTo.ErrorException("TheMessage", new Exception());
     }
+    public void ErrorStringExceptionParams()
+    {
+        LogTo.ErrorException("TheMessage", new Exception(),1);
+    }
     public void Fatal()
     {
 		LogTo.Fatal();
@@ -98,5 +118,9 @@ public class ClassWithLogging
 	public void FatalStringException()
     {
 		LogTo.FatalException("TheMessage", new Exception());
+    }
+    public void FatalStringExceptionParams()
+    {
+		LogTo.FatalException("TheMessage", new Exception(),1);
     }
 }

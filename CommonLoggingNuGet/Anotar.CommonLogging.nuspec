@@ -12,10 +12,10 @@
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
     <description>Simplifies logging through a static class and some IL manipulation.</description>
     <language>en-AU</language>
-    <tags>Logging, ILWeaving, Fody, Cecil, CommonLogging</tags>
+    <tags>Logging, ILWeaving, Fody, Cecil, Common.Logging</tags>
     <dependencies>
       <dependency id="Fody"/>
-      <dependency id="CommonLogging"/>		
+      <dependency id="Common.Logging"/>		
 	</dependencies>
   </metadata>
 </package>
