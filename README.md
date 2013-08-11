@@ -143,7 +143,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
     public class MyClass
     {
-        static ILog logger = LoggerManager.GetLogger("MyClass")();
+        static ILog logger = LoggerManager.GetLogger("MyClass");
 
         void MyMethod()
         {
