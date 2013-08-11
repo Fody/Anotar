@@ -37,6 +37,7 @@ public class CommonLoggingTests
        actionAdapter.Debugs.Clear();
        actionAdapter.Infos.Clear();
        actionAdapter.Warns.Clear();
+       actionAdapter.Traces.Clear();
     }
 
     [Test]
