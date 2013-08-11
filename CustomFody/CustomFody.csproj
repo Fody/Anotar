@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="AttributeFinder.cs" />
     <Compile Include="CustomTests.cs" />
+    <Compile Include="Lazy.cs" />
     <Compile Include="OnExceptionProcessor.cs" />
     <Compile Include="TypeProcessor.cs" />
     <Compile Include="InjectorExtentions.cs" />
