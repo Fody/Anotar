@@ -13,6 +13,7 @@ Simplifies logging through a static class and some IL manipulation
 * [Serilog](http://serilog.net/)
 * [MetroLog](https://github.com/mbrit/MetroLog)
 * [Catel](http://www.catelproject.com/)
+* [CommonLogging](http://netcommon.sourceforge.net/)
 * Custom (for frameworks/toolkits with custom logging)
 
 ## Nuget
@@ -40,6 +41,10 @@ Simplifies logging through a static class and some IL manipulation
  * Catel package http://nuget.org/packages/Anotar.Catel.Fody 
 
     PM> Install-Package Anotar.Catel.Fody
+ 
+ * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody 
+
+    PM> Install-Package Anotar.CommonLogging.Fody
  
 ## Explicit Logging
 
