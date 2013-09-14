@@ -6,7 +6,7 @@ using Mono.Collections.Generic;
 
 public static class CecilExtensions
 {
-    public static void Replace(this Collection<Instruction> collection, Instruction instruction, IEnumerable<Instruction> instructions)
+    public static void Replace(this Collection<Instruction> collection, Instruction instruction, ICollection<Instruction> instructions)
     {
         // Any instructions pointing to the instruction to be replaced
         // need to point to the new instruction instead.

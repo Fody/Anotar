@@ -12,8 +12,7 @@
     <AssemblyName>Anotar.Log4Net.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <FodyPath>..\packages\Fody.1.15.0.0</FodyPath>
+    <FodyPath>..\packages\Fody.1.17.4.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,12 +34,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
     <OutputPath>bin\Deployable\</OutputPath>
@@ -84,6 +77,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <None Include="Anotar.Log4Net.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Fody.targets" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
@@ -137,6 +133,23 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(ProjectPath)\..\..\Tools\Pepita\PepitaGet.targets" />
+  <Target Name="Clean">
+    <ItemGroup>
+      <FilesToDelete Include="$(SolutionDir)Log4NetNuGetBuild\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="AfterBuild" DependsOnTargets="Clean">
+    <MakeDir Directories="$(SolutionDir)Log4NetNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(ProjectDir)Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)Log4NetNuGetBuild\Tools" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)Log4NetNuGetBuild" MetadataAssembly="$(OutputPath)\Anotar.Log4Net.Fody.dll" />
+  </Target>
   <Import Project="Fody.targets" />
 </Project>
