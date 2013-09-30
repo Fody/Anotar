@@ -134,14 +134,12 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="Clean">
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="AfterBuild">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)CustomNuGetBuild\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-  </Target>
-  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
-  <Target Name="AfterBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
     <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />

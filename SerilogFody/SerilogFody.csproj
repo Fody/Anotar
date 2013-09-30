@@ -139,14 +139,12 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="Clean">
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="AfterBuild">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)SerilogNuGetBuild\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-  </Target>
-  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
-  <Target Name="AfterBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)SerilogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
     <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />

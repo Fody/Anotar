@@ -134,14 +134,12 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="Clean">
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="AfterBuild">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)MetroLogNuGetBuild\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-  </Target>
-  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
-  <Target Name="AfterBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)MetroLogNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.dll" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
     <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.xml" DestinationFolder="$(SolutionDir)MetroLogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
