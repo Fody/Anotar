@@ -137,18 +137,18 @@
   <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="AfterBuild">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)CustomNuGetBuild\**\*.*" />
+      <FilesToDelete Include="$(SolutionDir)NuGetBuild\Custom\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(ProjectDir)Anotar.Custom.nuspec" DestinationFolder="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Tools" />
-    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)CustomNuGetBuild\Tools" />
-    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)CustomNuGetBuild" MetadataAssembly="$(OutputPath)\Anotar.Custom.Fody.dll" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(ProjectDir)Anotar.Custom.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Tools" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Custom" MetadataAssembly="$(OutputPath)\Anotar.Custom.Fody.dll" />
   </Target>
   <Import Project="Fody.targets" />
 </Project>

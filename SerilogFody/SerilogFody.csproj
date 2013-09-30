@@ -142,18 +142,18 @@
   <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="AfterBuild">
     <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)SerilogNuGetBuild\**\*.*" />
+      <FilesToDelete Include="$(SolutionDir)NuGetBuild\Serilog\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(ProjectDir)Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)SerilogNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
-    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)SerilogNuGetBuild\Tools" />
-    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)SerilogNuGetBuild" MetadataAssembly="$(OutputPath)\Anotar.Serilog.Fody.dll" />
+    <MakeDir Directories="$(SolutionDir)NuGetBuild\Serilog" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(ProjectDir)Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Tools" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Serilog" MetadataAssembly="$(OutputPath)\Anotar.Serilog.Fody.dll" />
   </Target>
   <Import Project="Fody.targets" />
 </Project>
