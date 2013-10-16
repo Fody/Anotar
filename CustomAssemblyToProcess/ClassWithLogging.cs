@@ -3,6 +3,22 @@ using Anotar.Custom;
 
 public class ClassWithLogging
 {
+    public void Trace()
+    {
+        LogTo.Trace();
+    }
+    public void TraceString()
+    {
+        LogTo.Trace("TheMessage");
+    }
+    public void TraceStringParams()
+    {
+        LogTo.Trace("TheMessage {0}",1);
+    }
+    public void TraceStringException()
+    {
+        LogTo.Trace(new Exception(), "TheMessage");
+    }
     public void Debug()
     {
         LogTo.Debug();
