@@ -5,6 +5,10 @@ public partial class ModuleWeaver
 {
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
+        if (methodReference.Name == "Trace")
+        {
+            return TraceMethod;
+        }
         if (methodReference.Name == "Debug")
         {
             return DebugMethod;
@@ -30,6 +34,10 @@ public partial class ModuleWeaver
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {
+        if (methodReference.Name == "Trace")
+        {
+            return TraceExceptionMethod;
+        }
         if (methodReference.Name == "Debug")
         {
             return DebugExceptionMethod;

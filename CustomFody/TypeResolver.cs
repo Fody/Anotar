@@ -6,6 +6,9 @@ public partial class ModuleWeaver
     {
         var loggerTypeDefinition = GetLoggerMethod.ReturnType.Resolve();
         
+		TraceMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String","Object[]")));
+		isTraceEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled")));
+        TraceExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "Exception", "String", "Object[]")));
 		DebugMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String","Object[]")));
 		isDebugEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled")));
         DebugExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]")));
@@ -24,6 +27,8 @@ public partial class ModuleWeaver
 		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
     }
 
+	public Lazy<MethodReference> TraceMethod;
+	public Lazy<MethodReference> TraceExceptionMethod;
 	public Lazy<MethodReference> DebugMethod;
 	public Lazy<MethodReference> DebugExceptionMethod;
     public Lazy<MethodReference> InformationMethod;
@@ -37,6 +42,7 @@ public partial class ModuleWeaver
 
 	public TypeReference LoggerType;
 
+    public Lazy<MethodReference> isTraceEnabledMethod;
     public Lazy<MethodReference> isDebugEnabledMethod;
     public Lazy<MethodReference> isInformationEnabledMethod;
     public Lazy<MethodReference> isWarningEnabledMethod;
