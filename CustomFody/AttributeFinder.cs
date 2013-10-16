@@ -5,6 +5,11 @@ public class AttributeFinder
 	public AttributeFinder(MethodDefinition method)
 	{
 		var customAttributes = method.CustomAttributes;
+        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToTraceOnExceptionAttribute"))
+		{
+			FoundTrace = true;
+			Found = true;
+		}
         if (customAttributes.ContainsAttribute("Anotar.Custom.LogToDebugOnExceptionAttribute"))
 		{
 			FoundDebug = true;
@@ -35,6 +40,7 @@ public class AttributeFinder
 
 	public bool Found;
 	public bool FoundInformation;
+	public bool FoundTrace;
 	public bool FoundDebug;
     public bool FoundWarning;
 	public bool FoundError;

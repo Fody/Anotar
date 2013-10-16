@@ -120,6 +120,18 @@ public class OnException
         throw new Exception("Foo");
     }
 
+    [LogToTraceOnException]
+    public void ToTrace(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
+
+    [LogToTraceOnException]
+    public object ToTraceWithReturn(string param1, int param2)
+    {
+        throw new Exception("Foo");
+    }
+
     //TODO: add tests for these combos. for now it is ok to peVerify it
     [LogToDebugOnException]
     public object ToDebugWithReturnAndTC(string param1, int param2)

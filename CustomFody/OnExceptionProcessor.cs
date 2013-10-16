@@ -109,6 +109,14 @@ class OnExceptionProcessor
 		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
+		if (attributeFinder.FoundTrace)
+        {
+			foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod, ModuleWeaver.isTraceEnabledMethod))
+            {
+                yield return instruction;
+            }
+        }
+
 		if (attributeFinder.FoundDebug)
         {
 			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.isDebugEnabledMethod))

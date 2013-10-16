@@ -3,6 +3,25 @@ using System.Collections.Generic;
 
 public class Logger
 {
+    public void Trace(string format, params object[] args)
+    {
+        TraceEntries.Add(new LogEntry
+        {
+            Format = format,
+            Params = args,
+        });   
+    }
+    public void Trace(Exception exception, string format, params object[] args)
+    {
+        TraceEntries.Add(new LogEntry
+        {
+            Format = format,
+            Params = args,
+            Exception = exception
+        });
+    }
+    public bool IsTraceEnabled { get { return true; } }
+
     public void Debug(string format, params object[] args)
     {
         DebugEntries.Add(new LogEntry
@@ -104,4 +123,5 @@ public class Logger
     public List<LogEntry> DebugEntries;
     public List<LogEntry> InformationEntries;
     public List<LogEntry> WarningEntries;
+    public List<LogEntry> TraceEntries;
 }
