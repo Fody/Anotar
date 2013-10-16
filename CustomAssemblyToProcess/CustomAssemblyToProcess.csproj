@@ -45,6 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -65,9 +68,6 @@
     <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj">
       <Project>{46899ED4-2ED5-4C8D-BEC9-DED828CB1A6C}</Project>
       <Name>CustomAssemblyWithLogger</Name>
@@ -76,6 +76,9 @@
       <Project>{9f5a653c-ee47-4865-8a37-df447f5fa3cb}</Project>
       <Name>CustomReferenceAssembly</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

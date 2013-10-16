@@ -11,12 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
     <description>Simplifies logging through a static class and some IL manipulation.</description>
-    <summary />
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, MetroLog</tags>
     <dependencies>
       <dependency id="Fody"/>
-      <dependency id="MetroLog"/>
+      <dependency id="MetroLog" version ="0.8"/>
     </dependencies>
   </metadata>
 </package>

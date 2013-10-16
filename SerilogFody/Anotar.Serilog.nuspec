@@ -11,12 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
     <description>Simplifies logging through a static class and some IL manipulation.</description>
-    <summary />
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, Serilog</tags>
     <dependencies>
       <dependency id="Fody"/>
-      <dependency id="Serilog" version="0.9.4"/>
+      <dependency id="Serilog" version="1.0"/>
 	</dependencies>
   </metadata>
 </package>
