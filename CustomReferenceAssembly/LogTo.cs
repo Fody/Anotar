@@ -10,6 +10,37 @@ namespace Anotar.Custom
     {
 
 		/// <summary>
+		/// Writes the diagnostic message at the <c>Trace</c> level.
+		/// </summary>
+        public static void Trace()
+        {
+            throw new NotImplementedException();
+        }
+
+		/// <summary>
+		/// Writes the diagnostic message at the <c>Trace</c> level.
+		/// </summary>
+		/// <param name="format">A <see langword="string" /> containing format items.</param>
+		/// <param name="args">Arguments to format.</param>
+        [StringFormatMethod("format")]
+        public static void Trace(string format, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+		/// <summary>
+		/// Writes the diagnostic message and exception at the <c>Trace</c> level.
+		/// </summary>
+		/// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="exception">An exception to be logged.</param>
+        /// <param name="args">Arguments to format.</param>
+        [StringFormatMethod("format")]
+        public static void Trace(Exception exception, string format, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
         public static void Debug()

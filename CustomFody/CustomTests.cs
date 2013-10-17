@@ -85,6 +85,22 @@ public class CustomTests
 
 
     [Test]
+    public void OnExceptionToTrace()
+    {
+        var expected = "Exception occurred in 'void ToTrace(String, Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToTrace("x", 6);
+        CheckException(action, LoggerFactory.TraceEntries, expected);
+    }
+
+    [Test]
+    public void OnExceptionToTraceWithReturn()
+    {
+        var expected = "Exception occurred in 'Object ToTraceWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToTraceWithReturn("x", 6);
+        CheckException(action, LoggerFactory.TraceEntries, expected);
+    }
+
+    [Test]
     public void OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
@@ -163,6 +179,36 @@ public class CustomTests
         CheckException(action, LoggerFactory.FatalEntries, expected);
     }
 
+
+    [Test]
+    public void TraceString()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceString();
+        Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
+        Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceString()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringParams()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.TraceStringParams();
+        Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
+        Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringParams()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringException();
+        Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
+        Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
 
     [Test]
     public void DebugString()

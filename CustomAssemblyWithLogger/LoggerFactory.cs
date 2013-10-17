@@ -8,6 +8,7 @@ public class LoggerFactory
     public static List<LogEntry> DebugEntries = new List<LogEntry>();
     public static List<LogEntry> InformationEntries = new List<LogEntry>();
     public static List<LogEntry> WarningEntries = new List<LogEntry>();
+    public static List<LogEntry> TraceEntries = new List<LogEntry>();
 
     public static Logger GetLogger<T>()
     {
@@ -18,6 +19,7 @@ public class LoggerFactory
                    DebugEntries = DebugEntries,
                    InformationEntries = InformationEntries,
                    WarningEntries = WarningEntries,
+                   TraceEntries = TraceEntries,
                };
     }
 
@@ -28,5 +30,6 @@ public class LoggerFactory
         DebugEntries.Clear();
         InformationEntries.Clear();
         WarningEntries.Clear();
+        TraceEntries.Clear();
     }
 }
