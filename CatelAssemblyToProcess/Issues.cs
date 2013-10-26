@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Anotar.Catel;
-using Catel.Logging;
 
 public class Issues
 {
