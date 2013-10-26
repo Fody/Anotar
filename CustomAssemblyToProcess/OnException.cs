@@ -6,6 +6,11 @@ public class OnException
 {
 
     [LogToErrorOnException]
+    public object MethodThatReturns(string param1, int param2)
+    {
+        return "a";
+    }
+    [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
         throw new Exception("Foo");

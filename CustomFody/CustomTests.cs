@@ -41,7 +41,22 @@ public class CustomTests
         var message = LoggerFactory.DebugEntries.First();
         Assert.IsTrue(message.Format.StartsWith("Method: 'void Debug()'. Line: ~"));
     }
+    
+    [Test]
+    public void EnsureLoggerFactoryAttributeisRemoved()
+    {
+        var first = assembly.GetCustomAttributes(false).FirstOrDefault(x => x.GetType().Name.Contains("LoggerFactoryAttribute"));
+        Assert.IsNull(first);
+    }
 
+    [Test]
+    public void MethodThatReturns()
+    {
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
+    }
     [Test]
     public void Debug()
     {

@@ -22,6 +22,11 @@ public class OnException
         throw new Exception("Foo");
     }
 
+    [LogToErrorOnException]
+    public object MethodThatReturns(string param1, int param2)
+    {
+        return "a";
+    }
     [LogToFatalOnException]
     public object ToFatalWithReturn(string param1, int param2)
     {

@@ -101,6 +101,15 @@ public class SerilogTests
     }
 
     [Test]
+    public void MethodThatReturns()
+    {
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
+    }
+
+    [Test]
     public void WithStaticConstructor()
     {
         var type = assembly.GetType("ClassWithStaticConstructor");

@@ -183,6 +183,15 @@ public class CatelTests
         CheckException(action, Errors, expected);
     }
 
+    [Test]
+    public void MethodThatReturns()
+    {
+        var type = assembly.GetType("OnException");
+        var instance = (dynamic)Activator.CreateInstance(type);
+     
+        Assert.AreEqual("a",instance.MethodThatReturns("x", 6));
+    }
+
 
     [Test]
     public void DebugString()

@@ -5,6 +5,11 @@ using Anotar.Log4Net;
 public class OnException
 {
 
+    [LogToErrorOnException]
+    public object MethodThatReturns(string param1, int param2)
+    {
+        return "a";
+    }
     [LogToFatalOnException]
 	public void ToFatal(string param1, int param2)
     {

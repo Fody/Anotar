@@ -18,6 +18,12 @@ public class OnException
     }
 
     [LogToErrorOnException]
+    public object MethodThatReturns(string param1, int param2)
+    {
+        return "a";
+    }
+
+    [LogToErrorOnException]
     public void WithRefs(
         ref string param1,
         ref int param2,

@@ -31,7 +31,9 @@ public partial class ModuleWeaver
             var typeReference = (TypeReference) loggerFactoryAttribute.ConstructorArguments.First().Value;
 
             FindGetLogger(typeReference.Resolve());
+
             GetLoggerMethod = ModuleDefinition.Import(GetLoggerMethod);
+            ModuleDefinition.Assembly.CustomAttributes.Remove(loggerFactoryAttribute);
         }
 
     }
