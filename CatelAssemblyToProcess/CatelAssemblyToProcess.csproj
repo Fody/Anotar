@@ -53,19 +53,44 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs" />
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
-    <Compile Include="ClassWithExistingField.cs" />
-    <Compile Include="ClassWithLogging.cs" />
-    <Compile Include="ClassWithMultipleLoggings.cs" />
-    <Compile Include="ClassWithWhileMethod.cs" />
-    <Compile Include="ClassWithException.cs" />
-    <Compile Include="GenericClass.cs" />
+    <Compile Include="ClassWithAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithCompilerGeneratedClasses.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithExistingField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithLogging.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithMultipleLoggings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithWhileMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GenericClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Issues.cs" />
     <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs" />
-    <Compile Include="MyInterface.cs" />
-    <Compile Include="OnException.cs" />
-    <Compile Include="ReturnFixerTests.cs" />
+    <Compile Include="MyEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyInterface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OnException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReturnFixerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatelReferenceAssembly\CatelReferenceAssembly.csproj">

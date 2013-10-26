@@ -8,29 +8,25 @@ public static class CecilExtensions
 {
     public static void Replace(this Collection<Instruction> collection, Instruction instruction, ICollection<Instruction> instructions)
     {
-        // Any instructions pointing to the instruction to be replaced
-        // need to point to the new instruction instead.
         var newInstruction = instructions.First();
-        foreach (var item in collection)
-        {
-            if (item.Operand == instruction)
-                item.Operand = newInstruction;
-        }
+        instruction.Operand = newInstruction.Operand;
+        instruction.OpCode = newInstruction.OpCode;
 
         var indexOf = collection.IndexOf(instruction);
-        collection.RemoveAt(indexOf);
-        foreach (var instruction1 in instructions)
+        foreach (var instruction1 in instructions.Skip(1))
         {
-            collection.Insert(indexOf, instruction1);
+            collection.Insert(indexOf+1, instruction1);
             indexOf++;
         }
     }
+
     public static string DisplayName(this MethodDefinition method)
     {
         method = GetActualMethod(method);
         var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.DisplayName()));
         return string.Format("{0} {1}({2})", method.ReturnType.DisplayName(), method.Name, paramNames);
     }
+
     public static string DisplayName(this TypeReference typeReference)
     {
         var genericInstanceType = typeReference as GenericInstanceType;
@@ -38,7 +34,7 @@ public static class CecilExtensions
         {
             return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(c => c.DisplayName())) + ">";
         }
-            return typeReference.Name;
+        return typeReference.Name;
     }
 
     static MethodDefinition GetActualMethod(MethodDefinition method)
@@ -102,42 +98,51 @@ public static class CecilExtensions
     }
 
     public static MethodDefinition GetStaticConstructor(this TypeDefinition type)
-	{
-		var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
-		if (staticConstructor == null)
-		{
-			const MethodAttributes attributes = MethodAttributes.Static
-												| MethodAttributes.SpecialName
-												| MethodAttributes.RTSpecialName
-												| MethodAttributes.HideBySig
-												| MethodAttributes.Private;
-			staticConstructor = new MethodDefinition(".cctor", attributes, type.Module.TypeSystem.Void);
+    {
+        var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
+        if (staticConstructor == null)
+        {
+            const MethodAttributes attributes = MethodAttributes.Static
+                                                | MethodAttributes.SpecialName
+                                                | MethodAttributes.RTSpecialName
+                                                | MethodAttributes.HideBySig
+                                                | MethodAttributes.Private;
+            staticConstructor = new MethodDefinition(".cctor", attributes, type.Module.TypeSystem.Void);
 
-			staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
-			type.Methods.Add(staticConstructor);
-		}
-		return staticConstructor;
-	}
-	public static void InsertBefore(this ILProcessor processor, Instruction target, IEnumerable<Instruction> instructions)
-	{
-		foreach (var instruction in instructions)
-			processor.InsertBefore(target, instruction);
-	}
+            staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            type.Methods.Add(staticConstructor);
+        }
+        return staticConstructor;
+    }
+
+    public static void InsertBefore(this ILProcessor processor, Instruction target, IEnumerable<Instruction> instructions)
+    {
+        foreach (var instruction in instructions)
+        {
+            processor.InsertBefore(target, instruction);
+        }
+    }
 
 
     public static bool IsBasicLogCall(this Instruction instruction)
     {
         var previous = instruction.Previous;
-        if (previous.OpCode != OpCodes.Newarr || ((TypeReference)previous.Operand).FullName != "System.Object")
+        if (previous.OpCode != OpCodes.Newarr || ((TypeReference) previous.Operand).FullName != "System.Object")
+        {
             return false;
+        }
 
         previous = previous.Previous;
         if (previous.OpCode != OpCodes.Ldc_I4)
+        {
             return false;
+        }
 
         previous = previous.Previous;
         if (previous.OpCode != OpCodes.Ldstr)
+        {
             return false;
+        }
 
         return true;
     }
@@ -145,13 +150,17 @@ public static class CecilExtensions
     public static Instruction FindStringInstruction(this Instruction call)
     {
         if (IsBasicLogCall(call))
+        {
             return call.Previous.Previous.Previous;
+        }
 
         var previous = call.Previous;
         if (previous.OpCode != OpCodes.Ldloc)
+        {
             return null;
+        }
 
-        var variable = (VariableDefinition)previous.Operand;
+        var variable = (VariableDefinition) previous.Operand;
 
         while (previous != null && (previous.OpCode != OpCodes.Stloc || previous.Operand != variable))
         {
@@ -159,31 +168,34 @@ public static class CecilExtensions
         }
 
         if (previous == null)
+        {
             return null;
+        }
 
         if (IsBasicLogCall(previous))
+        {
             return previous.Previous.Previous.Previous;
+        }
 
         return null;
     }
 
-	public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
-	{
-		while (true)
-		{
+    public static SequencePoint GetPreviousSequencePoint(this Instruction instruction)
+    {
+        while (true)
+        {
+            if (instruction.SequencePoint != null)
+            {
+                return instruction.SequencePoint;
+            }
 
-			if (instruction.SequencePoint != null)
-			{
-				return instruction.SequencePoint;
-			}
-
-			instruction = instruction.Previous;
-			if (instruction == null)
-			{
-				return null;
-			}
-		}
-	}
+            instruction = instruction.Previous;
+            if (instruction == null)
+            {
+                return null;
+            }
+        }
+    }
 
     public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
     {
@@ -198,9 +210,9 @@ public static class CecilExtensions
     public static MethodDefinition FindMethod(this TypeDefinition typeDefinition, string method, params string[] paramTypes)
     {
         var firstOrDefault = typeDefinition.Methods
-            .FirstOrDefault(x => 
-                !x.HasGenericParameters && 
-                x.Name == method && 
+            .FirstOrDefault(x =>
+                !x.HasGenericParameters &&
+                x.Name == method &&
                 x.IsMatch(paramTypes));
         if (firstOrDefault == null)
         {
@@ -242,16 +254,17 @@ public static class CecilExtensions
 
         return definition;
     }
-	public static TypeReference GetGeneric(this TypeDefinition definition)
+
+    public static TypeReference GetGeneric(this TypeDefinition definition)
     {
-		if (definition.HasGenericParameters)
+        if (definition.HasGenericParameters)
         {
             var genericInstanceType = new GenericInstanceType(definition);
             foreach (var parameter in definition.GenericParameters)
             {
                 genericInstanceType.GenericArguments.Add(parameter);
             }
-            return  genericInstanceType;
+            return genericInstanceType;
         }
 
         return definition;

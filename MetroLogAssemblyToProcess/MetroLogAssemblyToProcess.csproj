@@ -62,6 +62,7 @@
     <Compile Include="ClassWithWhileMethod.cs" />
     <Compile Include="ClassWithException.cs" />
     <Compile Include="GenericClass.cs" />
+    <Compile Include="Issues.cs" />
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs" />
     <Compile Include="MyInterface.cs" />

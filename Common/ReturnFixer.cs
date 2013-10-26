@@ -11,14 +11,14 @@ public class ReturnFixer
     Instruction sealBranchesNop;
 
 
-    public void  MakeLastStatementReturn()
+    public void MakeLastStatementReturn()
     {
 
-          instructions = Method.Body.Instructions;
+        instructions = Method.Body.Instructions;
         FixHangingHandlerEnd();
 
         sealBranchesNop = Instruction.Create(OpCodes.Nop);
-       instructions.Add(sealBranchesNop);
+        instructions.Add(sealBranchesNop);
 
         NopBeforeReturn = Instruction.Create(OpCodes.Nop);
 
@@ -56,7 +56,7 @@ public class ReturnFixer
     }
 
 
-   void WithReturnValue()
+    void WithReturnValue()
     {
 
         var returnVariable = new VariableDefinition(Method.MethodReturnType.ReturnType);
@@ -74,9 +74,9 @@ public class ReturnFixer
             }
         }
         instructions.Add(NopBeforeReturn);
-        instructions.Add( Instruction.Create(OpCodes.Ldloc, returnVariable));
+        instructions.Add(Instruction.Create(OpCodes.Ldloc, returnVariable));
         instructions.Add(Instruction.Create(OpCodes.Ret));
-        
+
     }
 
     void WithNoReturn()
