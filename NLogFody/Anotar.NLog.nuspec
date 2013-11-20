@@ -15,7 +15,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, NLog</tags>
     <dependencies>
 		<dependency id="Fody"/>
-		<dependency id="NLog" version="2.1.0"/>
+		<dependency id="NLog" version="2.0.0.2000"/>
     </dependencies>
   </metadata>
 </package>
