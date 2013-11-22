@@ -5,11 +5,11 @@ using Mono.Collections.Generic;
 public class ReturnFixer
 {
     public MethodDefinition Method;
-    public Instruction NopForHandleEnd;
+    Instruction NopForHandleEnd;
     Collection<Instruction> instructions;
     public Instruction NopBeforeReturn;
     Instruction sealBranchesNop;
-
+    VariableDefinition returnVariable;
 
     public void MakeLastStatementReturn()
     {
@@ -22,19 +22,35 @@ public class ReturnFixer
 
         NopBeforeReturn = Instruction.Create(OpCodes.Nop);
 
-        foreach (var instruction in instructions)
+        if (IsMethodReturnValue())
         {
-            var operand = instruction.Operand as Instruction;
+            returnVariable = new VariableDefinition(Method.MethodReturnType.ReturnType);
+            Method.Body.Variables.Add(returnVariable);
+        }
+
+        for (var index = 0; index < instructions.Count; index++)
+        {
+            var operand = instructions[index].Operand as Instruction;
             if (operand != null)
             {
                 if (operand.OpCode == OpCodes.Ret)
                 {
-                    instruction.Operand = sealBranchesNop;
+                    if (IsMethodReturnValue())
+                    {
+                        // The C# compiler never (AFAICT) jumps directly to a ret
+                        // when returning a value from the method. But other Fody
+                        // modules and other compilers might. So store the value here.
+                        instructions.Insert(index, Instruction.Create(OpCodes.Stloc, returnVariable));
+                        instructions.Insert(index, Instruction.Create(OpCodes.Dup));
+                        index += 2;
+                    }
+
+                    instructions[index].Operand = sealBranchesNop;
                 }
             }
         }
 
-        if (Method.MethodReturnType.ReturnType.Name == "Void")
+        if (!IsMethodReturnValue())
         {
             WithNoReturn();
             return;
@@ -42,8 +58,18 @@ public class ReturnFixer
         WithReturnValue();
     }
 
+    bool IsMethodReturnValue()
+    {
+        return Method.MethodReturnType.ReturnType.Name != "Void";
+    }
+
     void FixHangingHandlerEnd()
     {
+        if (Method.Body.ExceptionHandlers.Count == 0)
+        {
+            return;
+        }
+
         NopForHandleEnd = Instruction.Create(OpCodes.Nop);
         Method.Body.Instructions.Add(NopForHandleEnd);
         foreach (var handler in Method.Body.ExceptionHandlers)
@@ -58,9 +84,6 @@ public class ReturnFixer
 
     void WithReturnValue()
     {
-
-        var returnVariable = new VariableDefinition(Method.MethodReturnType.ReturnType);
-        Method.Body.Variables.Add(returnVariable);
 
         for (var index = 0; index < instructions.Count; index++)
         {
