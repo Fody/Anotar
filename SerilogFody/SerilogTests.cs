@@ -467,10 +467,7 @@ public class SerilogTests
     {
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
-
-
-
-
+    
     [Test]
     public void AsyncMethod()
     {
@@ -482,6 +479,7 @@ public class SerilogTests
         Assert.AreEqual("Void AsyncMethod()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
+
     [Test]
     public void EnumeratorMethod()
     {
@@ -493,6 +491,7 @@ public class SerilogTests
         Assert.AreEqual("IEnumerable<Int32> EnumeratorMethod()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
+
     [Test]
     public void DelegateMethod()
     {
@@ -504,6 +503,7 @@ public class SerilogTests
         Assert.AreEqual("Void DelegateMethod()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
+
     [Test]
     public void LambdaMethod()
     {
@@ -514,5 +514,20 @@ public class SerilogTests
         Assert.AreEqual("29", logEvent.Value("LineNumber"));
         Assert.AreEqual("Void LambdaMethod()", logEvent.Value("MethodName"));
         Assert.AreEqual("Foo {0}", logEvent.MessageTemplate.Text);
+    }
+
+    [Test]
+    [Explicit("need to fix ref")]
+    public void Issue33()
+    {
+        // We need to load a custom assembly because the C# compiler won't generate the IL
+        // that caused the issue, but NullGuard does.
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
+        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
+
+        var type = issue33Assembly.GetType("NullGuardAnotarBug");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.NotNull(instance.DoIt());
     }
 }

@@ -524,11 +524,7 @@ public class NLogTests
     {
         // We need to load a custom assembly because the C# compiler won't generate the IL
         // that caused the issue, but NullGuard does.
-        var beforeIssue33Path = Path.GetFullPath(@"..\..\..\NLogAssemblyToProcess\bin\Debug\lib\NullGuardAnotarBug.dll");
-#if (!DEBUG)
-        beforeIssue33Path = beforeIssue33Path.Replace("Debug", "Release");
-#endif
-        var afterIssue33Path = WeaverHelper.Weave(beforeIssue33Path);
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
         var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
 
         var type = issue33Assembly.GetType("NullGuardAnotarBug");
