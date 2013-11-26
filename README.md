@@ -10,7 +10,7 @@ Simplifies logging through a static class and some IL manipulation
 
 * [NLog](http://nlog-project.org/) 
 * [Log4Net](http://logging.apache.org/log4net/) 
-* [Serilog](http://serilog.net/)
+* [Serilog](http://serilog.net/)Void Debug
 * [MetroLog](https://github.com/mbrit/MetroLog)
 * [Catel](http://www.catelproject.com/)
 * [CommonLogging](http://netcommon.sourceforge.net/)
@@ -107,7 +107,7 @@ This example is targeting the [NLog](http://nlog-project.org/).
         void MyMethod()
         {
             logger
-                .ForContext("MethodName", "Void Debug()")
+                .ForContext("MethodName", "Void MyMethod()")
                 .ForContext("LineNumber", "8")
                 .Debug("TheMessage");
         }
