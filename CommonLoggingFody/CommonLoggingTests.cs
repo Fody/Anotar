@@ -39,6 +39,7 @@ public class CommonLoggingTests
        actionAdapter.Warns.Clear();
        actionAdapter.Traces.Clear();
     }
+
     [Test]
     public void MethodThatReturns()
     {
@@ -106,8 +107,7 @@ public class CommonLoggingTests
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, actionAdapter.Debugs, expected);
     }
-
-
+    
     [Test]
     public void OnExceptionToDebugWithReturn()
     {
@@ -179,8 +179,7 @@ public class CommonLoggingTests
 		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, actionAdapter.Fatals, expected);
     }
-
-
+    
     [Test]
     public void DebugString()
     {
@@ -539,6 +538,7 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), logEvent.Format);
     }
+
     [Test]
     public void DelegateMethod()
     {
@@ -549,6 +549,7 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), logEvent.Format);
     }
+
     [Test]
     public void LambdaMethod()
     {
@@ -558,6 +559,21 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), logEvent.Format);
+    }
+
+    [Test]
+    [Explicit("need to fix ref")]
+    public void Issue33()
+    {
+        // We need to load a custom assembly because the C# compiler won't generate the IL
+        // that caused the issue, but NullGuard does.
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
+        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
+
+        var type = issue33Assembly.GetType("NullGuardAnotarBug");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.NotNull(instance.DoIt());
     }
 
 }

@@ -348,9 +348,7 @@ public class CatelTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-
-
-
+    
     [Test]
     public void AsyncMethod()
     {
@@ -360,6 +358,7 @@ public class CatelTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void AsyncMethod()'. Line: ~"));
     }
+
     [Test]
     public void EnumeratorMethod()
     {
@@ -369,6 +368,7 @@ public class CatelTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
     }
+
     [Test]
     public void DelegateMethod()
     {
@@ -378,6 +378,7 @@ public class CatelTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
     }
+
     [Test]
     public void LambdaMethod()
     {
@@ -386,5 +387,20 @@ public class CatelTests
         instance.LambdaMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
+    }
+
+    [Test]
+    [Explicit("need to fix ref")]
+    public void Issue33()
+    {
+        // We need to load a custom assembly because the C# compiler won't generate the IL
+        // that caused the issue, but NullGuard does.
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
+        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
+
+        var type = issue33Assembly.GetType("NullGuardAnotarBug");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.NotNull(instance.DoIt());
     }
 }

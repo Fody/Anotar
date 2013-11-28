@@ -518,4 +518,18 @@ public class NLogTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
     }
+
+    [Test]
+    public void Issue33()
+    {
+        // We need to load a custom assembly because the C# compiler won't generate the IL
+        // that caused the issue, but NullGuard does.
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
+        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
+
+        var type = issue33Assembly.GetType("NullGuardAnotarBug");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.NotNull(instance.DoIt());
+    }
 }

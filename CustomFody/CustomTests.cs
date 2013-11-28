@@ -98,7 +98,6 @@ public class CustomTests
         Assert.IsTrue(message.StartsWith(expected),message);
     }
 
-
     [Test]
     public void OnExceptionToTrace()
     {
@@ -178,6 +177,7 @@ public class CustomTests
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, LoggerFactory.ErrorEntries, expected);
     }
+
     [Test]
     public void OnExceptionToFatal()
     {
@@ -193,8 +193,7 @@ public class CustomTests
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, LoggerFactory.FatalEntries, expected);
     }
-
-
+    
     [Test]
     public void TraceString()
     {
@@ -420,9 +419,7 @@ public class CustomTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-
-
-
+    
     [Test]
     public void AsyncMethod()
     {
@@ -431,6 +428,7 @@ public class CustomTests
         instance.AsyncMethod();
         Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
     }
+
     [Test]
     public void EnumeratorMethod()
     {
@@ -440,6 +438,7 @@ public class CustomTests
         var message = LoggerFactory.DebugEntries.First().Format;
         Assert.IsTrue(message.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), message);
     }
+
     [Test]
     public void DelegateMethod()
     {
@@ -449,6 +448,7 @@ public class CustomTests
         var message = LoggerFactory.DebugEntries.First().Format;
         Assert.IsTrue(message.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), message);
     }
+
     [Test]
     public void LambdaMethod()
     {
@@ -457,5 +457,20 @@ public class CustomTests
         instance.LambdaMethod();
         var message = LoggerFactory.DebugEntries.First().Format;
         Assert.IsTrue(message.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), message);
+    }
+
+    [Test]
+    [Explicit("need to fix ref")]
+    public void Issue33()
+    {
+        // We need to load a custom assembly because the C# compiler won't generate the IL
+        // that caused the issue, but NullGuard does.
+        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
+        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
+
+        var type = issue33Assembly.GetType("NullGuardAnotarBug");
+        var instance = (dynamic)Activator.CreateInstance(type);
+
+        Assert.NotNull(instance.DoIt());
     }
 }

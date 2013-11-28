@@ -12,7 +12,7 @@
     <AssemblyName>Anotar.Catel.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <FodyPath>..\packages\Fody.1.17.4.0</FodyPath>
+    <FodyPath>..\packages\Fody.1.18.0.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="Catel.Core, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Catel.Core.3.6.1310142210-beta\lib\net45\Catel.Core.dll</HintPath>
+      <HintPath>..\packages\Catel.Core.3.7\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
@@ -130,6 +130,16 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Lib\NullGuardAnotarBug.dll">
+      <Link>NullGuardAnotarBug.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Lib\NullGuardAnotarBug.pdb">
+      <Link>NullGuardAnotarBug.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
