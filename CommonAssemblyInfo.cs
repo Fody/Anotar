@@ -2,5 +2,5 @@
 
 [assembly: AssemblyTitle("Anotar")]
 [assembly: AssemblyProduct("Anotar")]
-[assembly: AssemblyVersion("2.6.9")]
-[assembly: AssemblyFileVersion("2.6.9")]
+[assembly: AssemblyVersion("2.7.1")]
+[assembly: AssemblyFileVersion("2.7.1")]

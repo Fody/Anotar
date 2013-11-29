@@ -10,8 +10,7 @@
     <projectUrl>http://github.com/Fody/Anotar</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
-    <description>HACKED VERSION - compiled against NLog 2.0
-    Simplifies logging through a static class and some IL manipulation.</description>
+    <description>Simplifies logging through a static class and some IL manipulation.</description>
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, NLog</tags>
     <dependencies>
