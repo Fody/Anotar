@@ -210,7 +210,7 @@ public class LogForwardingProcessor
         var sequencePoint = instruction.GetPreviousSequencePoint();
         if (sequencePoint == null)
         {
-            return null;
+            return "?";
         }
 
         return sequencePoint.StartLine.ToString();
