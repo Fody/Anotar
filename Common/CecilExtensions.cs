@@ -112,6 +112,7 @@ public static class CecilExtensions
             staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             type.Methods.Add(staticConstructor);
         }
+        staticConstructor.Body.InitLocals = true;
         return staticConstructor;
     }
 

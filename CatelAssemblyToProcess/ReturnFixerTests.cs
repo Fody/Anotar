@@ -124,6 +124,7 @@ public class ReturnFixerTests
 #pragma warning restore 168
 
     bool isInSomeMode;
+// ReSharper disable once NotAccessedField.Local
     string branchingReturnField;
 
     [LogToDebugOnException]

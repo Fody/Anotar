@@ -36,7 +36,7 @@ public partial class ModuleWeaver
             var onExceptionProcessor = new OnExceptionProcessor
                 {
                     Method = method,
-                    Field = fieldReference,
+                    LoggerField = fieldReference,
                     FoundUsageInType = () => foundUsage = true,
                     ModuleWeaver = this
                 };
@@ -47,7 +47,7 @@ public partial class ModuleWeaver
 					FoundUsageInType = () => foundUsage = true,
                     Method = method,
 					ModuleWeaver = this,
-                    Field = fieldReference,
+                    LoggerField = fieldReference,
                 };
             logForwardingProcessor.ProcessMethod();
 

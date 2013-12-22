@@ -7,7 +7,7 @@ using Mono.Cecil.Cil;
 public class LogForwardingProcessor
 {
     public MethodDefinition Method;
-    public FieldReference Field;
+    public FieldReference LoggerField;
     public Action FoundUsageInType;
     bool foundUsageInMethod;
 	public ModuleWeaver ModuleWeaver;
@@ -75,7 +75,7 @@ public class LogForwardingProcessor
 
             instructions.Replace(instruction, new[]
                                               {
-                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
                                                   Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
                                                   Instruction.Create(OpCodes.Ldc_I4_0),
@@ -118,7 +118,7 @@ public class LogForwardingProcessor
                                                   Instruction.Create(OpCodes.Stloc, messageVar),
                                                   Instruction.Create(OpCodes.Stloc, exceptionVar),
 
-                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
 
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
                                                   Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
@@ -148,7 +148,7 @@ public class LogForwardingProcessor
                 instructions.Replace(stringInstruction, new[]
                                                         {
 
-                                                            Instruction.Create(OpCodes.Ldsfld, Field),
+                                                            Instruction.Create(OpCodes.Ldsfld, LoggerField),
 
                                                             Instruction.Create(OpCodes.Ldstr, "MethodName"),
                                                             Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
@@ -182,7 +182,7 @@ public class LogForwardingProcessor
                                                   Instruction.Create(OpCodes.Stloc, paramsVar),
                                                   Instruction.Create(OpCodes.Stloc, messageVar),
 
-                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
 
                                                   Instruction.Create(OpCodes.Ldstr, "MethodName"),
                                                   Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),

@@ -2,6 +2,7 @@ using Anotar.Custom;
 
 public class ClassWithExistingField
 {
+// ReSharper disable NotAccessedField.Local
     static Logger existingLogger;
 
     static ClassWithExistingField()

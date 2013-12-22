@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\NLog</BaseIntermediateOutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SplatAssemblyToProcess</RootNamespace>
+    <AssemblyName>SplatAssemblyToProcess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <OutputPath>bin\Deployable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Splat">
+      <HintPath>..\packages\Splat.1.1.1\lib\Net45\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassWithAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithCompilerGeneratedClasses.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithExistingField.cs" />
+    <Compile Include="ClassWithLogging.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithMultipleLoggings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithWhileMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GenericClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Issues.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyDelegate.cs" />
+    <Compile Include="MyEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyInterface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OnException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReturnFixerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Template.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SplatReferenceAssembly\SplatReferenceAssembly.csproj">
+      <Project>{efe9370b-89a6-45e9-b323-3c26785c1d9c}</Project>
+      <Name>SplatReferenceAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

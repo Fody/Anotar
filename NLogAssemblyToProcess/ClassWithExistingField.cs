@@ -3,6 +3,7 @@ using NLog;
 
 public class ClassWithExistingField
 {
+// ReSharper disable once NotAccessedField.Local
     static Logger existingLogger;
 
     static ClassWithExistingField()

@@ -7,10 +7,9 @@ using Mono.Cecil.Cil;
 public class LogForwardingProcessor
 {
     public MethodDefinition Method;
-    public FieldReference Field;
+    public FieldReference LoggerField;
     public Action FoundUsageInType;
     bool foundUsageInMethod;
-    ILProcessor processor;
     public ModuleWeaver ModuleWeaver;
 
     VariableDefinition messageVar;
@@ -22,7 +21,6 @@ public class LogForwardingProcessor
         Method.CheckForDynamicUsagesOf("Anotar.Catel.LogTo");
         try
         {
-            processor = Method.Body.GetILProcessor();
             var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
 
             foreach (var instruction in instructions)
@@ -69,7 +67,7 @@ public class LogForwardingProcessor
         {
             instructions.Replace(instruction, new[]
                                               {
-                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
                                                   Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
                                                   Instruction.Create(OpCodes.Ldnull),
                                                   Instruction.Create(OpCodes.Ldc_I4,logEvent),
@@ -101,7 +99,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Stloc, paramsVar),
                     Instruction.Create(OpCodes.Stloc, messageVar),
                     Instruction.Create(OpCodes.Stloc, exceptionVar),
-                    Instruction.Create(OpCodes.Ldsfld, Field),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
                     Instruction.Create(OpCodes.Ldloc, exceptionVar),
                     Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
                     Instruction.Create(OpCodes.Ldloc, messageVar),
@@ -124,7 +122,7 @@ public class LogForwardingProcessor
                 var operand = GetMessagePrefix(instruction) + (string) stringInstruction.Operand;
                 instructions.Replace(stringInstruction, new[]
                                                         {
-                                                            Instruction.Create(OpCodes.Ldsfld, Field),
+                                                            Instruction.Create(OpCodes.Ldsfld, LoggerField),
                                                             Instruction.Create(stringInstruction.OpCode, operand),
                                                         });
                 instructions.Replace(instruction, new[]
@@ -151,7 +149,7 @@ public class LogForwardingProcessor
                                               {
                                                   Instruction.Create(OpCodes.Stloc, paramsVar),  
                                                   Instruction.Create(OpCodes.Stloc, messageVar),
-                                                  Instruction.Create(OpCodes.Ldsfld, Field),
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
                                                   Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
                                                   Instruction.Create(OpCodes.Ldloc, messageVar),
                                                   Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),

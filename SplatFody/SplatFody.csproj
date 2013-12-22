@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B72C38E4-2DC7-4E7F-B177-36EF47D49572}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Anotar.Splat.Fody</RootNamespace>
+    <AssemblyName>Anotar.Splat.Fody</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FodyPath>..\packages\Fody.1.19.1.0</FodyPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <OutputPath>bin\Deployable\</OutputPath>
+    <DefineConstants>TRACE;SCALPEL</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cecil\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Scalpel">
+      <HintPath>..\packages\Scalpel.Fody.0.12.4.0\Lib\NET35\Scalpel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\packages\Splat.1.1.1\lib\Net45\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <None Include="Anotar.Splat.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Fody.targets" />
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\AppDomainAssemblyFinder.cs">
+      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\AsyncChecker.cs">
+      <Link>AsyncChecker.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\CecilExtensions.cs">
+      <Link>CecilExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\ParamsFormatBuilder.cs">
+      <Link>ParamsFormatBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\ReturnFixer.cs">
+      <Link>ReturnFixer.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\WeaverHelper.cs">
+      <Link>WeaverHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\WeavingException.cs">
+      <Link>WeavingException.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\AssemblyExtensions.cs">
+      <Link>TestHelpers\AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MockAssemblyResolver.cs">
+      <Link>TestHelpers\MockAssemblyResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Verifier.cs">
+      <Link>TestHelpers\Verifier.cs</Link>
+    </Compile>
+    <Compile Include="AttributeFinder.cs" />
+    <Compile Include="InjectorFinder.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="SplatTests.cs" />
+    <Compile Include="OnExceptionProcessor.cs" />
+    <Compile Include="TypeProcessor.cs" />
+    <Compile Include="InjectorExtentions.cs" />
+    <Compile Include="LogForwardingProcessor.cs" />
+    <Compile Include="ModuleWeaver.cs" />
+    <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="TypeResolver.cs" />
+    <Compile Include="ReferenceCleaner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SplatReferenceAssembly\SplatReferenceAssembly.csproj">
+      <Project>{efe9370b-89a6-45e9-b323-3c26785c1d9c}</Project>
+      <Name>SplatReferenceAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <FilesToDelete Include="$(SolutionDir)NuGetBuild\Splat\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <MakeDir Directories="$(SolutionDir)NuGetBuild\Splat" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\monoandroid" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\monoandroid" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\MonoMac" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\MonoMac" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Net45" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Net45" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\NetCore45" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\NetCore45" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Portable-Net45+WinRT45+WP8" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Portable-Net45+WinRT45+WP8" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\wp8" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\wp8" />
+    <Copy SourceFiles="$(ProjectDir)Anotar.Splat.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Splat.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
+    <Copy SourceFiles="$(OutputPath)\Anotar.Splat.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Tools" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Splat" MetadataAssembly="$(OutputPath)\Anotar.Splat.Fody.dll" />
+  </Target>
+  <Import Project="Fody.targets" />
+</Project>

@@ -9,7 +9,7 @@ class OnExceptionProcessor
 {
     public MethodDefinition Method;
     public Action FoundUsageInType;
-    public FieldReference Field;
+    public FieldReference LoggerField;
 	public ModuleWeaver ModuleWeaver;
     MethodBody body;
 
@@ -153,11 +153,11 @@ class OnExceptionProcessor
     IEnumerable<Instruction> AddWrite(MethodReference writeMethod, int level)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
-		yield return Instruction.Create(OpCodes.Ldsfld, Field);
+		yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
 		yield return Instruction.Create(OpCodes.Ldc_I4, level);
 		yield return Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod);
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
-        yield return Instruction.Create(OpCodes.Ldsfld, Field);
+        yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
 		yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
 		yield return Instruction.Create(OpCodes.Ldnull);

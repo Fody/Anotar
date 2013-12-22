@@ -3,6 +3,7 @@ using Catel.Logging;
 
 public class ClassWithExistingField
 {
+// ReSharper disable once NotAccessedField.Local
     static ILog existingLogger;
 
     static ClassWithExistingField()
