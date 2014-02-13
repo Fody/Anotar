@@ -10,7 +10,7 @@ Simplifies logging through a static class and some IL manipulation
 
 * [NLog](http://nlog-project.org/) 
 * [Log4Net](http://logging.apache.org/log4net/) 
-* [Serilog](http://serilog.net/)Void Debug
+* [Serilog](http://serilog.net/)
 * [MetroLog](https://github.com/mbrit/MetroLog)
 * [Catel](http://www.catelproject.com/)
 * [CommonLogging](http://netcommon.sourceforge.net/)
