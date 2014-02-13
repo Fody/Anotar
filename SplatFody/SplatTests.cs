@@ -26,7 +26,11 @@ public class SplatTests
         assembly = Assembly.LoadFile(afterAssemblyPath);
 
 
-        Locator.CurrentMutable = new FuncDependencyResolver(GetAllServices);
+        //var funcDependencyResolver = new FuncDependencyResolver(GetAllServices);
+        Locator.CurrentMutable.Register(() =>
+        {
+            return new FuncLogManager(GetLogger);
+        },typeof (ILogManager));
     }
 
     IEnumerable<object> GetAllServices(Type arg1, string arg2)

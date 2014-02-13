@@ -127,7 +127,7 @@ public class SerilogTests
         instance.Debug();
         Assert.AreEqual(1, debugs.Count);
         var logEvent = debugs.First();
-        Assert.AreEqual("16", logEvent.Value("LineNumber"));
+        Assert.AreEqual("17", logEvent.Value("LineNumber"));
         Assert.AreEqual("Void Debug()", logEvent.Value("MethodName"));
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
     }
