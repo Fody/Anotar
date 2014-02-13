@@ -14,6 +14,7 @@ Simplifies logging through a static class and some IL manipulation
 * [MetroLog](https://github.com/mbrit/MetroLog)
 * [Catel](http://www.catelproject.com/)
 * [CommonLogging](http://netcommon.sourceforge.net/)
+* [Splat](https://github.com/paulcbetts/splat)
 * Custom (for frameworks/toolkits with custom logging)
 
 ## Nuget
@@ -34,6 +35,10 @@ Simplifies logging through a static class and some IL manipulation
 
     PM> Install-Package Anotar.Serilog.Fody
  
+ * Splat package http://nuget.org/packages/Anotar.Splat.Fody 
+
+    PM> Install-Package Anotar.Splat.Fody
+ 
  * Custom package http://nuget.org/packages/Anotar.Custom.Fody 
 
     PM> Install-Package Anotar.Custom.Fody
@@ -52,105 +57,134 @@ This example is targeting the [NLog](http://nlog-project.org/).
 
 ### Your Code
 
-    public class MyClass
+```
+public class MyClass
+{
+    void MyMethod()
     {
-        void MyMethod()
-        {
-            LogTo.Debug("TheMessage");
-        }
+        LogTo.Debug("TheMessage");
     }
+}
+```
 
 ### What gets compiled
 
 #### In NLog
 
-    public class MyClass
-    {
-        static Logger logger = LogManager.GetLogger("MyClass");
+```
+public class MyClass
+{
+    static Logger logger = LogManager.GetLogger("MyClass");
 
-        void MyMethod()
-        {
-            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-        }
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
+}
+```
 
 #### In Log4Net
 
-    public class MyClass
-    {
-        static ILog logger = LogManager.GetLogger("MyClass");
+```
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger("MyClass");
 
-        void MyMethod()
-        {
-            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-        }
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
+}
+```
 
 #### In MetroLog
 
-    public class MyClass
-    {
-        static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
+```
+public class MyClass
+{
+    static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
 
-        void MyMethod()
-        {
-            logger.Debug("Method: 'Void :MyMethod()'. Line: ~24. TheMessage");
-        }
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void :MyMethod()'. Line: ~24. TheMessage");
     }
-    
+}
+```
+
 #### In Serilog
 
-    public class MyClass
-    {
-        static ILogger logger = Log.ForContext<MyClass>();
+```
+public class MyClass
+{
+    static ILogger logger = Log.ForContext<MyClass>();
 
-        void MyMethod()
-        {
-            logger
-                .ForContext("MethodName", "Void MyMethod()")
-                .ForContext("LineNumber", "8")
-                .Debug("TheMessage");
-        }
+    void MyMethod()
+    {
+        logger
+            .ForContext("MethodName", "Void MyMethod()")
+            .ForContext("LineNumber", "8")
+            .Debug("TheMessage");
     }
+}
+```
 
 #### In Catel
 
-    public class MyClass
+```
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger(typeof(MyClass));
+
+    void MyMethod()
     {
-        static ILog logger = LogManager.GetLogger(typeof(MyClass));
-
-        void MyMethod()
-        {
-            logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
-        }
+        logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
     }
-
+}
+```
 
 #### In Custom
 
-    public class MyClass
+```
+public class MyClass
+{
+    static Logger logger = LoggerFactory.GetLogger<MyClass>();
+
+    void MyMethod()
     {
-        static Logger logger = LoggerFactory.GetLogger<MyClass>();
-
-        void MyMethod()
-        {
-            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-        }
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
+}
+```
 
+#### In Splat
+
+```
+public class MyClass
+{
+    static IFullLogger logger = ((ILogManager) Locator.Current.GetService(typeof(ILogManager), null))
+								.GetLogger(typeof(ClassWithLogging));
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+    }
+}
+```
 
 #### In CommonLogging
 
-    public class MyClass
-    {
-        static ILog logger = LoggerManager.GetLogger("MyClass");
+```
+public class MyClass
+{
+    static ILog logger = LoggerManager.GetLogger("MyClass");
 
-        void MyMethod()
-        {
-            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-        }
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
-    
+}
+```
+
 ### Other Log Overloads in Explicit Logging
 
 There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
