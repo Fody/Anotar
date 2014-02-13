@@ -14,8 +14,8 @@
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, Splat</tags>
     <dependencies>
-		<dependency id="Fody"/>
-		<dependency id="Splat" version="1.1.1"/>
+		  <dependency id="Fody"/>
+		  <dependency id="Splat" version="1.2.0"/>
     </dependencies>
   </metadata>
 </package>
