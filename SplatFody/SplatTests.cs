@@ -25,20 +25,7 @@ public class SplatTests
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
 
-
-        //var funcDependencyResolver = new FuncDependencyResolver(GetAllServices);
-        Locator.CurrentMutable.Register(() =>
-        {
-            return new FuncLogManager(GetLogger);
-        },typeof (ILogManager));
-    }
-
-    IEnumerable<object> GetAllServices(Type arg1, string arg2)
-    {
-        if (arg1 == typeof (ILogManager))
-        {
-            yield return new FuncLogManager(GetLogger);
-        }
+        Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger),typeof (ILogManager));
     }
 
     IFullLogger GetLogger(Type arg)
