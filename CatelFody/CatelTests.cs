@@ -355,7 +355,7 @@ public class CatelTests
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.AsyncMethod();
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void AsyncMethod()'. Line: ~"), Debugs.First());
+        Assert.IsTrue(Debugs.Any(x=>x.StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void AsyncMethod()'. Line: ~")));
     }
 
     [Test]
