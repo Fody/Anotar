@@ -1,5 +1,4 @@
-﻿using Serilog.Events;
-// ReSharper disable UnusedParameter.Global
+﻿
 using System;
 
 namespace Anotar.Serilog
