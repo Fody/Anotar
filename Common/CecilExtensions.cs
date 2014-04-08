@@ -78,20 +78,45 @@ public static class CecilExtensions
         return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
     }
 
-    public static void CheckForDynamicUsagesOf(this MethodDefinition methodDefinition, string methodNameToCheckFor)
+    public static void CheckForInvalidLogToUsages(this MethodDefinition methodDefinition)
     {
         foreach (var instruction in methodDefinition.Body.Instructions)
         {
-            if (instruction.OpCode == OpCodes.Ldtoken)
+            var methodReference = instruction.Operand as MethodReference;
+            if (methodReference != null)
             {
-                var memberReference = instruction.Operand as MemberReference;
-                if (memberReference != null)
+                var declaringType = methodReference.DeclaringType;
+                if (declaringType.Name != "LogTo")
                 {
-                    if (memberReference.FullName == methodNameToCheckFor)
-                    {
-                        //TODO: sequence point
-                        throw new WeavingException(string.Format("'typeof' usages and passing `dynamic' params is not supported. '{0}'.", methodDefinition.FullName));
-                    }
+                    continue;
+                }
+                if (declaringType.Namespace == null || !declaringType.Namespace.StartsWith("Anotar"))
+                {
+                    continue;
+                }
+                //TODO: sequence point
+                if (instruction.OpCode == OpCodes.Ldftn)
+                {
+                    var message = string.Format("Inline delegate usages of 'LogTo' are not supported. '{0}'.", methodDefinition.FullName);
+                    throw new WeavingException(message);
+                }
+            }
+            var typeReference = instruction.Operand as TypeReference;
+            if (typeReference != null)
+            {
+                if (typeReference.Name != "LogTo")
+                {
+                    continue;
+                }
+                if (typeReference.Namespace == null || !typeReference.Namespace.StartsWith("Anotar"))
+                {
+                    continue;
+                }
+                //TODO: sequence point
+                if (instruction.OpCode == OpCodes.Ldtoken)
+                {
+                    var message = string.Format("'typeof' usages or passing `dynamic' params to 'LogTo' are not supported. '{0}'.", methodDefinition.FullName);
+                    throw new WeavingException(message);
                 }
             }
         }

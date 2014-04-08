@@ -18,7 +18,7 @@ public class LogForwardingProcessor
 
     public void ProcessMethod()
     {
-        Method.CheckForDynamicUsagesOf("Anotar.NLog.LogTo");
+        Method.CheckForInvalidLogToUsages();
         try
         {
             var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();

@@ -1,4 +1,5 @@
 using System;
+using Mono.Cecil.Cil;
 
 public class WeavingException : Exception
 {
@@ -7,4 +8,6 @@ public class WeavingException : Exception
     {
 
     }
+
+    public SequencePoint SequencePoint { get; set; }
 }
