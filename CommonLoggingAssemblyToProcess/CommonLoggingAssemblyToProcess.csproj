@@ -63,7 +63,7 @@
     <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithExistingField.cs" />
-    <Compile Include="ClassWithMultipleLoggings.cs" />
+    <Compile Include="ClassWithMultipleLoggingCalls.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />
     <Compile Include="ClassWithException.cs" />
     <Compile Include="GenericClass.cs" />

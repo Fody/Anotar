@@ -16,7 +16,7 @@ public class Log4NetTests
     Assembly assembly;
     public List<string> Errors = new List<string>();
     public List<string> Debugs = new List<string>();
-    public List<string> Infos = new List<string>();
+    public List<string> Informations = new List<string>();
     public List<string> Warns = new List<string>();
     public List<string> Fatals = new List<string>();
     string afterAssemblyPath;
@@ -58,7 +58,7 @@ public class Log4NetTests
         }
         if (loggingEvent.Level == Level.Info)
         {
-            Infos.Add(loggingEvent.RenderedMessage);
+            Informations.Add(loggingEvent.RenderedMessage);
             return;
         }
         if (loggingEvent.Level == Level.Debug)
@@ -90,7 +90,7 @@ public class Log4NetTests
         Fatals.Clear();
         Errors.Clear();
         Debugs.Clear();
-        Infos.Clear();
+        Informations.Clear();
         Warns.Clear();
     }
 
@@ -126,6 +126,7 @@ public class Log4NetTests
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
@@ -167,7 +168,7 @@ public class Log4NetTests
     {
         var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Informations, expected);
     }
 
     [Test]
@@ -175,7 +176,7 @@ public class Log4NetTests
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Informations, expected);
     }
 
     [Test]
@@ -263,8 +264,8 @@ public class Log4NetTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void Info()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -273,8 +274,8 @@ public class Log4NetTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -283,8 +284,8 @@ public class Log4NetTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -293,8 +294,8 @@ public class Log4NetTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]

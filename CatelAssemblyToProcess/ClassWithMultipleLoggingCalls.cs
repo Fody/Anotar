@@ -1,14 +1,14 @@
 using System;
-using Anotar.NLog;
+using Anotar.Catel;
 
 
-public class ClassWithMultipleLoggings
+public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
     {
         LogTo.Debug("Debug");
         LogTo.Info("Info");
-        LogTo.Warn("Warn");
+        LogTo.Warning("Warn");
     }
 
     public void LogWithArgs()
@@ -17,14 +17,14 @@ public class ClassWithMultipleLoggings
 
         LogTo.Debug("Debug", args);
         LogTo.Info("Info", args);
-        LogTo.Warn("Warn", args);
+        LogTo.Warning("Warn", args);
     }
 
     public void LogErrors()
     {
-        LogTo.DebugException("Debug", new Exception());
-        LogTo.InfoException("Info", new Exception());
-        LogTo.WarnException("Warn", new Exception());
+        LogTo.Debug(new Exception(),"Debug");
+        LogTo.Info(new Exception(),"Info");
+        LogTo.Warning(new Exception(), "Warn");
     }
 
     public void LogThrowLog(bool doThrow)

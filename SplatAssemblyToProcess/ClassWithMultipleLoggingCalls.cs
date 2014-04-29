@@ -1,8 +1,7 @@
 using System;
 using Anotar.Splat;
 
-
-public class ClassWithMultipleLoggings
+public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
     {

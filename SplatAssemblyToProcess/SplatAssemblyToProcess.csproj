@@ -65,7 +65,7 @@
     <Compile Include="ClassWithLogging.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClassWithMultipleLoggings.cs">
+    <Compile Include="ClassWithMultipleLoggingCalls.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ClassWithWhileMethod.cs">

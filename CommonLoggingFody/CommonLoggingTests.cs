@@ -35,8 +35,8 @@ public class CommonLoggingTests
        actionAdapter.Fatals.Clear();
        actionAdapter.Errors.Clear();
        actionAdapter.Debugs.Clear();
-       actionAdapter.Infos.Clear();
-       actionAdapter.Warns.Clear();
+       actionAdapter.Informations.Clear();
+       actionAdapter.Warnings.Clear();
        actionAdapter.Traces.Clear();
     }
 
@@ -81,6 +81,7 @@ public class CommonLoggingTests
         Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<LogEvent> list, string expected)
     {
         Exception exception = null;
@@ -121,7 +122,7 @@ public class CommonLoggingTests
     {
         var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, actionAdapter.Infos, expected);
+        CheckException(action, actionAdapter.Informations, expected);
     }
 
     [Test]
@@ -129,7 +130,7 @@ public class CommonLoggingTests
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, actionAdapter.Infos, expected);
+        CheckException(action, actionAdapter.Informations, expected);
     }
 
     [Test]
@@ -137,7 +138,7 @@ public class CommonLoggingTests
     {
         var expected = "Exception occurred in 'void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
-        CheckException(action, actionAdapter.Warns, expected);
+        CheckException(action, actionAdapter.Warnings, expected);
     }
 
     [Test]
@@ -145,7 +146,7 @@ public class CommonLoggingTests
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-        CheckException(action, actionAdapter.Warns, expected);
+        CheckException(action, actionAdapter.Warnings, expected);
     }
 
     [Test]
@@ -293,8 +294,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, actionAdapter.Infos.Count);
-        var logEvent = actionAdapter.Infos.First();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
@@ -304,8 +305,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, actionAdapter.Infos.Count);
-        var logEvent = actionAdapter.Infos.First();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
@@ -315,8 +316,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, actionAdapter.Infos.Count);
-        var logEvent = actionAdapter.Infos.First();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
@@ -327,8 +328,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, actionAdapter.Infos.Count);
-        var logEvent = actionAdapter.Infos.First();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringException()'. Line: ~"));
     }
@@ -339,8 +340,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Infos.Count);
-        var logEvent = actionAdapter.Infos.First();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
@@ -352,8 +353,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
-        Assert.AreEqual(1, actionAdapter.Warns.Count);
-        var logEvent = actionAdapter.Warns.First();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Warn()'. Line: ~"));
     }
 
@@ -363,8 +364,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
-        Assert.AreEqual(1, actionAdapter.Warns.Count);
-        var logEvent = actionAdapter.Warns.First();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnString()'. Line: ~"));
     }
 
@@ -374,8 +375,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
-        Assert.AreEqual(1, actionAdapter.Warns.Count);
-        var logEvent = actionAdapter.Warns.First();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
@@ -386,8 +387,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
-        Assert.AreEqual(1, actionAdapter.Warns.Count);
-        var logEvent = actionAdapter.Warns.First();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringException()'. Line: ~"));
     }
@@ -398,8 +399,8 @@ public class CommonLoggingTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Warns.Count);
-        var logEvent = actionAdapter.Warns.First();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());

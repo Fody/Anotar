@@ -15,7 +15,7 @@ public class MetroLogTests
     public List<string> Fatals = new List<string>();
     public List<string> Debugs = new List<string>();
     public List<string> Traces = new List<string>();
-    public List<string> Infos = new List<string>();
+    public List<string> Information = new List<string>();
     public List<string> Warns = new List<string>();
     string afterAssemblyPath;
 
@@ -61,7 +61,7 @@ public class MetroLogTests
         }
         if (eventInfo.Level == LogLevel.Info)
         {
-            Infos.Add(eventInfo.Message);
+            Information.Add(eventInfo.Message);
             return;
         }
         if (eventInfo.Level == LogLevel.Debug)
@@ -85,7 +85,7 @@ public class MetroLogTests
         Errors.Clear();
         Traces.Clear();
         Debugs.Clear();
-        Infos.Clear();
+        Information.Clear();
         Warns.Clear();
         Fatals.Clear();
     }
@@ -121,6 +121,7 @@ public class MetroLogTests
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
@@ -177,7 +178,7 @@ public class MetroLogTests
     {
         var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Information, expected);
     }
 
     [Test]
@@ -185,7 +186,7 @@ public class MetroLogTests
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Information, expected);
     }
 
     [Test]
@@ -322,8 +323,8 @@ public class MetroLogTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void Info()'. Line: ~"));
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -332,8 +333,8 @@ public class MetroLogTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -342,8 +343,8 @@ public class MetroLogTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -352,8 +353,8 @@ public class MetroLogTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]

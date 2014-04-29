@@ -2,7 +2,7 @@ using System;
 using Anotar.Custom;
 
 
-public class ClassWithMultipleLoggings
+public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
     {

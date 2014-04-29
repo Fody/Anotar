@@ -13,7 +13,7 @@ public class CatelTests
     Assembly assembly;
     public List<string> Errors = new List<string>();
     public List<string> Debugs = new List<string>();
-    public List<string> Infos = new List<string>();
+    public List<string> Informations = new List<string>();
     public List<string> Warnings = new List<string>();
     string afterAssemblyPath;
 
@@ -46,7 +46,7 @@ public class CatelTests
         }
         if (logEvent == LogEvent.Info)
         {
-            Infos.Add(message);
+            Informations.Add(message);
             return;
         }
         if (logEvent == LogEvent.Debug)
@@ -63,7 +63,7 @@ public class CatelTests
     {
         Errors.Clear();
         Debugs.Clear();
-        Infos.Clear();
+        Informations.Clear();
         Warnings.Clear();
     }
 
@@ -99,6 +99,7 @@ public class CatelTests
         Assert.IsTrue(Debugs.First().StartsWith("[ClassWithExistingField] Method: 'void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
@@ -140,7 +141,7 @@ public class CatelTests
     {
         var expected = "[OnException] Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Informations, expected);
     }
 
     [Test]
@@ -148,7 +149,7 @@ public class CatelTests
     {
         var expected = "[OnException] Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, Infos, expected);
+        CheckException(action, Informations, expected);
     }
 
     [Test]
@@ -229,8 +230,8 @@ public class CatelTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("[ClassWithLogging] Method: 'void Info()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -239,8 +240,8 @@ public class CatelTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("[ClassWithLogging] Method: 'void InfoString()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -249,8 +250,8 @@ public class CatelTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -259,8 +260,8 @@ public class CatelTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, Infos.Count);
-        Assert.IsTrue(Infos.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringException()'. Line: ~"));
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]

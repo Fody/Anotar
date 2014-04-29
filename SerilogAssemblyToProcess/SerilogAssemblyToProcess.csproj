@@ -40,13 +40,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Serilog, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.1.2.41\lib\net45\Serilog.dll</HintPath>
+    <Reference Include="Serilog">
+      <HintPath>..\packages\Serilog.1.3.3\lib\net45\Serilog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Serilog.FullNetFx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Serilog.1.2.41\lib\net45\Serilog.FullNetFx.dll</HintPath>
+    <Reference Include="Serilog.FullNetFx">
+      <HintPath>..\packages\Serilog.1.3.3\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,7 +61,7 @@
     <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
     <Compile Include="ClassWithExistingField.cs" />
     <Compile Include="ClassWithLogging.cs" />
-    <Compile Include="ClassWithMultipleLoggings.cs" />
+    <Compile Include="ClassWithMultipleLoggingCalls.cs" />
     <Compile Include="ClassWithStaticConstructor.cs" />
     <Compile Include="ClassWithWhileMethod.cs" />
     <Compile Include="ClassWithException.cs" />

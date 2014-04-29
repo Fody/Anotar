@@ -13,6 +13,7 @@ namespace Anotar.Custom
         /// Construct a new instance of <see cref="LoggerFactoryAttribute"/>
         /// </summary>
         /// <param name="loggerFactory">The logger factory <see cref="Type"/> to use.</param>
+        // ReSharper disable once UnusedParameter.Local
         public LoggerFactoryAttribute(Type loggerFactory)
         {
 

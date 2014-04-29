@@ -19,6 +19,7 @@ public class ClassWithCompilerGeneratedClasses
 
     public void DelegateMethod()
     {
+        // ReSharper disable once ConvertClosureToMethodGroup
         Action action = () => LogTo.Debug();
         action();
     }

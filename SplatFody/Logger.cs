@@ -12,7 +12,7 @@ public class Logger : ILogger
     public List<string> Errors = new List<string>();
     public List<string> Fatals = new List<string>();
     public List<string> Debugs = new List<string>();
-    public List<string> Infos = new List<string>();
+    public List<string> Informations = new List<string>();
     public List<string> Warns = new List<string>();
     public void Write(string message, LogLevel logLevel)
     {
@@ -33,7 +33,7 @@ public class Logger : ILogger
         }
         if (logLevel == LogLevel.Info)
         {
-            Infos.Add(message);
+            Informations.Add(message);
             return;
         }
         if (logLevel == LogLevel.Debug)
@@ -47,7 +47,7 @@ public class Logger : ILogger
     public void Clear()
     {
         Debugs.Clear();
-        Infos.Clear();
+        Informations.Clear();
         Warns.Clear();
         Fatals.Clear();
         Errors.Clear();

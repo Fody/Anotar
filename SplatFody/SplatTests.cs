@@ -81,6 +81,7 @@ public class SplatTests
         Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
@@ -122,7 +123,7 @@ public class SplatTests
     {
         var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, currentLogger.Infos, expected);
+        CheckException(action, currentLogger.Informations, expected);
     }
 
     [Test]
@@ -130,7 +131,7 @@ public class SplatTests
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, currentLogger.Infos, expected);
+        CheckException(action, currentLogger.Informations, expected);
     }
 
     [Test]
@@ -216,8 +217,8 @@ public class SplatTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, currentLogger.Infos.Count);
-        Assert.IsTrue(currentLogger.Infos.First().Contains("Method: 'void Info()'. Line: ~"));
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -226,8 +227,8 @@ public class SplatTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, currentLogger.Infos.Count);
-        Assert.IsTrue(currentLogger.Infos.First().Contains("Method: 'void InfoString()'. Line: ~"));
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -236,8 +237,8 @@ public class SplatTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, currentLogger.Infos.Count);
-        Assert.IsTrue(currentLogger.Infos.First().Contains("Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -246,8 +247,8 @@ public class SplatTests
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, currentLogger.Infos.Count);
-        Assert.IsTrue(currentLogger.Infos.First().Contains("Method: 'void InfoStringException()'. Line: ~"));
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]

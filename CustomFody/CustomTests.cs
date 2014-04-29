@@ -78,6 +78,7 @@ public class CustomTests
         Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
     }
 
+    // ReSharper disable once UnusedParameter.Local
     void CheckException(Action<object> action, List<LogEntry> list, string expected)
     {
         Exception exception = null;

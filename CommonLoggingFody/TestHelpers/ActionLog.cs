@@ -143,7 +143,7 @@ public class ActionLog : ILog
 
     public void InfoFormat(string format, params object[] args)
     {
-        actionAdapter.Infos.Add(new LogEvent
+        actionAdapter.Informations.Add(new LogEvent
                                 {
                                     Format = format,
                                     Args = args
@@ -152,7 +152,7 @@ public class ActionLog : ILog
 
     public void InfoFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Infos.Add(new LogEvent
+        actionAdapter.Informations.Add(new LogEvent
                                 {
                                     Format = format,
                                     Args = args,
@@ -202,7 +202,7 @@ public class ActionLog : ILog
 
     public void WarnFormat(string format, params object[] args)
     {
-        actionAdapter.Warns.Add(new LogEvent
+        actionAdapter.Warnings.Add(new LogEvent
                                 {
                                     Format = format,
                                     Args = args
@@ -211,7 +211,7 @@ public class ActionLog : ILog
 
     public void WarnFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Warns.Add(new LogEvent
+        actionAdapter.Warnings.Add(new LogEvent
                                 {
                                     Format = format,
                                     Args = args,

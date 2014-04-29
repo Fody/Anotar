@@ -1,8 +1,7 @@
 using System;
-using Anotar.CommonLogging;
+using Anotar.MetroLog;
 
-
-public class ClassWithMultipleLoggings
+public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
     {

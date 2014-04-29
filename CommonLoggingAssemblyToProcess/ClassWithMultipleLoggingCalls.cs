@@ -1,8 +1,8 @@
 using System;
-using Anotar.Log4Net;
+using Anotar.CommonLogging;
 
 
-public class ClassWithMultipleLoggings
+public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
     {

@@ -167,7 +167,7 @@ namespace Anotar.Splat
 		/// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
 		/// </summary>
-        public static void Fatal(string messgae)
+        public static void Fatal(string message)
         {
             throw new NotImplementedException();
         }
