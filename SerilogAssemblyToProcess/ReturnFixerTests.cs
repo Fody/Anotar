@@ -122,8 +122,9 @@ public class ReturnFixerTests
     }
 #pragma warning restore 168
 
+    // ReSharper disable once UnassignedField.Compiler
     bool isInSomeMode;
-// ReSharper disable once NotAccessedField.Local
+    // ReSharper disable once NotAccessedField.Local
     string branchingReturnField;
 
     [LogToDebugOnException]

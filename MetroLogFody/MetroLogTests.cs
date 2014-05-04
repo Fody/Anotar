@@ -22,7 +22,8 @@ public class MetroLogTests
     public MetroLogTests()
     {
         AppDomainAssemblyFinder.Attach();
-        LogManagerFactory.DefaultConfiguration.IsEnabled = true;
+        var configuration = LogManagerFactory.DefaultConfiguration;
+        configuration.IsEnabled = true;
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\MetroLogAssemblyToProcess\bin\Debug\MetroLogAssemblyToProcess.dll");
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
@@ -34,12 +35,12 @@ public class MetroLogTests
                          Action = LogEvent
                      };
 
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Trace, target);
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Debug, target);
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Warn, target);
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Info, target);
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Error, target);
-        LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Fatal, target);
+        configuration.AddTarget(LogLevel.Trace, target);
+        configuration.AddTarget(LogLevel.Debug, target);
+        configuration.AddTarget(LogLevel.Warn, target);
+        configuration.AddTarget(LogLevel.Info, target);
+        configuration.AddTarget(LogLevel.Error, target);
+        configuration.AddTarget(LogLevel.Fatal, target);
     }
 
     void LogEvent(LogEventInfo eventInfo)
