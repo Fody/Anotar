@@ -55,7 +55,6 @@
     <Compile Include="LogToInfoOnExceptionAttribute.cs" />
     <Compile Include="LogToWarnOnExceptionAttribute.cs" />
     <Compile Include="StringFormatMethodAttribute.cs" />
-    <None Include="FodyWeavers.xml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
