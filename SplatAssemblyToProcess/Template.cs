@@ -6,7 +6,7 @@ public class Template
 
     static Template()
     {
-        var service = (ILogManager)Locator.Current.GetService(typeof(ILogManager), null);
+        var service = (ILogManager)Locator.Current.GetService(typeof(ILogManager));
         existingLogger = service.GetLogger(typeof(Template));
 
 

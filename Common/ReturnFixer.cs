@@ -37,7 +37,7 @@ public class ReturnFixer
                 {
                     if (IsMethodReturnValue())
                     {
-                        // The C# compiler never (AFAICT) jumps directly to a ret
+                        // The C# compiler never jumps directly to a ret
                         // when returning a value from the method. But other Fody
                         // modules and other compilers might. So store the value here.
                         instructions.Insert(index, Instruction.Create(OpCodes.Stloc, returnVariable));

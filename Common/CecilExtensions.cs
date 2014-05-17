@@ -19,6 +19,10 @@ public static class CecilExtensions
             indexOf++;
         }
     }
+    public static void Append(this List<Instruction> collection, params Instruction[] instructions)
+    {
+        collection.AddRange(instructions);
+    }
 
     public static string DisplayName(this MethodDefinition method)
     {

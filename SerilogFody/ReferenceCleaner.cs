@@ -16,3 +16,4 @@ public partial class ModuleWeaver
         LogInfo("\tRemoving reference to 'Anotar.Serilog.dll'.");
     }
 }
+

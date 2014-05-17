@@ -30,6 +30,7 @@ public static class Verifier
             CreateNoWindow = true
         });
 
+        // ReSharper disable once PossibleNullReferenceException
         process.WaitForExit(10000);
         return process.StandardOutput.ReadToEnd().Trim().Replace(assemblyPath2, "");
     }

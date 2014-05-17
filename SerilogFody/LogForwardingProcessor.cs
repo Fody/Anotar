@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
@@ -10,13 +11,13 @@ public class LogForwardingProcessor
     public FieldReference LoggerField;
     public Action FoundUsageInType;
     bool foundUsageInMethod;
-	public ModuleWeaver ModuleWeaver;
+    public ModuleWeaver ModuleWeaver;
 
     VariableDefinition messageVar;
     VariableDefinition paramsVar;
     VariableDefinition exceptionVar;
 
-	public void ProcessMethod()
+    public void ProcessMethod()
     {
         Method.CheckForInvalidLogToUsages();
         try
@@ -63,157 +64,182 @@ public class LogForwardingProcessor
 
         instruction.OpCode = OpCodes.Callvirt;
 
-        var lineNumber = GetLineNumber(instruction);
-        var instructions = Method.Body.Instructions;
         if (parameters.Count == 0)
         {
-            if (paramsVar == null)
-            {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                Method.Body.Variables.Add(paramsVar);
-            }
-
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldstr, "LineNumber"),
-                                                  Instruction.Create(OpCodes.Ldstr, lineNumber),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldstr, ""),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)
-                                                      )
-                                              });
+            HandleNoParams(instruction, methodReference);
             return;
         }
         if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
-            if (messageVar == null)
-            {
-                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                Method.Body.Variables.Add(messageVar);
-            }
-            if (exceptionVar == null)
-            {
-                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
-                Method.Body.Variables.Add(exceptionVar);
-            }
-            if (paramsVar == null)
-            {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                Method.Body.Variables.Add(paramsVar);
-            }
-
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Stloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Stloc, messageVar),
-                                                  Instruction.Create(OpCodes.Stloc, exceptionVar),
-
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-
-                                                  Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldstr, "LineNumber"),
-                                                  Instruction.Create(OpCodes.Ldstr, lineNumber),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldloc, exceptionVar),
-                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
-                                                  Instruction.Create(OpCodes.Ldloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference)),
-                                              });
+            HandleExceptionAndStringAndArray(instruction, methodReference);
 
             return;
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var stringInstruction = instruction.FindStringInstruction();
-
-            if (stringInstruction != null)
-            {
-
-                instructions.Replace(stringInstruction, new[]
-                                                        {
-
-                                                            Instruction.Create(OpCodes.Ldsfld, LoggerField),
-
-                                                            Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                            Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
-                                                            Instruction.Create(OpCodes.Ldc_I4_0),
-                                                            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                            Instruction.Create(OpCodes.Ldstr, "LineNumber"),
-                                                            Instruction.Create(OpCodes.Ldstr, lineNumber),
-                                                            Instruction.Create(OpCodes.Ldc_I4_0),
-                                                            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-                                                            Instruction.Create(stringInstruction.OpCode, (string) stringInstruction.Operand),
-                                                        });
-
-                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
-                return;
-            }
-            if (messageVar == null)
-            {
-                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                Method.Body.Variables.Add(messageVar);
-            }
-            if (paramsVar == null)
-            {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                Method.Body.Variables.Add(paramsVar);
-            }
-
-            instructions.Replace(instruction, new[]
-                                              {
-
-                                                  Instruction.Create(OpCodes.Stloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Stloc, messageVar),
-
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-
-                                                  Instruction.Create(OpCodes.Ldstr, "MethodName"),
-                                                  Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldstr, "LineNumber"),
-                                                  Instruction.Create(OpCodes.Ldstr, lineNumber),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition),
-
-                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
-                                                  Instruction.Create(OpCodes.Ldloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
-                                              });
+            HandleStringAndArray(instruction, methodReference);
             return;
         }
 
         throw new NotImplementedException();
     }
 
+    void HandleStringAndArray(Instruction instruction, MethodReference methodReference)
+    {
+        var instructions = Method.Body.Instructions;
+        var stringInstruction = instruction.FindStringInstruction();
 
-    string GetLineNumber(Instruction instruction)
+        if (stringInstruction != null)
+        {
+            var replacement = new List<Instruction>
+            {
+                //add logger to stack
+                Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            };
+            AppendMethodName(replacement);
+            AppendLineNumber(instruction, replacement);
+            replacement.Append(
+                //re-write stringInstruction contentes 
+                Instruction.Create(stringInstruction.OpCode, (string) stringInstruction.Operand)
+                );
+            instructions.Replace(stringInstruction, replacement);
+
+            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
+        }
+        else
+        {
+            if (messageVar == null)
+            {
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
+            }
+            if (paramsVar == null)
+            {
+                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                Method.Body.Variables.Add(paramsVar);
+            }
+
+            var replacement = new List<Instruction>
+            {
+                // store the variables
+                Instruction.Create(OpCodes.Stloc, paramsVar),
+                Instruction.Create(OpCodes.Stloc, messageVar),
+                                                  
+                //add logger to stack
+                Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            };
+            AppendMethodName(replacement);
+            AppendLineNumber(instruction, replacement);
+            replacement.Append(
+                //put the variable back on the stack params
+                Instruction.Create(OpCodes.Ldloc, messageVar),
+                Instruction.Create(OpCodes.Ldloc, paramsVar),
+
+                //call the write method
+                Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
+                );
+            instructions.Replace(instruction, replacement);
+        }
+    }
+
+
+    void HandleExceptionAndStringAndArray(Instruction instruction, MethodReference methodReference)
+    {
+        if (messageVar == null)
+        {
+            messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            Method.Body.Variables.Add(messageVar);
+        }
+        if (exceptionVar == null)
+        {
+            exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+            Method.Body.Variables.Add(exceptionVar);
+        }
+        if (paramsVar == null)
+        {
+            paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+            Method.Body.Variables.Add(paramsVar);
+        }
+
+        var instructions = Method.Body.Instructions;
+        var replacement = new List<Instruction>
+        {
+            //store variables 
+            Instruction.Create(OpCodes.Stloc, paramsVar),
+            Instruction.Create(OpCodes.Stloc, messageVar),
+            Instruction.Create(OpCodes.Stloc, exceptionVar),
+                                                  
+            //add logger to stack
+            Instruction.Create(OpCodes.Ldsfld, LoggerField),
+        };
+        AppendMethodName(replacement);
+        AppendLineNumber(instruction, replacement);
+        replacement.Append(
+            // put stored variables back on the stack
+            Instruction.Create(OpCodes.Ldloc, exceptionVar),
+            Instruction.Create(OpCodes.Ldloc, messageVar),
+            Instruction.Create(OpCodes.Ldloc, paramsVar),
+
+            //call the write method
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference))
+            );
+        instructions.Replace(instruction, replacement);
+    }
+
+    void HandleNoParams(Instruction instruction, MethodReference methodReference)
+    {
+        var instructions = Method.Body.Instructions;
+        if (paramsVar == null)
+        {
+            paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+            Method.Body.Variables.Add(paramsVar);
+        }
+        var replacement = new List<Instruction>
+        {
+            // add the logger to the stack
+            Instruction.Create(OpCodes.Ldsfld, LoggerField),
+        };
+        AppendMethodName(replacement);
+        AppendLineNumber(instruction, replacement);
+        replacement.Append(
+            //Write empty array
+            Instruction.Create(OpCodes.Ldstr, ""),
+            Instruction.Create(OpCodes.Ldc_I4_0),
+            Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
+
+            //call the write method
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
+            );
+        instructions.Replace(instruction, replacement);
+    }
+
+    void AppendMethodName(List<Instruction> replacement)
+    {
+        replacement.Append(
+            //Write MethodName
+            Instruction.Create(OpCodes.Ldstr, "MethodName"),
+            Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
+            Instruction.Create(OpCodes.Ldc_I4_0),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition)
+            );
+    }
+    
+    void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
     {
         var sequencePoint = instruction.GetPreviousSequencePoint();
         if (sequencePoint == null)
         {
-            return "?";
+            return;
         }
-
-        return sequencePoint.StartLine.ToString();
+        var lineNumber = sequencePoint.StartLine;
+        replacement.Append(
+            //Write LineNumber
+            Instruction.Create(OpCodes.Ldstr, "LineNumber"),
+            Instruction.Create(OpCodes.Ldc_I4, lineNumber),
+            Instruction.Create(OpCodes.Box, ModuleWeaver.ModuleDefinition.TypeSystem.Int32),
+            Instruction.Create(OpCodes.Ldc_I4_0),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition)
+            );
     }
 
 }

@@ -122,7 +122,7 @@ public class MyClass
     {
         logger
             .ForContext("MethodName", "Void MyMethod()")
-            .ForContext("LineNumber", "8")
+            .ForContext("LineNumber", 8)
             .Debug("TheMessage");
     }
 }
