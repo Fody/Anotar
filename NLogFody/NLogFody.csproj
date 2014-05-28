@@ -149,8 +149,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />

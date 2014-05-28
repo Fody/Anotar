@@ -154,8 +154,8 @@
   <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="AfterBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)NuGetBuild\CommonLogging" />
-    <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib\portable-net45+sl5+wp81+windows8" />
-    <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.xml" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib\portable-net45+sl5+wp81+windows8" />
+    <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.xml" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.CommonLogging.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)\Anotar.CommonLogging.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)\Anotar.CommonLogging.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />

@@ -144,18 +144,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Splat" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\monoandroid" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\monoandroid" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\MonoMac" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\MonoMac" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Net45" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Net45" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\NetCore45" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\NetCore45" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Portable-Net45+WinRT45+WP8" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\Portable-Net45+WinRT45+WP8" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\wp8" />
-    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\wp8" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)SplatReferenceAssembly\bin\$(ConfigurationName)\Anotar.Splat.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Splat.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Splat.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Splat.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />

@@ -144,8 +144,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Catel" />
-    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib\portable-net45+sl5+wp8+win8" />
-    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib\portable-net45+sl5+wp8+win8" />
+    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Catel.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Catel.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Catel.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />

@@ -151,8 +151,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Custom.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />

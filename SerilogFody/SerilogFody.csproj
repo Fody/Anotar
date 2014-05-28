@@ -156,8 +156,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Serilog" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)SerilogReferenceAssembly\bin\$(ConfigurationName)\Anotar.Serilog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />

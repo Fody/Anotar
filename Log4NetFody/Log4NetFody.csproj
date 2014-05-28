@@ -149,8 +149,8 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Log4Net" />
-    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib\portable-net4+sl4+wp7+windows8" />
-    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib\portable-net4+sl4+wp7+windows8" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
