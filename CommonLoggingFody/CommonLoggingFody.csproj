@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Anotar.CommonLogging.Fody</RootNamespace>
     <AssemblyName>Anotar.CommonLogging.Fody</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>da27b0a8</NuGetPackageImportStamp>
   </PropertyGroup>
