@@ -37,8 +37,8 @@ public partial class ModuleWeaver
         FormatMethod = ModuleDefinition.Import(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
-        ExceptionType = ModuleDefinition.Import(msCoreLibDefinition.MainModule.Types.First(x => x.Name == "Exception"));
+        FindExceptionType();
+
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))
@@ -49,5 +49,18 @@ public partial class ModuleWeaver
         //TODO: ensure attributes don't exist on interfaces
         RemoveReference();
     }
+
+    void FindExceptionType()
+    {
+        var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
+        var exceptionType = msCoreLibDefinition.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
+        if (exceptionType == null)
+        {
+            var systemRuntimeDefinition = AssemblyResolver.Resolve("System.Runtime");
+            exceptionType = systemRuntimeDefinition.MainModule.Types.First(x => x.Name == "Exception");
+        }
+        ExceptionType = ModuleDefinition.Import(exceptionType);
+    }
+
 
 }
