@@ -138,7 +138,7 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild" Condition="$(ConfigurationName) == 'Deployable'">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)NuGetBuild\Log4Net\**\*.*" />
     </ItemGroup>
@@ -147,8 +147,8 @@
     <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib" />
     <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib" />
     <Copy SourceFiles="$(ProjectDir)Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
+    <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
+    <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Tools" />
     <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Tools" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Log4Net" MetadataAssembly="$(OutputPath)\Anotar.Log4Net.Fody.dll" />

@@ -12,7 +12,7 @@
     <AssemblyName>Anotar.CommonLogging.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>a60f3302</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>aa774c63</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,16 +49,16 @@
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.24.0\lib\net40\Mono.Cecil.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.25.0\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.24.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.25.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.24.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.25.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.24.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.25.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -147,13 +147,13 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
-  <Target Name="AfterBuild" DependsOnTargets="Clean">
+  <Target Name="AfterBuild" DependsOnTargets="Clean" Condition="$(ConfigurationName) == 'Deployable'">
     <MakeDir Directories="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib" />
     <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.xml" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib" />
     <Copy SourceFiles="$(ProjectDir)Anotar.CommonLogging.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.CommonLogging.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
-    <Copy SourceFiles="$(OutputPath)\Anotar.CommonLogging.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
+    <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
+    <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Tools" />
     <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Tools" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\CommonLogging" MetadataAssembly="$(OutputPath)\Anotar.CommonLogging.Fody.dll" />
@@ -163,6 +163,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.25.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.25.0\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets')" />
+  <Import Project="..\packages\Fody.1.25.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.25.0\build\Fody.targets')" />
 </Project>
