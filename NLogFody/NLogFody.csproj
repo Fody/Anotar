@@ -12,7 +12,7 @@
     <AssemblyName>Anotar.NLog.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>f3e296d4</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>6c22a4d1</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -142,15 +142,14 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="PepitaPackage.CreatePackageTask" AssemblyFile="$(SolutionDir)Tools\Pepita\PepitaPackage.dll" />
   <Target Name="AfterBuild">
     <ItemGroup>
       <FilesToDelete Include="$(SolutionDir)NuGetBuild\NLog\**\*.*" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
+    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
     <Copy SourceFiles="$(ProjectDir)Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)\Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
@@ -164,5 +163,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.1.24.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.24.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets'))" />
   </Target>
+  <Import Project="..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.2\build\PepitaPackage.targets')" />
 </Project>
