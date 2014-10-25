@@ -77,7 +77,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Issues.cs" />
-    <Compile Include="LoggerFactory.cs" />
     <Compile Include="MyDelegate.cs" />
     <Compile Include="MyEnum.cs">
       <SubType>Code</SubType>

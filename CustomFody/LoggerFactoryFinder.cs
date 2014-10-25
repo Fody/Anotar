@@ -40,6 +40,11 @@ public partial class ModuleWeaver
 
     void FindGetLogger(TypeDefinition typeDefinition)
     {
+        if (!typeDefinition.IsPublic)
+        {
+            var message = string.Format("The logger factory type '{0}' needs to be public.", typeDefinition.FullName);
+            throw new WeavingException(message);
+        }
         GetLoggerMethod = typeDefinition
             .Methods
             .FirstOrDefault(x =>
@@ -52,6 +57,11 @@ public partial class ModuleWeaver
         if (GetLoggerMethod == null)
         {
             throw new WeavingException("Found 'LoggerFactory' but it did not have a static 'GetLogger' method that takes 'string' as a parameter");
+        }
+        if (!GetLoggerMethod.Resolve().IsPublic)
+        {
+            var message = string.Format("The logger factory method '{0}' needs to be public.", GetLoggerMethod.FullName);
+            throw new WeavingException(message);
         }
     }
 }
