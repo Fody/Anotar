@@ -4,26 +4,26 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-	public Lazy<AssemblyDefinition> CommonLoggingCoreReference;
+	public Lazy<AssemblyDefinition> CommonLoggingReference;
 
 	void FindReference()
 	{
-        CommonLoggingCoreReference = new Lazy<AssemblyDefinition>(GetCommonCoreLogging);
+        CommonLoggingReference = new Lazy<AssemblyDefinition>(GetCommonLogging);
 	}
 
-    AssemblyDefinition GetCommonCoreLogging()
+    AssemblyDefinition GetCommonLogging()
     {
-        var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Common.Logging.Core");
+        var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Common.Logging");
 
         if (existingReference != null)
         {
             return AssemblyResolver.Resolve(existingReference);
         }
-        var reference = AssemblyResolver.Resolve("Common.Logging.Core");
+        var reference = AssemblyResolver.Resolve("Common.Logging");
         if (reference != null)
         {
             return reference;
         }
-        throw new Exception("Could not resolve a reference to Common.Logging.Core.dll.");
+        throw new Exception("Could not resolve a reference to Common.Logging.dll.");
     }
 }
