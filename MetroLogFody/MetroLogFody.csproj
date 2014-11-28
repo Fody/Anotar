@@ -106,6 +106,9 @@
     <Compile Include="..\Common\MockAssemblyResolver.cs">
       <Link>TestHelpers\MockAssemblyResolver.cs</Link>
     </Compile>
+    <Compile Include="..\Common\SystemTypesResolver.cs">
+      <Link>SystemTypesResolver.cs</Link>
+    </Compile>
     <Compile Include="..\Common\Verifier.cs">
       <Link>TestHelpers\Verifier.cs</Link>
     </Compile>

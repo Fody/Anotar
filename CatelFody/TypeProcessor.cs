@@ -75,7 +75,7 @@ public partial class ModuleWeaver
         }
 
         instructions.Insert(0, Instruction.Create(OpCodes.Ldtoken, declaringType));
-        instructions.Insert(1, Instruction.Create(OpCodes.Call, getTypeFromHandle));
+        instructions.Insert(1, Instruction.Create(OpCodes.Call, GetTypeFromHandle));
         instructions.Insert(2, Instruction.Create(OpCodes.Call, buildLoggerMethod));
         instructions.Insert(3, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
         type.Fields.Add(fieldDefinition);

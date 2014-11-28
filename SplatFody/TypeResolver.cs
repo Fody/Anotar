@@ -9,15 +9,6 @@ public partial class ModuleWeaver
         var getLocator = locatorType.Methods.First(x => x.Name == "get_Current");
         GetLocatorMethod = ModuleDefinition.Import(getLocator);
 
-        var mscorlib = AssemblyResolver.Resolve("mscorlib");
-        var typeType = mscorlib.MainModule.Types.First(x => x.Name == "Type");
-        GetTypeFromHandle = typeType.Methods
-            .First(x => x.Name == "GetTypeFromHandle" &&
-                        x.Parameters.Count == 1 &&
-                        x.Parameters[0].ParameterType.Name == "RuntimeTypeHandle");
-        GetTypeFromHandle = ModuleDefinition.Import(GetTypeFromHandle);
-
-
         var dependencyResolver = SplatReference.MainModule.Types.First(x => x.Name == "IDependencyResolver");
         var getServiceDefinition = dependencyResolver.Methods.First(x => x.Name == "GetService");
         GetServiceMethod = ModuleDefinition.Import(getServiceDefinition);
@@ -77,5 +68,4 @@ public partial class ModuleWeaver
 	public MethodReference FatalExceptionMethod;
 	public TypeReference FullLoggerType;
 	public MethodReference getLevelMethod;
-    public MethodReference GetTypeFromHandle;
 }

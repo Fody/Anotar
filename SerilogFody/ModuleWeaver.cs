@@ -9,10 +9,6 @@ public partial class ModuleWeaver
     public Action<string> LogWarning { get; set; }
     public Action<string> LogError { get; set; }
     public ModuleDefinition ModuleDefinition { get; set; }
-    public MethodReference ConcatMethod;
-	public MethodReference FormatMethod;
-    public TypeReference ExceptionType;
-    public ArrayType ObjectArray;
 
     public ModuleWeaver()
     {
@@ -23,14 +19,9 @@ public partial class ModuleWeaver
 
     public void Execute()
     {
+        LoadSystemTypes();
 		FindReference();
 		Init();
-        var stringType = ModuleDefinition.TypeSystem.String.Resolve();
-        ConcatMethod = ModuleDefinition.Import(stringType.FindMethod("Concat", "String", "String"));
-        FormatMethod = ModuleDefinition.Import(stringType.FindMethod("Format", "String", "Object[]"));
-        ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
-
-        FindExceptionType();
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))
@@ -42,15 +33,4 @@ public partial class ModuleWeaver
         RemoveReference();
     }
 
-    void FindExceptionType()
-    {
-        var msCoreLibDefinition = AssemblyResolver.Resolve("mscorlib");
-        var exceptionType = msCoreLibDefinition.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
-        if (exceptionType == null)
-        {
-            var systemRuntimeDefinition = AssemblyResolver.Resolve("System.Runtime");
-            exceptionType = systemRuntimeDefinition.MainModule.Types.First(x => x.Name == "Exception");
-        }
-        ExceptionType = ModuleDefinition.Import(exceptionType);  
-    }
 }
