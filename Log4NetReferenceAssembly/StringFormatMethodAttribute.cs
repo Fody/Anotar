@@ -8,7 +8,7 @@ namespace JetBrains.Annotations
 	/// <summary>
 	/// Not for external use.
 	/// </summary>
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor)]
     internal sealed class StringFormatMethodAttribute : Attribute
     {
 		/// <summary>

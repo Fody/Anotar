@@ -5,7 +5,7 @@ namespace Anotar.Custom
     /// <summary>
     /// Used to point to the correct logger factory Template.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Assembly)]
     public class LoggerFactoryAttribute : Attribute
     {
 
