@@ -8,28 +8,45 @@ Simplifies logging through a static class and some IL manipulation
 
 ## Supported Logging Libraries
 
-* [NLog](http://nlog-project.org/) 
-* [Log4Net](http://logging.apache.org/log4net/) 
-* [Serilog](http://serilog.net/)
-* [MetroLog](https://github.com/mbrit/MetroLog)
 * [Catel](http://www.catelproject.com/)
-* [CommonLogging](http://netcommon.sourceforge.net/)
-* [Splat](https://github.com/paulcbetts/splat)
 * Custom (for frameworks/toolkits with custom logging)
+* [CommonLogging](http://netcommon.sourceforge.net/)
+* [LibLog](https://github.com/damianh/LibLog) 
+* [Log4Net](http://logging.apache.org/log4net/) 
+* [MetroLog](https://github.com/mbrit/MetroLog)
+* [NLog](http://nlog-project.org/) 
+* [Serilog](http://serilog.net/)
+* [Splat](https://github.com/paulcbetts/splat)
 
 ## Nuget
+  
+ * Catel package http://nuget.org/packages/Anotar.Catel.Fody 
 
- * NLog package http://nuget.org/packages/Anotar.NLog.Fody 
+    PM> Install-Package Anotar.Catel.Fody
+ 
+ * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody 
 
-    PM> Install-Package Anotar.NLog.Fody
+    PM> Install-Package Anotar.CommonLogging.Fody
+ 
+ * Custom package http://nuget.org/packages/Anotar.Custom.Fody 
+
+    PM> Install-Package Anotar.Custom.Fody
+
+ * LibLog package http://nuget.org/packages/Anotar.LibLog.Fody 
+
+    PM> Install-Package Anotar.LibLog.Fody
+
+ * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody 
+
+    PM> Install-Package Anotar.Log4Net.Fody
  
  * MetroLog package http://nuget.org/packages/Anotar.MetroLog.Fody 
 
     PM> Install-Package Anotar.MetroLog.Fody
- 
- * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody 
 
-    PM> Install-Package Anotar.Log4Net.Fody
+ * NLog package http://nuget.org/packages/Anotar.NLog.Fody 
+
+    PM> Install-Package Anotar.NLog.Fody
  
  * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody 
 
@@ -39,21 +56,8 @@ Simplifies logging through a static class and some IL manipulation
 
     PM> Install-Package Anotar.Splat.Fody
  
- * Custom package http://nuget.org/packages/Anotar.Custom.Fody 
-
-    PM> Install-Package Anotar.Custom.Fody
- 
- * Catel package http://nuget.org/packages/Anotar.Catel.Fody 
-
-    PM> Install-Package Anotar.Catel.Fody
- 
- * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody 
-
-    PM> Install-Package Anotar.CommonLogging.Fody
- 
 ## Explicit Logging
 
-This example is targeting the [NLog](http://nlog-project.org/).
 
 ### Your Code
 
@@ -69,12 +73,54 @@ public class MyClass
 
 ### What gets compiled
 
-#### In NLog
+#### In Catel
 
 ```
 public class MyClass
 {
-    static Logger logger = LogManager.GetLogger("MyClass");
+    static ILog logger = LogManager.GetLogger(typeof(MyClass));
+
+    void MyMethod()
+    {
+        logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
+    }
+}
+```
+
+#### In CommonLogging
+
+```
+public class MyClass
+{
+    static ILog logger = LoggerManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+    }
+}
+```
+
+#### In Custom
+
+```
+public class MyClass
+{
+    static Logger logger = LoggerFactory.GetLogger<MyClass>();
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+    }
+}
+```
+
+#### In LibLog
+
+```
+public class MyClass
+{
+    static ILog logger = LogProvider.GetCurrentClassLogger();
 
     void MyMethod()
     {
@@ -111,6 +157,20 @@ public class MyClass
 }
 ```
 
+#### In NLog
+
+```
+public class MyClass
+{
+    static Logger logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+    }
+}
+```
+
 #### In Serilog
 
 ```
@@ -128,34 +188,6 @@ public class MyClass
 }
 ```
 
-#### In Catel
-
-```
-public class MyClass
-{
-    static ILog logger = LogManager.GetLogger(typeof(MyClass));
-
-    void MyMethod()
-    {
-        logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
-    }
-}
-```
-
-#### In Custom
-
-```
-public class MyClass
-{
-    static Logger logger = LoggerFactory.GetLogger<MyClass>();
-
-    void MyMethod()
-    {
-        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-    }
-}
-```
-
 #### In Splat
 
 ```
@@ -163,20 +195,6 @@ public class MyClass
 {
     static IFullLogger logger = ((ILogManager) Locator.Current.GetService(typeof(ILogManager), null))
 								.GetLogger(typeof(ClassWithLogging));
-
-    void MyMethod()
-    {
-        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-    }
-}
-```
-
-#### In CommonLogging
-
-```
-public class MyClass
-{
-    static ILog logger = LoggerManager.GetLogger("MyClass");
 
     void MyMethod()
     {
