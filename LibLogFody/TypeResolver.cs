@@ -14,8 +14,8 @@ public partial class ModuleWeaver
             {
                 continue;
             }
-            var getLoggerGenericDefinition = logManagerType.Methods.First(x => x.Name == "GetCurrentClassLogger");
-            constructLoggerGenericMethod = ModuleDefinition.Import(getLoggerGenericDefinition);
+            var getLoggerDefinition = logManagerType.FindMethod("GetLogger","String");
+            constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
             var logExtensionsTypeDefinition = module.Types.First(x => x.Name == "LogExtensions");
 
@@ -92,7 +92,7 @@ public partial class ModuleWeaver
 
     public TypeReference LogType;
 
-    MethodReference constructLoggerGenericMethod;
+    MethodReference constructLoggerMethod;
     public MethodReference isTraceEnabledMethod;
     public MethodReference isDebugEnabledMethod;
     public MethodReference isInfoEnabledMethod;

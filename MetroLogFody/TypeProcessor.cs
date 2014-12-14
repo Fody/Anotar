@@ -58,13 +58,13 @@ public partial class ModuleWeaver
 
     void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
 	{
-		var staticConstructor = type.GetStaticConstructor();
-	    var instructions = staticConstructor.Body.Instructions;
         var logName = type.FullName;
         if (type.IsCompilerGenerated() && type.IsNested)
         {
             logName = type.DeclaringType.FullName;
         }
+		var staticConstructor = type.GetStaticConstructor();
+	    var instructions = staticConstructor.Body.Instructions;
 	    instructions.Insert(0, Instruction.Create(OpCodes.Call, getDefaultLogManager));
         instructions.Insert(1, Instruction.Create(OpCodes.Ldstr, logName));
 	    instructions.Insert(2, Instruction.Create(OpCodes.Ldnull));
