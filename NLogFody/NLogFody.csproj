@@ -114,7 +114,7 @@
     </Compile>
     <Compile Include="TestHelpers\ActionTarget.cs" />
     <Compile Include="AttributeFinder.cs" />
-    <Compile Include="InjectorFinder.cs" />
+    <Compile Include="ReferenceFinder.cs" />
     <Compile Include="NLogTests.cs" />
     <Compile Include="OnExceptionProcessor.cs" />
     <Compile Include="TypeProcessor.cs" />

@@ -10,7 +10,7 @@ public partial class ModuleWeaver
 		var logManagerType = CommonLoggingReference.Value.MainModule.Types.First(x => x.Name == "LogManager");
         
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
-        buildLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+        constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
         var loggerTypeDefinition = CommonLoggingReference.Value.MainModule.Types.First(x => x.Name == "ILog");
 
@@ -55,7 +55,7 @@ public partial class ModuleWeaver
 	public MethodReference TraceMethod;
     public MethodReference TraceExceptionMethod;
 	public TypeReference LoggerType;
-    MethodReference buildLoggerMethod;
+    MethodReference constructLoggerMethod;
 	public MethodReference isErrorEnabledMethod;
 	public MethodReference isFatalEnabledMethod;
 	public MethodReference isDebugEnabledMethod;

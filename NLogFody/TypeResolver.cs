@@ -7,11 +7,11 @@ public partial class ModuleWeaver
     {
         var logManagerType = NLogReference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerGenericDefinition = logManagerType.Methods.First(x => x.Name == "GetCurrentClassLogger");
-		buildLoggerGenericMethod = ModuleDefinition.Import(getLoggerGenericDefinition);
-		var loggerTypeDefinition = NLogReference.MainModule.Types.First(x => x.Name == "Logger");
+		constructLoggerGenericMethod = ModuleDefinition.Import(getLoggerGenericDefinition);
 		var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
-        buildLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+        constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
+        var loggerTypeDefinition = NLogReference.MainModule.Types.First(x => x.Name == "Logger");
         TraceMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String", "Object[]"));
 		isTraceEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled"));
 		TraceExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("TraceException", "String", "Exception"));
@@ -48,7 +48,8 @@ public partial class ModuleWeaver
 
 	public TypeReference LoggerType;
 
-	MethodReference buildLoggerGenericMethod; MethodReference buildLoggerMethod;
+	MethodReference constructLoggerGenericMethod; 
+    MethodReference constructLoggerMethod;
 	public MethodReference isTraceEnabledMethod;
 	public MethodReference isDebugEnabledMethod;
 	public MethodReference isInfoEnabledMethod;

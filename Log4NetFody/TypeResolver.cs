@@ -9,7 +9,7 @@ public partial class ModuleWeaver
 
 		var logManagerType = Log4NetReference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
-        buildLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+        constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 		var loggerTypeDefinition = Log4NetReference.MainModule.Types.First(x => x.Name == "ILog");
 
         DebugMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
@@ -42,7 +42,7 @@ public partial class ModuleWeaver
 	public MethodReference FatalMethod;
 	public MethodReference FatalExceptionMethod;
 	public TypeReference LoggerType;
-    MethodReference buildLoggerMethod;
+    MethodReference constructLoggerMethod;
 	public MethodReference isErrorEnabledMethod;
 	public MethodReference isFatalEnabledMethod;
 	public MethodReference isDebugEnabledMethod;

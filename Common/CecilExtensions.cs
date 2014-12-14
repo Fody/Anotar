@@ -251,6 +251,20 @@ public static class CecilExtensions
         }
         return firstOrDefault;
     }
+    public static MethodDefinition FindGenericMethod(this TypeDefinition typeDefinition, string method, params string[] paramTypes)
+    {
+        var firstOrDefault = typeDefinition.Methods
+            .FirstOrDefault(x =>
+                x.HasGenericParameters &&
+                x.Name == method &&
+                x.IsMatch(paramTypes));
+        if (firstOrDefault == null)
+        {
+            var parameterNames = string.Join(", ", paramTypes);
+            throw new WeavingException(string.Format("Expected to find method '{0}({1})' on type '{2}'.", method, parameterNames, typeDefinition.FullName));
+        }
+        return firstOrDefault;
+    }
 
     public static bool IsMatch(this MethodReference methodReference, params string[] paramTypes)
     {

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\NLog</BaseIntermediateOutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D0947887-0667-4638-9DFC-D2E15C4DE93E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LibLogAssemblyToProcess</RootNamespace>
+    <AssemblyName>LibLogAssemblyToProcess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <OutputPath>bin\Deployable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassWithAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithCompilerGeneratedClasses.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithExistingField.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithLogging.cs" />
+    <Compile Include="ClassWithMultipleLoggingCalls.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClassWithWhileMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GenericClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyDelegate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyInterface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OnException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReturnFixerTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibLogAssembly\LibLogAssembly.csproj">
+      <Project>{3A12BAA3-D72B-40CD-8D89-51AE5D6B20A2}</Project>
+      <Name>LibLogAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibLogReferenceAssembly\LibLogReferenceAssembly.csproj">
+      <Project>{7afcfd73-d16e-4543-a65c-1baf167d620e}</Project>
+      <Name>LibLogReferenceAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -7,7 +7,7 @@ public partial class ModuleWeaver
     {
         var logManagerType = CatelReference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerMethod = logManagerType.FindMethod("GetLogger", "Type");
-        buildLoggerMethod = ModuleDefinition.Import(getLoggerMethod);
+        constructLoggerMethod = ModuleDefinition.Import(getLoggerMethod);
 		var loggerTypeDefinition = CatelReference.MainModule.Types.First(x => x.Name == "ILog");
 		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
         var logInfoDefinition = logManagerType.NestedTypes.First(x => x.Name == "LogInfo");
@@ -38,7 +38,7 @@ public partial class ModuleWeaver
 
 	public TypeReference LoggerType;
 
-	MethodReference buildLoggerMethod; 
+	MethodReference constructLoggerMethod; 
 	public MethodReference isDebugEnabledMethod;
 	public MethodReference isInfoEnabledMethod;
 	public MethodReference isWarningEnabledMethod;

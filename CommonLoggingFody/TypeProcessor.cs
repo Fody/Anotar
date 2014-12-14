@@ -68,7 +68,7 @@ public partial class ModuleWeaver
         }
 
         instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
-	    instructions.Insert(1, Instruction.Create(OpCodes.Call, buildLoggerMethod));
+	    instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
 	    instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
 	    type.Fields.Add(fieldDefinition);
     }

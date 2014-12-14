@@ -113,7 +113,7 @@
       <Link>TestHelpers\Verifier.cs</Link>
     </Compile>
     <Compile Include="AttributeFinder.cs" />
-    <Compile Include="InjectorFinder.cs" />
+    <Compile Include="ReferenceFinder.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="SplatTests.cs" />
     <Compile Include="OnExceptionProcessor.cs" />

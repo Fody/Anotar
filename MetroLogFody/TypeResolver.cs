@@ -12,7 +12,7 @@ public partial class ModuleWeaver
 
 		var logManagerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogManager");
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String", "LoggingConfiguration"));
-		buildLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+		constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 		var loggerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogger");
 
 		TraceMethod = ModuleDefinition.Import(loggerType.FindMethod("Trace", "String", "Object[]"));
@@ -52,7 +52,7 @@ public partial class ModuleWeaver
 
 	public TypeReference LoggerType;
 
-    MethodReference buildLoggerMethod;
+    MethodReference constructLoggerMethod;
     
 
    public MethodReference getDefaultLogManager;

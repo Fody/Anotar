@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0C6D9D08-4F93-44AC-B71A-7063F54106ED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Anotar.LibLog.Fody</RootNamespace>
+    <AssemblyName>Anotar.LibLog.Fody</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>10ce5722</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <OutputPath>bin\Deployable\</OutputPath>
+    <DefineConstants>TRACE;SCALPEL</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\FodyCecil.1.26.3\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\FodyCecil.1.26.3\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\FodyCecil.1.26.3\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\FodyCecil.1.26.3\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Scalpel">
+      <HintPath>..\packages\Scalpel.Fody.1.0.2.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\Scalpel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <None Include="Anotar.LibLog.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\AppDomainAssemblyFinder.cs">
+      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\AsyncChecker.cs">
+      <Link>AsyncChecker.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\CecilExtensions.cs">
+      <Link>CecilExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\ParamsFormatBuilder.cs">
+      <Link>ParamsFormatBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\ReturnFixer.cs">
+      <Link>ReturnFixer.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\SystemTypesResolver.cs">
+      <Link>SystemTypesResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\WeaverHelper.cs">
+      <Link>WeaverHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\WeavingException.cs">
+      <Link>WeavingException.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\AssemblyExtensions.cs">
+      <Link>TestHelpers\AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MockAssemblyResolver.cs">
+      <Link>TestHelpers\MockAssemblyResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Verifier.cs">
+      <Link>TestHelpers\Verifier.cs</Link>
+    </Compile>
+    <Compile Include="AttributeFinder.cs" />
+    <Compile Include="LibLogTests.cs" />
+    <Compile Include="OnExceptionProcessor.cs" />
+    <Compile Include="TestHelpers\LogCapture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TypeProcessor.cs" />
+    <Compile Include="InjectorExtentions.cs" />
+    <Compile Include="LogForwardingProcessor.cs" />
+    <Compile Include="ModuleWeaver.cs" />
+    <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="TypeResolver.cs" />
+    <Compile Include="ReferenceCleaner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Lib\NullGuardAnotarBug.dll">
+      <Link>NullGuardAnotarBug.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Lib\NullGuardAnotarBug.pdb">
+      <Link>NullGuardAnotarBug.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibLogAssembly\LibLogAssembly.csproj">
+      <Project>{3A12BAA3-D72B-40CD-8D89-51AE5D6B20A2}</Project>
+      <Name>LibLogAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild" Condition="$(ConfigurationName) == 'Deployable'">
+    <ItemGroup>
+      <FilesToDelete Include="$(SolutionDir)NuGetBuild\LibLog\**\*.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <MakeDir Directories="$(SolutionDir)NuGetBuild\LibLog" />
+    <Copy SourceFiles="$(SolutionDir)LibLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.LibLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog\Lib" />
+    <Copy SourceFiles="$(SolutionDir)LibLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.LibLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog\Lib" />
+    <Copy SourceFiles="$(ProjectDir)Anotar.LibLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog" />
+    <Copy SourceFiles="$(OutputPath)Anotar.LibLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog" />
+    <Copy SourceFiles="$(OutputPath)Anotar.LibLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog" />
+    <Copy SourceFiles="$(SolutionDir)install.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog\Tools" />
+    <Copy SourceFiles="$(SolutionDir)uninstall.ps1" DestinationFolder="$(SolutionDir)NuGetBuild\LibLog\Tools" />
+    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\LibLog" MetadataAssembly="$(TargetPath)" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.26.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.26.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets'))" />
+  </Target>
+  <Import Project="..\packages\Fody.1.26.2\build\Fody.targets" Condition="Exists('..\packages\Fody.1.26.2\build\Fody.targets')" />
+  <Import Project="..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" />
+</Project>
