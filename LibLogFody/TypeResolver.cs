@@ -14,10 +14,16 @@ public partial class ModuleWeaver
             {
                 continue;
             }
+
+            var logExtensionsTypeDefinition = module.Types.FirstOrDefault(x => x.Name == "LogExtensions");
+            if (logExtensionsTypeDefinition == null)
+            {
+                continue;
+            }
+
             var getLoggerDefinition = logManagerType.FindMethod("GetLogger","String");
             constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
-            var logExtensionsTypeDefinition = module.Types.First(x => x.Name == "LogExtensions");
 
             TraceMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Trace", "ILog", "String"));
             TraceFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("TraceFormat", "ILog", "String", "Object[]"));
