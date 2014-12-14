@@ -120,7 +120,7 @@ public class MyClass
 ```
 public class MyClass
 {
-    static ILog logger = LogProvider.GetCurrentClassLogger();
+    static ILog logger = LogProvider.GetLogger("MyClass");
 
     void MyMethod()
     {
