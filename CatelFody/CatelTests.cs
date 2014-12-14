@@ -75,7 +75,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
-        Assert.IsTrue(message.Split(']').Last().StartsWith(" Method: 'Void Debug()'. Line: ~"), message);
+        Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"), message);
     }
 
     [Test]
@@ -85,7 +85,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithLogging] Method: 'void Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
     }
 
     [Test]
@@ -96,7 +96,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithExistingField] Method: 'void Debug()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
     }
 
     // ReSharper disable once UnusedParameter.Local
@@ -123,7 +123,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToDebug()
     {
-        var expected = "[OnException] Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, Debugs, expected);
     }
@@ -131,7 +131,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToDebugWithReturn()
     {
-        var expected = "[OnException] Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
         CheckException(action, Debugs, expected);
     }
@@ -139,7 +139,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToInfo()
     {
-        var expected = "[OnException] Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
         CheckException(action, Informations, expected);
     }
@@ -147,7 +147,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToInfoWithReturn()
     {
-        var expected = "[OnException] Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
         CheckException(action, Informations, expected);
     }
@@ -155,7 +155,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToWarning()
     {
-        var expected = "[OnException] Exception occurred in 'void ToWarning(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToWarning(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarning("x", 6);
         CheckException(action, Warnings, expected);
     }
@@ -163,7 +163,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToWarningWithReturn()
     {
-        var expected = "[OnException] Exception occurred in 'Object ToWarningWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToWarningWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarningWithReturn("x", 6);
         CheckException(action, Warnings, expected);
     }
@@ -171,7 +171,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToError()
     {
-        var expected = "[OnException] Exception occurred in 'void ToError(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
         CheckException(action, Errors, expected);
     }
@@ -179,7 +179,7 @@ public class CatelTests
     [Test]
     public void OnExceptionToErrorWithReturn()
     {
-        var expected = "[OnException] Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
         CheckException(action, Errors, expected);
     }
@@ -201,7 +201,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithLogging] Method: 'void DebugString()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -211,7 +211,7 @@ public class CatelTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithLogging] Method: 'void DebugStringParams()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -221,7 +221,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithLogging] Method: 'void DebugStringException()'. Line: ~"));
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
     }
 
     [Test]
@@ -231,7 +231,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, Informations.Count);
-        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void Info()'. Line: ~"));
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void Info()'. Line: ~"));
     }
 
     [Test]
@@ -241,7 +241,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, Informations.Count);
-        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoString()'. Line: ~"));
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -251,7 +251,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, Informations.Count);
-        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -261,7 +261,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, Informations.Count);
-        Assert.IsTrue(Informations.First().StartsWith("[ClassWithLogging] Method: 'void InfoStringException()'. Line: ~"));
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
     }
 
     [Test]
@@ -271,7 +271,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("[ClassWithLogging] Method: 'void Warn()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void Warn()'. Line: ~"));
     }
 
     [Test]
@@ -281,7 +281,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("[ClassWithLogging] Method: 'void WarnString()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnString()'. Line: ~"));
     }
 
     [Test]
@@ -291,7 +291,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("[ClassWithLogging] Method: 'void WarnStringParams()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -301,7 +301,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("[ClassWithLogging] Method: 'void WarnStringException()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
     }
 
     [Test]
@@ -311,7 +311,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("[ClassWithLogging] Method: 'void Error()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void Error()'. Line: ~"));
     }
 
     [Test]
@@ -321,7 +321,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("[ClassWithLogging] Method: 'void ErrorString()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -331,7 +331,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("[ClassWithLogging] Method: 'void ErrorStringParams()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
     }
 
     [Test]
@@ -341,7 +341,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
-        Assert.IsTrue(Errors.First().StartsWith("[ClassWithLogging] Method: 'void ErrorStringException()'. Line: ~"));
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
     }
     
     [Test]
@@ -356,7 +356,7 @@ public class CatelTests
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.AsyncMethod();
-        Assert.IsTrue(Debugs.Any(x=>x.StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void AsyncMethod()'. Line: ~")));
+        Assert.IsTrue(Debugs.Any(x=>x.StartsWith("Method: 'Void AsyncMethod()'. Line: ~")));
     }
 
     [Test]
@@ -366,7 +366,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
     }
 
     [Test]
@@ -376,7 +376,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
     }
 
     [Test]
@@ -386,7 +386,7 @@ public class CatelTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.LambdaMethod();
         Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("[ClassWithCompilerGeneratedClasses] Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
     }
 
     [Test]

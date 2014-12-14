@@ -16,7 +16,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, Catel</tags>
     <dependencies>
 		  <dependency id="Fody"/>
-		  <dependency id="Catel.Core" version="3.7.0"/>
+		  <dependency id="Catel.Core" version="4.0.0"/>
     </dependencies>
   </metadata>
 </package>
