@@ -106,11 +106,11 @@ public class MyClass
 ```
 public class MyClass
 {
-    static Logger logger = LoggerFactory.GetLogger<MyClass>();
+    static ILogger AnotarLogger = LoggerFactory.GetLogger<Program>();
 
     void MyMethod()
     {
-        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+        AnotarLogger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
 }
 ```
