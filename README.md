@@ -106,7 +106,7 @@ public class MyClass
 ```
 public class MyClass
 {
-    static ILogger AnotarLogger = LoggerFactory.GetLogger<Program>();
+    static ILogger AnotarLogger = LoggerFactory.GetLogger<MyClass>();
 
     void MyMethod()
     {
