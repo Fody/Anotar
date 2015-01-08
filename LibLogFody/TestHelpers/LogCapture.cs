@@ -51,15 +51,13 @@ public class LogCapture : ILogProvider, ILog
         return true;   
     }
 
-    public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception) where TException : Exception
+    public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null)
     {
-        Log(logLevel, messageFunc);
+        return Log(logLevel, messageFunc);
     }
 
     public void Clear()
     {
-
-
         Fatals.Clear();
         Errors.Clear();
         Traces.Clear();
@@ -67,4 +65,5 @@ public class LogCapture : ILogProvider, ILog
         Informations.Clear();
         Warns.Clear();
     }
+
 }
