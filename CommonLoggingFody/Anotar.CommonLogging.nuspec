@@ -16,7 +16,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, Common.Logging</tags>
     <dependencies>
       <dependency id="Fody"/>
-      <dependency id="Common.Logging" version="3.0.0"/>		
+      <dependency id="Common.Logging.Portable" version="3.0.0"/>		
 	</dependencies>
   </metadata>
 </package>
