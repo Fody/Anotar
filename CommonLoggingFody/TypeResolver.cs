@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Mono.Cecil;
 
@@ -12,7 +13,8 @@ public partial class ModuleWeaver
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
-        var loggerTypeDefinition = CommonLoggingReference.Value.MainModule.Types.First(x => x.Name == "ILog");
+        var types = CommonLoggingCoreReference.Value.MainModule.Types.ToArray();
+        var loggerTypeDefinition = CommonLoggingCoreReference.Value.MainModule.Types.First(x => x.Name == "ILog");
 
         DebugMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
 		isDebugEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));

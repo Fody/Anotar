@@ -373,4 +373,14 @@ public class ActionLog : ILog
     public bool IsFatalEnabled { get { return true; } }
     public bool IsInfoEnabled { get { return true; } }
     public bool IsWarnEnabled { get { return true; } }
+
+    public IVariablesContext GlobalVariablesContext
+    {
+        get { throw new NotImplementedException(); }
+    }
+
+    public IVariablesContext ThreadVariablesContext
+    {
+        get { throw new NotImplementedException(); }
+    }
 }
