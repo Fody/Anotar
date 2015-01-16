@@ -4,28 +4,27 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-	public Lazy<AssemblyDefinition> CommonLoggingReference;
-    public Lazy<AssemblyDefinition> CommonLoggingCoreReference;
+	public AssemblyDefinition CommonLoggingReference;
+    public AssemblyDefinition CommonLoggingCoreReference;
 
 	void FindReference()
 	{
-        CommonLoggingReference = new Lazy<AssemblyDefinition>(() => GetReference("Common.Logging"));
-        CommonLoggingCoreReference = new Lazy<AssemblyDefinition>(() => GetReference("Common.Logging.Core"));
+        CommonLoggingReference = GetReference("Common.Logging", "Common.Logging.Portable");
+        CommonLoggingCoreReference = GetReference("Common.Logging.Core");
 	}
 
-    AssemblyDefinition GetReference(string referenceName)
+    AssemblyDefinition GetReference(params string[] referenceNames)
     {
-        var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == referenceName);
+        foreach (var referenceName in referenceNames)
+        {
+            var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == referenceName);
 
-        if (existingReference != null)
-        {
-            return AssemblyResolver.Resolve(existingReference);
+            if (existingReference != null)
+            {
+                return AssemblyResolver.Resolve(existingReference);
+            }
         }
-        var reference = AssemblyResolver.Resolve(referenceName);
-        if (reference != null)
-        {
-            return reference;
-        }
-        throw new Exception(string.Format("Could not resolve a reference to {0}.dll.", referenceName));
+        var message = string.Format("Expected to find a reference to one of {0}.", string.Join(",",referenceNames));
+        throw new Exception(message);
     }
 }

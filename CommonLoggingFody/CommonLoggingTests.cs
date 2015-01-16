@@ -23,9 +23,7 @@ public class CommonLoggingTests
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
-        actionAdapter = new ActionAdapter
-                         {
-                         };
+        actionAdapter = new ActionAdapter();
         LogManager.Adapter = actionAdapter;
     }
 

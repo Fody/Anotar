@@ -7,13 +7,12 @@ public partial class ModuleWeaver
     public void Init()
     {
 
-		var logManagerType = CommonLoggingReference.Value.MainModule.Types.First(x => x.Name == "LogManager");
+		var logManagerType = CommonLoggingReference.MainModule.Types.First(x => x.Name == "LogManager");
         
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
 
-        var types = CommonLoggingCoreReference.Value.MainModule.Types.ToArray();
-        var loggerTypeDefinition = CommonLoggingCoreReference.Value.MainModule.Types.First(x => x.Name == "ILog");
+        var loggerTypeDefinition = CommonLoggingCoreReference.MainModule.Types.First(x => x.Name == "ILog");
 
         DebugMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
 		isDebugEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
