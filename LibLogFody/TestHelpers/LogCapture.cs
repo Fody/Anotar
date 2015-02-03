@@ -12,12 +12,23 @@ public class LogCapture : ILogProvider, ILog
     public List<string> Traces = new List<string>();
     public List<string> Informations = new List<string>();
     public List<string> Warns = new List<string>();
+
     public ILog GetLogger(string name)
     {
         return this;
     }
 
-    public bool Log(LogLevel logLevel, Func<string> messageFunc)
+    public IDisposable OpenNestedContext(string message)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IDisposable OpenMappedContext(string key, string value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null, params object[] formatParameters )
     {
         if (messageFunc == null)
         {
@@ -50,12 +61,7 @@ public class LogCapture : ILogProvider, ILog
         }
         return true;   
     }
-
-    public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null)
-    {
-        return Log(logLevel, messageFunc);
-    }
-
+    
     public void Clear()
     {
         Fatals.Clear();

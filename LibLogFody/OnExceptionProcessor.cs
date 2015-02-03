@@ -164,6 +164,8 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
+        yield return Instruction.Create(OpCodes.Ldc_I4_0);
+        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object);
         yield return Instruction.Create(OpCodes.Call, writeMethod);
         yield return sectionNop;
     }

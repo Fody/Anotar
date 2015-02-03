@@ -93,6 +93,8 @@ public class LogForwardingProcessor
                                                   Instruction.Create(OpCodes.Ldloc, messageVar),
                                                   Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                                                   Instruction.Create(OpCodes.Ldloc, exceptionVar),
+                                                  Instruction.Create(OpCodes.Ldc_I4_0),
+                                                  Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
                                                   Instruction.Create(OpCodes.Call, ModuleWeaver.GetExceptionOperand(methodReference)),
                                               });
             return;
