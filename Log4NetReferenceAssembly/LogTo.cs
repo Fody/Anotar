@@ -21,6 +21,7 @@ namespace Anotar.Log4Net
         /// </summary>
         /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="args">Arguments to format.</param>
+        [StringFormatMethod("format")]
         public static void Trace(string format, params object[] args)
         {
             throw new NotImplementedException();
