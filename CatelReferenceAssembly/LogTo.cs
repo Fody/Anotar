@@ -9,6 +9,14 @@ namespace Anotar.Catel
     public static class LogTo
     {
 
+        /// <summary>
+        /// Returns true if debug is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -38,6 +46,14 @@ namespace Anotar.Catel
         public static void Debug(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if info is enabled.
+        /// </summary>
+        public static bool IsInfoEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -71,6 +87,14 @@ namespace Anotar.Catel
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if Warning is enabled.
+        /// </summary>
+        public static bool IsWarningEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -100,6 +124,14 @@ namespace Anotar.Catel
         public static void Warning(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>

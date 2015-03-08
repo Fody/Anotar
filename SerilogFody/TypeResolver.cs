@@ -9,7 +9,7 @@ public partial class ModuleWeaver
 		var logEventLevelType = SerilogReference.MainModule.Types.First(x => x.Name == "LogEventLevel");
 	    DebugLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Debug").Constant;
 		ErrorLevel = (int)logEventLevelType.Fields.First(x => x.Name == "Error").Constant;
-	    InfoLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Information").Constant;
+	    InformationLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Information").Constant;
 	    WarningLevel = (int)logEventLevelType.Fields.First(x => x.Name == "Warning").Constant;
 		FatalLevel = (int)logEventLevelType.Fields.First(x => x.Name == "Fatal").Constant;
 
@@ -26,7 +26,7 @@ public partial class ModuleWeaver
 		DebugExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]"));
 		infoMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Information", "String", "Object[]"));
 		InfoExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Information", "Exception", "String", "Object[]"));
-		warnMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warning", "String", "Object[]"));
+		warningMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warning", "String", "Object[]"));
 		WarnExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warning", "Exception", "String", "Object[]"));
 		errorMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Object[]"));
 		ErrorExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "Exception", "String", "Object[]"));
@@ -37,7 +37,7 @@ public partial class ModuleWeaver
 
     MethodReference debugMethod;
     MethodReference infoMethod;
-    MethodReference warnMethod;
+    MethodReference warningMethod;
     MethodReference errorMethod; 
     MethodReference fatalMethod;
     TypeReference loggerType;
@@ -55,6 +55,6 @@ public partial class ModuleWeaver
 	public int FatalLevel;
 	public int WarningLevel;
 	public int ErrorLevel;
-	public int InfoLevel;
+	public int InformationLevel;
     public MethodReference forPropertyContextDefinition;
 }

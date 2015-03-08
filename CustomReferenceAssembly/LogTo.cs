@@ -9,6 +9,14 @@ namespace Anotar.Custom
     public static class LogTo
     {
 
+        /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsTraceEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Trace</c> level.
 		/// </summary>
@@ -38,6 +46,14 @@ namespace Anotar.Custom
         public static void Trace(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -71,6 +87,14 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsInformationEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Information</c> level.
 		/// </summary>
@@ -100,6 +124,14 @@ namespace Anotar.Custom
         public static void Information(Exception exception, string format, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if warning is enabled.
+        /// </summary>
+        public static bool IsWarningEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -133,6 +165,14 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -163,6 +203,15 @@ namespace Anotar.Custom
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if fatal is enabled.
+        /// </summary>
+        public static bool IsFatalEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
 		/// </summary>

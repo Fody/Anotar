@@ -60,8 +60,16 @@ public class LogForwardingProcessor
 
         var parameters = methodReference.Parameters;
         var instructions = Method.Body.Instructions;
-        instruction.OpCode = OpCodes.Callvirt;
 
+        if (parameters.Count == 0 && methodReference.Name.StartsWith("get_Is"))
+        {
+            instructions.Replace(instruction, new[]
+                                              {
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLogEnabled(methodReference))
+                                              });
+            return;
+        }
         if (parameters.Count == 0)
         {
             instructions.Replace(instruction, new[]
@@ -74,6 +82,8 @@ public class LogForwardingProcessor
                                               });
             return;
         }
+
+        instruction.OpCode = OpCodes.Callvirt;
         if (methodReference.IsMatch("String", "Exception"))
         {
             if (messageVar == null)

@@ -108,15 +108,6 @@ public class NLogTests
         Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-    [Test]
-    public void Debug()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Debug();
-        Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
-    }
 
     [Test]
     public void ClassWithExistingField()
@@ -244,6 +235,14 @@ public class NLogTests
         CheckException(action, Fatals, expected);
     }
 
+
+    [Test]
+    public void IsTraceEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsTraceEnabled());
+    }
     [Test]
     public void Trace()
     {
@@ -285,6 +284,22 @@ public class NLogTests
 
 
     [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
+    }
+    [Test]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -312,6 +327,14 @@ public class NLogTests
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
     }
 
     [Test]
@@ -355,6 +378,14 @@ public class NLogTests
     }
 
     [Test]
+    public void IsWarnEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarnEnabled());
+    }
+
+    [Test]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -394,6 +425,14 @@ public class NLogTests
         Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
     }
 
+
+    [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
+    }
     [Test]
     public void Error()
     {
@@ -433,7 +472,15 @@ public class NLogTests
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
     }
-    
+
+
+    [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
+    }
     [Test]
     public void Fatal()
     {

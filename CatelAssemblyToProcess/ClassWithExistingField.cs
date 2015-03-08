@@ -9,6 +9,7 @@ public class ClassWithExistingField
     static ClassWithExistingField()
     {
         existingLogger = LogManager.GetLogger(typeof(ClassWithExistingField));
+        
     }
 
     public void Debug()

@@ -8,6 +8,15 @@ namespace Anotar.Serilog
 	/// </summary>
     public static class LogTo
     {
+
+        /// <summary>
+        /// Returns true if debug is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -15,6 +24,7 @@ namespace Anotar.Serilog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -43,6 +53,15 @@ namespace Anotar.Serilog
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if information is enabled.
+        /// </summary>
+        public static bool IsInformationEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
         /// </summary>
@@ -62,6 +81,14 @@ namespace Anotar.Serilog
         public static void Information(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if warning is enabled.
+        /// </summary>
+        public static bool IsWarningEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -93,6 +120,14 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -120,6 +155,14 @@ namespace Anotar.Serilog
         public static void Error(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if fatal is enabled.
+        /// </summary>
+        public static bool IsFatalEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>

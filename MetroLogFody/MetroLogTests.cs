@@ -239,6 +239,13 @@ public class MetroLogTests
     }
 
     [Test]
+    public void IsTraceEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsTraceEnabled());
+    }
+    [Test]
     public void Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -278,6 +285,13 @@ public class MetroLogTests
         Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringException()'. Line: ~"));
     }
 
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
     [Test]
     public void Debug()
     {
@@ -319,6 +333,13 @@ public class MetroLogTests
     }
 
     [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
+    }
+    [Test]
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -359,6 +380,13 @@ public class MetroLogTests
     }
 
     [Test]
+    public void IsWarnEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarnEnabled());
+    }
+    [Test]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -396,6 +424,13 @@ public class MetroLogTests
         instance.WarnStringException();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
     }
 
     [Test]
@@ -438,6 +473,13 @@ public class MetroLogTests
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
     }
 
+    [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
+    }
     [Test]
     public void Fatal()
     {

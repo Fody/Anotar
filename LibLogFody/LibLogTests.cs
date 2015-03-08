@@ -54,15 +54,6 @@ public class LibLogTests
         //Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-    [Test]
-    public void Debug()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Debug();
-        Assert.AreEqual(1, logProvider.Debugs.Count);
-        Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
-    }
 
     [Test]
     public void ClassWithExistingField()
@@ -191,6 +182,13 @@ public class LibLogTests
     }
 
     [Test]
+    public void IsTraceEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsTraceEnabled());
+    }
+    [Test]
     public void Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -229,6 +227,22 @@ public class LibLogTests
         Assert.IsTrue(logProvider.Traces.First().StartsWith("Method: 'void TraceStringException()'. Line: ~"));
     }
 
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, logProvider.Debugs.Count);
+        Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
+    }
 
     [Test]
     public void DebugString()
@@ -258,6 +272,13 @@ public class LibLogTests
         instance.DebugStringException();
         Assert.AreEqual(1, logProvider.Debugs.Count);
         Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
     }
 
     [Test]
@@ -301,6 +322,13 @@ public class LibLogTests
     }
 
     [Test]
+    public void IsWarnEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarnEnabled());
+    }
+    [Test]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -341,6 +369,13 @@ public class LibLogTests
     }
 
     [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
+    }
+    [Test]
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -380,6 +415,13 @@ public class LibLogTests
         Assert.IsTrue(logProvider.Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
     }
 
+    [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
+    }
     [Test]
     public void Fatal()
     {

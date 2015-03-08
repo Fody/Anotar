@@ -60,8 +60,15 @@ public class LogForwardingProcessor
 
         var parameters = methodReference.Parameters;
 
-        instruction.OpCode = OpCodes.Callvirt;
         var instructions = Method.Body.Instructions;
+        if (parameters.Count == 0 && methodReference.Name.StartsWith("get_Is"))
+        {
+            instruction.Operand = ModuleWeaver.GetLogEnabled(methodReference);
+            return;
+        }
+
+        instruction.OpCode = OpCodes.Callvirt;
+
         var logEvent = ModuleWeaver.GetLogEvent(methodReference);
         if (parameters.Count == 0)
         {

@@ -3,6 +3,34 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
+    public MethodReference GetLogEnabled(MethodReference methodReference)
+    {
+        if (methodReference.Name == "get_IsTraceEnabled")
+        {
+            return isTraceEnabledMethod;
+        }
+        if (methodReference.Name == "get_IsDebugEnabled")
+        {
+            return isDebugEnabledMethod;
+        }
+        if (methodReference.Name == "get_IsInfoEnabled")
+        {
+            return isInfoEnabledMethod;
+        }
+        if (methodReference.Name == "get_IsWarnEnabled")
+        {
+            return isWarnEnabledMethod;
+        }
+        if (methodReference.Name == "get_IsErrorEnabled")
+        {
+            return isErrorEnabledMethod;
+        }
+        if (methodReference.Name == "get_IsFatalEnabled")
+        {
+            return isFatalEnabledMethod;
+        }
+        throw new Exception("Invalid method name");
+    }
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
         if (methodReference.Name == "Trace")

@@ -20,9 +20,7 @@ class OnExceptionProcessor
 
 	public void Process()
     {
-
-
-	    attributeFinder = new AttributeFinder(Method);
+        attributeFinder = new AttributeFinder(Method);
 		if (!attributeFinder.Found)
         {
             return;
@@ -120,7 +118,7 @@ class OnExceptionProcessor
         }
 		if (attributeFinder.FoundInfo)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.InfoLevel))
+			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.InformationLevel))
             {
                 yield return instruction;
             }

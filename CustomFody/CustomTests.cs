@@ -57,15 +57,6 @@ public class CustomTests
 
         Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
-    [Test]
-    public void Debug()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Debug();
-        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
-        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
-    }
 
     [Test]
     public void ClassWithExistingField()
@@ -196,6 +187,13 @@ public class CustomTests
     }
     
     [Test]
+    public void IsTraceEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+       Assert.IsTrue(instance.IsTraceEnabled());
+    }
+    [Test]
     public void TraceString()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -223,6 +221,22 @@ public class CustomTests
         instance.TraceStringException();
         Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
         Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
     }
 
     [Test]
@@ -253,6 +267,13 @@ public class CustomTests
         instance.DebugStringException();
         Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
         Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsInformationEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInformationEnabled());
     }
 
     [Test]
@@ -293,6 +314,13 @@ public class CustomTests
         instance.InformationStringException();
         Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
         Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'void InformationStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsWarningEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarningEnabled());
     }
 
     [Test]
@@ -336,6 +364,13 @@ public class CustomTests
     }
 
     [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
+    }
+    [Test]
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -373,6 +408,14 @@ public class CustomTests
         instance.ErrorStringException();
         Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
         Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
     }
     
     [Test]

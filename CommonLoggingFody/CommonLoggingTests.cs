@@ -30,19 +30,19 @@ public class CommonLoggingTests
     [SetUp]
     public void Setup()
     {
-       actionAdapter.Fatals.Clear();
-       actionAdapter.Errors.Clear();
-       actionAdapter.Debugs.Clear();
-       actionAdapter.Informations.Clear();
-       actionAdapter.Warnings.Clear();
-       actionAdapter.Traces.Clear();
+        actionAdapter.Fatals.Clear();
+        actionAdapter.Errors.Clear();
+        actionAdapter.Debugs.Clear();
+        actionAdapter.Informations.Clear();
+        actionAdapter.Warnings.Clear();
+        actionAdapter.Traces.Clear();
     }
 
     [Test]
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
@@ -52,28 +52,19 @@ public class CommonLoggingTests
     {
         var type = assembly.GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof (string));
-        var instance = (dynamic)Activator.CreateInstance(constructedType);
+        var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = actionAdapter.Debugs.First();
         Assert.IsTrue(message.Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-    [Test]
-    public void Debug()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Debug();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
-    }
 
     [Test]
     public void ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
@@ -106,7 +97,7 @@ public class CommonLoggingTests
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, actionAdapter.Debugs, expected);
     }
-    
+
     [Test]
     public void OnExceptionToDebugWithReturn()
     {
@@ -166,24 +157,43 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToFatal()
     {
-		var expected = "Exception occurred in 'void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatal("x", 6);
+        var expected = "Exception occurred in 'void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatal("x", 6);
         CheckException(action, actionAdapter.Fatals, expected);
     }
 
     [Test]
-	public void OnExceptionToFatalWithReturn()
+    public void OnExceptionToFatalWithReturn()
     {
-		var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
-		Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
+        var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
+        Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, actionAdapter.Fatals, expected);
     }
-    
+
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
+
+
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
+    }
+
     [Test]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
@@ -206,7 +216,7 @@ public class CommonLoggingTests
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
@@ -218,20 +228,28 @@ public class CommonLoggingTests
     public void DebugStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
-    }    
-    
+    }
+
+    [Test]
+    public void IsTraceEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsTraceEnabled());
+    }
+
     [Test]
     public void Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Trace();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
@@ -242,7 +260,7 @@ public class CommonLoggingTests
     public void TraceString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceString();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
@@ -253,7 +271,7 @@ public class CommonLoggingTests
     public void TraceStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringParams();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
@@ -265,7 +283,7 @@ public class CommonLoggingTests
     public void TraceStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringException();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
@@ -277,7 +295,7 @@ public class CommonLoggingTests
     public void TraceStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
@@ -287,10 +305,18 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
+    }
+
+    [Test]
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
@@ -301,7 +327,7 @@ public class CommonLoggingTests
     public void InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
@@ -312,7 +338,7 @@ public class CommonLoggingTests
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
@@ -324,7 +350,7 @@ public class CommonLoggingTests
     public void InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
@@ -336,7 +362,7 @@ public class CommonLoggingTests
     public void InfoStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
@@ -346,10 +372,18 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void IsWarnEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarnEnabled());
+    }
+
+    [Test]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
@@ -360,7 +394,7 @@ public class CommonLoggingTests
     public void WarnString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
@@ -371,7 +405,7 @@ public class CommonLoggingTests
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
@@ -383,7 +417,7 @@ public class CommonLoggingTests
     public void WarnStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
@@ -395,7 +429,7 @@ public class CommonLoggingTests
     public void WarnStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
@@ -405,10 +439,18 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
+    }
+
+    [Test]
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
@@ -419,7 +461,7 @@ public class CommonLoggingTests
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
@@ -430,7 +472,7 @@ public class CommonLoggingTests
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
@@ -442,7 +484,7 @@ public class CommonLoggingTests
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
@@ -454,7 +496,7 @@ public class CommonLoggingTests
     public void ErrorStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
@@ -464,22 +506,30 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
+    }
+
+    [Test]
     public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalString();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalString();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalString()'. Line: ~"));
     }
 
     [Test]
-	public void FatalStringParams()
+    public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-		instance.FatalStringParams();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringParams();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringParams()'. Line: ~"));
@@ -490,7 +540,7 @@ public class CommonLoggingTests
     public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
@@ -502,7 +552,7 @@ public class CommonLoggingTests
     public void FatalStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionParams();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
@@ -514,14 +564,14 @@ public class CommonLoggingTests
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
+        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 
     [Test]
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
@@ -531,8 +581,8 @@ public class CommonLoggingTests
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), logEvent.Format);
@@ -542,7 +592,7 @@ public class CommonLoggingTests
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
@@ -553,7 +603,7 @@ public class CommonLoggingTests
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
@@ -570,7 +620,7 @@ public class CommonLoggingTests
         var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
 
         var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.NotNull(instance.DoIt());
     }

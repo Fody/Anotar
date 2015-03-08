@@ -209,7 +209,44 @@ There are also appropriate methods for Warn, Info, Error etc as applicable to ea
 
 Each of these methods has the expected 'message', 'params' and 'exception' overloads. 
 
-## Exception Logging
+## Checking logging level
+
+The `LogTo` class also has `IsLevelEnabled` properties that redirect to the respective level enabled checks in each framework. 
+
+### Your code
+
+```
+public class MyClass
+{
+    void MyMethod()
+    { 
+        if (LogTo.IsDebugEnabled)
+        {
+            LogTo.Debug("TheMessage");
+        }
+    }
+}
+```
+
+### What gets compiled
+
+```
+public class MyClass
+{
+    static Logger logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        if (logger.IsDebugEnabled)
+        {
+            logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+        }
+    }
+}
+```
+ 
+
+## Exception logging
     
 ### Your code
 
@@ -241,7 +278,7 @@ Each of these methods has the expected 'message', 'params' and 'exception' overl
     }
 
 
-## Custom Logging
+## Custom logging
 
 The custom logging variant exist for several reasons
 

@@ -8,6 +8,15 @@ namespace Anotar.CommonLogging
 	/// </summary>
     public static class LogTo
     {
+
+        /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsTraceEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
@@ -16,7 +25,7 @@ namespace Anotar.CommonLogging
             throw new NotImplementedException();
         }
 
-        /// <summary>
+	    /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
         /// <param name="format">A <see langword="string" /> containing format items.</param>
@@ -35,6 +44,15 @@ namespace Anotar.CommonLogging
         public static void TraceException(string format, Exception exception, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Returns true if debug is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -66,6 +84,15 @@ namespace Anotar.CommonLogging
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if info is enabled.
+        /// </summary>
+        public static bool IsInfoEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
@@ -94,6 +121,14 @@ namespace Anotar.CommonLogging
         public static void InfoException(string format, Exception exception, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if warn is enabled.
+        /// </summary>
+        public static bool IsWarnEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -126,6 +161,14 @@ namespace Anotar.CommonLogging
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -154,6 +197,14 @@ namespace Anotar.CommonLogging
         public static void ErrorException(string format, Exception exception, params object[] args)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsFatalEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>

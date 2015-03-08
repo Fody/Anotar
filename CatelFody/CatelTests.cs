@@ -16,6 +16,7 @@ public class CatelTests
     public List<string> Informations = new List<string>();
     public List<string> Warnings = new List<string>();
     string afterAssemblyPath;
+    static object locker = new object();
 
     public CatelTests()
     {
@@ -26,6 +27,7 @@ public class CatelTests
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
+        
         LogManager.AddListener(new LogListener
                                {
                                    Action =LogMessage
@@ -76,6 +78,14 @@ public class CatelTests
         instance.Debug();
         var message = Debugs.First();
         Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"), message);
+    }
+
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
     }
 
     [Test]
@@ -225,6 +235,14 @@ public class CatelTests
     }
 
     [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
+    }
+
+    [Test]
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -265,43 +283,59 @@ public class CatelTests
     }
 
     [Test]
-    public void Warn()
+    public void IsWarningEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Warn();
-        Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void Warn()'. Line: ~"));
+        Assert.IsTrue(instance.IsWarningEnabled());
     }
 
     [Test]
-    public void WarnString()
+    public void Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnString();
+        instance.Warning();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnString()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void Warning()'. Line: ~"));
     }
 
     [Test]
-    public void WarnStringParams()
+    public void WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnStringParams();
+        instance.WarningString();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningString()'. Line: ~"));
     }
 
     [Test]
-    public void WarnStringException()
+    public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic)Activator.CreateInstance(type);
-        instance.WarnStringException();
+        instance.WarningStringParams();
         Assert.AreEqual(1, Warnings.Count);
-        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringParams()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarningStringException()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarningStringException();
+        Assert.AreEqual(1, Warnings.Count);
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
     }
 
     [Test]

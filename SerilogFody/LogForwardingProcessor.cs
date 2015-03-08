@@ -189,6 +189,18 @@ public class LogForwardingProcessor
     void HandleNoParams(Instruction instruction, MethodReference methodReference)
     {
         var instructions = Method.Body.Instructions;
+        if (methodReference.Name.StartsWith("get_Is"))
+        {
+            instructions.Replace(instruction, new[]
+                                              {
+                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevel(methodReference)),
+                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
+                                              });
+            return;
+        }
+
+
         if (paramsVar == null)
         {
             paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);

@@ -105,15 +105,6 @@ public class Log4NetTests
         Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-    [Test]
-    public void Debug()
-    {
-        var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        instance.Debug();
-        Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
-    }
 
     [Test]
     public void ClassWithExistingField()
@@ -227,6 +218,22 @@ public class Log4NetTests
 		CheckException(action, Fatals, expected);
     }
 
+    [Test]
+    public void IsDebugEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsDebugEnabled());
+    }
+    [Test]
+    public void Debug()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.Debug();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
+    }
 
     [Test]
     public void DebugString()
@@ -256,6 +263,13 @@ public class Log4NetTests
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsInfoEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsInfoEnabled());
     }
 
     [Test]
@@ -296,6 +310,13 @@ public class Log4NetTests
         instance.InfoStringException();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+    [Test]
+    public void IsWarnEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsWarnEnabled());
     }
 
     [Test]
@@ -338,6 +359,13 @@ public class Log4NetTests
         Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
     }
 
+    [Test]
+    public void IsErrorEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsErrorEnabled());
+    }
     [Test]
     public void Error()
     {
@@ -386,6 +414,13 @@ public class Log4NetTests
 		instance.FatalString();
 		Assert.AreEqual(1, Fatals.Count);
 		Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalString()'. Line: ~"));
+    }
+    [Test]
+    public void IsFatalEnabled()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        Assert.IsTrue(instance.IsFatalEnabled());
     }
 
     [Test]

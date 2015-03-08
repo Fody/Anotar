@@ -9,6 +9,14 @@ namespace Anotar.Splat
     public static class LogTo
     {
 
+        /// <summary>
+        /// Returns true if debug is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -44,6 +52,14 @@ namespace Anotar.Splat
         public static void DebugException(string message, Exception exception)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if info is enabled.
+        /// </summary>
+        public static bool IsInfoEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -83,6 +99,14 @@ namespace Anotar.Splat
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if warn is enabled.
+        /// </summary>
+        public static bool IsWarnEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -118,6 +142,14 @@ namespace Anotar.Splat
         public static void WarnException(string message, Exception exception)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
         }
 
 		/// <summary>
@@ -156,6 +188,15 @@ namespace Anotar.Splat
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if fatal is enabled.
+        /// </summary>
+        public static bool IsFatalEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
 		/// </summary>

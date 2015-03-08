@@ -1,8 +1,33 @@
 using System;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 public partial class ModuleWeaver
 {
+    public OpCode GetLevel(MethodReference methodReference)
+    {
+        if (methodReference.Name == "get_IsDebugEnabled")
+        {
+            return OpCodes.Ldc_I4_2;
+        }
+        if (methodReference.Name == "get_IsInfoEnabled")
+        {
+            return OpCodes.Ldc_I4_3;
+        }
+        if (methodReference.Name == "get_IsWarnEnabled")
+        {
+            return OpCodes.Ldc_I4_4;
+        }
+        if (methodReference.Name == "get_IsErrorEnabled")
+        {
+            return OpCodes.Ldc_I4_5;
+        }
+        if (methodReference.Name == "get_IsFatalEnabled")
+        {
+            return OpCodes.Ldc_I4_6;
+        }
+        throw new Exception("Invalid method name");
+    }
     public MethodReference GetNormalOperandParams(MethodReference methodReference)
     {
         if (methodReference.Name == "Debug")

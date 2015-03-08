@@ -10,12 +10,21 @@ namespace Anotar.MetroLog
     {
 
         /// <summary>
+        /// Returns true if trace is enabled.
+        /// </summary>
+        public static bool IsTraceEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
         public static void Trace()
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
@@ -26,6 +35,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Writes the diagnostic message and exception at the <c>Trace</c> level.
         /// </summary>
@@ -36,6 +46,14 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns true if debug is enabled.
+        /// </summary>
+        public static bool IsDebugEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -43,6 +61,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Debug</c> level.
 		/// </summary>
@@ -53,6 +72,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Debug</c> level.
 		/// </summary>
@@ -62,6 +82,15 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if info is enabled.
+        /// </summary>
+        public static bool IsInfoEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
@@ -69,6 +98,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Info</c> level.
 		/// </summary>
@@ -79,6 +109,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Info</c> level.
 		/// </summary>
@@ -88,6 +119,15 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if warn is enabled.
+        /// </summary>
+        public static bool IsWarnEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -95,6 +135,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Warn</c> level.
 		/// </summary>
@@ -105,6 +146,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Warn</c> level.
 		/// </summary>
@@ -114,6 +156,15 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if error is enabled.
+        /// </summary>
+        public static bool IsErrorEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -121,6 +172,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Error</c> level.
 		/// </summary>
@@ -131,6 +183,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Error</c> level.
 		/// </summary>
@@ -140,6 +193,15 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns true if fatal is enabled.
+        /// </summary>
+        public static bool IsFatalEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Fatal</c> level.
 		/// </summary>
@@ -147,6 +209,7 @@ namespace Anotar.MetroLog
 		{
 			throw new NotImplementedException();
 		}
+
 		/// <summary>
 		/// Writes the diagnostic message at the <c>Fatal</c> level.
 		/// </summary>
@@ -157,6 +220,7 @@ namespace Anotar.MetroLog
         {
             throw new NotImplementedException();
         }
+
 		/// <summary>
 		/// Writes the diagnostic message and exception at the <c>Fatal</c> level.
 		/// </summary>
