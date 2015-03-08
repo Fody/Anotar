@@ -15,6 +15,7 @@ Simplifies logging through a static class and some IL manipulation
 * [Log4Net](http://logging.apache.org/log4net/) 
 * [MetroLog](https://github.com/mbrit/MetroLog)
 * [NLog](http://nlog-project.org/) 
+* [NServiceBus](http://particular.net/nservicebus) 
 * [Serilog](http://serilog.net/)
 * [Splat](https://github.com/paulcbetts/splat)
 
@@ -47,6 +48,10 @@ Simplifies logging through a static class and some IL manipulation
  * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg?style=flat)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
 
     PM> Install-Package Anotar.NLog.Fody
+ 
+ * NServiceBus package http://nuget.org/packages/Anotar.NServiceBus.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NServiceBus.Fody.svg?style=flat)](https://www.nuget.org/packages/Anotar.NServiceBus.Fody/)
+
+    PM> Install-Package Anotar.NServiceBus.Fody
  
  * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Serilog.Fody.svg?style=flat)](https://www.nuget.org/packages/Anotar.Serilog.Fody/)
 
@@ -167,6 +172,20 @@ public class MyClass
     void MyMethod()
     {
         logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
+    }
+}
+```
+
+#### In NServiceBus
+
+```
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.DebugFormat("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
 }
 ```

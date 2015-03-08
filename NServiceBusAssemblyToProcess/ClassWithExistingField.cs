@@ -17,12 +17,3 @@ public class ClassWithExistingField
     }
 }
 
-
-public class GenericClass2<T>
-{
-    private static ILog AnotarLogger = LogManager.GetLogger("GenericClass2`1");
-    public void Debug()
-    {
-        AnotarLogger.DebugFormat("Method: 'Void Debug()'. Line: ~7. ", new object[0]);
-    }
-}
