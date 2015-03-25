@@ -32,6 +32,7 @@
 // ReSharper disable ArrangeThisQualifier
 // ReSharper disable SuggestVarOrType_BuiltInTypes
 // ReSharper disable UnusedParameter.Local
+// ReSharper disable SuggestVarOrType_Elsewhere
 #pragma warning disable 1591
 
 namespace LibLogAssembly.Logging

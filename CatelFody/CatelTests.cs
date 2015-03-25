@@ -16,7 +16,6 @@ public class CatelTests
     public List<string> Informations = new List<string>();
     public List<string> Warnings = new List<string>();
     string afterAssemblyPath;
-    static object locker = new object();
 
     public CatelTests()
     {
