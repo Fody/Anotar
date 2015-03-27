@@ -1848,7 +1848,7 @@ namespace LibLogAssembly.Logging.LogProviders
                 }
                 try
                 {
-                    return String.Format(CultureInfo.InvariantCulture, targetMessage, formatParameters);
+                    return string.Format(CultureInfo.InvariantCulture, targetMessage, formatParameters);
                 }
                 catch (FormatException ex)
                 {

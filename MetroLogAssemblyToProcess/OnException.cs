@@ -50,11 +50,11 @@ public class OnException
         ref object param12,
         ref char param13,
         ref DateTime param14,
-        ref Single param15,
+        ref float param15,
         ref IntPtr param16,
-        ref UInt16 param17,
-        ref UInt32 param18,
-        ref UInt64 param19,
+        ref ushort param17,
+        ref uint param18,
+        ref ulong param19,
         ref UIntPtr param20
         )
     {
@@ -77,11 +77,11 @@ public class OnException
         ref object param12,
         ref char param13,
         ref DateTime param14,
-        ref Single param15,
+        ref float param15,
         ref IntPtr param16,
-        ref UInt16 param17,
-        ref UInt32 param18,
-        ref UInt64 param19,
+        ref ushort param17,
+        ref uint param18,
+        ref ulong param19,
         ref UIntPtr param20
         )
     {
