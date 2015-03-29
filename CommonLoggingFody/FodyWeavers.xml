@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Weavers VerifyAssembly="true">
   <Caseless />
-  <Scalpel RemoveReferences="Common.Logging.Core|Microsoft.Build.Utilities.v4.0" />
 </Weavers>

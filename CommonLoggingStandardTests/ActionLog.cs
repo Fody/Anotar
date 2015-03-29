@@ -1,8 +1,6 @@
 ﻿using System;
 using Common.Logging;
-using Scalpel;
 
-[Remove]
 public class ActionLog : ILog
 {
     ActionAdapter actionAdapter;

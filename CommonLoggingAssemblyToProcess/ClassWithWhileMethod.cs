@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using System;
 using Anotar.CommonLogging;
 
 public class ClassWithWhileMethod
@@ -8,7 +8,8 @@ public class ClassWithWhileMethod
     {
         while (true)
         {
-            Trace.WriteLine("aString");
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            TimeSpan.FromDays(1);
             break;
         }
         LogTo.Info();

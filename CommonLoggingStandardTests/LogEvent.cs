@@ -1,7 +1,5 @@
 ﻿using System;
-using Scalpel;
 
-[Remove]
 public class LogEvent
 {
     public object[] Args;

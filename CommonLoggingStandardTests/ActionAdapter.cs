@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
-using Scalpel;
-
-[Remove]
 public class ActionAdapter : ILoggerFactoryAdapter
 {
     public List<LogEvent> Errors = new List<LogEvent>();

@@ -1,9 +1,6 @@
 using System.IO;
 using Mono.Cecil;
 using Mono.Cecil.Pdb;
-using Scalpel;
-
-[Remove]
 public static class WeaverHelper
 {
 

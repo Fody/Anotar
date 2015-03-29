@@ -7,7 +7,8 @@ public class ClassWithException
     {
         try
         {
-            System.Diagnostics.Trace.WriteLine("Foo");
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            TimeSpan.FromDays(1);
         }
         catch
         {

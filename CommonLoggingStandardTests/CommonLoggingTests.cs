@@ -16,8 +16,13 @@ public class CommonLoggingTests
 
     public CommonLoggingTests()
     {
+#if (PORTABLE)
+        var path = @"..\..\..\CommonLoggingAssemblyToProcessPortable\bin\Debug\CommonLoggingAssemblyToProcessPortable.dll";
+#else
+        var path = @"..\..\..\CommonLoggingAssemblyToProcess\bin\Debug\CommonLoggingAssemblyToProcess.dll";
+#endif
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\CommonLoggingAssemblyToProcess\bin\Debug\CommonLoggingAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(path);
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

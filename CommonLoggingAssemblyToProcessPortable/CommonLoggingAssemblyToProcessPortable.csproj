@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1EF58623-A71E-4C13-A654-B8EC5A3F8D53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommonLoggingAssemblyToProcessPortable</RootNamespace>
+    <AssemblyName>CommonLoggingAssemblyToProcessPortable</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile44</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
+    <OutputPath>bin\DeployablePortable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonLoggingReferenceAssembly\CommonLoggingReferenceAssembly.csproj">
+      <Project>{26b366d7-fb5a-4d75-8fe9-29b4333d96a7}</Project>
+      <Name>CommonLoggingReferenceAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithAbstract.cs">
+      <Link>ClassWithAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithCompilerGeneratedClasses.cs">
+      <Link>ClassWithCompilerGeneratedClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithException.cs">
+      <Link>ClassWithException.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithExistingField.cs">
+      <Link>ClassWithExistingField.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithLogging.cs">
+      <Link>ClassWithLogging.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithMultipleLoggingCalls.cs">
+      <Link>ClassWithMultipleLoggingCalls.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithWhileMethod.cs">
+      <Link>ClassWithWhileMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\GenericClass.cs">
+      <Link>GenericClass.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\Issues.cs">
+      <Link>Issues.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\MyDelegate.cs">
+      <Link>MyDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\MyEnum.cs">
+      <Link>MyEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\MyInterface.cs">
+      <Link>MyInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\OnException.cs">
+      <Link>OnException.cs</Link>
+    </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ReturnFixerTests.cs">
+      <Link>ReturnFixerTests.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\portable-win+net40+sl40+wp7\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Portable">
+      <HintPath>..\packages\Common.Logging.Portable.3.1.0\lib\portable-win+net40+sl40+wp7\Common.Logging.Portable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>

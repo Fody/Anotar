@@ -132,7 +132,8 @@ public class ReturnFixerTests
         branchingReturnField = value;
         if (isInSomeMode)
         {
-            Console.WriteLine("code here so 'if' does not get optimized away in release mode");
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            TimeSpan.FromDays(1);
 // ReSharper disable RedundantJumpStatement
             return;
 // ReSharper restore RedundantJumpStatement
