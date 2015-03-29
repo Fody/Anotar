@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using Scalpel;
 
+[Remove]
 public static class Verifier
 {
     public static void Verify(string beforeAssemblyPath, string afterAssemblyPath)
