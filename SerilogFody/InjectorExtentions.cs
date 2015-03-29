@@ -3,7 +3,31 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-    public int GetLevel(MethodReference methodReference)
+    public int GetLevelForMethodName(MethodReference methodReference)
+    {
+        if (methodReference.Name == "Debug")
+        {
+            return DebugLevel;
+        }
+        if (methodReference.Name == "Information")
+        {
+            return InformationLevel;
+        }
+        if (methodReference.Name == "Warning")
+        {
+            return WarningLevel;
+        }
+        if (methodReference.Name == "Error")
+        {
+            return ErrorLevel;
+        }
+        if (methodReference.Name == "Fatal")
+        {
+            return FatalLevel;
+        }
+        throw new Exception("Invalid method name");
+    }
+    public int GetLevelForIsEnabled(MethodReference methodReference)
     {
         if (methodReference.Name == "get_IsDebugEnabled")
         {

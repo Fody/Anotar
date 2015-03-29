@@ -89,24 +89,7 @@ public class LogForwardingProcessor
         var instructions = Method.Body.Instructions;
         var stringInstruction = instruction.FindStringInstruction();
 
-        if (stringInstruction != null)
-        {
-            var replacement = new List<Instruction>
-            {
-                //add logger to stack
-                Instruction.Create(OpCodes.Ldsfld, LoggerField),
-            };
-            AppendMethodName(replacement);
-            AppendLineNumber(instruction, replacement);
-            replacement.Append(
-                //re-write stringInstruction contentes 
-                Instruction.Create(stringInstruction.OpCode, (string) stringInstruction.Operand)
-                );
-            instructions.Replace(stringInstruction, replacement);
-
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
-        }
-        else
+        if (stringInstruction == null)
         {
             if (messageVar == null)
             {
@@ -120,25 +103,32 @@ public class LogForwardingProcessor
             }
 
             var replacement = new List<Instruction>
-            {
-                // store the variables
-                Instruction.Create(OpCodes.Stloc, paramsVar),
-                Instruction.Create(OpCodes.Stloc, messageVar),
-                                                  
-                //add logger to stack
-                Instruction.Create(OpCodes.Ldsfld, LoggerField),
-            };
-            AppendMethodName(replacement);
-            AppendLineNumber(instruction, replacement);
+                              {
+                                  // store the variables
+                                  Instruction.Create(OpCodes.Stloc, paramsVar),
+                                  Instruction.Create(OpCodes.Stloc, messageVar),
+                              };
+            AppendExtraContext(instruction, replacement);
             replacement.Append(
                 //put the variable back on the stack params
                 Instruction.Create(OpCodes.Ldloc, messageVar),
                 Instruction.Create(OpCodes.Ldloc, paramsVar),
-
                 //call the write method
                 Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
                 );
             instructions.Replace(instruction, replacement);
+        }
+        else
+        {
+            var replacement = new List<Instruction>();
+            AppendExtraContext(instruction, replacement);
+            replacement.Append(
+                //re-write stringInstruction contentes 
+                Instruction.Create(stringInstruction.OpCode, (string) stringInstruction.Operand)
+                );
+            instructions.Replace(stringInstruction, replacement);
+
+            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
         }
     }
 
@@ -163,17 +153,13 @@ public class LogForwardingProcessor
 
         var instructions = Method.Body.Instructions;
         var replacement = new List<Instruction>
-        {
-            //store variables 
-            Instruction.Create(OpCodes.Stloc, paramsVar),
-            Instruction.Create(OpCodes.Stloc, messageVar),
-            Instruction.Create(OpCodes.Stloc, exceptionVar),
-                                                  
-            //add logger to stack
-            Instruction.Create(OpCodes.Ldsfld, LoggerField),
-        };
-        AppendMethodName(replacement);
-        AppendLineNumber(instruction, replacement);
+                          {
+                              //store variables 
+                              Instruction.Create(OpCodes.Stloc, paramsVar),
+                              Instruction.Create(OpCodes.Stloc, messageVar),
+                              Instruction.Create(OpCodes.Stloc, exceptionVar),
+                          };
+        AppendExtraContext(instruction, replacement);
         replacement.Append(
             // put stored variables back on the stack
             Instruction.Create(OpCodes.Ldloc, exceptionVar),
@@ -186,6 +172,14 @@ public class LogForwardingProcessor
         instructions.Replace(instruction, replacement);
     }
 
+    void AppendExtraContext(Instruction instruction, List<Instruction> replacement)
+    {
+        //add logger to stack
+        replacement.Append(Instruction.Create(OpCodes.Ldsfld, LoggerField));
+        AppendMethodName(replacement);
+        AppendLineNumber(instruction, replacement);
+    }
+
     void HandleNoParams(Instruction instruction, MethodReference methodReference)
     {
         var instructions = Method.Body.Instructions;
@@ -194,7 +188,7 @@ public class LogForwardingProcessor
             instructions.Replace(instruction, new[]
                                               {
                                                   Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevel(methodReference)),
+                                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),
                                                   Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
                                               });
             return;
@@ -206,13 +200,8 @@ public class LogForwardingProcessor
             paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
             Method.Body.Variables.Add(paramsVar);
         }
-        var replacement = new List<Instruction>
-        {
-            // add the logger to the stack
-            Instruction.Create(OpCodes.Ldsfld, LoggerField),
-        };
-        AppendMethodName(replacement);
-        AppendLineNumber(instruction, replacement);
+        var replacement = new List<Instruction>();
+        AppendExtraContext(instruction, replacement);
         replacement.Append(
             //Write empty array
             Instruction.Create(OpCodes.Ldstr, ""),
@@ -235,7 +224,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition)
             );
     }
-    
+
     void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
     {
         var sequencePoint = instruction.GetPreviousSequencePoint();
