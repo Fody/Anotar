@@ -199,10 +199,13 @@ public class MyClass
 
     void MyMethod()
     {
-        logger
-            .ForContext("MethodName", "Void MyMethod()")
-            .ForContext("LineNumber", 8)
-            .Debug("TheMessage");
+		if (logger.IsEnabled(LogEventLevel.Debug))
+		{
+			logger
+				.ForContext("MethodName", "Void MyMethod()")
+				.ForContext("LineNumber", 8)
+				.Debug("TheMessage");
+		}
     }
 }
 ```
