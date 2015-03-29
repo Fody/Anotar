@@ -16,4 +16,6 @@ public class Template
                 .Debug("", new object[0]);
         }
     }
+
+
 }
