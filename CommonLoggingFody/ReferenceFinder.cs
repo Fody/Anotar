@@ -24,6 +24,16 @@ public partial class ModuleWeaver
                 return AssemblyResolver.Resolve(existingReference);
             }
         }
+        foreach (var referenceName in referenceNames)
+        {
+            var assemblyDefinition = AssemblyResolver.Resolve(referenceName);
+
+            if (assemblyDefinition != null)
+            {
+                ModuleDefinition.AssemblyReferences.Add(assemblyDefinition.Name);
+                return assemblyDefinition;
+            }
+        }
         var message = string.Format("Expected to find a reference to one of {0}.", string.Join(",",referenceNames));
         throw new Exception(message);
     }
