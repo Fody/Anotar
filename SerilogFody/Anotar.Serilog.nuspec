@@ -16,7 +16,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, Serilog</tags>
     <dependencies>
       <dependency id="Fody"/>
-      <dependency id="Serilog" version="1.4.0"/>
+      <dependency id="Serilog" version="1.5.0"/>
 	</dependencies>
   </metadata>
 </package>
