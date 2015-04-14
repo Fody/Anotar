@@ -13,9 +13,9 @@ public class LogCapture : ILogProvider, ILog
     public List<string> Informations = new List<string>();
     public List<string> Warns = new List<string>();
 
-    public ILog GetLogger(string name)
+    public Logger GetLogger(string name)
     {
-        return this;
+        return Log;
     }
 
     public IDisposable OpenNestedContext(string message)
