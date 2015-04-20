@@ -9,10 +9,11 @@ public partial class ModuleWeaver
     public ArrayType ObjectArray;
     public MethodReference ConcatMethod;
     public MethodReference FormatMethod;
+    public MethodReference FuncInvokeMethod;
+    public TypeReference GenericFunc;
 
     public void LoadSystemTypes()
     {
-
         var mscorlib = AssemblyResolver.Resolve("mscorlib");
         var typeType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "Type");
         if (typeType == null)
@@ -20,6 +21,14 @@ public partial class ModuleWeaver
             var runtime = AssemblyResolver.Resolve("System.Runtime");
             typeType = runtime.MainModule.Types.First(x => x.Name == "Type");
         }
+        var funcDefinition = typeType.Module.Types.First(x => x.Name == "Func`1");
+        var genericInstanceType = new GenericInstanceType(funcDefinition);
+        genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
+        GenericFunc = ModuleDefinition.Import(genericInstanceType);
+
+        var methodReference = new MethodReference("Invoke", funcDefinition.FindMethod("Invoke").ReturnType, genericInstanceType) { HasThis = true };
+        FuncInvokeMethod = ModuleDefinition.Import(methodReference);
+
         GetTypeFromHandle = typeType.Methods
             .First(x => x.Name == "GetTypeFromHandle" &&
                         x.Parameters.Count == 1 &&
@@ -41,4 +50,5 @@ public partial class ModuleWeaver
         ExceptionType = ModuleDefinition.Import(exceptionType);
 
     }
+
 }

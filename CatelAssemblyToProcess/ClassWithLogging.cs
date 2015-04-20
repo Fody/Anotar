@@ -18,6 +18,11 @@ public class ClassWithLogging
         LogTo.Debug("TheMessage");
     }
 
+    public void DebugStringFunc()
+    {
+        LogTo.Debug(()=>"TheMessage");
+    }
+
     public void DebugStringParams()
     {
         LogTo.Debug("TheMessage {0}", 1);
@@ -31,6 +36,11 @@ public class ClassWithLogging
     public void DebugStringException()
     {
         LogTo.Debug(new Exception(), "TheMessage");
+    }
+
+    public void DebugStringExceptionFunc()
+    {
+        LogTo.Debug(new Exception(),()=> "TheMessage");
     }
 
     public bool IsInfoEnabled()
@@ -48,6 +58,11 @@ public class ClassWithLogging
         LogTo.Info("TheMessage");
     }
 
+    public void InfoStringFunc()
+    {
+        LogTo.Info(()=>"TheMessage");
+    }
+
     public void InfoStringParams()
     {
         LogTo.Info("TheMessage {0}", 1);
@@ -56,6 +71,11 @@ public class ClassWithLogging
     public void InfoStringException()
     {
         LogTo.Info(new Exception(), "TheMessage");
+    }
+
+    public void InfoStringExceptionFunc()
+    {
+        LogTo.Info(new Exception(), ()=>"TheMessage");
     }
 
     public bool IsWarningEnabled()
@@ -73,6 +93,11 @@ public class ClassWithLogging
         LogTo.Warning("TheMessage");
     }
 
+    public void WarningStringFunc()
+    {
+        LogTo.Warning(()=>"TheMessage");
+    }
+
     public void WarningStringParams()
     {
         LogTo.Warning("TheMessage {0}", 1);
@@ -81,6 +106,11 @@ public class ClassWithLogging
     public void WarningStringException()
     {
         LogTo.Warning(new Exception(), "TheMessage");
+    }
+
+    public void WarningStringExceptionFunc()
+    {
+        LogTo.Warning(new Exception(), ()=>"TheMessage");
     }
 
     public bool IsErrorEnabled()
@@ -98,6 +128,11 @@ public class ClassWithLogging
         LogTo.Error("TheMessage");
     }
 
+    public void ErrorStringFunc()
+    {
+        LogTo.Error(() => "TheMessage");
+    }
+
     public void ErrorStringParams()
     {
         LogTo.Error("TheMessage {0}", 1);
@@ -106,5 +141,10 @@ public class ClassWithLogging
     public void ErrorStringException()
     {
         LogTo.Error(new Exception(), "TheMessage");
+    }
+
+    public void ErrorStringExceptionFunc()
+    {
+        LogTo.Error(new Exception(), () => "TheMessage");
     }
 }

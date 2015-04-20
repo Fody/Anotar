@@ -212,6 +212,15 @@ public class CatelTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugString()'. Line: ~"));
     }
+    [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
 
     [Test]
     public void DebugStringParams()
@@ -231,6 +240,16 @@ public class CatelTests
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -262,6 +281,16 @@ public class CatelTests
     }
 
     [Test]
+    public void InfoStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InfoStringFunc();
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -279,6 +308,16 @@ public class CatelTests
         instance.InfoStringException();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InfoStringExceptionFunc();
+        Assert.AreEqual(1, Informations.Count);
+        Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -310,6 +349,16 @@ public class CatelTests
     }
 
     [Test]
+    public void WarningStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarningStringFunc();
+        Assert.AreEqual(1, Warnings.Count);
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -327,6 +376,16 @@ public class CatelTests
         instance.WarningStringException();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarningStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarningStringExceptionFunc();
+        Assert.AreEqual(1, Warnings.Count);
+        Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -358,6 +417,16 @@ public class CatelTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -375,6 +444,16 @@ public class CatelTests
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
     
     [Test]

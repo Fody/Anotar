@@ -24,7 +24,28 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
-    public MethodReference GetLogEnabled(MethodReference methodReference)
+    public MethodReference GetLogEnabledForLog(MethodReference methodReference)
+    {
+        if (methodReference.Name == "Debug")
+        {
+            return isDebugEnabledMethod;
+        }
+        if (methodReference.Name == "Info")
+        {
+            return isInfoEnabledMethod;
+        }
+        if (methodReference.Name == "Warning")
+        {
+            return isWarningEnabledMethod;
+        }
+        if (methodReference.Name == "Error")
+        {
+            return isErrorEnabledMethod;
+        }
+        throw new Exception("Invalid method name");
+    }
+
+    public MethodReference GetLogEnabledForIs(MethodReference methodReference)
     {
         if (methodReference.Name == "get_IsDebugEnabled")
         {
