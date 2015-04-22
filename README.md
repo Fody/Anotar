@@ -267,6 +267,39 @@ public class MyClass
 }
 ```
  
+## Delegate Logging
+
+All the `LogTo` methods have equivalent overloads that accept a `Func<string>` instead of a string. This delegate is used to construct the message and should be used when that message construction is resource intensive. At compile time the logging will be wrapped in a `IsEnabled` check so as to only incur the cost if that level of logging is required.
+
+### Your code
+
+```
+public class MyClass
+{
+    void MyMethod()
+    { 
+        LogTo.Debug(()=>"TheMessage");
+    }
+}
+```
+
+### What gets compiled
+
+```
+public class MyClass
+{
+    static Logger logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        if (logger.IsDebugEnabled)
+        {
+            Func<string> messageConstructor = () => "TheMessage";
+            logger.Debug("Method: 'Void DebugStringFunc()'. Line: ~58. " + messageConstructor());
+        }
+    }
+}
+```
 
 ## Exception logging
     
@@ -282,22 +315,24 @@ public class MyClass
 
 #### In NLog
 
-    void MyMethod(string param1, int param2)
+```
+void MyMethod(string param1, int param2)
+{
+    try
     {
-        try
-        {
-            //Do Stuff
-        }
-        catch (Exception exception)
-        {
-            if (logger.IsErrorEnabled)
-            {
-                var message = string.Format("Exception occurred in SimpleClass.MyMethod. param1 '{0}', param2 '{1}'", param1, param2);
-                logger.ErrorException(message, exception);
-            }
-            throw;
-        }
+        //Do Stuff
     }
+    catch (Exception exception)
+    {
+        if (logger.IsErrorEnabled)
+        {
+            var message = string.Format("Exception occurred in SimpleClass.MyMethod. param1 '{0}', param2 '{1}'", param1, param2);
+            logger.ErrorException(message, exception);
+        }
+        throw;
+    }
+}
+```
 
 
 ## Custom logging
@@ -342,24 +377,26 @@ The Logger instance is responsible for building an instance of a logger.
   
 For example
 
-    public class Logger
-    {
-        public void Debug(string format, params object[] args){}
-        public void Debug(Exception exception, string format, params object[] args){}
-        public bool IsDebugEnabled { get; private set; }
-        public void Information(string format, params object[] args){}
-        public void Information(Exception exception, string format, params object[] args){}
-        public bool IsInformationEnabled { get; private set; }
-        public void Warning(string format, params object[] args){}
-        public void Warning(Exception exception, string format, params object[] args){}
-        public bool IsWarningEnabled { get; private set; }
-        public void Error(string format, params object[] args){}
-        public void Error(Exception exception, string format, params object[] args){}
-        public bool IsErrorEnabled { get; private set; }
-        public void Fatal(string format, params object[] args){}
-        public void Fatal(Exception exception, string format, params object[] args){}
-        public bool IsFatalEnabled { get; private set; }
-    }
+```
+public class Logger
+{
+    public void Debug(string format, params object[] args){}
+    public void Debug(Exception exception, string format, params object[] args){}
+    public bool IsDebugEnabled { get; private set; }
+    public void Information(string format, params object[] args){}
+    public void Information(Exception exception, string format, params object[] args){}
+    public bool IsInformationEnabled { get; private set; }
+    public void Warning(string format, params object[] args){}
+    public void Warning(Exception exception, string format, params object[] args){}
+    public bool IsWarningEnabled { get; private set; }
+    public void Error(string format, params object[] args){}
+    public void Error(Exception exception, string format, params object[] args){}
+    public bool IsErrorEnabled { get; private set; }
+    public void Fatal(string format, params object[] args){}
+    public void Fatal(Exception exception, string format, params object[] args){}
+    public bool IsFatalEnabled { get; private set; }
+}
+```
         
 ### Discovery
 
