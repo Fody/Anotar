@@ -6,39 +6,42 @@ public partial class ModuleWeaver
 
     public int GetLogEvent(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return DebugLogEvent;
         }
-        if (methodReference.Name == "Info")
+        if (name == "Info")
         {
             return InfoLogEvent;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return WarningLogEvent;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorLogEvent;
         }
         throw new Exception("Invalid method name");
     }
+
     public MethodReference GetLogEnabledForLog(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return isDebugEnabledMethod;
         }
-        if (methodReference.Name == "Info")
+        if (name == "Info")
         {
             return isInfoEnabledMethod;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return isWarningEnabledMethod;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return isErrorEnabledMethod;
         }
@@ -47,19 +50,20 @@ public partial class ModuleWeaver
 
     public MethodReference GetLogEnabledForIs(MethodReference methodReference)
     {
-        if (methodReference.Name == "get_IsDebugEnabled")
+        var name = methodReference.Name;
+        if (name == "get_IsDebugEnabled")
         {
             return isDebugEnabledMethod;
         }
-        if (methodReference.Name == "get_IsInfoEnabled")
+        if (name == "get_IsInfoEnabled")
         {
             return isInfoEnabledMethod;
         }
-        if (methodReference.Name == "get_IsWarningEnabled")
+        if (name == "get_IsWarningEnabled")
         {
             return isWarningEnabledMethod;
         }
-        if (methodReference.Name == "get_IsErrorEnabled")
+        if (name == "get_IsErrorEnabled")
         {
             return isErrorEnabledMethod;
         }

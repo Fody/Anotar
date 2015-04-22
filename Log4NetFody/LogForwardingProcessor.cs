@@ -15,6 +15,7 @@ public class LogForwardingProcessor
     VariableDefinition messageVar;
     VariableDefinition paramsVar;
     VariableDefinition exceptionVar;
+    VariableDefinition funcVar;
 
     public void ProcessMethod()
     {
@@ -63,23 +64,27 @@ public class LogForwardingProcessor
 
         if (parameters.Count == 0 && methodReference.Name.StartsWith("get_Is"))
         {
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLogEnabled(methodReference))
-                                              });
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLogEnabled(methodReference))
+                });
             return;
         }
+        var messagePrefix = GetMessagePrefix(instruction);
+        var isEnabledMethod = ModuleWeaver.GetLogEnabledForLog(methodReference);
         if (parameters.Count == 0)
         {
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
-                                                  Instruction.Create(OpCodes.Ldc_I4_0),
-                                                  Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
-                                              });
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldc_I4_0),
+                    Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
+                });
             return;
         }
 
@@ -96,31 +101,65 @@ public class LogForwardingProcessor
                 exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Stloc, exceptionVar),
-                                                  Instruction.Create(OpCodes.Stloc, messageVar),
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
-                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
-                                                  Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
-                                                  Instruction.Create(OpCodes.Ldloc, exceptionVar),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference)),
-                                              });
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Stloc, exceptionVar),
+                    Instruction.Create(OpCodes.Stloc, messageVar),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, messageVar),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Ldloc, exceptionVar),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference)),
+                });
+            return;
+        }
+        if (methodReference.IsMatch("Func`1", "Exception"))
+        {
+            if (funcVar == null)
+            {
+                funcVar = new VariableDefinition(ModuleWeaver.GenericFunc);
+                Method.Body.Variables.Add(funcVar);
+            }
+            if (exceptionVar == null)
+            {
+                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+                Method.Body.Variables.Add(exceptionVar);
+            }
+            var sectionNop = Instruction.Create(OpCodes.Nop);
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Stloc, exceptionVar),
+                    Instruction.Create(OpCodes.Stloc, funcVar),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Callvirt, isEnabledMethod),
+                    Instruction.Create(OpCodes.Brfalse_S, sectionNop),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, funcVar),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.FuncInvokeMethod),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Ldloc, exceptionVar),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetExceptionOperand(methodReference)),
+                    sectionNop
+                });
             return;
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var stringInstruction =instruction.FindStringInstruction();
+            var stringInstruction = instruction.FindStringInstruction();
 
             if (stringInstruction != null)
             {
-                var operand = GetMessagePrefix(instruction) + (string) stringInstruction.Operand;
-                instructions.Replace(stringInstruction, new[]
-                                                        {
-                                                            Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                            Instruction.Create(stringInstruction.OpCode, operand),
-                                                        });
+                var operand = messagePrefix + (string) stringInstruction.Operand;
+                instructions.Replace(stringInstruction,
+                    new[]
+                    {
+                        Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                        Instruction.Create(stringInstruction.OpCode, operand),
+                    });
 
                 instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
                 return;
@@ -137,17 +176,44 @@ public class LogForwardingProcessor
             }
 
 
-            instructions.Replace(instruction, new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Stloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Stloc, messageVar),
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldstr, GetMessagePrefix(instruction)),
-                                                  Instruction.Create(OpCodes.Ldloc, messageVar),
-                                                  Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
-                                                  Instruction.Create(OpCodes.Ldloc, paramsVar),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
-                                              });
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Stloc, paramsVar),
+                    Instruction.Create(OpCodes.Stloc, messageVar),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, messageVar),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Ldloc, paramsVar),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                });
+            return;
+        }
+        if (methodReference.IsMatch("Func`1"))
+        {
+            if (funcVar == null)
+            {
+                funcVar = new VariableDefinition(ModuleWeaver.GenericFunc);
+                Method.Body.Variables.Add(funcVar);
+            }
+
+            var sectionNop = Instruction.Create(OpCodes.Nop);
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Stloc, funcVar),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Callvirt, isEnabledMethod),
+                    Instruction.Create(OpCodes.Brfalse_S, sectionNop),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, funcVar),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.FuncInvokeMethod),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Ldnull),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                });
             return;
         }
         throw new NotImplementedException();

@@ -5,99 +5,105 @@ public partial class ModuleWeaver
 {
     public int GetLevelForMethodName(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return DebugLevel;
         }
-        if (methodReference.Name == "Information")
+        if (name == "Information")
         {
             return InformationLevel;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return WarningLevel;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorLevel;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return FatalLevel;
         }
         throw new Exception("Invalid method name");
     }
+
     public int GetLevelForIsEnabled(MethodReference methodReference)
     {
-        if (methodReference.Name == "get_IsDebugEnabled")
+        var name = methodReference.Name;
+        if (name == "get_IsDebugEnabled")
         {
             return DebugLevel;
         }
-        if (methodReference.Name == "get_IsInformationEnabled")
+        if (name == "get_IsInformationEnabled")
         {
             return InformationLevel;
         }
-        if (methodReference.Name == "get_IsWarningEnabled")
+        if (name == "get_IsWarningEnabled")
         {
             return WarningLevel;
         }
-        if (methodReference.Name == "get_IsErrorEnabled")
+        if (name == "get_IsErrorEnabled")
         {
             return ErrorLevel;
         }
-        if (methodReference.Name == "get_IsFatalEnabled")
+        if (name == "get_IsFatalEnabled")
         {
             return FatalLevel;
         }
         throw new Exception("Invalid method name");
     }
+
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return debugMethod;
         }
-        if (methodReference.Name == "Information")
+        if (name == "Information")
         {
             return infoMethod;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return warningMethod;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return errorMethod;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return fatalMethod;
         }
         throw new Exception("Invalid method name");
     }
 
-    public MethodReference GetExceptionOperand( MethodReference methodReference)
+    public MethodReference GetExceptionOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return DebugExceptionMethod;
         }
-        if (methodReference.Name == "Information")
+        if (name == "Information")
         {
             return InfoExceptionMethod;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return WarnExceptionMethod;
-		}
-		if (methodReference.Name == "Error")
-		{
-			return ErrorExceptionMethod;
-		}
-		if (methodReference.Name == "Fatal")
-		{
-			return FatalExceptionMethod;
-		}
+        }
+        if (name == "Error")
+        {
+            return ErrorExceptionMethod;
+        }
+        if (name == "Fatal")
+        {
+            return FatalExceptionMethod;
+        }
         throw new Exception("Invalid method name");
     }
 }

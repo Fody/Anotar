@@ -20,8 +20,6 @@ class OnExceptionProcessor
 
 	public void Process()
     {
-
-
 	    attributeFinder = new AttributeFinder(Method);
 		if (!attributeFinder.Found)
         {

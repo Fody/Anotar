@@ -206,6 +206,15 @@ public class LibLogTests
         Assert.AreEqual(1, logProvider.Traces.Count);
         Assert.IsTrue(logProvider.Traces.First().StartsWith("Method: 'void TraceString()'. Line: ~"));
     }
+    [Test]
+    public void TraceStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringFunc();
+        Assert.AreEqual(1, logProvider.Traces.Count);
+        Assert.IsTrue(logProvider.Traces.First().StartsWith("Method: 'void TraceStringFunc()'. Line: ~"));
+    }
 
     [Test]
     public void TraceStringParams()
@@ -225,6 +234,16 @@ public class LibLogTests
         instance.TraceStringException();
         Assert.AreEqual(1, logProvider.Traces.Count);
         Assert.IsTrue(logProvider.Traces.First().StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Traces.Count);
+        Assert.IsTrue(logProvider.Traces.First().StartsWith("Method: 'void TraceStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -255,6 +274,16 @@ public class LibLogTests
     }
 
     [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, logProvider.Debugs.Count);
+        Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -272,6 +301,16 @@ public class LibLogTests
         instance.DebugStringException();
         Assert.AreEqual(1, logProvider.Debugs.Count);
         Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Debugs.Count);
+        Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
     [Test]
     public void IsInfoEnabled()
@@ -302,6 +341,16 @@ public class LibLogTests
     }
 
     [Test]
+    public void InfoStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InfoStringFunc();
+        Assert.AreEqual(1, logProvider.Informations.Count);
+        Assert.IsTrue(logProvider.Informations.First().StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -319,6 +368,16 @@ public class LibLogTests
         instance.InfoStringException();
         Assert.AreEqual(1, logProvider.Informations.Count);
         Assert.IsTrue(logProvider.Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InfoStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Informations.Count);
+        Assert.IsTrue(logProvider.Informations.First().StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -348,6 +407,17 @@ public class LibLogTests
         Assert.IsTrue(logProvider.Warns.First().StartsWith("Method: 'void WarnString()'. Line: ~"));
     }
 
+
+    [Test]
+    public void WarnStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarnStringFunc();
+        Assert.AreEqual(1, logProvider.Warns.Count);
+        Assert.IsTrue(logProvider.Warns.First().StartsWith("Method: 'void WarnStringFunc()'. Line: ~"));
+    }
+
     [Test]
     public void WarnStringParams()
     {
@@ -366,6 +436,16 @@ public class LibLogTests
         instance.WarnStringException();
         Assert.AreEqual(1, logProvider.Warns.Count);
         Assert.IsTrue(logProvider.Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarnStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarnStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Warns.Count);
+        Assert.IsTrue(logProvider.Warns.First().StartsWith("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -396,6 +476,16 @@ public class LibLogTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, logProvider.Errors.Count);
+        Assert.IsTrue(logProvider.Errors.First().StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -413,6 +503,16 @@ public class LibLogTests
         instance.ErrorStringException();
         Assert.AreEqual(1, logProvider.Errors.Count);
         Assert.IsTrue(logProvider.Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Errors.Count);
+        Assert.IsTrue(logProvider.Errors.First().StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -443,6 +543,16 @@ public class LibLogTests
     }
 
     [Test]
+    public void FatalStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.FatalStringFunc();
+        Assert.AreEqual(1, logProvider.Fatals.Count);
+        Assert.IsTrue(logProvider.Fatals.First().StartsWith("Method: 'void FatalStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -460,6 +570,16 @@ public class LibLogTests
         instance.FatalStringException();
         Assert.AreEqual(1, logProvider.Fatals.Count);
         Assert.IsTrue(logProvider.Fatals.First().StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.FatalStringExceptionFunc();
+        Assert.AreEqual(1, logProvider.Fatals.Count);
+        Assert.IsTrue(logProvider.Fatals.First().StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]

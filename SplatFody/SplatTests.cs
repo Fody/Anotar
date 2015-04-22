@@ -205,6 +205,16 @@ public class SplatTests
     }
 
     [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, currentLogger.Debugs.Count);
+        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -222,6 +232,16 @@ public class SplatTests
         instance.DebugStringException();
         Assert.AreEqual(1, currentLogger.Debugs.Count);
         Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, currentLogger.Debugs.Count);
+        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -253,6 +273,16 @@ public class SplatTests
     }
 
     [Test]
+    public void InfoStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringFunc();
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -270,6 +300,16 @@ public class SplatTests
         instance.InfoStringException();
         Assert.AreEqual(1, currentLogger.Informations.Count);
         Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringExceptionFunc();
+        Assert.AreEqual(1, currentLogger.Informations.Count);
+        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
     }
 
 
@@ -302,6 +342,16 @@ public class SplatTests
     }
 
     [Test]
+    public void WarnStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringFunc();
+        Assert.AreEqual(1, currentLogger.Warns.Count);
+        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'void WarnStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -319,6 +369,16 @@ public class SplatTests
         instance.WarnStringException();
         Assert.AreEqual(1, currentLogger.Warns.Count);
         Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'void WarnStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarnStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringExceptionFunc();
+        Assert.AreEqual(1, currentLogger.Warns.Count);
+        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
     }
 
 
@@ -352,6 +412,16 @@ public class SplatTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, currentLogger.Errors.Count);
+        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -369,6 +439,16 @@ public class SplatTests
         instance.ErrorStringException();
         Assert.AreEqual(1, currentLogger.Errors.Count);
         Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, currentLogger.Errors.Count);
+        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -400,6 +480,16 @@ public class SplatTests
     }
 
     [Test]
+    public void FatalStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringFunc();
+        Assert.AreEqual(1, currentLogger.Fatals.Count);
+        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'void FatalStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -417,6 +507,16 @@ public class SplatTests
         instance.FatalStringException();
         Assert.AreEqual(1, currentLogger.Fatals.Count);
         Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringExceptionFunc();
+        Assert.AreEqual(1, currentLogger.Fatals.Count);
+        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]

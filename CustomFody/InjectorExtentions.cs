@@ -5,55 +5,88 @@ public partial class ModuleWeaver
 {
     public MethodReference GetLogEnabled(MethodReference methodReference)
     {
-        if (methodReference.Name == "get_IsTraceEnabled")
+        var name = methodReference.Name;
+        if (name == "get_IsTraceEnabled")
         {
             return isTraceEnabledMethod;
         }
-        if (methodReference.Name == "get_IsDebugEnabled")
+        if (name == "get_IsDebugEnabled")
         {
             return isDebugEnabledMethod;
         }
-        if (methodReference.Name == "get_IsInformationEnabled")
+        if (name == "get_IsInformationEnabled")
         {
             return isInformationEnabledMethod;
         }
-        if (methodReference.Name == "get_IsWarningEnabled")
+        if (name == "get_IsWarningEnabled")
         {
             return isWarningEnabledMethod;
         }
-        if (methodReference.Name == "get_IsErrorEnabled")
+        if (name == "get_IsErrorEnabled")
         {
             return isErrorEnabledMethod;
         }
-        if (methodReference.Name == "get_IsFatalEnabled")
+        if (name == "get_IsFatalEnabled")
         {
             return isFatalEnabledMethod;
         }
         throw new Exception("Invalid method name");
     }
+
+    public MethodReference GetLogEnabledForLog(MethodReference methodReference)
+    {
+        var name = methodReference.Name;
+        if (name == "Trace")
+        {
+            return isTraceEnabledMethod;
+        }
+        if (name == "Debug")
+        {
+            return isDebugEnabledMethod;
+        }
+        if (name == "Information")
+        {
+            return isInformationEnabledMethod;
+        }
+        if (name == "Warning")
+        {
+            return isWarningEnabledMethod;
+        }
+        if (name == "Error")
+        {
+            return isErrorEnabledMethod;
+        }
+        if (name == "Fatal")
+        {
+            return isFatalEnabledMethod;
+        }
+        throw new Exception("Invalid method name");
+    }
+
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "Trace")
+        var name = methodReference.Name;
+        if (name == "Trace")
         {
             return TraceMethod;
         }
-        if (methodReference.Name == "Debug")
+        if (name == "Debug")
         {
             return DebugMethod;
         }
-        if (methodReference.Name == "Information")
+        if (name == "Information")
         {
             return InformationMethod;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return WarningMethod;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorMethod;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return FatalMethod;
         }
@@ -62,27 +95,28 @@ public partial class ModuleWeaver
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "Trace")
+        var name = methodReference.Name;
+        if (name == "Trace")
         {
             return TraceExceptionMethod;
         }
-        if (methodReference.Name == "Debug")
+        if (name == "Debug")
         {
             return DebugExceptionMethod;
         }
-        if (methodReference.Name == "Information")
+        if (name == "Information")
         {
             return InformationExceptionMethod;
         }
-        if (methodReference.Name == "Warning")
+        if (name == "Warning")
         {
             return WarningExceptionMethod;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorExceptionMethod;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return FatalExceptionMethod;
         }

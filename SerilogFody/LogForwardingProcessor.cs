@@ -217,7 +217,8 @@ public class LogForwardingProcessor
         var instructions = Method.Body.Instructions;
         if (methodReference.Name.StartsWith("get_Is"))
         {
-            instructions.Replace(instruction, new[]
+            instructions.Replace(instruction,
+                new[]
                                               {
                                                   Instruction.Create(OpCodes.Ldsfld, LoggerField),
                                                   Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),

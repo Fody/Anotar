@@ -206,6 +206,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -227,6 +238,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -273,6 +296,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void TraceStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.TraceStringFunc();
+        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void TraceStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -294,6 +328,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Traces.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.TraceStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        var logEvent = actionAdapter.Traces.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -340,6 +386,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void InfoStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringFunc();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -361,6 +418,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        var logEvent = actionAdapter.Informations.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -407,6 +476,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void WarnStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringFunc();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -428,6 +508,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarnStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        var logEvent = actionAdapter.Warnings.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -474,6 +566,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -495,6 +598,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Errors.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        var logEvent = actionAdapter.Errors.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -530,6 +645,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void FatalStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringFunc();
+        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -551,6 +677,18 @@ public class CommonLoggingTests
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsNotNull(logEvent.Exception);
         Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringExceptionFunc();
+        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        var logEvent = actionAdapter.Fatals.First();
+        Assert.IsNotNull(logEvent.Exception);
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]

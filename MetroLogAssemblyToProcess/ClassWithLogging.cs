@@ -18,6 +18,11 @@ public class ClassWithLogging
         LogTo.Trace("TheMessage");
     }
 
+    public void TraceStringFunc()
+    {
+        LogTo.Trace(()=>"TheMessage");
+    }
+
     public void TraceStringParams()
     {
         LogTo.Trace("TheMessage {0}", 1);
@@ -26,6 +31,11 @@ public class ClassWithLogging
     public void TraceStringException()
     {
         LogTo.TraceException("TheMessage", new Exception());
+    }
+
+    public void TraceStringExceptionFunc()
+    {
+        LogTo.TraceException(()=>"TheMessage", new Exception());
     }
 
     public bool IsDebugEnabled()
@@ -43,6 +53,11 @@ public class ClassWithLogging
         LogTo.Debug("TheMessage");
     }
 
+    public void DebugStringFunc()
+    {
+        LogTo.Debug(()=>"TheMessage");
+    }
+
     public void DebugStringParams()
     {
         LogTo.Debug("TheMessage {0}", 1);
@@ -51,6 +66,11 @@ public class ClassWithLogging
     public void DebugStringException()
     {
         LogTo.DebugException("TheMessage", new Exception());
+    }
+
+    public void DebugStringExceptionFunc()
+    {
+        LogTo.DebugException(()=>"TheMessage", new Exception());
     }
 
     public bool IsInfoEnabled()
@@ -68,6 +88,11 @@ public class ClassWithLogging
         LogTo.Info("TheMessage");
     }
 
+    public void InfoStringFunc()
+    {
+        LogTo.Info(()=>"TheMessage");
+    }
+
     public void InfoStringParams()
     {
         LogTo.Info("TheMessage {0}", 1);
@@ -76,6 +101,11 @@ public class ClassWithLogging
     public void InfoStringException()
     {
         LogTo.InfoException("TheMessage", new Exception());
+    }
+
+    public void InfoStringExceptionFunc()
+    {
+        LogTo.InfoException(()=>"TheMessage", new Exception());
     }
 
     public bool IsWarnEnabled()
@@ -93,6 +123,11 @@ public class ClassWithLogging
         LogTo.Warn("TheMessage");
     }
 
+    public void WarnStringFunc()
+    {
+        LogTo.Warn(()=>"TheMessage");
+    }
+
     public void WarnStringParams()
     {
         LogTo.Warn("TheMessage {0}", 1);
@@ -101,6 +136,11 @@ public class ClassWithLogging
     public void WarnStringException()
     {
         LogTo.WarnException("TheMessage", new Exception());
+    }
+
+    public void WarnStringExceptionFunc()
+    {
+        LogTo.WarnException(()=>"TheMessage", new Exception());
     }
 
     public bool IsErrorEnabled()
@@ -118,6 +158,11 @@ public class ClassWithLogging
         LogTo.Error("TheMessage");
     }
 
+    public void ErrorStringFunc()
+    {
+        LogTo.Error(()=>"TheMessage");
+    }
+
     public void ErrorStringParams()
     {
         LogTo.Error("TheMessage {0}", 1);
@@ -126,6 +171,11 @@ public class ClassWithLogging
     public void ErrorStringException()
     {
         LogTo.ErrorException("TheMessage", new Exception());
+    }
+
+    public void ErrorStringExceptionFunc()
+    {
+        LogTo.ErrorException(()=>"TheMessage", new Exception());
     }
 
     public bool IsFatalEnabled()
@@ -143,6 +193,11 @@ public class ClassWithLogging
         LogTo.Fatal("TheMessage");
     }
 
+    public void FatalStringFunc()
+    {
+        LogTo.Fatal(()=>"TheMessage");
+    }
+
     public void FatalStringParams()
     {
         LogTo.Fatal("TheMessage {0}", 1);
@@ -151,6 +206,11 @@ public class ClassWithLogging
     public void FatalStringException()
     {
         LogTo.FatalException("TheMessage", new Exception());
+    }
+
+    public void FatalStringExceptionFunc()
+    {
+        LogTo.FatalException(()=>"TheMessage", new Exception());
     }
 
 }

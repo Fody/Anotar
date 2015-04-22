@@ -202,6 +202,15 @@ public class CustomTests
         Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
         Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceString()'. Line: ~"));
     }
+    [Test]
+    public void TraceStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringFunc();
+        Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
+        Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringFunc()'. Line: ~"));
+    }
 
     [Test]
     public void TraceStringParams()
@@ -221,6 +230,16 @@ public class CustomTests
         instance.TraceStringException();
         Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
         Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.TraceStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.TraceEntries.Count);
+        Assert.IsTrue(LoggerFactory.TraceEntries.First().Format.StartsWith("Method: 'void TraceStringExceptionFunc()'. Line: ~"));
     }
     [Test]
     public void IsDebugEnabled()
@@ -250,6 +269,16 @@ public class CustomTests
     }
 
     [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -267,6 +296,16 @@ public class CustomTests
         instance.DebugStringException();
         Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
         Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.DebugEntries.Count);
+        Assert.IsTrue(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
     [Test]
     public void IsInformationEnabled()
@@ -297,6 +336,16 @@ public class CustomTests
     }
 
     [Test]
+    public void InformationStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InformationStringFunc();
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'void InformationStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InformationStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -314,6 +363,16 @@ public class CustomTests
         instance.InformationStringException();
         Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
         Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'void InformationStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InformationStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.InformationStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.InformationEntries.Count);
+        Assert.IsTrue(LoggerFactory.InformationEntries.First().Format.StartsWith("Method: 'void InformationStringExceptionFunc()'. Line: ~"));
     }
     [Test]
     public void IsWarningEnabled()
@@ -344,6 +403,16 @@ public class CustomTests
     }
 
     [Test]
+    public void WarningStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarningStringFunc();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'void WarningStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -361,6 +430,16 @@ public class CustomTests
         instance.WarningStringException();
         Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
         Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'void WarningStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarningStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.WarningStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.WarningEntries.Count);
+        Assert.IsTrue(LoggerFactory.WarningEntries.First().Format.StartsWith("Method: 'void WarningStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -391,6 +470,16 @@ public class CustomTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -408,6 +497,16 @@ public class CustomTests
         instance.ErrorStringException();
         Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
         Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.ErrorEntries.Count);
+        Assert.IsTrue(LoggerFactory.ErrorEntries.First().Format.StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -439,6 +538,16 @@ public class CustomTests
     }
 
     [Test]
+    public void FatalStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.FatalStringFunc();
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'void FatalStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -456,6 +565,16 @@ public class CustomTests
         instance.FatalStringException();
         Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
         Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.FatalStringExceptionFunc();
+        Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
+        Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
     
     [Test]

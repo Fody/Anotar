@@ -266,6 +266,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void TraceStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.TraceStringFunc();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void TraceStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -283,6 +293,16 @@ public class MetroLogTests
         instance.TraceStringException();
         Assert.AreEqual(1, Traces.Count);
         Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void TraceStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.TraceStringExceptionFunc();
+        Assert.AreEqual(1, Traces.Count);
+        Assert.IsTrue(Traces.First().StartsWith("Method: 'void TraceStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -313,6 +333,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void DebugStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringFunc();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -330,6 +360,16 @@ public class MetroLogTests
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void DebugStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.DebugStringExceptionFunc();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -360,6 +400,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void InfoStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringFunc();
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -377,6 +427,16 @@ public class MetroLogTests
         instance.InfoStringException();
         Assert.AreEqual(1, Information.Count);
         Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void InfoStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.InfoStringExceptionFunc();
+        Assert.AreEqual(1, Information.Count);
+        Assert.IsTrue(Information.First().StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -407,6 +467,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void WarnStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringFunc();
+        Assert.AreEqual(1, Warns.Count);
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -424,6 +494,16 @@ public class MetroLogTests
         instance.WarnStringException();
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void WarnStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.WarnStringExceptionFunc();
+        Assert.AreEqual(1, Warns.Count);
+        Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
     }
     [Test]
     public void IsErrorEnabled()
@@ -454,6 +534,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void ErrorStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringFunc();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -471,6 +561,16 @@ public class MetroLogTests
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void ErrorStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.ErrorStringExceptionFunc();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -501,6 +601,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void FatalStringFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringFunc();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringFunc()'. Line: ~"));
+    }
+
+    [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
@@ -518,6 +628,16 @@ public class MetroLogTests
         instance.FatalStringException();
         Assert.AreEqual(1, Fatals.Count);
         Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+    }
+
+    [Test]
+    public void FatalStringExceptionFunc()
+    {
+        var type = assembly.GetType("ClassWithLogging");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.FatalStringExceptionFunc();
+        Assert.AreEqual(1, Fatals.Count);
+        Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]

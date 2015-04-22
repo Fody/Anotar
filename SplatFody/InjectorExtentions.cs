@@ -4,73 +4,104 @@ using Mono.Cecil.Cil;
 
 public partial class ModuleWeaver
 {
-    public OpCode GetLevel(MethodReference methodReference)
+    public OpCode GetLevelForLog(MethodReference methodReference)
     {
-        if (methodReference.Name == "get_IsDebugEnabled")
+        var name = methodReference.Name;
+        if (name == "Debug" ||  name == "DebugException")
         {
             return OpCodes.Ldc_I4_2;
         }
-        if (methodReference.Name == "get_IsInfoEnabled")
+        if (name == "Info" || name == "InfoException")
         {
             return OpCodes.Ldc_I4_3;
         }
-        if (methodReference.Name == "get_IsWarnEnabled")
+        if (name == "Warn" || name == "WarnException")
         {
             return OpCodes.Ldc_I4_4;
         }
-        if (methodReference.Name == "get_IsErrorEnabled")
+        if (name == "Error" || name == "ErrorException")
         {
             return OpCodes.Ldc_I4_5;
         }
-        if (methodReference.Name == "get_IsFatalEnabled")
+        if (name == "Fatal" || name == "FatalException")
         {
             return OpCodes.Ldc_I4_6;
         }
         throw new Exception("Invalid method name");
     }
+
+    public OpCode GetLevel(MethodReference methodReference)
+    {
+        var name = methodReference.Name;
+        if (name == "get_IsDebugEnabled")
+        {
+            return OpCodes.Ldc_I4_2;
+        }
+        if (name == "get_IsInfoEnabled")
+        {
+            return OpCodes.Ldc_I4_3;
+        }
+        if (name == "get_IsWarnEnabled")
+        {
+            return OpCodes.Ldc_I4_4;
+        }
+        if (name == "get_IsErrorEnabled")
+        {
+            return OpCodes.Ldc_I4_5;
+        }
+        if (name == "get_IsFatalEnabled")
+        {
+            return OpCodes.Ldc_I4_6;
+        }
+        throw new Exception("Invalid method name");
+    }
+
     public MethodReference GetNormalOperandParams(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return DebugMethodParams;
         }
-        if (methodReference.Name == "Info")
+        if (name == "Info")
         {
             return InfoMethodParams;
         }
-        if (methodReference.Name == "Warn")
+        if (name == "Warn")
         {
             return WarnMethodParams;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorMethodParams;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return FatalMethodParams;
         }
         throw new Exception("Invalid method name");
     }
+
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "Debug")
+        var name = methodReference.Name;
+        if (name == "Debug")
         {
             return DebugMethod;
         }
-        if (methodReference.Name == "Info")
+        if (name == "Info")
         {
             return InfoMethod;
         }
-        if (methodReference.Name == "Warn")
+        if (name == "Warn")
         {
             return WarnMethod;
         }
-        if (methodReference.Name == "Error")
+        if (name == "Error")
         {
             return ErrorMethod;
         }
-        if (methodReference.Name == "Fatal")
+        if (name == "Fatal")
         {
             return FatalMethod;
         }
@@ -79,23 +110,24 @@ public partial class ModuleWeaver
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {
-        if (methodReference.Name == "DebugException")
+        var name = methodReference.Name;
+        if (name == "DebugException")
         {
             return DebugExceptionMethod;
         }
-        if (methodReference.Name == "InfoException")
+        if (name == "InfoException")
         {
             return InfoExceptionMethod;
         }
-        if (methodReference.Name == "WarnException")
+        if (name == "WarnException")
         {
             return WarnExceptionMethod;
         }
-        if (methodReference.Name == "ErrorException")
+        if (name == "ErrorException")
         {
             return ErrorExceptionMethod;
         }
-        if (methodReference.Name == "FatalException")
+        if (name == "FatalException")
         {
             return FatalExceptionMethod;
         }
