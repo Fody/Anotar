@@ -70,7 +70,7 @@ public class LogForwardingProcessor
                 {
                     Instruction.Create(enumValue),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.getLevelMethod),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLevelMethod),
                     Instruction.Create(OpCodes.Cgt)
                 });
             return;
@@ -136,7 +136,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Stloc, exceptionVar),
                     Instruction.Create(OpCodes.Stloc, funcVar),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.getLevelMethod),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLevelMethod),
                     Instruction.Create(isEnabledEnum),
                     Instruction.Create(OpCodes.Bgt_S, sectionNop),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
@@ -206,7 +206,7 @@ public class LogForwardingProcessor
                 {
                     Instruction.Create(OpCodes.Stloc, funcVar),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.getLevelMethod),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLevelMethod),
                     Instruction.Create(isEnabledEnum),
                     Instruction.Create(OpCodes.Bgt_S, sectionNop),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),

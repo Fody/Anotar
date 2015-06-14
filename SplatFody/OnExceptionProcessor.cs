@@ -152,7 +152,7 @@ class OnExceptionProcessor
 	{
         var sectionNop = Instruction.Create(OpCodes.Nop);
 		yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
-        yield return Instruction.Create(OpCodes.Callvirt, ModuleWeaver.getLevelMethod);
+        yield return Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetLevelMethod);
         yield return Instruction.Create(enumValue);
         yield return Instruction.Create(OpCodes.Bgt_S, sectionNop);
         yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);

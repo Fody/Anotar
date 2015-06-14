@@ -131,7 +131,7 @@ public class LogForwardingProcessor
         else
         {
             var exitNop = Instruction.Create(OpCodes.Nop);
-            var replacement = new List<Instruction>()
+            var replacement = new List<Instruction>
                               {
 
                                   Instruction.Create(OpCodes.Ldsfld, LoggerField),
@@ -235,7 +235,7 @@ public class LogForwardingProcessor
         }
 
         var exitNop = Instruction.Create(OpCodes.Nop);
-        var replacement = new List<Instruction>()
+        var replacement = new List<Instruction>
                           {
                               //Append if 
                               Instruction.Create(OpCodes.Ldsfld, LoggerField),
@@ -267,7 +267,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Ldstr, "MethodName"),
             Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
             Instruction.Create(OpCodes.Ldc_I4_0),
-            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition)
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
             );
     }
 
@@ -285,7 +285,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Ldc_I4, lineNumber),
             Instruction.Create(OpCodes.Box, ModuleWeaver.ModuleDefinition.TypeSystem.Int32),
             Instruction.Create(OpCodes.Ldc_I4_0),
-            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.forPropertyContextDefinition)
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
             );
     }
 

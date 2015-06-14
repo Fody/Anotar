@@ -8,27 +8,27 @@ public partial class ModuleWeaver
         var name = methodReference.Name;
         if (name == "get_IsTraceEnabled")
         {
-            return isTraceEnabledMethod;
+            return IsTraceEnabledMethod;
         }
         if (name == "get_IsDebugEnabled")
         {
-            return isDebugEnabledMethod;
+            return IsDebugEnabledMethod;
         }
         if (name == "get_IsInformationEnabled")
         {
-            return isInformationEnabledMethod;
+            return IsInformationEnabledMethod;
         }
         if (name == "get_IsWarningEnabled")
         {
-            return isWarningEnabledMethod;
+            return IsWarningEnabledMethod;
         }
         if (name == "get_IsErrorEnabled")
         {
-            return isErrorEnabledMethod;
+            return IsErrorEnabledMethod;
         }
         if (name == "get_IsFatalEnabled")
         {
-            return isFatalEnabledMethod;
+            return IsFatalEnabledMethod;
         }
         throw new Exception("Invalid method name");
     }
@@ -38,27 +38,27 @@ public partial class ModuleWeaver
         var name = methodReference.Name;
         if (name == "Trace")
         {
-            return isTraceEnabledMethod;
+            return IsTraceEnabledMethod;
         }
         if (name == "Debug")
         {
-            return isDebugEnabledMethod;
+            return IsDebugEnabledMethod;
         }
         if (name == "Information")
         {
-            return isInformationEnabledMethod;
+            return IsInformationEnabledMethod;
         }
         if (name == "Warning")
         {
-            return isWarningEnabledMethod;
+            return IsWarningEnabledMethod;
         }
         if (name == "Error")
         {
-            return isErrorEnabledMethod;
+            return IsErrorEnabledMethod;
         }
         if (name == "Fatal")
         {
-            return isFatalEnabledMethod;
+            return IsFatalEnabledMethod;
         }
         throw new Exception("Invalid method name");
     }

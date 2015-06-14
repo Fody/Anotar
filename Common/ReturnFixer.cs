@@ -5,7 +5,7 @@ using Mono.Collections.Generic;
 public class ReturnFixer
 {
     public MethodDefinition Method;
-    Instruction NopForHandleEnd;
+    Instruction nopForHandleEnd;
     Collection<Instruction> instructions;
     public Instruction NopBeforeReturn;
     Instruction sealBranchesNop;
@@ -70,13 +70,13 @@ public class ReturnFixer
             return;
         }
 
-        NopForHandleEnd = Instruction.Create(OpCodes.Nop);
-        Method.Body.Instructions.Add(NopForHandleEnd);
+        nopForHandleEnd = Instruction.Create(OpCodes.Nop);
+        Method.Body.Instructions.Add(nopForHandleEnd);
         foreach (var handler in Method.Body.ExceptionHandlers)
         {
             if (handler.HandlerStart != null && handler.HandlerEnd == null)
             {
-                handler.HandlerEnd = NopForHandleEnd;
+                handler.HandlerEnd = nopForHandleEnd;
             }
         }
     }

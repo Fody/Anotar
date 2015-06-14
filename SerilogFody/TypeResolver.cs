@@ -17,7 +17,7 @@ public partial class ModuleWeaver
 
         var loggerTypeDefinition = SerilogReference.MainModule.Types.First(x => x.Name == "ILogger");
 
-        forPropertyContextDefinition = ModuleDefinition.Import(loggerTypeDefinition.Methods.First(x => x.Name == "ForContext" && !x.IsStatic && !x.HasGenericParameters && x.IsMatch("String", "Object", "Boolean")));
+        ForPropertyContextDefinition = ModuleDefinition.Import(loggerTypeDefinition.Methods.First(x => x.Name == "ForContext" && !x.IsStatic && !x.HasGenericParameters && x.IsMatch("String", "Object", "Boolean")));
 
 
 		IsEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("IsEnabled", "LogEventLevel"));
@@ -56,5 +56,5 @@ public partial class ModuleWeaver
 	public int WarningLevel;
 	public int ErrorLevel;
 	public int InformationLevel;
-    public MethodReference forPropertyContextDefinition;
+    public MethodReference ForPropertyContextDefinition;
 }

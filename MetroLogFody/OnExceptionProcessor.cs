@@ -113,42 +113,42 @@ class OnExceptionProcessor
 
 		if (attributeFinder.FoundTrace)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod,ModuleWeaver.isTraceEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod,ModuleWeaver.IsTraceEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundDebug)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.isDebugEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.IsDebugEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundInfo)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.isInfoEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.IsInfoEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundWarn)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.isWarnEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.IsWarnEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundError)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.isErrorEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.IsErrorEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundFatal)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.isFatalEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.IsFatalEnabledMethod))
             {
                 yield return instruction;
             }

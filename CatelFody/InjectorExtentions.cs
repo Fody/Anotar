@@ -31,19 +31,19 @@ public partial class ModuleWeaver
         var name = methodReference.Name;
         if (name == "Debug")
         {
-            return isDebugEnabledMethod;
+            return IsDebugEnabledMethod;
         }
         if (name == "Info")
         {
-            return isInfoEnabledMethod;
+            return IsInfoEnabledMethod;
         }
         if (name == "Warning")
         {
-            return isWarningEnabledMethod;
+            return IsWarningEnabledMethod;
         }
         if (name == "Error")
         {
-            return isErrorEnabledMethod;
+            return IsErrorEnabledMethod;
         }
         throw new Exception("Invalid method name");
     }
@@ -53,19 +53,19 @@ public partial class ModuleWeaver
         var name = methodReference.Name;
         if (name == "get_IsDebugEnabled")
         {
-            return isDebugEnabledMethod;
+            return IsDebugEnabledMethod;
         }
         if (name == "get_IsInfoEnabled")
         {
-            return isInfoEnabledMethod;
+            return IsInfoEnabledMethod;
         }
         if (name == "get_IsWarningEnabled")
         {
-            return isWarningEnabledMethod;
+            return IsWarningEnabledMethod;
         }
         if (name == "get_IsErrorEnabled")
         {
-            return isErrorEnabledMethod;
+            return IsErrorEnabledMethod;
         }
         throw new Exception("Invalid method name");
     }

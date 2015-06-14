@@ -27,7 +27,7 @@ public partial class ModuleWeaver
         var loggerDefinition = SplatReference.MainModule.Types.First(x => x.Name == "ILogger");
         //FullLoggerType = ModuleDefinition.Import(loggerDefinition);
 
-        getLevelMethod = ModuleDefinition.Import(loggerDefinition.FindMethod("get_Level"));
+        GetLevelMethod = ModuleDefinition.Import(loggerDefinition.FindMethod("get_Level"));
 
         DebugMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Debug", "String"));
         DebugMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Debug", "String", "Object[]"));
@@ -67,5 +67,5 @@ public partial class ModuleWeaver
 	public MethodReference FatalMethodParams;
 	public MethodReference FatalExceptionMethod;
 	public TypeReference FullLoggerType;
-	public MethodReference getLevelMethod;
+	public MethodReference GetLevelMethod;
 }

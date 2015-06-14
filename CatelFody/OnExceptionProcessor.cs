@@ -111,28 +111,28 @@ class OnExceptionProcessor
 
 		if (attributeFinder.FoundDebug)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.isDebugEnabledMethod, ModuleWeaver.DebugLogEvent))
+			foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsDebugEnabledMethod, ModuleWeaver.DebugLogEvent))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundInfo)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.isInfoEnabledMethod,ModuleWeaver.InfoLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsInfoEnabledMethod,ModuleWeaver.InfoLogEvent))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundWarning)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.isWarningEnabledMethod,ModuleWeaver.WarningLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsWarningEnabledMethod,ModuleWeaver.WarningLogEvent))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundError)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.isErrorEnabledMethod, ModuleWeaver.ErrorLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsErrorEnabledMethod, ModuleWeaver.ErrorLogEvent))
             {
                 yield return instruction;
             }

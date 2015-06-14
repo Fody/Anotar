@@ -111,7 +111,7 @@ class OnExceptionProcessor
 
 		if (attributeFinder.FoundTrace)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod, ModuleWeaver.isTraceEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.TraceExceptionMethod, ModuleWeaver.IsTraceEnabledMethod))
             {
                 yield return instruction;
             }
@@ -119,35 +119,35 @@ class OnExceptionProcessor
 
 		if (attributeFinder.FoundDebug)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.isDebugEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.IsDebugEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundInformation)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.InformationExceptionMethod, ModuleWeaver.isInformationEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.InformationExceptionMethod, ModuleWeaver.IsInformationEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundWarning)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WarningExceptionMethod, ModuleWeaver.isWarningEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.WarningExceptionMethod, ModuleWeaver.IsWarningEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundError)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod,ModuleWeaver.isErrorEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod,ModuleWeaver.IsErrorEnabledMethod))
             {
                 yield return instruction;
             }
         }
 		if (attributeFinder.FoundFatal)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod,ModuleWeaver.isFatalEnabledMethod))
+			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod,ModuleWeaver.IsFatalEnabledMethod))
             {
                 yield return instruction;
             }

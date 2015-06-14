@@ -20,10 +20,10 @@ public partial class ModuleWeaver
         WriteExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("WriteWithData", "Exception", "String", "Object", "LogEvent"));
 
         var logInfoDefinition = logManagerType.NestedTypes.First(x => x.Name == "LogInfo");
-        isDebugEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsDebugEnabled"));
-        isErrorEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsErrorEnabled"));
-        isWarningEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsWarningEnabled"));
-        isInfoEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsInfoEnabled"));
+        IsDebugEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsDebugEnabled"));
+        IsErrorEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsErrorEnabled"));
+        IsWarningEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsWarningEnabled"));
+        IsInfoEnabledMethod = ModuleDefinition.Import(logInfoDefinition.FindMethod("get_IsInfoEnabled"));
     }
 
     public int WarningLogEvent;
@@ -37,9 +37,9 @@ public partial class ModuleWeaver
 	public TypeReference LoggerType;
 
 	MethodReference constructLoggerMethod; 
-	public MethodReference isDebugEnabledMethod;
-	public MethodReference isInfoEnabledMethod;
-	public MethodReference isWarningEnabledMethod;
-	public MethodReference isErrorEnabledMethod;
+	public MethodReference IsDebugEnabledMethod;
+	public MethodReference IsInfoEnabledMethod;
+	public MethodReference IsWarningEnabledMethod;
+	public MethodReference IsErrorEnabledMethod;
 
 }

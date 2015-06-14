@@ -13,22 +13,22 @@ public partial class ModuleWeaver
 
         var loggerTypeDefinition = NLogReference.MainModule.Types.First(x => x.Name == "Logger");
         TraceMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String", "Object[]"));
-		isTraceEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled"));
+		IsTraceEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled"));
 		TraceExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("TraceException", "String", "Exception"));
 		DebugMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String","Object[]"));
-		isDebugEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
+		IsDebugEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
 		DebugExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("DebugException", "String", "Exception"));
         InfoMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Info", "String", "Object[]"));
-		isInfoEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsInfoEnabled"));
+		IsInfoEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsInfoEnabled"));
 		InfoExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("InfoException", "String", "Exception"));
         WarnMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warn", "String", "Object[]"));
-		isWarnEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
+		IsWarnEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
 		WarnExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("WarnException", "String", "Exception"));
         ErrorMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Object[]"));
-		isErrorEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
+		IsErrorEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
 		ErrorExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("ErrorException", "String", "Exception"));
         FatalMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Object[]"));
-        isFatalEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
+        IsFatalEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
         FatalExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("FatalException", "String", "Exception"));
 		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
     }
@@ -50,11 +50,11 @@ public partial class ModuleWeaver
 
 	MethodReference constructLoggerGenericMethod; 
     MethodReference constructLoggerMethod;
-	public MethodReference isTraceEnabledMethod;
-	public MethodReference isDebugEnabledMethod;
-	public MethodReference isInfoEnabledMethod;
-	public MethodReference isWarnEnabledMethod;
-	public MethodReference isErrorEnabledMethod;
-	public MethodReference isFatalEnabledMethod;
+	public MethodReference IsTraceEnabledMethod;
+	public MethodReference IsDebugEnabledMethod;
+	public MethodReference IsInfoEnabledMethod;
+	public MethodReference IsWarnEnabledMethod;
+	public MethodReference IsErrorEnabledMethod;
+	public MethodReference IsFatalEnabledMethod;
 
 }
