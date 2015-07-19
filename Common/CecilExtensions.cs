@@ -46,12 +46,7 @@ public static class CecilExtensions
         var isTypeCompilerGenerated = method.DeclaringType.IsCompilerGenerated();
         if (isTypeCompilerGenerated)
         {
-            var rootType = method.DeclaringType.DeclaringType;
-            while (rootType.DeclaringType != null && rootType.IsCompilerGenerated())
-            {
-                rootType = rootType.DeclaringType;
-            }
-
+            var rootType = method.DeclaringType.GetNonCompilerGeneratedType();
             if (rootType != null)
             {
                 foreach (var parentClassMethod in rootType.Methods)
@@ -80,6 +75,15 @@ public static class CecilExtensions
             }
         }
         return method;
+    }
+
+    public static TypeDefinition GetNonCompilerGeneratedType(this TypeDefinition typeDefinition)
+    {
+        while (typeDefinition.IsCompilerGenerated() && typeDefinition.DeclaringType != null)
+        {
+            typeDefinition = typeDefinition.DeclaringType;
+        }
+        return typeDefinition;
     }
 
     public static bool IsCompilerGenerated(this ICustomAttributeProvider value)

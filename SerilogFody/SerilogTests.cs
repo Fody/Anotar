@@ -52,7 +52,6 @@ public class SerilogTests
         {
             warns.Add(eventInfo);
         }
-
     }
 
     [SetUp]
@@ -86,8 +85,8 @@ public class SerilogTests
         Assert.AreEqual(7, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.IsTrue(logEvent.SourceContext().StartsWith("GenericClass`1"), logEvent.SourceContext());
     }
-
 
     [Test]
     public void MethodThatReturns()
@@ -120,6 +119,7 @@ public class SerilogTests
         Assert.AreEqual(17, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithExistingField", logEvent.SourceContext());
     }
 
     // ReSharper disable once UnusedParameter.Local
@@ -141,7 +141,6 @@ public class SerilogTests
         var first = list.First();
         Assert.IsTrue(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
     }
-
 
     [Test]
     public void OnExceptionToDebug()
@@ -223,7 +222,6 @@ public class SerilogTests
         CheckException(action, fatals, expected);
     }
 
-
     [Test]
     public void IsDebugEnabled()
     {
@@ -231,6 +229,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsDebugEnabled());
     }
+
     [Test]
     public void Debug()
     {
@@ -241,7 +240,9 @@ public class SerilogTests
         Assert.AreEqual(13, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void DebugString()
     {
@@ -252,7 +253,9 @@ public class SerilogTests
         Assert.AreEqual(18, logEvent.LineNumber());
         Assert.AreEqual("Void DebugString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void DebugStringParams()
     {
@@ -263,6 +266,7 @@ public class SerilogTests
         Assert.AreEqual(23, logEvent.LineNumber());
         Assert.AreEqual("Void DebugStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -275,8 +279,8 @@ public class SerilogTests
         Assert.AreEqual(28, logEvent.LineNumber());
         Assert.AreEqual("Void DebugStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
-
 
     [Test]
     public void IsInformationEnabled()
@@ -285,6 +289,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsInformationEnabled());
     }
+
     [Test]
     public void Information()
     {
@@ -295,6 +300,7 @@ public class SerilogTests
         Assert.AreEqual(38, logEvent.LineNumber());
         Assert.AreEqual("Void Information()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -307,6 +313,7 @@ public class SerilogTests
         Assert.AreEqual(43, logEvent.LineNumber());
         Assert.AreEqual("Void InformationString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -319,7 +326,7 @@ public class SerilogTests
         Assert.AreEqual(48, logEvent.LineNumber());
         Assert.AreEqual("Void InformationStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -332,8 +339,9 @@ public class SerilogTests
         Assert.AreEqual(53, logEvent.LineNumber());
         Assert.AreEqual("Void InformationStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsWarningEnabled()
     {
@@ -352,6 +360,7 @@ public class SerilogTests
         Assert.AreEqual(63, logEvent.LineNumber());
         Assert.AreEqual("Void Warning()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -364,6 +373,7 @@ public class SerilogTests
         Assert.AreEqual(68, logEvent.LineNumber());
         Assert.AreEqual("Void WarningString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -376,6 +386,7 @@ public class SerilogTests
         Assert.AreEqual(73, logEvent.LineNumber());
         Assert.AreEqual("Void WarningStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -388,7 +399,9 @@ public class SerilogTests
         Assert.AreEqual(78, logEvent.LineNumber());
         Assert.AreEqual("Void WarningStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsErrorEnabled()
     {
@@ -407,6 +420,7 @@ public class SerilogTests
         Assert.AreEqual(88, logEvent.LineNumber());
         Assert.AreEqual("Void Error()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -419,6 +433,7 @@ public class SerilogTests
         Assert.AreEqual(93, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -431,6 +446,7 @@ public class SerilogTests
         Assert.AreEqual(98, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -443,7 +459,9 @@ public class SerilogTests
         Assert.AreEqual(103, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsFatalEnabled()
     {
@@ -462,7 +480,7 @@ public class SerilogTests
         Assert.AreEqual(113, logEvent.LineNumber());
         Assert.AreEqual("Void Fatal()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -475,6 +493,7 @@ public class SerilogTests
         Assert.AreEqual(118, logEvent.LineNumber());
         Assert.AreEqual("Void FatalString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -487,6 +506,7 @@ public class SerilogTests
         Assert.AreEqual(123, logEvent.LineNumber());
         Assert.AreEqual("Void FatalStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -499,6 +519,7 @@ public class SerilogTests
         Assert.AreEqual(128, logEvent.LineNumber());
         Assert.AreEqual("Void FatalStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -517,6 +538,7 @@ public class SerilogTests
         Assert.AreEqual(10, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -529,6 +551,7 @@ public class SerilogTests
         Assert.AreEqual(16, logEvent.LineNumber());
         Assert.AreEqual("IEnumerable<Int32> EnumeratorMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -541,6 +564,7 @@ public class SerilogTests
         Assert.AreEqual(23, logEvent.LineNumber());
         Assert.AreEqual("Void DelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -553,6 +577,7 @@ public class SerilogTests
         Assert.AreEqual(36, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncDelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -565,6 +590,7 @@ public class SerilogTests
         Assert.AreEqual(30, logEvent.LineNumber());
         Assert.AreEqual("Void LambdaMethod()", logEvent.MethodName());
         Assert.AreEqual("Foo {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]

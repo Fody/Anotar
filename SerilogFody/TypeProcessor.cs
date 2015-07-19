@@ -13,9 +13,9 @@ public partial class ModuleWeaver
         if (fieldDefinition == null)
         {
             fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, loggerType)
-                              {
-                                  DeclaringType = type
-                              };
+            {
+                DeclaringType = type
+            };
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
@@ -33,21 +33,21 @@ public partial class ModuleWeaver
             }
 
             var onExceptionProcessor = new OnExceptionProcessor
-                                       {
-                                           Method = method,
-                                           LoggerField = fieldReference,
-                                           FoundUsageInType = () => foundUsage = true,
-                                           ModuleWeaver = this
-                                       };
+            {
+                Method = method,
+                LoggerField = fieldReference,
+                FoundUsageInType = () => foundUsage = true,
+                ModuleWeaver = this
+            };
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
-                                         {
-                                             FoundUsageInType = () => foundUsage = true,
-                                             Method = method,
-                                             ModuleWeaver = this,
-                                             LoggerField = fieldReference,
-                                         };
+            {
+                FoundUsageInType = () => foundUsage = true,
+                Method = method,
+                ModuleWeaver = this,
+                LoggerField = fieldReference,
+            };
             logForwardingProcessor.ProcessMethod();
 
         }
@@ -63,14 +63,7 @@ public partial class ModuleWeaver
         var staticConstructor = type.GetStaticConstructor();
         staticConstructor.Body.SimplifyMacros();
         var genericInstanceMethod = new GenericInstanceMethod(forContextDefinition);
-        if (type.IsCompilerGenerated() && type.IsNested)
-        {
-            genericInstanceMethod.GenericArguments.Add(type.DeclaringType.GetGeneric());
-        }
-        else
-        {
-            genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
-        }
+        genericInstanceMethod.GenericArguments.Add(type.GetNonCompilerGeneratedType().GetGeneric());
         var instructions = staticConstructor.Body.Instructions;
         type.Fields.Add(fieldDefinition);
 
