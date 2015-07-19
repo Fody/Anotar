@@ -47,11 +47,16 @@ public static class CecilExtensions
         if (isTypeCompilerGenerated)
         {
             var rootType = method.DeclaringType.DeclaringType;
+            while (rootType.DeclaringType != null && rootType.IsCompilerGenerated())
+            {
+                rootType = rootType.DeclaringType;
+            }
+
             if (rootType != null)
             {
                 foreach (var parentClassMethod in rootType.Methods)
                 {
-                    if (method.DeclaringType.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                    if (method.DeclaringType.Name.Contains("<" + parentClassMethod.Name + ">"))
                     {
                         return parentClassMethod;
                     }
@@ -80,6 +85,12 @@ public static class CecilExtensions
     public static bool IsCompilerGenerated(this ICustomAttributeProvider value)
     {
         return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
+    }
+
+    public static bool IsCompilerGenerated(this TypeDefinition typeDefinition)
+    {
+        return typeDefinition.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute") ||
+            (typeDefinition.IsNested && typeDefinition.DeclaringType.IsCompilerGenerated());
     }
 
     public static void CheckForInvalidLogToUsages(this MethodDefinition methodDefinition)
