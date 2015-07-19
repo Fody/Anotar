@@ -31,7 +31,7 @@ public class Log4NetTests
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var hierarchy = (Hierarchy)LogManager.GetRepository();
-        hierarchy.Root.RemoveAllAppenders(); 
+        hierarchy.Root.RemoveAllAppenders();
 
         var target = new ActionAppender
         {
@@ -548,7 +548,7 @@ public class Log4NetTests
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-    
+
     [Test]
     public void AsyncMethod()
     {
@@ -577,6 +577,16 @@ public class Log4NetTests
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+    }
+
+    [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
     }
 
     [Test]

@@ -743,6 +743,17 @@ public class CommonLoggingTests
     }
 
     [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        var logEvent = actionAdapter.Debugs.First();
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), logEvent.Format);
+    }
+
+    [Test]
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");

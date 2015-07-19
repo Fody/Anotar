@@ -41,7 +41,7 @@ public class CustomTests
         var message = LoggerFactory.DebugEntries.First();
         Assert.IsTrue(message.Format.StartsWith("Method: 'void Debug()'. Line: ~"));
     }
-    
+
     [Test]
     public void EnsureLoggerFactoryAttributeisRemoved()
     {
@@ -185,7 +185,7 @@ public class CustomTests
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, LoggerFactory.FatalEntries, expected);
     }
-    
+
     [Test]
     public void IsTraceEnabled()
     {
@@ -516,7 +516,7 @@ public class CustomTests
         var instance = (dynamic)Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsFatalEnabled());
     }
-    
+
     [Test]
     public void Fatal()
     {
@@ -576,13 +576,13 @@ public class CustomTests
         Assert.AreEqual(1, LoggerFactory.FatalEntries.Count);
         Assert.IsTrue(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
-    
+
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-    
+
     [Test]
     public void AsyncMethod()
     {
@@ -610,6 +610,16 @@ public class CustomTests
         instance.DelegateMethod();
         var message = LoggerFactory.DebugEntries.First().Format;
         Assert.IsTrue(message.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), message);
+    }
+
+    [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        var message = LoggerFactory.DebugEntries.First().Format;
+        Assert.IsTrue(message.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), message);
     }
 
     [Test]

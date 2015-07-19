@@ -617,6 +617,15 @@ public class LibLogTests
         Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), logProvider.Debugs.First());
     }
     [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, logProvider.Debugs.Count);
+        Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), logProvider.Debugs.First());
+    }
+    [Test]
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
