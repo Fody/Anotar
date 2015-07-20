@@ -33,7 +33,10 @@ public class ClassWithCompilerGeneratedClasses
 
     public void AsyncDelegateMethod()
     {
-        var action = new Action(async () => LogTo.Debug());
+        var action = new Action(async () =>
+        {
+            LogTo.Debug();
+        });
         action();
     }
 }

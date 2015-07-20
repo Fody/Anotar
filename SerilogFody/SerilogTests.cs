@@ -574,7 +574,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         var logEvent = debugs.Single();
-        Assert.AreEqual(36, logEvent.LineNumber());
+        Assert.AreEqual(38, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncDelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
