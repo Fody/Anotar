@@ -246,13 +246,12 @@ public class LogForwardingProcessor
         {
             return string.Empty;
         }
-        var sequencePoint = instruction.GetPreviousSequencePoint();
-        if (sequencePoint == null)
+        int lineNumber;
+        if (instruction.TryGetPreviousLineNumber(out lineNumber))
         {
-            return string.Format("Method: '{0}'. ", Method.DisplayName());
+            return string.Format("Method: '{0}'. Line: ~{1}. ", Method.DisplayName(), lineNumber);
         }
-
-        return string.Format("Method: '{0}'. Line: ~{1}. ", Method.DisplayName(), sequencePoint.StartLine);
+        return string.Format("Method: '{0}'. ", Method.DisplayName());
     }
 
 }

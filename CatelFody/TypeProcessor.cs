@@ -64,7 +64,7 @@ public partial class ModuleWeaver
         staticConstructor.Body.SimplifyMacros();
         var instructions = staticConstructor.Body.Instructions;
 
-        TypeReference declaringType = type.GetNonCompilerGeneratedType().GetGeneric();
+        var declaringType = type.GetNonCompilerGeneratedType().GetGeneric();
 
         instructions.Insert(0, Instruction.Create(OpCodes.Ldtoken, declaringType));
         instructions.Insert(1, Instruction.Create(OpCodes.Call, GetTypeFromHandle));

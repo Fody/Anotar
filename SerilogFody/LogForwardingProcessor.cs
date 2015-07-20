@@ -273,12 +273,11 @@ public class LogForwardingProcessor
 
     void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
     {
-        var sequencePoint = instruction.GetPreviousSequencePoint();
-        if (sequencePoint == null)
+        int lineNumber;
+        if (!instruction.TryGetPreviousLineNumber(out lineNumber))
         {
             return;
         }
-        var lineNumber = sequencePoint.StartLine;
         replacement.Append(
             //Write LineNumber
             Instruction.Create(OpCodes.Ldstr, "LineNumber"),
