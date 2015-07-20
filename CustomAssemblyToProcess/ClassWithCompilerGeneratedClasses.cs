@@ -29,4 +29,10 @@ public class ClassWithCompilerGeneratedClasses
         Action<string> log = l => LogTo.Debug(l, x);
         log("Foo {0}");
     }
+
+    public void AsyncDelegateMethod()
+    {
+        var action = new Action(async () => LogTo.Debug());
+        action();
+    }
 }

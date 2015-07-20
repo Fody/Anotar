@@ -64,14 +64,7 @@ public partial class ModuleWeaver
         var staticConstructor = type.GetStaticConstructor();
         staticConstructor.Body.SimplifyMacros();
         var genericInstanceMethod = new GenericInstanceMethod(GetLoggerMethod);
-        if (type.IsCompilerGenerated() && type.IsNested)
-        {
-            genericInstanceMethod.GenericArguments.Add(type.DeclaringType.GetGeneric());
-        }
-        else
-        {
-            genericInstanceMethod.GenericArguments.Add(type.GetGeneric());
-        }
+        genericInstanceMethod.GenericArguments.Add(type.GetNonCompilerGeneratedType().GetGeneric());
         var instructions = staticConstructor.Body.Instructions;
         type.Fields.Add(fieldDefinition);
 

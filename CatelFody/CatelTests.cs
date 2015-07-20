@@ -26,7 +26,7 @@ public class CatelTests
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
-        
+
         LogManager.AddListener(new LogListener
                                {
                                    Action =LogMessage
@@ -55,7 +55,7 @@ public class CatelTests
             Debugs.Add(message);
 // ReSharper disable once RedundantJumpStatement
             return;
-        }        
+        }
 
     }
 
@@ -198,7 +198,7 @@ public class CatelTests
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic)Activator.CreateInstance(type);
-     
+
         Assert.AreEqual("a",instance.MethodThatReturns("x", 6));
     }
 
@@ -455,13 +455,13 @@ public class CatelTests
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
     }
-    
+
     [Test]
     public void PeVerify()
     {
         Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
     }
-    
+
     [Test]
     public void AsyncMethod()
     {
@@ -489,6 +489,16 @@ public class CatelTests
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+    }
+
+    [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
     }
 
     [Test]

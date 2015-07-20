@@ -62,11 +62,7 @@ public partial class ModuleWeaver
         var staticConstructor = type.GetStaticConstructor();
         var instructions = staticConstructor.Body.Instructions;
 
-        var targetType = type;
-        if (type.IsCompilerGenerated() && type.IsNested)
-        {
-            targetType = type.DeclaringType;
-        }
+        var targetType = type.GetNonCompilerGeneratedType();
         var logManagerVariable = new VariableDefinition(LogManagerType);
         staticConstructor.Body.Variables.Add(logManagerVariable);
 

@@ -677,6 +677,16 @@ public class MetroLogTests
     }
 
     [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
+    }
+
+    [Test]
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");

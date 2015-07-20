@@ -28,7 +28,7 @@ public class NServiceBusTests
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
-       
+
         LogManager.UseFactory(new LogCapture(this));
     }
 
@@ -507,7 +507,7 @@ public class NServiceBusTests
         Assert.AreEqual(1, Fatals.Count);
         Assert.IsTrue(Fatals.First().StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
     }
-    
+
     [Test]
     public void PeVerify()
     {
@@ -543,6 +543,15 @@ public class NServiceBusTests
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+    }
+    [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        Assert.AreEqual(1, Debugs.Count);
+        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
     }
     [Test]
     public void LambdaMethod()

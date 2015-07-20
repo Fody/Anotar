@@ -14,4 +14,9 @@ public static class LogEventExtensions
         var logEventPropertyValue = (ScalarValue)logEvent.Properties["LineNumber"];
         return (int)logEventPropertyValue.Value;
     }
+    public static string SourceContext(this LogEvent logEvent)
+    {
+        var logEventPropertyValue = (ScalarValue)logEvent.Properties["SourceContext"];
+        return (string)logEventPropertyValue.Value;
+    }
 }

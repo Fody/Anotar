@@ -52,16 +52,15 @@ public class SerilogTests
         {
             warns.Add(eventInfo);
         }
-
     }
 
     [SetUp]
     public void Setup()
     {
         var eventSink = new EventSink
-            {
-                Action = LogEvent
-            };
+        {
+            Action = LogEvent
+        };
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
@@ -79,15 +78,15 @@ public class SerilogTests
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
-        var instance = (dynamic) Activator.CreateInstance(constructedType);
+        var constructedType = type.MakeGenericType(typeof(string));
+        var instance = (dynamic)Activator.CreateInstance(constructedType);
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual(7, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.IsTrue(logEvent.SourceContext().StartsWith("GenericClass`1"), logEvent.SourceContext());
     }
-
 
     [Test]
     public void MethodThatReturns()
@@ -104,7 +103,7 @@ public class SerilogTests
         var type = assembly.GetType("ClassWithStaticConstructor");
         type.GetMethod("StaticMethod", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
         // ReSharper disable once PossibleNullReferenceException
-        var message = (string) type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+        var message = (string)type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
         Assert.AreEqual("Foo", message);
     }
 
@@ -113,13 +112,14 @@ public class SerilogTests
     {
         var type = assembly.GetType("ClassWithExistingField");
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, debugs.Count);
         var logEvent = debugs.First();
         Assert.AreEqual(17, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithExistingField", logEvent.SourceContext());
     }
 
     // ReSharper disable once UnusedParameter.Local
@@ -127,7 +127,7 @@ public class SerilogTests
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         try
         {
             action(instance);
@@ -141,7 +141,6 @@ public class SerilogTests
         var first = list.First();
         Assert.IsTrue(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
     }
-
 
     [Test]
     public void OnExceptionToDebug()
@@ -223,7 +222,6 @@ public class SerilogTests
         CheckException(action, fatals, expected);
     }
 
-
     [Test]
     public void IsDebugEnabled()
     {
@@ -231,6 +229,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsDebugEnabled());
     }
+
     [Test]
     public void Debug()
     {
@@ -241,42 +240,47 @@ public class SerilogTests
         Assert.AreEqual(13, logEvent.LineNumber());
         Assert.AreEqual("Void Debug()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugString();
         var logEvent = debugs.Single();
         Assert.AreEqual(18, logEvent.LineNumber());
         Assert.AreEqual("Void DebugString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringParams();
         var logEvent = debugs.Single();
         Assert.AreEqual(23, logEvent.LineNumber());
         Assert.AreEqual("Void DebugStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.DebugStringException();
         var logEvent = debugs.Single();
         Assert.AreEqual(28, logEvent.LineNumber());
         Assert.AreEqual("Void DebugStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
-
 
     [Test]
     public void IsInformationEnabled()
@@ -285,55 +289,59 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsInformationEnabled());
     }
+
     [Test]
     public void Information()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.Information();
         var logEvent = informations.Single();
         Assert.AreEqual(38, logEvent.LineNumber());
         Assert.AreEqual("Void Information()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void InformationString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationString();
         var logEvent = informations.Single();
         Assert.AreEqual(43, logEvent.LineNumber());
         Assert.AreEqual("Void InformationString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void InformationStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationStringParams();
         var logEvent = informations.Single();
         Assert.AreEqual(48, logEvent.LineNumber());
         Assert.AreEqual("Void InformationStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void InformationStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.InformationStringException();
         var logEvent = informations.Single();
         Assert.AreEqual(53, logEvent.LineNumber());
         Assert.AreEqual("Void InformationStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsWarningEnabled()
     {
@@ -346,49 +354,54 @@ public class SerilogTests
     public void Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.Warning();
         var logEvent = warns.Single();
         Assert.AreEqual(63, logEvent.LineNumber());
         Assert.AreEqual("Void Warning()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarningString();
         var logEvent = warns.Single();
         Assert.AreEqual(68, logEvent.LineNumber());
         Assert.AreEqual("Void WarningString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarningStringParams();
         var logEvent = warns.Single();
         Assert.AreEqual(73, logEvent.LineNumber());
         Assert.AreEqual("Void WarningStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void WarningStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.WarningStringException();
         var logEvent = warns.Single();
         Assert.AreEqual(78, logEvent.LineNumber());
         Assert.AreEqual("Void WarningStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsErrorEnabled()
     {
@@ -401,49 +414,54 @@ public class SerilogTests
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.Error();
         var logEvent = errors.Single();
         Assert.AreEqual(88, logEvent.LineNumber());
         Assert.AreEqual("Void Error()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorString();
         var logEvent = errors.Single();
         Assert.AreEqual(93, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringParams();
         var logEvent = errors.Single();
         Assert.AreEqual(98, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.ErrorStringException();
         var logEvent = errors.Single();
         Assert.AreEqual(103, logEvent.LineNumber());
         Assert.AreEqual("Void ErrorStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
+
     [Test]
     public void IsFatalEnabled()
     {
@@ -456,49 +474,52 @@ public class SerilogTests
     public void Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.Fatal();
         var logEvent = fatals.Single();
         Assert.AreEqual(113, logEvent.LineNumber());
         Assert.AreEqual("Void Fatal()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
-
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalString();
         var logEvent = fatals.Single();
         Assert.AreEqual(118, logEvent.LineNumber());
         Assert.AreEqual("Void FatalString()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringParams();
         var logEvent = fatals.Single();
         Assert.AreEqual(123, logEvent.LineNumber());
         Assert.AreEqual("Void FatalStringParams()", logEvent.MethodName());
         Assert.AreEqual("TheMessage {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
     public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic) Activator.CreateInstance(type);
+        var instance = (dynamic)Activator.CreateInstance(type);
         instance.FatalStringException();
         var logEvent = fatals.Single();
         Assert.AreEqual(128, logEvent.LineNumber());
         Assert.AreEqual("Void FatalStringException()", logEvent.MethodName());
         Assert.AreEqual("TheMessage", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithLogging", logEvent.SourceContext());
     }
 
     [Test]
@@ -506,7 +527,7 @@ public class SerilogTests
     {
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
-    
+
     [Test]
     public void AsyncMethod()
     {
@@ -517,6 +538,7 @@ public class SerilogTests
         Assert.AreEqual(10, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -529,6 +551,7 @@ public class SerilogTests
         Assert.AreEqual(16, logEvent.LineNumber());
         Assert.AreEqual("IEnumerable<Int32> EnumeratorMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -541,6 +564,20 @@ public class SerilogTests
         Assert.AreEqual(23, logEvent.LineNumber());
         Assert.AreEqual("Void DelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+    }
+
+    [Test]
+    public void AsyncDelegateMethod()
+    {
+        var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
+        var instance = (dynamic)Activator.CreateInstance(type);
+        instance.AsyncDelegateMethod();
+        var logEvent = debugs.Single();
+        Assert.AreEqual(36, logEvent.LineNumber());
+        Assert.AreEqual("Void AsyncDelegateMethod()", logEvent.MethodName());
+        Assert.AreEqual("", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
@@ -553,6 +590,7 @@ public class SerilogTests
         Assert.AreEqual(30, logEvent.LineNumber());
         Assert.AreEqual("Void LambdaMethod()", logEvent.MethodName());
         Assert.AreEqual("Foo {0}", logEvent.MessageTemplate.Text);
+        Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
 
     [Test]
