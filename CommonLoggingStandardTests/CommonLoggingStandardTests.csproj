@@ -11,7 +11,7 @@
     <AssemblyName>CommonLoggingStandardTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>3cf5acfe</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>00d9c8e7</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,19 +38,19 @@
       <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.0\lib\net40\Mono.Cecil.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.1\lib\net40\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.1\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.1\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.1.29.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>..\packages\FodyCecil.1.29.1\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
@@ -112,11 +112,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.1.29.0.1\build\Fody.targets" Condition="Exists('..\packages\Fody.1.29.0.1\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.1.29.1\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.1\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.29.0.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.0.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.1\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.1\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
   </Target>
 </Project>
