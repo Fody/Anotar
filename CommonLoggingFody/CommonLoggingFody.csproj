@@ -122,9 +122,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.CommonLogging.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\CommonLogging\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\CommonLogging" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

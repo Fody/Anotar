@@ -161,9 +161,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.MetroLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.MetroLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.MetroLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\MetroLog\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\MetroLog" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

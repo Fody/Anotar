@@ -153,9 +153,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Splat.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
     <Copy SourceFiles="$(OutputPath)Anotar.Splat.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
     <Copy SourceFiles="$(OutputPath)Anotar.Splat.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Splat" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Splat\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Splat\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Splat" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

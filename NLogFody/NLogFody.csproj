@@ -157,9 +157,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NLog\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\NLog" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

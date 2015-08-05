@@ -164,9 +164,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Serilog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
     <Copy SourceFiles="$(OutputPath)Anotar.Serilog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
     <Copy SourceFiles="$(OutputPath)Anotar.Serilog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Serilog\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Serilog\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Serilog" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

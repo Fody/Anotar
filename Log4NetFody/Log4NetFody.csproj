@@ -157,9 +157,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Log4Net\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Log4Net" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

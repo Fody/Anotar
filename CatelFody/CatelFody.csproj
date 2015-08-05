@@ -156,8 +156,8 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Catel.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)Anotar.Catel.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)Anotar.Catel.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Content" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Catel" MetadataAssembly="$(TargetPath)" />
   </Target>

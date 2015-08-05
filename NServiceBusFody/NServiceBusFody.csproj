@@ -154,9 +154,9 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NServiceBus.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(OutputPath)Anotar.NServiceBus.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(OutputPath)Anotar.NServiceBus.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\Content" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus\Content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus\Content" />
+    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NServiceBus\Tools\install.ps1" />
     <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\NServiceBus" MetadataAssembly="$(TargetPath)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
