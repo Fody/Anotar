@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8">
-    <id>Anotar.LibLog.Fody</id>
+    <id>Anotar.CommonLogging.Fody</id>
     <version>$version$</version>
-    <title>Anotar.LibLog.Fody</title>
+    <title>Anotar.CommonLogging.Fody</title>
     <authors>Simon Cropp</authors>
     <owners>Simon Cropp</owners>
     <developmentDependency>true</developmentDependency>
@@ -13,10 +13,10 @@
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
     <description>Simplifies logging through a static class and some IL manipulation.</description>
     <language>en-AU</language>
-    <tags>Logging, ILWeaving, Fody, Cecil, LibLog</tags>
+    <tags>Logging, ILWeaving, Fody, Cecil, Common.Logging</tags>
     <dependencies>
-		<dependency id="Fody"/>
-		<dependency id="LibLog" version="[4.2.0, 5.0.0)"/>
-    </dependencies>
+      <dependency id="Fody" version="1.29.1"/>
+      <dependency id="Common.Logging.Core" version="3.1.0"/>		
+	</dependencies>
   </metadata>
 </package>

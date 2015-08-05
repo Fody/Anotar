@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8">
-    <id>Anotar.MetroLog.Fody</id>
+    <id>Anotar.Custom.Fody</id>
     <version>$version$</version>
-    <title>Anotar.MetroLog.Fody</title>
+    <title>Anotar.Custom.Fody</title>
     <authors>Simon Cropp</authors>
     <owners>Simon Cropp</owners>
     <developmentDependency>true</developmentDependency>
@@ -13,10 +13,9 @@
     <iconUrl>https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png</iconUrl>
     <description>Simplifies logging through a static class and some IL manipulation.</description>
     <language>en-AU</language>
-    <tags>Logging, ILWeaving, Fody, Cecil, MetroLog</tags>
+    <tags>Logging, ILWeaving, Fody, Cecil</tags>
     <dependencies>
-      <dependency id="Fody"/>
-      <dependency id="MetroLog" version ="0.8"/>
+      <dependency id="Fody" version="1.29.1"/>
     </dependencies>
   </metadata>
 </package>
