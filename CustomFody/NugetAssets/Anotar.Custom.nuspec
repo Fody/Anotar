@@ -15,7 +15,7 @@
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil</tags>
     <dependencies>
-      <dependency id="Fody" version="1.29.1"/>
+      <dependency id="Fody" version="1.29.2"/>
     </dependencies>
   </metadata>
 </package>
