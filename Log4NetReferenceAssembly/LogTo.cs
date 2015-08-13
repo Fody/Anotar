@@ -11,62 +11,6 @@ namespace Anotar.Log4Net
     {
 
         /// <summary>
-        /// Returns true if trace is enabled.
-        /// </summary>
-        public static bool IsTraceEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
-        /// Writes the diagnostic message at the <c>Trace</c> level.
-        /// </summary>
-        public static void Trace()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Writes the diagnostic message at the <c>Trace</c> level.
-        /// </summary>
-        /// <param name="format">A <see langword="string" /> containing format items.</param>
-        /// <param name="args">Arguments to format.</param>
-        [StringFormatMethod("format")]
-        public static void Trace(string format, params object[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Writes the diagnostic message at the <c>Trace</c> level.
-        /// </summary>
-        /// <param name="message">The log message.</param>
-        public static void Trace(Func<string> message)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Writes the diagnostic message and exception at the <c>Trace</c> level.
-        /// </summary>
-        /// <param name="message">The log message.</param>
-        /// <param name="exception">An exception to be logged.</param>
-        public static void TraceException(string message, Exception exception)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Writes the diagnostic message and exception at the <c>Trace</c> level.
-        /// </summary>
-        /// <param name="message">The log message.</param>
-        /// <param name="exception">An exception to be logged.</param>
-        public static void TraceException(Func<string> message, Exception exception)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Returns true if debug is enabled.
         /// </summary>
         public static bool IsDebugEnabled
