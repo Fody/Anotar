@@ -7,43 +7,43 @@ public partial class ModuleWeaver
     {
         var locatorType = SplatReference.MainModule.Types.First(x => x.Name == "Locator");
         var getLocator = locatorType.Methods.First(x => x.Name == "get_Current");
-        GetLocatorMethod = ModuleDefinition.Import(getLocator);
+        GetLocatorMethod = ModuleDefinition.ImportReference(getLocator);
 
         var dependencyResolver = SplatReference.MainModule.Types.First(x => x.Name == "IDependencyResolver");
         var getServiceDefinition = dependencyResolver.Methods.First(x => x.Name == "GetService");
-        GetServiceMethod = ModuleDefinition.Import(getServiceDefinition);
+        GetServiceMethod = ModuleDefinition.ImportReference(getServiceDefinition);
 
         var logManagerDefinition = SplatReference.MainModule.Types.First(x => x.Name == "ILogManager");
-        LogManagerType = ModuleDefinition.Import(logManagerDefinition);
+        LogManagerType = ModuleDefinition.ImportReference(logManagerDefinition);
         var getLoggerDefinition = logManagerDefinition.Methods.First(x => x.Name == "GetLogger");
-        GetLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+        GetLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
 
 
         var fullLoggerDefinition = SplatReference.MainModule.Types.First(x => x.Name == "IFullLogger");
-        FullLoggerType = ModuleDefinition.Import(fullLoggerDefinition);
+        FullLoggerType = ModuleDefinition.ImportReference(fullLoggerDefinition);
 
 
         var loggerDefinition = SplatReference.MainModule.Types.First(x => x.Name == "ILogger");
         //FullLoggerType = ModuleDefinition.Import(loggerDefinition);
 
-        GetLevelMethod = ModuleDefinition.Import(loggerDefinition.FindMethod("get_Level"));
+        GetLevelMethod = ModuleDefinition.ImportReference(loggerDefinition.FindMethod("get_Level"));
 
-        DebugMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Debug", "String"));
-        DebugMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Debug", "String", "Object[]"));
-        DebugExceptionMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("DebugException", "String", "Exception"));
-        InfoMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Info", "String"));
-        InfoMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Info", "String", "Object[]"));
-        InfoExceptionMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("InfoException", "String", "Exception"));
-        WarnMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Warn", "String"));
-        WarnMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Warn", "String", "Object[]"));
-        WarnExceptionMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("WarnException", "String", "Exception"));
-        ErrorMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Error", "String"));
-        ErrorMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Error", "String", "Object[]"));
-        ErrorExceptionMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("ErrorException", "String", "Exception"));
-        FatalMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Fatal", "String"));
-        FatalMethodParams = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("Fatal", "String", "Object[]"));
-        FatalExceptionMethod = ModuleDefinition.Import(fullLoggerDefinition.FindMethod("FatalException", "String", "Exception"));
+        DebugMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Debug", "String"));
+        DebugMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Debug", "String", "Object[]"));
+        DebugExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("DebugException", "String", "Exception"));
+        InfoMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Info", "String"));
+        InfoMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Info", "String", "Object[]"));
+        InfoExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("InfoException", "String", "Exception"));
+        WarnMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Warn", "String"));
+        WarnMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Warn", "String", "Object[]"));
+        WarnExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("WarnException", "String", "Exception"));
+        ErrorMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Error", "String"));
+        ErrorMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Error", "String", "Object[]"));
+        ErrorExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("ErrorException", "String", "Exception"));
+        FatalMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Fatal", "String"));
+        FatalMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Fatal", "String", "Object[]"));
+        FatalExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("FatalException", "String", "Exception"));
 	
     }
 

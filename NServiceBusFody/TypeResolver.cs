@@ -7,30 +7,30 @@ public partial class ModuleWeaver
     {
         var logManagerType = NServiceBusReference.MainModule.Types.First(x => x.Name == "LogManager");
 		var getLoggerDefinition = logManagerType.FindMethod("GetLogger","String");
-        constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+        constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
         var loggerTypeDefinition = NServiceBusReference.MainModule.Types.First(x => x.Name == "ILog");
-		DebugFormatMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("DebugFormat", "String","Object[]"));
-		DebugMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String"));
-		IsDebugEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
-		DebugExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String", "Exception"));
-        InfoFormatMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("InfoFormat", "String", "Object[]"));
-        InfoMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Info", "String"));
-		IsInfoEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsInfoEnabled"));
-		InfoExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Info", "String", "Exception"));
-        WarnFormatMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("WarnFormat", "String", "Object[]"));
-        WarnMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warn", "String"));
-		IsWarnEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
-		WarnExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warn", "String", "Exception"));
-        ErrorFormatMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("ErrorFormat", "String", "Object[]"));
-        ErrorMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String"));
-		IsErrorEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
-		ErrorExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Exception"));
-        FatalFormatMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("FatalFormat", "String", "Object[]"));
-        FatalMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String"));
-        IsFatalEnabledMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
-        FatalExceptionMethod = ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Exception"));
-		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
+        DebugFormatMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
+        DebugMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String"));
+        IsDebugEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsDebugEnabled"));
+        DebugExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String", "Exception"));
+        InfoFormatMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("InfoFormat", "String", "Object[]"));
+        InfoMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Info", "String"));
+        IsInfoEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsInfoEnabled"));
+        InfoExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Info", "String", "Exception"));
+        WarnFormatMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("WarnFormat", "String", "Object[]"));
+        WarnMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warn", "String"));
+        IsWarnEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
+        WarnExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warn", "String", "Exception"));
+        ErrorFormatMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("ErrorFormat", "String", "Object[]"));
+        ErrorMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "String"));
+        IsErrorEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsErrorEnabled"));
+        ErrorExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "String", "Exception"));
+        FatalFormatMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("FatalFormat", "String", "Object[]"));
+        FatalMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "String"));
+        IsFatalEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsFatalEnabled"));
+        FatalExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "String", "Exception"));
+        LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);
     }
 
 	public MethodReference DebugFormatMethod;

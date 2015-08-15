@@ -32,7 +32,7 @@ public partial class ModuleWeaver
 
             FindGetLogger(typeReference.Resolve());
 
-            GetLoggerMethod = ModuleDefinition.Import(GetLoggerMethod);
+            GetLoggerMethod = ModuleDefinition.ImportReference(GetLoggerMethod);
             ModuleDefinition.Assembly.CustomAttributes.Remove(loggerFactoryAttribute);
         }
 

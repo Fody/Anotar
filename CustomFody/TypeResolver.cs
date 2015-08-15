@@ -5,26 +5,26 @@ public partial class ModuleWeaver
     public void Init()
     {
         var loggerTypeDefinition = GetLoggerMethod.ReturnType.Resolve();
-        
-		TraceMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "String","Object[]")));
-		IsTraceEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsTraceEnabled")));
-        TraceExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Trace", "Exception", "String", "Object[]")));
-		DebugMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "String","Object[]")));
-		IsDebugEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsDebugEnabled")));
-        DebugExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]")));
-        InformationMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Information", "String", "Object[]")));
-        IsInformationEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsInformationEnabled")));
-        InformationExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Information", "Exception", "String", "Object[]")));
-        WarningMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warning", "String", "Object[]")));
-        IsWarningEnabledMethod = new Lazy<MethodReference>(()=>ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsWarningEnabled")));
-        WarningExceptionMethod =new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Warning", "Exception", "String", "Object[]")));
-        ErrorMethod =new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "String", "Object[]")));
-		IsErrorEnabledMethod =new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsErrorEnabled")));
-        ErrorExceptionMethod = new Lazy<MethodReference>(()=>ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Error", "Exception", "String", "Object[]")));
-        FatalMethod = new Lazy<MethodReference>(()=>ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "String", "Object[]")));
-        IsFatalEnabledMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("get_IsFatalEnabled")));
-        FatalExceptionMethod = new Lazy<MethodReference>(()=> ModuleDefinition.Import(loggerTypeDefinition.FindMethod("Fatal", "Exception", "String", "Object[]")));
-		LoggerType = ModuleDefinition.Import(loggerTypeDefinition);
+
+        TraceMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Trace", "String", "Object[]")));
+        IsTraceEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsTraceEnabled")));
+        TraceExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Trace", "Exception", "String", "Object[]")));
+        DebugMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String", "Object[]")));
+        IsDebugEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsDebugEnabled")));
+        DebugExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]")));
+        InformationMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Information", "String", "Object[]")));
+        IsInformationEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsInformationEnabled")));
+        InformationExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Information", "Exception", "String", "Object[]")));
+        WarningMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warning", "String", "Object[]")));
+        IsWarningEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsWarningEnabled")));
+        WarningExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warning", "Exception", "String", "Object[]")));
+        ErrorMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "String", "Object[]")));
+        IsErrorEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsErrorEnabled")));
+        ErrorExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "Exception", "String", "Object[]")));
+        FatalMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "String", "Object[]")));
+        IsFatalEnabledMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsFatalEnabled")));
+        FatalExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "Exception", "String", "Object[]")));
+        LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);
     }
 
 	public Lazy<MethodReference> TraceMethod;

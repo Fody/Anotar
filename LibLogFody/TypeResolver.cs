@@ -22,41 +22,41 @@ public partial class ModuleWeaver
             }
 
             var getLoggerDefinition = logManagerType.FindMethod("GetLogger","String");
-            constructLoggerMethod = ModuleDefinition.Import(getLoggerDefinition);
+            constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
 
-            TraceMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Trace", "ILog", "String"));
-            TraceFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("TraceFormat", "ILog", "String", "Object[]"));
-            IsTraceEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsTraceEnabled", "ILog"));
-            TraceExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("TraceException", "ILog", "String", "Exception", "Object[]"));
+            TraceMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Trace", "ILog", "String"));
+            TraceFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("TraceFormat", "ILog", "String", "Object[]"));
+            IsTraceEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsTraceEnabled", "ILog"));
+            TraceExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("TraceException", "ILog", "String", "Exception", "Object[]"));
 
-            DebugMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Debug", "ILog", "String"));
-            DebugFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("DebugFormat", "ILog", "String", "Object[]"));
-            IsDebugEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsDebugEnabled", "ILog"));
-            DebugExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("DebugException", "ILog", "String", "Exception", "Object[]"));
+            DebugMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Debug", "ILog", "String"));
+            DebugFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("DebugFormat", "ILog", "String", "Object[]"));
+            IsDebugEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsDebugEnabled", "ILog"));
+            DebugExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("DebugException", "ILog", "String", "Exception", "Object[]"));
 
-            InfoMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Info", "ILog", "String"));
-            InfoFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("InfoFormat", "ILog", "String", "Object[]"));
-            IsInfoEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsInfoEnabled", "ILog"));
-            InfoExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("InfoException", "ILog", "String", "Exception", "Object[]"));
+            InfoMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Info", "ILog", "String"));
+            InfoFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("InfoFormat", "ILog", "String", "Object[]"));
+            IsInfoEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsInfoEnabled", "ILog"));
+            InfoExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("InfoException", "ILog", "String", "Exception", "Object[]"));
 
-            WarnMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Warn", "ILog", "String"));
-            WarnFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("WarnFormat", "ILog", "String", "Object[]"));
-            IsWarnEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsWarnEnabled", "ILog"));
-            WarnExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("WarnException", "ILog", "String", "Exception", "Object[]"));
+            WarnMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Warn", "ILog", "String"));
+            WarnFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("WarnFormat", "ILog", "String", "Object[]"));
+            IsWarnEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsWarnEnabled", "ILog"));
+            WarnExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("WarnException", "ILog", "String", "Exception", "Object[]"));
 
-            ErrorMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Error", "ILog", "String"));
-            ErrorFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("ErrorFormat", "ILog", "String", "Object[]"));
-            IsErrorEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsErrorEnabled", "ILog"));
-            ErrorExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("ErrorException", "ILog", "String", "Exception", "Object[]"));
+            ErrorMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Error", "ILog", "String"));
+            ErrorFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("ErrorFormat", "ILog", "String", "Object[]"));
+            IsErrorEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsErrorEnabled", "ILog"));
+            ErrorExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("ErrorException", "ILog", "String", "Exception", "Object[]"));
 
-            FatalMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("Fatal", "ILog", "String"));
-            FatalFormatMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("FatalFormat", "ILog", "String", "Object[]"));
-            IsFatalEnabledMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("IsFatalEnabled", "ILog"));
-            FatalExceptionMethod = ModuleDefinition.Import(logExtensionsTypeDefinition.FindMethod("FatalException", "ILog", "String", "Exception", "Object[]"));
+            FatalMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Fatal", "ILog", "String"));
+            FatalFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("FatalFormat", "ILog", "String", "Object[]"));
+            IsFatalEnabledMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("IsFatalEnabled", "ILog"));
+            FatalExceptionMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("FatalException", "ILog", "String", "Exception", "Object[]"));
 
             var log = module.Types.First(x => x.Name == "ILog");
-            LogType = ModuleDefinition.Import(log);
+            LogType = ModuleDefinition.ImportReference(log);
 
             return;
         }
