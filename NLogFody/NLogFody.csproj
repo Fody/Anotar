@@ -76,7 +76,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.NLog.nuspec">
+    <None Include="NugetAssets\Anotar.NLog.Fody.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="FodyWeavers.xml" />
@@ -152,7 +152,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
     <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NLog.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NLog\Tools\install.ps1" />

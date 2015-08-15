@@ -80,7 +80,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.MetroLog.nuspec">
+    <None Include="NugetAssets\Anotar.MetroLog.Fody.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="FodyWeavers.xml">
@@ -156,7 +156,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog\Lib" />
     <Copy SourceFiles="$(SolutionDir)MetroLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.MetroLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.MetroLog.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.MetroLog.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.MetroLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(OutputPath)Anotar.MetroLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\MetroLog" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\MetroLog\Tools\install.ps1" />

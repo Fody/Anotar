@@ -75,7 +75,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.NServiceBus.nuspec" />
+    <None Include="NugetAssets\Anotar.NServiceBus.Fody.nuspec" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +149,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(SolutionDir)NServiceBusReferenceAssembly\bin\$(ConfigurationName)\Anotar.NServiceBus.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus\Lib" />
     <Copy SourceFiles="$(SolutionDir)NServiceBusReferenceAssembly\bin\$(ConfigurationName)\Anotar.NServiceBus.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NServiceBus.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NServiceBus.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(OutputPath)Anotar.NServiceBus.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(OutputPath)Anotar.NServiceBus.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NServiceBus" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NServiceBus\Tools\install.ps1" />

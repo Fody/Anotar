@@ -76,7 +76,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.Log4Net.nuspec">
+    <None Include="NugetAssets\Anotar.Log4Net.Fody.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="FodyWeavers.xml" />
@@ -152,7 +152,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib" />
     <Copy SourceFiles="$(SolutionDir)Log4NetReferenceAssembly\bin\$(ConfigurationName)\Anotar.Log4Net.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Log4Net.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Log4Net.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(OutputPath)Anotar.Log4Net.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Log4Net" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Log4Net\Tools\install.ps1" />

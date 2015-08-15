@@ -64,7 +64,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.CommonLogging.nuspec">
+    <None Include="NugetAssets\Anotar.CommonLogging.Fody.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="FodyWeavers.xml">
@@ -117,7 +117,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib" />
     <Copy SourceFiles="$(SolutionDir)CommonLoggingReferenceAssembly\bin\$(ConfigurationName)\Anotar.CommonLogging.xml" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.CommonLogging.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.CommonLogging.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(OutputPath)Anotar.CommonLogging.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\CommonLogging" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\CommonLogging\Tools\install.ps1" />

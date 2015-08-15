@@ -77,7 +77,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.Catel.nuspec" />
+    <None Include="NugetAssets\Anotar.Catel.Fody.nuspec" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +151,7 @@
     <MakeDir Directories="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib" />
     <Copy SourceFiles="$(SolutionDir)CatelReferenceAssembly\bin\$(ConfigurationName)\Anotar.Catel.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Catel\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Catel.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Catel.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)Anotar.Catel.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(OutputPath)Anotar.Catel.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Catel" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Catel\Tools\install.ps1" />

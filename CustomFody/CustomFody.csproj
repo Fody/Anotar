@@ -72,7 +72,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.Custom.nuspec">
+    <None Include="NugetAssets\Anotar.Custom.Fody.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="FodyWeavers.xml" />
@@ -154,7 +154,7 @@
     <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib" />
     <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Custom\Tools\install.ps1" />
