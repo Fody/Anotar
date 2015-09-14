@@ -14,9 +14,8 @@ namespace JetBrains.Annotations
 		/// <summary>
 		/// Not for external use.
 		/// </summary>
-// ReSharper disable UnusedParameter.Local
+		// ReSharper disable once UnusedParameter.Local
         public StringFormatMethodAttribute(string formatParameterName)
-// ReSharper restore UnusedParameter.Local
         {
         }
 
