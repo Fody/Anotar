@@ -28,7 +28,7 @@ public static class CecilExtensions
     {
         method = GetActualMethod(method);
         var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.DisplayName()));
-        return string.Format("{0} {1}({2})", method.ReturnType.DisplayName(), method.Name, paramNames);
+        return $"{method.ReturnType.DisplayName()} {method.Name}({paramNames})";
     }
 
     public static string DisplayName(this TypeReference typeReference)
@@ -116,7 +116,7 @@ public static class CecilExtensions
                 //TODO: sequence point
                 if (instruction.OpCode == OpCodes.Ldftn)
                 {
-                    var message = string.Format("Inline delegate usages of 'LogTo' are not supported. '{0}'.", methodDefinition.FullName);
+                    var message = $"Inline delegate usages of 'LogTo' are not supported. '{methodDefinition.FullName}'.";
                     throw new WeavingException(message);
                 }
             }
@@ -134,7 +134,7 @@ public static class CecilExtensions
                 //TODO: sequence point
                 if (instruction.OpCode == OpCodes.Ldtoken)
                 {
-                    var message = string.Format("'typeof' usages or passing `dynamic' params to 'LogTo' are not supported. '{0}'.", methodDefinition.FullName);
+                    var message = $"'typeof' usages or passing `dynamic' params to 'LogTo' are not supported. '{methodDefinition.FullName}'.";
                     throw new WeavingException(message);
                 }
             }
@@ -270,7 +270,7 @@ public static class CecilExtensions
         if (firstOrDefault == null)
         {
             var parameterNames = string.Join(", ", paramTypes);
-            throw new WeavingException(string.Format("Expected to find method '{0}({1})' on type '{2}'.", method, parameterNames, typeDefinition.FullName));
+            throw new WeavingException($"Expected to find method '{method}({parameterNames})' on type '{typeDefinition.FullName}'.");
         }
         return firstOrDefault;
     }
@@ -284,7 +284,7 @@ public static class CecilExtensions
         if (firstOrDefault == null)
         {
             var parameterNames = string.Join(", ", paramTypes);
-            throw new WeavingException(string.Format("Expected to find method '{0}({1})' on type '{2}'.", method, parameterNames, typeDefinition.FullName));
+            throw new WeavingException($"Expected to find method '{method}({parameterNames})' on type '{typeDefinition.FullName}'.");
         }
         return firstOrDefault;
     }

@@ -34,7 +34,7 @@ public partial class ModuleWeaver
                 return assemblyDefinition;
             }
         }
-        var message = string.Format("Expected to find a reference to one of {0}.", string.Join(",",referenceNames));
+        var message = $"Expected to find a reference to one of {string.Join(",", referenceNames)}.";
         throw new Exception(message);
     }
 }

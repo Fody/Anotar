@@ -35,7 +35,7 @@ public class LogForwardingProcessor
         }
         catch (Exception exception)
         {
-            throw new Exception(string.Format("Failed to process '{0}'.", Method.FullName), exception);
+            throw new Exception($"Failed to process '{Method.FullName}'.", exception);
         }
     }
 
@@ -234,9 +234,9 @@ public class LogForwardingProcessor
         int lineNumber;
         if (instruction.TryGetPreviousLineNumber(out lineNumber))
         {
-            return string.Format("Method: '{0}'. Line: ~{1}. ", Method.DisplayName(), lineNumber);
+            return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
         }
-        return string.Format("Method: '{0}'. ", Method.DisplayName());
+        return $"Method: '{Method.DisplayName()}'. ";
     }
 
 }

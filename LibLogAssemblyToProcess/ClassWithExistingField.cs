@@ -13,7 +13,7 @@ public class ClassWithExistingField
 
     public void Debug()
     {
-        LogTo.Debug("Sdf","asd");
+        LogTo.Debug("Sdf{0}","asd");
     }
     public void Debug2()
     {

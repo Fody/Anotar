@@ -365,12 +365,12 @@ public class ActionLog : ILog
         throw new NotImplementedException();
     }
 
-    public bool IsTraceEnabled { get{return true;}}
-    public bool IsDebugEnabled { get { return true; } }
-    public bool IsErrorEnabled { get { return true; } }
-    public bool IsFatalEnabled { get { return true; } }
-    public bool IsInfoEnabled { get { return true; } }
-    public bool IsWarnEnabled { get { return true; } }
+    public bool IsTraceEnabled => true;
+    public bool IsDebugEnabled => true;
+    public bool IsErrorEnabled => true;
+    public bool IsFatalEnabled => true;
+    public bool IsInfoEnabled => true;
+    public bool IsWarnEnabled => true;
 
     public IVariablesContext GlobalVariablesContext
     {

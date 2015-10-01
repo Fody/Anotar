@@ -13,7 +13,7 @@ public class Template
             anotarLogger
                 .ForContext("MethodName", "Void Debug()", false)
                 .ForContext("LineNumber", 13, false)
-                .Debug("", new object[0]);
+                .Debug("");
         }
     }
 

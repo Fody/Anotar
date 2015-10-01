@@ -15,7 +15,7 @@ class ParamsFormatBuilder
     {
 		this.paramsArray = paramsArray;
 
-		MessageBuilder = new StringBuilder(string.Format("Exception occurred in '{0}'. ", methodDefinition.DisplayName()));
+		MessageBuilder = new StringBuilder($"Exception occurred in '{methodDefinition.DisplayName()}'. ");
 		foreach (var parameterDefinition in methodDefinition.Parameters)
         {
             foreach (var instruction in ProcessParam(parameterDefinition))

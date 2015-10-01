@@ -42,6 +42,10 @@
 // ReSharper disable RedundantUsingDirective
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable SuggestVarOrType_BuiltInTypes
+// ReSharper disable UseNullPropagation
+// ReSharper disable ConvertPropertyToExpressionBody
+// ReSharper disable ConvertToAutoProperty
+// ReSharper disable UnusedMember.Global
 #pragma warning disable 1591
 
 // If you copied this file manually, you need to change all "YourRootNameSpace" so not to clash with other libraries
@@ -676,6 +680,7 @@ namespace LibLogAssembly.Logging
             _getIsDisabled = getIsDisabled ?? (() => false);
         }
 
+        // ReSharper disable once ConvertToAutoPropertyWhenPossible
         internal Logger WrappedLogger
         {
             get { return _logger; }

@@ -42,7 +42,7 @@ public partial class ModuleWeaver
     {
         if (!typeDefinition.IsPublic)
         {
-            var message = string.Format("The logger factory type '{0}' needs to be public.", typeDefinition.FullName);
+            var message = $"The logger factory type '{typeDefinition.FullName}' needs to be public.";
             throw new WeavingException(message);
         }
         GetLoggerMethod = typeDefinition
@@ -60,7 +60,7 @@ public partial class ModuleWeaver
         }
         if (!GetLoggerMethod.Resolve().IsPublic)
         {
-            var message = string.Format("The logger factory method '{0}' needs to be public.", GetLoggerMethod.FullName);
+            var message = $"The logger factory method '{GetLoggerMethod.FullName}' needs to be public.";
             throw new WeavingException(message);
         }
     }

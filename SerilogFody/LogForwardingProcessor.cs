@@ -35,7 +35,7 @@ public class LogForwardingProcessor
         }
         catch (Exception exception)
         {
-            throw new Exception(string.Format("Failed to process '{0}'.", Method.FullName), exception);
+            throw new Exception($"Failed to process '{Method.FullName}'.", exception);
         }
     }
 

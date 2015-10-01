@@ -20,7 +20,7 @@ public class Logger
             Exception = exception
         });
     }
-    public bool IsTraceEnabled { get { return true; } }
+    public bool IsTraceEnabled => true;
 
     public void Debug(string format, params object[] args)
     {
@@ -40,7 +40,7 @@ public class Logger
         });
     }
 
-    public bool IsDebugEnabled { get { return true; } }
+    public bool IsDebugEnabled => true;
 
     public void Information(string format, params object[] args)
     {
@@ -59,7 +59,7 @@ public class Logger
             Exception = exception
         });
     }
-    public bool IsInformationEnabled { get { return true; } }
+    public bool IsInformationEnabled => true;
 
     public void Warning(string format, params object[] args)
     {
@@ -78,7 +78,7 @@ public class Logger
             Exception = exception
         });
     }
-    public bool IsWarningEnabled { get { return true; } }
+    public bool IsWarningEnabled => true;
 
     public void Error(string format, params object[] args)
     {
@@ -98,7 +98,7 @@ public class Logger
             Exception = exception
         });
     } 
-    public bool IsErrorEnabled { get { return true; } }
+    public bool IsErrorEnabled => true;
 
     public void Fatal(string format, params object[] args)
     {
@@ -117,7 +117,7 @@ public class Logger
             Exception = exception
         });
     }
-    public bool IsFatalEnabled { get { return true; } }
+    public bool IsFatalEnabled => true;
     public List<LogEntry> ErrorEntries;
     public List<LogEntry> FatalEntries;
     public List<LogEntry> DebugEntries;
