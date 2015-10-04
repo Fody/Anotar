@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Anotar.NLog;
+// ReSharper disable UnusedVariable
 
 public class ReturnFixerTests
 {
