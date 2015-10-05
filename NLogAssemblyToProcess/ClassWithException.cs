@@ -1,5 +1,6 @@
 using System;
 using Anotar.NLog;
+#pragma warning disable 1998
 
 public class ClassWithException
 {

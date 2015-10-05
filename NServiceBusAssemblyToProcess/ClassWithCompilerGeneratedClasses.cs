@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Anotar.NServiceBus;
+#pragma warning disable 1998
 
 public class ClassWithCompilerGeneratedClasses
 {

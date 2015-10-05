@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployable|AnyCPU'">
     <OutputPath>bin\Deployable\</OutputPath>
@@ -44,6 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -155,8 +158,10 @@
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
     <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_35\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\net35" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_35\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\net35" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_Portable\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net45+netcore45+wpa81+wp8" />
+    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_Portable\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net45+netcore45+wpa81+wp8" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />

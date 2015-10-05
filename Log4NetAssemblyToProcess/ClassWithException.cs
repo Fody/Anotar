@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Anotar.Log4Net;
+#pragma warning disable 1998
 
 public class ClassWithException
 {

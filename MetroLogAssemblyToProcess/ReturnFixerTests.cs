@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using Anotar.MetroLog;
 // ReSharper disable UnusedVariable
+#pragma warning disable 162
+#pragma warning disable 649
 
 public class ReturnFixerTests
 {
@@ -121,10 +123,8 @@ public class ReturnFixerTests
             throw new Exception("aString");
         }
     }
-#pragma warning restore 168
 
     bool isInSomeMode;
-// ReSharper disable once NotAccessedField.Local
     string branchingReturnField;
 
     [LogToDebugOnException]
@@ -134,9 +134,7 @@ public class ReturnFixerTests
         if (isInSomeMode)
         {
             Console.WriteLine("code here so 'if' does not get optimized away in release mode");
-// ReSharper disable RedundantJumpStatement
             return;
-// ReSharper restore RedundantJumpStatement
         }
     }
 }

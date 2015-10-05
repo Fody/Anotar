@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Anotar.Custom;
+#pragma warning disable 1998
 
 
 public class ClassWithCompilerGeneratedClasses

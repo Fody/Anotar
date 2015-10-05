@@ -1,5 +1,6 @@
 using Serilog;
 using Serilog.Events;
+#pragma warning disable 169
 
 public class Template
 {

@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using Anotar.CommonLogging;
 // ReSharper disable UnusedVariable
+#pragma warning disable 162
+#pragma warning disable 649
 
 public class ReturnFixerTests
 {
@@ -121,7 +123,6 @@ public class ReturnFixerTests
             throw new Exception("aString");
         }
     }
-#pragma warning restore 168
 
     bool isInSomeMode;
 // ReSharper disable once NotAccessedField.Local
