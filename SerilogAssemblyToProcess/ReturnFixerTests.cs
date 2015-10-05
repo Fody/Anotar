@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Anotar.Serilog;
 // ReSharper disable UnusedVariable
+#pragma warning disable 162
 #pragma warning disable 649
 
 public class ReturnFixerTests
@@ -115,6 +116,7 @@ public class ReturnFixerTests
                 Debug.WriteLine("aString");
                 throw;
             }
+            // ReSharper disable once HeuristicUnreachableCode
             throw new Exception("aString", exception);
         }
         finally
