@@ -535,7 +535,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.AsyncMethod();
         var logEvent = debugs.Single();
-        Assert.AreEqual(10, logEvent.LineNumber());
+        Assert.AreEqual(11, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
@@ -548,7 +548,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
         var logEvent = debugs.Single();
-        Assert.AreEqual(16, logEvent.LineNumber());
+        Assert.AreEqual(17, logEvent.LineNumber());
         Assert.AreEqual("IEnumerable<Int32> EnumeratorMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
@@ -561,7 +561,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.DelegateMethod();
         var logEvent = debugs.Single();
-        Assert.AreEqual(23, logEvent.LineNumber());
+        Assert.AreEqual(24, logEvent.LineNumber());
         Assert.AreEqual("Void DelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
@@ -574,7 +574,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         var logEvent = debugs.Single();
-        Assert.AreEqual(38, logEvent.LineNumber());
+        Assert.AreEqual(39, logEvent.LineNumber());
         Assert.AreEqual("Void AsyncDelegateMethod()", logEvent.MethodName());
         Assert.AreEqual("", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
@@ -587,7 +587,7 @@ public class SerilogTests
         var instance = (dynamic)Activator.CreateInstance(type);
         instance.LambdaMethod();
         var logEvent = debugs.Single();
-        Assert.AreEqual(30, logEvent.LineNumber());
+        Assert.AreEqual(31, logEvent.LineNumber());
         Assert.AreEqual("Void LambdaMethod()", logEvent.MethodName());
         Assert.AreEqual("Foo {0}", logEvent.MessageTemplate.Text);
         Assert.AreEqual("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
