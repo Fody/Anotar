@@ -6,6 +6,10 @@ public partial class ModuleWeaver
     public int GetLevelForMethodName(MethodReference methodReference)
     {
         var name = methodReference.Name;
+        if (name == "Verbose")
+        {
+            return VerboseLevel;
+        }
         if (name == "Debug")
         {
             return DebugLevel;
@@ -32,6 +36,10 @@ public partial class ModuleWeaver
     public int GetLevelForIsEnabled(MethodReference methodReference)
     {
         var name = methodReference.Name;
+        if (name == "get_IsVerboseEnabled")
+        {
+            return VerboseLevel;
+        }
         if (name == "get_IsDebugEnabled")
         {
             return DebugLevel;
@@ -58,6 +66,10 @@ public partial class ModuleWeaver
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
         var name = methodReference.Name;
+        if (name == "Verbose")
+        {
+            return verboseMethod;
+        }
         if (name == "Debug")
         {
             return debugMethod;
@@ -84,6 +96,10 @@ public partial class ModuleWeaver
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {
         var name = methodReference.Name;
+        if (name == "Verbose")
+        {
+            return VerboseExceptionMethod;
+        }
         if (name == "Debug")
         {
             return DebugExceptionMethod;

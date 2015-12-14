@@ -5,6 +5,46 @@ using Anotar.Serilog;
 
 public class ClassWithException
 {
+    public void Verbose()
+    {
+        try
+        {
+        LogTo.Verbose();
+        }
+        catch
+        {
+        }
+    }
+    public void VerboseString()
+    {
+        try
+        {
+        LogTo.Verbose("TheMessage");
+        }
+        catch
+        {
+        }
+    }
+    public void VerboseStringParams()
+    {
+        try
+        {
+        LogTo.Verbose("TheMessage {0}", 1);
+        }
+        catch
+        {
+        }
+    }
+    public void VerboseStringException()
+    {
+        try
+        {
+        LogTo.Verbose(new Exception(), "TheMessage");
+        }
+        catch
+        {
+        }
+    }
     public void Debug()
     {
         try

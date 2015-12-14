@@ -7,6 +7,7 @@ public partial class ModuleWeaver
     {
 		var logManagerType = SerilogReference.MainModule.Types.First(x => x.Name == "Log");
 		var logEventLevelType = SerilogReference.MainModule.Types.First(x => x.Name == "LogEventLevel");
+        VerboseLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Verbose").Constant;
 	    DebugLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Debug").Constant;
 		ErrorLevel = (int)logEventLevelType.Fields.First(x => x.Name == "Error").Constant;
 	    InformationLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Information").Constant;
@@ -22,6 +23,8 @@ public partial class ModuleWeaver
 
         IsEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("IsEnabled", "LogEventLevel"));
 
+        verboseMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Verbose", "String", "Object[]"));
+        VerboseExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Verbose", "Exception", "String", "Object[]"));
         debugMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String", "Object[]"));
         DebugExceptionMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]"));
         infoMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Information", "String", "Object[]"));
@@ -36,12 +39,14 @@ public partial class ModuleWeaver
     }
 
     MethodReference debugMethod;
+    MethodReference verboseMethod;
     MethodReference infoMethod;
     MethodReference warningMethod;
     MethodReference errorMethod; 
     MethodReference fatalMethod;
     TypeReference loggerType;
 
+	public MethodReference VerboseExceptionMethod;
 	public MethodReference DebugExceptionMethod;
 	public MethodReference InfoExceptionMethod;
 	public MethodReference WarnExceptionMethod;
@@ -51,6 +56,7 @@ public partial class ModuleWeaver
 
 	MethodReference forContextDefinition;
 	public MethodReference IsEnabledMethod;
+	public int VerboseLevel;
 	public int DebugLevel;
 	public int FatalLevel;
 	public int WarningLevel;

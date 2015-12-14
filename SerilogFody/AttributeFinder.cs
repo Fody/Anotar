@@ -5,6 +5,11 @@ public class AttributeFinder
 	public AttributeFinder(MethodDefinition method)
 	{
 		var customAttributes = method.CustomAttributes;
+		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToVerboseOnExceptionAttribute"))
+		{
+			FoundVerbose = true;
+			Found = true;
+		}
 		if (customAttributes.ContainsAttribute("Anotar.Serilog.LogToDebugOnExceptionAttribute"))
 		{
 			FoundDebug = true;
@@ -36,6 +41,7 @@ public class AttributeFinder
 	public bool Found;
 	public bool FoundInfo;
 	public bool FoundDebug;
+	public bool FoundVerbose;
 	public bool FoundWarn;
 	public bool FoundError;
 	public bool FoundFatal;

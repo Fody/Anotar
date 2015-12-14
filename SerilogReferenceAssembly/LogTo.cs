@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace Anotar.Serilog
 {
@@ -8,7 +7,44 @@ namespace Anotar.Serilog
 	/// </summary>
     public static class LogTo
     {
+        
 
+        /// <summary>
+        /// Returns true if verbose is enabled.
+        /// </summary>
+        public static bool IsVerboseEnabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Verbose</c> level.
+        /// </summary>
+        public static void Verbose()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Verbose</c> level.
+        /// </summary>
+        /// <param name="messageTemplate">Message template describing the event.</param>
+        /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        public static void Verbose(string messageTemplate, params object[] propertyValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Verbose</c> level.
+        /// </summary>
+        /// <param name="exception">An exception to be logged.</param>
+        /// <param name="messageTemplate">Message template describing the event.</param>
+        /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        public static void Verbose(Exception exception, string messageTemplate, params object[] propertyValues)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Returns true if debug is enabled.
         /// </summary>

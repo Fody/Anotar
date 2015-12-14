@@ -3,6 +3,30 @@ using Anotar.Serilog;
 
 public class ClassWithLogging
 {
+    public bool IsVerboseEnabled()
+    {
+        return LogTo.IsVerboseEnabled;
+    }
+
+    public void Verbose()
+    {
+        LogTo.Verbose();
+    }
+
+    public void VerboseString()
+    {
+        LogTo.Verbose("TheMessage");
+    }
+
+    public void VerboseStringParams()
+    {
+        LogTo.Verbose("TheMessage {0}", 1);
+    }
+
+    public void VerboseStringException()
+    {
+        LogTo.Verbose(new Exception(), "TheMessage");
+    }
     public bool IsDebugEnabled()
     {
         return LogTo.IsDebugEnabled;

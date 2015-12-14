@@ -114,6 +114,38 @@ public class OnException
         throw new Exception("Foo");
     }
 
+    [LogToVerboseOnException]
+    public void ToVerbose(string param1, int param2)
+    {
+        Debug.WriteLine("aString");
+        throw new Exception("Foo");
+    }
+
+    [LogToVerboseOnException]
+    public object ToVerboseWithReturn(string param1, int param2)
+    {
+        Debug.WriteLine("aString");
+        throw new Exception("Foo");
+    }
+
+    //TODO: add tests for these combos. for now it is ok to peVerify it
+    [LogToVerboseOnException]
+    public object ToVerboseWithReturnAndTc(string param1, int param2)
+    {
+        try
+        {
+            throw new Exception("Foo");
+        }
+        catch (Exception exception)
+        {
+            throw new Exception("Foo", exception);
+        }
+        finally
+        {
+            Debug.WriteLine("finally");
+        }
+    }
+
     [LogToDebugOnException]
     public void ToDebug(string param1, int param2)
     {
