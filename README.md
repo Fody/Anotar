@@ -380,6 +380,9 @@ For example
 ```
 public class Logger
 {
+    public void Trace(string format, params object[] args){}
+    public void Trace(Exception exception, string format, params object[] args){}
+    public bool IsTraceEnabled { get; private set; }
     public void Debug(string format, params object[] args){}
     public void Debug(Exception exception, string format, params object[] args){}
     public bool IsDebugEnabled { get; private set; }
