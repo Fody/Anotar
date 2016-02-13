@@ -16,7 +16,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, MetroLog</tags>
     <dependencies>
       <dependency id="Fody" version="1.29.2"/>
-      <dependency id="MetroLog" version ="0.8"/>
+      <dependency id="MetroLog" version ="1.0.0"/>
     </dependencies>
   </metadata>
 </package>
