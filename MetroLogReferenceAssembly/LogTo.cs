@@ -28,6 +28,15 @@ namespace Anotar.MetroLog
         /// <summary>
         /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Trace(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
         /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
@@ -81,10 +90,19 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Debug(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Debug(string format, params object[] args)
@@ -92,8 +110,8 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Debug(Func<string> message)
@@ -137,19 +155,28 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Info</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Info(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Info(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Info</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Info(Func<string> message)
@@ -193,19 +220,28 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Warn</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Warn(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Warn(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Warn</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Warn(Func<string> message)
@@ -249,19 +285,28 @@ namespace Anotar.MetroLog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Error</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Error(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Error(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Error</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Error(Func<string> message)
@@ -303,21 +348,30 @@ namespace Anotar.MetroLog
 		public static void Fatal()
 		{
 			throw new NotImplementedException();
-		}
+        }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Fatal</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
-        [StringFormatMethod("format")]
-		public static void Fatal(string format, params object[] args)
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Fatal(string message)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
+        [StringFormatMethod("format")]
+        public static void Fatal(string format, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Fatal(Func<string> message)
