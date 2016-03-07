@@ -60,6 +60,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
+    <Compile Include="ClassWithComplexExpressionInLog.cs" />
     <Compile Include="ClassWithExistingField_NLog.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithMultipleLoggingCalls.cs" />

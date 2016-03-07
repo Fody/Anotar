@@ -92,6 +92,35 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
+    public MethodReference GetNormalOperandSimple(MethodReference methodReference)
+    {
+        var name = methodReference.Name;
+        if (name == "Trace")
+        {
+            return TraceMethodSimple;
+        }
+        if (name == "Debug")
+        {
+            return DebugMethodSimple;
+        }
+        if (name == "Information")
+        {
+            return InformationMethodSimple;
+        }
+        if (name == "Warning")
+        {
+            return WarningMethodSimple;
+        }
+        if (name == "Error")
+        {
+            return ErrorMethodSimple;
+        }
+        if (name == "Fatal")
+        {
+            return FatalMethodSimple;
+        }
+        throw new Exception("Invalid method name");
+    }
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {

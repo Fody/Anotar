@@ -25,19 +25,28 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Trace</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Trace(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Trace(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Trace</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Trace</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Trace(Func<string> message)
@@ -92,21 +101,30 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Debug(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Debug(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Debug</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Debug</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
@@ -141,18 +159,27 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Information</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Information(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Information</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Information(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Information</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
@@ -199,19 +226,28 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Warn</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Warning(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Warning(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Warn</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Warning(Func<string> message)
@@ -257,19 +293,28 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Error</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Error(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Error(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Error</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Error</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
         public static void Error(Func<string> message)
@@ -315,18 +360,27 @@ namespace Anotar.Custom
             throw new NotImplementedException();
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
-		/// </summary>
-		/// <param name="format">A <see langword="string" /> containing format items.</param>
-		/// <param name="args">Arguments to format.</param>
+        /// </summary>
+        /// <param name="message">The message to log.</param>
+        public static void Fatal(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// </summary>
+        /// <param name="format">A <see langword="string" /> containing format items.</param>
+        /// <param name="args">Arguments to format.</param>
         [StringFormatMethod("format")]
         public static void Fatal(string format, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>

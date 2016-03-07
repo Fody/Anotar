@@ -158,22 +158,6 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("String", "Object[]"))
         {
-            var stringInstruction = instruction.FindStringInstruction();
-
-            if (stringInstruction != null)
-            {
-
-                var operand = messagePrefix + (string) stringInstruction.Operand;
-                instructions.Replace(stringInstruction,
-                    new[]
-                    {
-                        Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                        Instruction.Create(stringInstruction.OpCode, operand),
-                    });
-
-                instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
-                return;
-            }
             if (messageVar == null)
             {
                 messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
@@ -196,6 +180,26 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldloc, paramsVar),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                });
+            return;
+        }
+        if (methodReference.IsMatch("String"))
+        {
+            if (messageVar == null)
+            {
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
+            }
+
+            instructions.Replace(instruction,
+                new[]
+                {
+                    Instruction.Create(OpCodes.Stloc, messageVar),
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, messageVar),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperandSimple(methodReference)),
                 });
             return;
         }
