@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ClassWithAbstract.cs" />
     <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
+    <Compile Include="ClassWithComplexExpressionInLog.cs" />
     <Compile Include="ClassWithLogging.cs" />
     <Compile Include="ClassWithExistingField.cs" />
     <Compile Include="ClassWithMultipleLoggingCalls.cs" />
