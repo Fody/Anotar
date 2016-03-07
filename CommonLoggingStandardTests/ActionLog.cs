@@ -12,7 +12,11 @@ public class ActionLog : ILog
 
     public void Trace(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Traces.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] { }
+        });
     }
 
     public void Trace(object message, Exception exception)
@@ -71,7 +75,11 @@ public class ActionLog : ILog
 
     public void Debug(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Debugs.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] { }
+        });
     }
 
     public void Debug(object message, Exception exception)
@@ -131,7 +139,11 @@ public class ActionLog : ILog
 
     public void Info(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Informations.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] {}
+        });
     }
 
     public void Info(object message, Exception exception)
@@ -190,7 +202,11 @@ public class ActionLog : ILog
 
     public void Warn(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Warnings.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] { }
+        });
     }
 
     public void Warn(object message, Exception exception)
@@ -249,7 +265,11 @@ public class ActionLog : ILog
 
     public void Error(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Errors.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] { }
+        });
     }
 
     public void Error(object message, Exception exception)
@@ -308,7 +328,11 @@ public class ActionLog : ILog
 
     public void Fatal(object message)
     {
-        throw new NotImplementedException();
+        actionAdapter.Fatals.Add(new LogEvent
+        {
+            Format = message.ToString(),
+            Args = new object[] { }
+        });
     }
 
     public void Fatal(object message, Exception exception)

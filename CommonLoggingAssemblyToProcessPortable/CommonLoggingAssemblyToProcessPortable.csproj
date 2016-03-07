@@ -63,6 +63,9 @@
     <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithCompilerGeneratedClasses.cs">
       <Link>ClassWithCompilerGeneratedClasses.cs</Link>
     </Compile>
+    <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithComplexExpressionInLog.cs">
+      <Link>ClassWithComplexExpressionInLog.cs</Link>
+    </Compile>
     <Compile Include="..\CommonLoggingAssemblyToProcess\ClassWithException.cs">
       <Link>ClassWithException.cs</Link>
     </Compile>
