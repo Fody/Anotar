@@ -86,71 +86,42 @@ public class LogForwardingProcessor
     void HandleStringAndArray(Instruction instruction, MethodReference methodReference)
     {
         var instructions = Method.Body.Instructions;
-        var stringInstruction = instruction.FindStringInstruction();
-
-        if (stringInstruction == null)
+        if (messageVar == null)
         {
-            if (messageVar == null)
-            {
-                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
-                Method.Body.Variables.Add(messageVar);
-            }
-            if (paramsVar == null)
-            {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
-                Method.Body.Variables.Add(paramsVar);
-            }
-
-            var exitNop = Instruction.Create(OpCodes.Nop);
-
-            var replacement = new List<Instruction>
-                              {
-                                  // store the variables
-                                  Instruction.Create(OpCodes.Stloc, paramsVar),
-                                  Instruction.Create(OpCodes.Stloc, messageVar),
-
-                                  //Append if 
-                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
-                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
-                                  Instruction.Create(OpCodes.Brfalse, exitNop)
-                              };
-
-            AppendExtraContext(instruction, replacement);
-            replacement.Append(
-                //put the variable back on the stack params
-                Instruction.Create(OpCodes.Ldloc, messageVar),
-                Instruction.Create(OpCodes.Ldloc, paramsVar),
-                //call the write method
-                Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
-                exitNop
-                );
-            ;
-            instructions.Replace(instruction, replacement);
+            messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            Method.Body.Variables.Add(messageVar);
         }
-        else
+        if (paramsVar == null)
         {
-            var exitNop = Instruction.Create(OpCodes.Nop);
-            var replacement = new List<Instruction>
-                              {
-
-                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
-                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
-                                  Instruction.Create(OpCodes.Brfalse, exitNop)
-                              };
-
-            AppendExtraContext(instruction, replacement);
-            replacement.Append(
-                //re-write stringInstruction contentes 
-                Instruction.Create(stringInstruction.OpCode, (string) stringInstruction.Operand)
-                );
-            instructions.Replace(stringInstruction, replacement);
-
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
-            
-            instructions.Insert(instructions.IndexOf(instruction)+1, exitNop);
+            paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+            Method.Body.Variables.Add(paramsVar);
         }
+
+        var exitNop = Instruction.Create(OpCodes.Nop);
+
+        var replacement = new List<Instruction>
+        {
+            // store the variables
+            Instruction.Create(OpCodes.Stloc, paramsVar),
+            Instruction.Create(OpCodes.Stloc, messageVar),
+
+            //Append if 
+            Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
+            Instruction.Create(OpCodes.Brfalse, exitNop)
+        };
+
+        AppendExtraContext(instruction, replacement);
+        replacement.Append(
+            //put the variable back on the stack params
+            Instruction.Create(OpCodes.Ldloc, messageVar),
+            Instruction.Create(OpCodes.Ldloc, paramsVar),
+            //call the write method
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+            exitNop
+            );
+        instructions.Replace(instruction, replacement);
     }
 
 
