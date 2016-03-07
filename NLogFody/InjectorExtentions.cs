@@ -92,6 +92,35 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
+    public MethodReference GetFormatOperand(MethodReference methodReference)
+    {
+        var name = methodReference.Name;
+        if (name == "Trace")
+        {
+            return TraceFormatMethod;
+        }
+        if (name == "Debug")
+        {
+            return DebugFormatMethod;
+        }
+        if (name == "Info")
+        {
+            return InfoFormatMethod;
+        }
+        if (name == "Warn")
+        {
+            return WarnFormatMethod;
+        }
+        if (name == "Error")
+        {
+            return ErrorFormatMethod;
+        }
+        if (name == "Fatal")
+        {
+            return FatalFormatMethod;
+        }
+        throw new Exception("Invalid method name");
+    }
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
     {

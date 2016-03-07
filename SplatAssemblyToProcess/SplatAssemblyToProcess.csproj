@@ -60,6 +60,7 @@
     <Compile Include="ClassWithCompilerGeneratedClasses.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ClassWithComplexExpressionInLog.cs" />
     <Compile Include="ClassWithException.cs">
       <SubType>Code</SubType>
     </Compile>

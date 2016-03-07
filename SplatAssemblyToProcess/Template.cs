@@ -8,8 +8,6 @@ public class Template
     {
         var service = (ILogManager)Locator.Current.GetService(typeof(ILogManager));
         existingLogger = service.GetLogger(typeof(Template));
-
-
     }
 
     public void Debug()
