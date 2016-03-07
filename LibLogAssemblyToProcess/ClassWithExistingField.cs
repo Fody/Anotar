@@ -15,9 +15,5 @@ public class ClassWithExistingField
     {
         LogTo.Debug("Sdf{0}","asd");
     }
-    public void Debug2()
-    {
-        existingLogger.DebugFormat("Sdf","asd");
-    }
 
 }
