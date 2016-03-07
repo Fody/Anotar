@@ -83,7 +83,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldstr, messagePrefix),
                     Instruction.Create(OpCodes.Ldc_I4_0),
                     Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference))
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetFormatOperand(methodReference))
                 });
             return;
         }
@@ -163,7 +163,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldstr, messagePrefix),
                     Instruction.Create(OpCodes.Ldloc, messageVar),
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperandSimple(methodReference)),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
                 });
             return;
         }
@@ -191,7 +191,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldloc, messageVar),
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldloc, paramsVar),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetFormatOperand(methodReference)),
                 });
             return;
         }
@@ -217,7 +217,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.FuncInvokeMethod),
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldnull),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetFormatOperand(methodReference)),
                 });
             return;
         }

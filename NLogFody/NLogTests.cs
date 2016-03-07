@@ -22,7 +22,6 @@ public class NLogTests
 
     public NLogTests()
     {
-
         AppDomainAssemblyFinder.Attach();
         beforeAssemblyPath = Path.GetFullPath(@"..\..\..\NLogAssemblyToProcess\bin\Debug\NLogAssemblyToProcess.dll");
 #if (!DEBUG)
@@ -32,9 +31,9 @@ public class NLogTests
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var config = new LoggingConfiguration();
         var target = new ActionTarget
-                     {
-                         Action = LogEvent
-                     };
+        {
+            Action = LogEvent
+        };
 
         config.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, target));
         config.AddTarget("debugger", target);
@@ -75,7 +74,16 @@ public class NLogTests
             return;
 // ReSharper restore RedundantJumpStatement
         }
+    }
 
+    [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void Method()'. Line: ~"));
     }
 
     [Test]
@@ -102,7 +110,7 @@ public class NLogTests
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
+        var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
@@ -687,7 +695,7 @@ public class NLogTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());

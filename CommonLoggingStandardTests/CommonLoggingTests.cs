@@ -43,6 +43,17 @@ public class CommonLoggingTests
         actionAdapter.Traces.Clear();
     }
 
+
+    [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void Method()'. Line: ~"));
+    }
+
     [Test]
     public void MethodThatReturns()
     {
@@ -56,7 +67,7 @@ public class CommonLoggingTests
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
+        var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = actionAdapter.Debugs.First();
@@ -746,7 +757,7 @@ public class CommonLoggingTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();

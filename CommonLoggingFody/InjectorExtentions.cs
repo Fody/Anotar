@@ -3,35 +3,6 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-    public MethodReference GetNormalOperandSimple(MethodReference methodReference)
-    {
-        var name = methodReference.Name;
-        if (name == "Trace")
-        {
-            return TraceMethodSimple;
-        }
-        if (name == "Debug")
-        {
-            return DebugMethodSimple;
-        }
-        if (name == "Info")
-        {
-            return InfoMethodSimple;
-        }
-        if (name == "Warn")
-        {
-            return WarnMethodSimple;
-        }
-        if (name == "Error")
-        {
-            return ErrorMethodSimple;
-        }
-        if (name == "Fatal")
-        {
-            return FatalMethodSimple;
-        }
-        throw new Exception("Invalid method name");
-    }
     public MethodReference GetNormalOperand(MethodReference methodReference)
     {
         var name = methodReference.Name;
@@ -58,6 +29,35 @@ public partial class ModuleWeaver
         if (name == "Fatal")
         {
             return FatalMethod;
+        }
+        throw new Exception("Invalid method name");
+    }
+    public MethodReference GetFormatOperand(MethodReference methodReference)
+    {
+        var name = methodReference.Name;
+        if (name == "Trace")
+        {
+            return TraceFormatMethod;
+        }
+        if (name == "Debug")
+        {
+            return DebugFormatMethod;
+        }
+        if (name == "Info")
+        {
+            return InfoFormatMethod;
+        }
+        if (name == "Warn")
+        {
+            return WarnForatMethod;
+        }
+        if (name == "Error")
+        {
+            return ErrorFormatMethod;
+        }
+        if (name == "Fatal")
+        {
+            return FatalFormatMethod;
         }
         throw new Exception("Invalid method name");
     }

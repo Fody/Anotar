@@ -28,9 +28,9 @@ public class CatelTests
         assembly = Assembly.LoadFile(afterAssemblyPath);
 
         LogManager.AddListener(new LogListener
-                               {
-                                   Action =LogMessage
-                               });
+        {
+            Action = LogMessage
+        });
     }
 
     void LogMessage(string message, LogEvent logEvent)
@@ -72,18 +72,28 @@ public class CatelTests
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
-        var instance = (dynamic)Activator.CreateInstance(constructedType);
+        var constructedType = type.MakeGenericType(typeof(string));
+        var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
         Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"), message);
     }
 
     [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void Method()'. Line: ~"));
+    }
+
+    [Test]
     public void IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsDebugEnabled());
     }
 
@@ -91,7 +101,7 @@ public class CatelTests
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
@@ -102,7 +112,7 @@ public class CatelTests
     {
         var type = assembly.GetType("ClassWithExistingField");
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void Debug()'. Line: ~"));
@@ -125,7 +135,7 @@ public class CatelTests
         Assert.IsNotNull(exception);
         Assert.AreEqual(1, list.Count);
         var first = list.First();
-        Assert.IsTrue(first.StartsWith(expected),first);
+        Assert.IsTrue(first.StartsWith(expected), first);
     }
 
 
@@ -197,9 +207,9 @@ public class CatelTests
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.AreEqual("a",instance.MethodThatReturns("x", 6));
+        Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
 
 
@@ -207,16 +217,17 @@ public class CatelTests
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugString()'. Line: ~"));
     }
+
     [Test]
     public void DebugStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringFunc();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
@@ -236,7 +247,7 @@ public class CatelTests
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringException()'. Line: ~"));
@@ -246,7 +257,7 @@ public class CatelTests
     public void DebugStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
@@ -256,7 +267,7 @@ public class CatelTests
     public void IsInfoEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsInfoEnabled());
     }
 
@@ -264,7 +275,7 @@ public class CatelTests
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void Info()'. Line: ~"));
@@ -274,7 +285,7 @@ public class CatelTests
     public void InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoString()'. Line: ~"));
@@ -284,7 +295,7 @@ public class CatelTests
     public void InfoStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringFunc();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
@@ -294,7 +305,7 @@ public class CatelTests
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
@@ -304,7 +315,7 @@ public class CatelTests
     public void InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringException()'. Line: ~"));
@@ -314,7 +325,7 @@ public class CatelTests
     public void InfoStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionFunc();
         Assert.AreEqual(1, Informations.Count);
         Assert.IsTrue(Informations.First().StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
@@ -324,7 +335,7 @@ public class CatelTests
     public void IsWarningEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsWarningEnabled());
     }
 
@@ -332,7 +343,7 @@ public class CatelTests
     public void Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warning();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void Warning()'. Line: ~"));
@@ -342,7 +353,7 @@ public class CatelTests
     public void WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningString();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningString()'. Line: ~"));
@@ -352,7 +363,7 @@ public class CatelTests
     public void WarningStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringFunc();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringFunc()'. Line: ~"));
@@ -362,7 +373,7 @@ public class CatelTests
     public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringParams();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringParams()'. Line: ~"));
@@ -372,7 +383,7 @@ public class CatelTests
     public void WarningStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringException();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringException()'. Line: ~"));
@@ -382,7 +393,7 @@ public class CatelTests
     public void WarningStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringExceptionFunc();
         Assert.AreEqual(1, Warnings.Count);
         Assert.IsTrue(Warnings.First().StartsWith("Method: 'void WarningStringExceptionFunc()'. Line: ~"));
@@ -392,7 +403,7 @@ public class CatelTests
     public void IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsErrorEnabled());
     }
 
@@ -400,7 +411,7 @@ public class CatelTests
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void Error()'. Line: ~"));
@@ -410,7 +421,7 @@ public class CatelTests
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorString()'. Line: ~"));
@@ -420,7 +431,7 @@ public class CatelTests
     public void ErrorStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringFunc();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
@@ -430,7 +441,7 @@ public class CatelTests
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
@@ -440,7 +451,7 @@ public class CatelTests
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
@@ -450,7 +461,7 @@ public class CatelTests
     public void ErrorStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
         Assert.AreEqual(1, Errors.Count);
         Assert.IsTrue(Errors.First().StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
@@ -459,24 +470,24 @@ public class CatelTests
     [Test]
     public void PeVerify()
     {
-        Verifier.Verify(beforeAssemblyPath,afterAssemblyPath);
+        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 
     [Test]
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
-        Assert.IsTrue(Debugs.Any(x=>x.StartsWith("Method: 'Void AsyncMethod()'. Line: ~")));
+        Assert.IsTrue(Debugs.Any(x => x.StartsWith("Method: 'Void AsyncMethod()'. Line: ~")));
     }
 
     [Test]
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
     }
@@ -485,7 +496,7 @@ public class CatelTests
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
@@ -495,7 +506,7 @@ public class CatelTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
@@ -505,7 +516,7 @@ public class CatelTests
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
@@ -521,7 +532,7 @@ public class CatelTests
         var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
 
         var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.NotNull(instance.DoIt());
     }

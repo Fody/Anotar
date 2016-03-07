@@ -1,10 +1,12 @@
 ![Icon](https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png)
 
-## This is an add-in for  [Fody](https://github.com/Fody/Fody) 
+
+## This is an add-in for [Fody](https://github.com/Fody/Fody) 
 
 Simplifies logging through a static class and some IL manipulation
 
 [Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
+
 
 ## Supported Logging Libraries
 
@@ -18,6 +20,7 @@ Simplifies logging through a static class and some IL manipulation
 * [NServiceBus](http://particular.net/nservicebus) 
 * [Serilog](http://serilog.net/)
 * [Splat](https://github.com/paulcbetts/splat)
+
 
 ## Nuget
   
@@ -60,7 +63,8 @@ Simplifies logging through a static class and some IL manipulation
  * Splat package http://nuget.org/packages/Anotar.Splat.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Splat.Fody.svg?style=flat)](https://www.nuget.org/packages/Anotar.Splat.Fody/)
 
     PM> Install-Package Anotar.Splat.Fody
- 
+
+
 ## Explicit Logging
 
 
@@ -78,6 +82,7 @@ public class MyClass
 
 ### What gets compiled
 
+
 #### In Catel
 
 ```
@@ -91,6 +96,7 @@ public class MyClass
     }
 }
 ```
+
 
 #### In CommonLogging
 
@@ -106,6 +112,7 @@ public class MyClass
 }
 ```
 
+
 #### In Custom
 
 ```
@@ -119,6 +126,7 @@ public class MyClass
     }
 }
 ```
+
 
 #### In LibLog
 
@@ -134,6 +142,7 @@ public class MyClass
 }
 ```
 
+
 #### In Log4Net
 
 ```
@@ -147,6 +156,7 @@ public class MyClass
     }
 }
 ```
+
 
 #### In MetroLog
 
@@ -162,6 +172,7 @@ public class MyClass
 }
 ```
 
+
 #### In NLog
 
 ```
@@ -176,6 +187,7 @@ public class MyClass
 }
 ```
 
+
 #### In NServiceBus
 
 ```
@@ -189,6 +201,7 @@ public class MyClass
     }
 }
 ```
+
 
 #### In Serilog
 
@@ -225,15 +238,18 @@ public class MyClass
 }
 ```
 
+
 ### Other Log Overloads in Explicit Logging
 
 There are also appropriate methods for Warn, Info, Error etc as applicable to each of the logging frameworks. 
 
 Each of these methods has the expected 'message', 'params' and 'exception' overloads. 
 
+
 ## Checking logging level
 
 The `LogTo` class also has `IsLevelEnabled` properties that redirect to the respective level enabled checks in each framework. 
+
 
 ### Your code
 
@@ -249,6 +265,7 @@ public class MyClass
     }
 }
 ```
+
 
 ### What gets compiled
 
@@ -266,10 +283,12 @@ public class MyClass
     }
 }
 ```
- 
+
+
 ## Delegate Logging
 
 All the `LogTo` methods have equivalent overloads that accept a `Func<string>` instead of a string. This delegate is used to construct the message and should be used when that message construction is resource intensive. At compile time the logging will be wrapped in a `IsEnabled` check so as to only incur the cost if that level of logging is required.
+
 
 ### Your code
 
@@ -282,6 +301,7 @@ public class MyClass
     }
 }
 ```
+
 
 ### What gets compiled
 
@@ -301,8 +321,10 @@ public class MyClass
 }
 ```
 
+
 ## Exception logging
-    
+
+
 ### Your code
 
     [LogToErrorOnException]
@@ -310,8 +332,10 @@ public class MyClass
     {
         //Do Stuff
     }
-    
+
+
 ### What gets compiled
+
 
 #### In NLog
 
@@ -345,7 +369,9 @@ The custom logging variant exist for several reasons
   
 It works by allowing you to have custom logger construction and a custom logger instance.
 
+
 ### Expected factory and instance formats
+
 
 #### Factory
 
@@ -364,7 +390,8 @@ For example
             return new Logger();
         }
     }
-    
+
+
 #### Instance
 
 The Logger instance is responsible for building an instance of a logger. 
@@ -380,32 +407,41 @@ For example
 ```
 public class Logger
 {
+    public void Trace(string message){}
     public void Trace(string format, params object[] args){}
     public void Trace(Exception exception, string format, params object[] args){}
     public bool IsTraceEnabled { get; private set; }
+    public void Debug(string message){}
     public void Debug(string format, params object[] args){}
     public void Debug(Exception exception, string format, params object[] args){}
     public bool IsDebugEnabled { get; private set; }
+    public void Information(string message){}
     public void Information(string format, params object[] args){}
     public void Information(Exception exception, string format, params object[] args){}
     public bool IsInformationEnabled { get; private set; }
+    public void Warning(string message){}
     public void Warning(string format, params object[] args){}
     public void Warning(Exception exception, string format, params object[] args){}
     public bool IsWarningEnabled { get; private set; }
+    public void Error(string message){}
     public void Error(string format, params object[] args){}
     public void Error(Exception exception, string format, params object[] args){}
     public bool IsErrorEnabled { get; private set; }
+    public void Fatal(string message){}
     public void Fatal(string format, params object[] args){}
     public void Fatal(Exception exception, string format, params object[] args){}
     public bool IsFatalEnabled { get; private set; }
 }
 ```
-        
+
+
 ### Discovery
+
 
 #### Current Assembly
 
 If `LoggerFactory` and `Logger` exist in the current assembly they will be picked up automatically.
+
 
 #### Other Assembly
 
@@ -416,23 +452,29 @@ If `LoggerFactory` and `Logger` exist in a different assembly You will need to u
 
 ## Nothing to deploy
 
+
 After compilation the reference to the Anotar assemblies will be removed so you don't need to deploy the assembly.
-    
+
+
 ## But why? What purpose does this serve?
 
-### 1. Dont make me think
 
-When I am coding I often want to quickly add a line of logging code. If I dont already have the static `logger` field I have to jump back to the top of the file to add it. This breaks my train of thought. I know this is minor but it is still an annoyance. Static logging methods are much less disruptive to call.
+### 1. Don't make me think
+
+When I am coding I often want to quickly add a line of logging code. If I don't already have the static `logger` field I have to jump back to the top of the file to add it. This breaks my train of thought. I know this is minor but it is still an annoyance. Static logging methods are much less disruptive to call.
+
 
 ### 2. I want some extra information
 
 Often when I am logging I want to know the method and line number I am logging from. I don't want to manually add this. So using IL I just prefix the message with the method name and line number. Note that the line number is prefixed with '~'. The reason for this is that a single line of code can equate to multiple IL instructions. So I walk back up the instructions until I find one that has a line number and use that. Hence it is an approximation.
 
+
 ## I don't want extra information
 
-If you don't want the extra information, method name and line number, then add this to AssemblyInfo.cs:
+If you don't want the extra information, method name and line number, then add this to `AssemblyInfo.cs`:
 
     [assembly: LogMinimalMessage]
+
 
 ## Why not use CallerInfoAttributes
 
@@ -440,16 +482,19 @@ The CallerInfoAttributes consist of  [CallerLineNumberAttribute](http://msdn.mic
 
 So some of this could be achieved using these attributes however there are a couple of points that complicate things.
 
+
 ### 1. Only .net 4.5 and up
 
 So this makes it a little difficult to use with other runtimes.
+
 
 ### 2. Cant be used when passing arrays as `params`
 
 Logging APIs all make use of `params` to pass arguments to a `string.Format`. Since you cant use `params` with CallerInfoAttributes most logging APIs choose not to use these attributes.
 
 You can vote for [Compatibility between `params` with CallerInfoAttributes](http://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/2762025-caller-membername-filepath-linenumber-of-net-4-5-) 
-    
+
+
 ## Icon
 
 Icon courtesy of [The Noun Project](http://thenounproject.com)

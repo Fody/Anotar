@@ -31,9 +31,9 @@ public class MetroLogTests
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
         var target = new ActionTarget
-                     {
-                         Action = LogEvent
-                     };
+        {
+            Action = LogEvent
+        };
 
         configuration.AddTarget(LogLevel.Trace, target);
         configuration.AddTarget(LogLevel.Debug, target);
@@ -92,18 +92,29 @@ public class MetroLogTests
     }
 
     [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, Errors.Count);
+        Assert.IsTrue(Errors.First().StartsWith("Method: 'void Method()'. Line: ~"));
+    }
+
+    [Test]
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
+
     [Test]
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
+        var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
@@ -242,9 +253,10 @@ public class MetroLogTests
     public void IsTraceEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsTraceEnabled());
     }
+
     [Test]
     public void Trace()
     {
@@ -309,9 +321,10 @@ public class MetroLogTests
     public void IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsDebugEnabled());
     }
+
     [Test]
     public void Debug()
     {
@@ -376,9 +389,10 @@ public class MetroLogTests
     public void IsInfoEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsInfoEnabled());
     }
+
     [Test]
     public void Info()
     {
@@ -443,9 +457,10 @@ public class MetroLogTests
     public void IsWarnEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsWarnEnabled());
     }
+
     [Test]
     public void Warn()
     {
@@ -505,11 +520,12 @@ public class MetroLogTests
         Assert.AreEqual(1, Warns.Count);
         Assert.IsTrue(Warns.First().StartsWith("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
     }
+
     [Test]
     public void IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsErrorEnabled());
     }
 
@@ -577,9 +593,10 @@ public class MetroLogTests
     public void IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsFatalEnabled());
     }
+
     [Test]
     public void Fatal()
     {
@@ -650,7 +667,7 @@ public class MetroLogTests
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
@@ -660,8 +677,8 @@ public class MetroLogTests
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
     }
@@ -670,7 +687,7 @@ public class MetroLogTests
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
@@ -680,7 +697,7 @@ public class MetroLogTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
@@ -690,7 +707,7 @@ public class MetroLogTests
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
@@ -706,7 +723,7 @@ public class MetroLogTests
         var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
 
         var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.NotNull(instance.DoIt());
     }

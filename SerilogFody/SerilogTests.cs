@@ -80,12 +80,24 @@ public class SerilogTests
         warns = new List<LogEvent>();
     }
 
+
+    [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, errors.Count);
+        var text = errors.First().MessageTemplate.Text;
+        Assert.AreEqual(text, "X");
+    }
+
     [Test]
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof(string));
-        var instance = (dynamic)Activator.CreateInstance(constructedType);
+        var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual(7, logEvent.LineNumber());
@@ -98,7 +110,7 @@ public class SerilogTests
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
@@ -109,7 +121,7 @@ public class SerilogTests
         var type = assembly.GetType("ClassWithStaticConstructor");
         type.GetMethod("StaticMethod", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
         // ReSharper disable once PossibleNullReferenceException
-        var message = (string)type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+        var message = (string) type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
         Assert.AreEqual("Foo", message);
     }
 
@@ -118,7 +130,7 @@ public class SerilogTests
     {
         var type = assembly.GetType("ClassWithExistingField");
         Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, debugs.Count);
         var logEvent = debugs.First();
@@ -133,7 +145,7 @@ public class SerilogTests
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         try
         {
             action(instance);
@@ -163,6 +175,7 @@ public class SerilogTests
         Action<dynamic> action = o => o.ToVerboseWithReturn("x", 6);
         CheckException(action, verboses, expected);
     }
+
     [Test]
     public void OnExceptionToDebug()
     {
@@ -247,7 +260,7 @@ public class SerilogTests
     public void IsVerboseEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsVerboseEnabled());
     }
 
@@ -255,7 +268,7 @@ public class SerilogTests
     public void Verbose()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Verbose();
         var logEvent = verboses.Single();
         Assert.AreEqual(13, logEvent.LineNumber());
@@ -268,7 +281,7 @@ public class SerilogTests
     public void VerboseString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseString();
         var logEvent = verboses.Single();
         Assert.AreEqual(18, logEvent.LineNumber());
@@ -281,7 +294,7 @@ public class SerilogTests
     public void VerboseStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseStringParams();
         var logEvent = verboses.Single();
         Assert.AreEqual(23, logEvent.LineNumber());
@@ -294,7 +307,7 @@ public class SerilogTests
     public void VerboseStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseStringException();
         var logEvent = verboses.Single();
         Assert.AreEqual(28, logEvent.LineNumber());
@@ -307,7 +320,7 @@ public class SerilogTests
     public void IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsDebugEnabled());
     }
 
@@ -315,7 +328,7 @@ public class SerilogTests
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         var logEvent = debugs.Single();
         Assert.AreEqual(37, logEvent.LineNumber());
@@ -328,7 +341,7 @@ public class SerilogTests
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         var logEvent = debugs.Single();
         Assert.AreEqual(42, logEvent.LineNumber());
@@ -341,7 +354,7 @@ public class SerilogTests
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         var logEvent = debugs.Single();
         Assert.AreEqual(47, logEvent.LineNumber());
@@ -354,7 +367,7 @@ public class SerilogTests
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         var logEvent = debugs.Single();
         Assert.AreEqual(52, logEvent.LineNumber());
@@ -367,7 +380,7 @@ public class SerilogTests
     public void IsInformationEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsInformationEnabled());
     }
 
@@ -375,7 +388,7 @@ public class SerilogTests
     public void Information()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Information();
         var logEvent = informations.Single();
         Assert.AreEqual(62, logEvent.LineNumber());
@@ -388,7 +401,7 @@ public class SerilogTests
     public void InformationString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationString();
         var logEvent = informations.Single();
         Assert.AreEqual(67, logEvent.LineNumber());
@@ -401,7 +414,7 @@ public class SerilogTests
     public void InformationStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringParams();
         var logEvent = informations.Single();
         Assert.AreEqual(72, logEvent.LineNumber());
@@ -414,7 +427,7 @@ public class SerilogTests
     public void InformationStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringException();
         var logEvent = informations.Single();
         Assert.AreEqual(77, logEvent.LineNumber());
@@ -427,7 +440,7 @@ public class SerilogTests
     public void IsWarningEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsWarningEnabled());
     }
 
@@ -435,7 +448,7 @@ public class SerilogTests
     public void Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warning();
         var logEvent = warns.Single();
         Assert.AreEqual(87, logEvent.LineNumber());
@@ -448,7 +461,7 @@ public class SerilogTests
     public void WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningString();
         var logEvent = warns.Single();
         Assert.AreEqual(92, logEvent.LineNumber());
@@ -461,7 +474,7 @@ public class SerilogTests
     public void WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringParams();
         var logEvent = warns.Single();
         Assert.AreEqual(97, logEvent.LineNumber());
@@ -474,7 +487,7 @@ public class SerilogTests
     public void WarningStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringException();
         var logEvent = warns.Single();
         Assert.AreEqual(102, logEvent.LineNumber());
@@ -487,7 +500,7 @@ public class SerilogTests
     public void IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsErrorEnabled());
     }
 
@@ -495,7 +508,7 @@ public class SerilogTests
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         var logEvent = errors.Single();
         Assert.AreEqual(112, logEvent.LineNumber());
@@ -508,7 +521,7 @@ public class SerilogTests
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         var logEvent = errors.Single();
         Assert.AreEqual(117, logEvent.LineNumber());
@@ -521,7 +534,7 @@ public class SerilogTests
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         var logEvent = errors.Single();
         Assert.AreEqual(122, logEvent.LineNumber());
@@ -534,7 +547,7 @@ public class SerilogTests
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         var logEvent = errors.Single();
         Assert.AreEqual(127, logEvent.LineNumber());
@@ -547,7 +560,7 @@ public class SerilogTests
     public void IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         Assert.IsTrue(instance.IsFatalEnabled());
     }
 
@@ -555,7 +568,7 @@ public class SerilogTests
     public void Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
         var logEvent = fatals.Single();
         Assert.AreEqual(137, logEvent.LineNumber());
@@ -568,7 +581,7 @@ public class SerilogTests
     public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
         var logEvent = fatals.Single();
         Assert.AreEqual(142, logEvent.LineNumber());
@@ -581,7 +594,7 @@ public class SerilogTests
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
         var logEvent = fatals.Single();
         Assert.AreEqual(147, logEvent.LineNumber());
@@ -594,7 +607,7 @@ public class SerilogTests
     public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
         var logEvent = fatals.Single();
         Assert.AreEqual(152, logEvent.LineNumber());
@@ -613,7 +626,7 @@ public class SerilogTests
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
         var logEvent = debugs.Single();
         Assert.AreEqual(11, logEvent.LineNumber());
@@ -626,8 +639,8 @@ public class SerilogTests
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
-        ((IEnumerable<int>)instance.EnumeratorMethod()).ToList();
+        var instance = (dynamic) Activator.CreateInstance(type);
+        ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         var logEvent = debugs.Single();
         Assert.AreEqual(17, logEvent.LineNumber());
         Assert.AreEqual("IEnumerable<Int32> EnumeratorMethod()", logEvent.MethodName());
@@ -639,7 +652,7 @@ public class SerilogTests
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         var logEvent = debugs.Single();
         Assert.AreEqual(24, logEvent.LineNumber());
@@ -652,7 +665,7 @@ public class SerilogTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         var logEvent = debugs.Single();
         Assert.AreEqual(39, logEvent.LineNumber());
@@ -665,7 +678,7 @@ public class SerilogTests
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         var logEvent = debugs.Single();
         Assert.AreEqual(31, logEvent.LineNumber());
@@ -684,7 +697,7 @@ public class SerilogTests
         var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
 
         var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.NotNull(instance.DoIt());
     }

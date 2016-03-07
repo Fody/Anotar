@@ -152,17 +152,22 @@ public class LogForwardingProcessor
         }
         if (methodReference.IsMatch("String"))
         {
-            var stringInstruction = instruction.Previous; 
+            if (messageVar == null)
+            {
+                messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+                Method.Body.Variables.Add(messageVar);
+            }
 
-            var operand = messagePrefix + (string) stringInstruction.Operand;
-            instructions.Replace(stringInstruction,
+            instructions.Replace(instruction,
                 new[]
                 {
+                    Instruction.Create(OpCodes.Stloc, messageVar),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                    Instruction.Create(stringInstruction.OpCode, operand)
+                    Instruction.Create(OpCodes.Ldstr, messagePrefix),
+                    Instruction.Create(OpCodes.Ldloc, messageVar),
+                    Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
                 });
-
-            instruction.Operand = ModuleWeaver.GetNormalOperand(methodReference);
             return;
         }
         if (methodReference.IsMatch("String", "Object[]"))

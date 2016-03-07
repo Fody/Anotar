@@ -25,21 +25,33 @@ public class SplatTests
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
 
-        Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger), typeof (ILogManager));
+        Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger), typeof(ILogManager));
     }
 
     IFullLogger GetLogger(Type arg)
     {
         return new WrappingFullLogger(currentLogger, GetType())
-               {
-                   Level = LogLevel.Debug
-               };
+        {
+            Level = LogLevel.Debug
+        };
     }
 
     [TearDown]
     public void TearDown()
     {
         currentLogger.Clear();
+    }
+
+
+    [Test]
+    public void ClassWithComplexExpressionInLog()
+    {
+        var type = assembly.GetType("ClassWithComplexExpressionInLog");
+        var instance = (dynamic) Activator.CreateInstance(type);
+        instance.Method();
+        Assert.AreEqual(1, currentLogger.Errors.Count);
+        var error = currentLogger.Errors.First();
+        Assert.IsTrue(error.Contains("Method: 'void Method()'. Line: ~"));
     }
 
     [Test]
@@ -56,7 +68,7 @@ public class SplatTests
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
-        var constructedType = type.MakeGenericType(typeof (string));
+        var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = currentLogger.Debugs.First();
@@ -559,7 +571,7 @@ public class SplatTests
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         Assert.AreEqual(1, currentLogger.Debugs.Count);
         Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void AsyncDelegateMethod()'. Line: ~"), currentLogger.Debugs.First());
