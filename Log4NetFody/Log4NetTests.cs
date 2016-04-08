@@ -631,4 +631,24 @@ public class Log4NetTests
 
         Assert.NotNull(instance.DoIt());
     }
+
+    [Test, Timeout(1000)]
+    public void Issue73()
+    {
+        var hierarchy = LogManager.GetRepository();
+        var previousThreshold = hierarchy.Threshold;
+        hierarchy.Threshold = Level.Info;
+
+        try
+        {
+            var type = assembly.GetType("ClassWithLogging");
+            var instance = (dynamic) Activator.CreateInstance(type);
+            instance.DebugStringFunc();
+            Assert.AreEqual(0, Debugs.Count);
+        }
+        finally
+        {
+            hierarchy.Threshold = previousThreshold;
+        }
+    }
 }

@@ -218,6 +218,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetFormatOperand(methodReference)),
+                    sectionNop
                 });
             return;
         }
