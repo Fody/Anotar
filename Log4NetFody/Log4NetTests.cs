@@ -633,7 +633,7 @@ public class Log4NetTests
     }
 
     [Test, Timeout(1000)]
-    public void Issue73()
+    public void PreventInfiniteLoopsWhenLoggingDisabled()
     {
         var hierarchy = LogManager.GetRepository();
         var previousThreshold = hierarchy.Threshold;
