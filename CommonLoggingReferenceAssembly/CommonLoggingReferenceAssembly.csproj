@@ -46,6 +46,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="LogMinimalMessageAttribute.cs" />
     <Compile Include="LogTo.cs" />
     <Compile Include="LogToDebugOnExceptionAttribute.cs" />
