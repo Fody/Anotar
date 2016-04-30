@@ -50,6 +50,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="LogTo.cs" />
     <Compile Include="LoggerFactoryAttribute.cs" />
     <Compile Include="LogToFatalOnExceptionAttribute.cs" />

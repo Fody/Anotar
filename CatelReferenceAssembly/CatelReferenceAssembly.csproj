@@ -49,6 +49,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="LogToErrorOnExceptionAttribute.cs" />
     <Compile Include="LogTo.cs" />
     <Compile Include="LogMinimalMessageAttribute.cs" />
