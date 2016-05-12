@@ -127,7 +127,7 @@
     <Compile Include="TestHelpers\LogListener.cs" />
     <Compile Include="OnExceptionProcessor.cs" />
     <Compile Include="TypeProcessor.cs" />
-    <Compile Include="InjectorExtentions.cs" />
+    <Compile Include="InjectorExtensions.cs" />
     <Compile Include="LogForwardingProcessor.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />

@@ -125,7 +125,7 @@
     <Compile Include="SplatTests.cs" />
     <Compile Include="OnExceptionProcessor.cs" />
     <Compile Include="TypeProcessor.cs" />
-    <Compile Include="InjectorExtentions.cs" />
+    <Compile Include="InjectorExtensions.cs" />
     <Compile Include="LogForwardingProcessor.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
