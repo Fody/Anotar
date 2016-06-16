@@ -32,21 +32,14 @@
 // this can have unintended consequences of consumers of your library using your library to resolve a logger. If the
 // reason is because you want to open this functionality to other projects within your solution,
 // consider [InternalsVisibleTo] instead.
-// 
+//
 // Define LIBLOG_PROVIDERS_ONLY if your library provides its own logging API and you just want to use the
 // LibLog providers internally to provide built in support for popular logging frameworks.
 
 #pragma warning disable 1591
 
 using System.Diagnostics.CodeAnalysis;
-// ReSharper disable ConvertPropertyToExpressionBody
-// ReSharper disable SuggestVarOrType_SimpleTypes
-// ReSharper disable UseNullPropagation
-// ReSharper disable ConvertToAutoPropertyWhenPossible
-// ReSharper disable RedundantUsingDirective
-// ReSharper disable ConvertToAutoProperty
-// ReSharper disable SuggestVarOrType_Elsewhere
-// ReSharper disable SuggestVarOrType_BuiltInTypes
+// ReSharper disable All
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "LibLogAssembly.Logging")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "LibLogAssembly.Logging.Logger.#Invoke(LibLogAssembly.Logging.LogLevel,System.Func`1<System.String>,System.Exception,System.Object[])")]
@@ -103,7 +96,7 @@ namespace LibLogAssembly.Logging
         /// <remarks>
         /// Note to implementers: the message func should not be called if the loglevel is not enabled
         /// so as not to incur performance penalties.
-        /// 
+        ///
         /// To check IsEnabled call Log with only LogLevel and check the return value, no event will be written.
         /// </remarks>
         bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null, params object[] formatParameters );
@@ -466,10 +459,10 @@ namespace LibLogAssembly.Logging
         public static bool IsDisabled { get; set; }
 
         /// <summary>
-        /// Sets an action that is invoked when a consumer of your library has called SetCurrentLogProvider. It is 
+        /// Sets an action that is invoked when a consumer of your library has called SetCurrentLogProvider. It is
         /// important that hook into this if you are using child libraries (especially ilmerged ones) that are using
         /// LibLog (or other logging abstraction) so you adapt and delegate to them.
-        /// <see cref="SetCurrentLogProvider"/> 
+        /// <see cref="SetCurrentLogProvider"/>
         /// </summary>
         internal static Action<ILogProvider> OnCurrentLogProviderSet
         {
@@ -549,7 +542,7 @@ namespace LibLogAssembly.Logging
         static ILog GetLogger(string name)
         {
             ILogProvider logProvider = CurrentLogProvider ?? ResolveLogProvider();
-            return logProvider == null 
+            return logProvider == null
                 ? NoOpLogger.Instance
                 : (ILog)new LoggerExecutionWrapper(logProvider.GetLogger(name), () => IsDisabled);
         }
@@ -567,9 +560,11 @@ namespace LibLogAssembly.Logging
 #endif
         static IDisposable OpenNestedContext(string message)
         {
-            return CurrentLogProvider == null 
-                ? new DisposableAction(() => {}) 
-                : CurrentLogProvider.OpenNestedContext(message);
+            ILogProvider logProvider = CurrentLogProvider ?? ResolveLogProvider();
+
+            return logProvider == null
+                ? new DisposableAction(() => { })
+                : logProvider.OpenNestedContext(message);
         }
 
         /// <summary>
@@ -586,9 +581,11 @@ namespace LibLogAssembly.Logging
 #endif
         static IDisposable OpenMappedContext(string key, string value)
         {
-            return CurrentLogProvider == null 
-                ? new DisposableAction(() => { }) 
-                : CurrentLogProvider.OpenMappedContext(key, value);
+            ILogProvider logProvider = CurrentLogProvider ?? ResolveLogProvider();
+
+            return logProvider == null
+                ? new DisposableAction(() => { })
+                : logProvider.OpenMappedContext(key, value);
         }
 #endif
 
@@ -761,7 +758,7 @@ namespace LibLogAssembly.Logging.LogProviders
 
         protected LogProviderBase()
         {
-            _lazyOpenNdcMethod 
+            _lazyOpenNdcMethod
                 = new Lazy<OpenNdc>(GetOpenNdcMethod);
             _lazyOpenMdcMethod
                = new Lazy<OpenMdc>(GetOpenMdcMethod);
@@ -1377,7 +1374,7 @@ namespace LibLogAssembly.Logging.LogProviders
             Expression severityParameter, ParameterExpression logNameParameter)
         {
             var entryType = LogEntryType;
-            MemberInitExpression memberInit = Expression.MemberInit(Expression.New(entryType), 
+            MemberInitExpression memberInit = Expression.MemberInit(Expression.New(entryType),
                 Expression.Bind(entryType.GetPropertyPortable("Message"), message),
                 Expression.Bind(entryType.GetPropertyPortable("Severity"), severityParameter),
                 Expression.Bind(
@@ -1495,7 +1492,7 @@ namespace LibLogAssembly.Logging.LogProviders
         {
             Type ndcContextType = Type.GetType("Serilog.Context.LogContext, Serilog.FullNetFx");
             MethodInfo pushPropertyMethod = ndcContextType.GetMethodPortable(
-                "PushProperty", 
+                "PushProperty",
                 typeof(string),
                 typeof(object),
                 typeof(bool));
@@ -1511,7 +1508,7 @@ namespace LibLogAssembly.Logging.LogProviders
                     valueParam,
                     destructureObjectParam)
                 .Compile();
-            
+
             return (key, value) => pushProperty(key, value, false);
         }
 
@@ -1529,7 +1526,7 @@ namespace LibLogAssembly.Logging.LogProviders
             ParameterExpression destructureObjectsParam = Expression.Parameter(typeof(bool), "destructureObjects");
             MethodCallExpression methodCall = Expression.Call(null, method, new Expression[]
             {
-                propertyNameParam, 
+                propertyNameParam,
                 valueParam,
                 destructureObjectsParam
             });
@@ -1539,7 +1536,7 @@ namespace LibLogAssembly.Logging.LogProviders
                 valueParam,
                 destructureObjectsParam)
                 .Compile();
-            return name => func("Name", name, false);
+            return name => func("SourceContext", name, false);
         }
 
         internal class SerilogLogger
@@ -1600,7 +1597,7 @@ namespace LibLogAssembly.Logging.LogProviders
                     messageParam,
                     propertyValuesParam);
                 var expression = Expression.Lambda<Action<object, object, string, object[]>>(
-                    writeMethodExp, 
+                    writeMethodExp,
                     instanceParam,
                     levelParam,
                     messageParam,
@@ -1609,7 +1606,7 @@ namespace LibLogAssembly.Logging.LogProviders
 
                 // Action<object, object, string, Exception> WriteException =
                 // (logger, level, exception, message) => { ((ILogger)logger).Write(level, exception, message, new object[]); }
-                MethodInfo writeExceptionMethodInfo = loggerType.GetMethodPortable("Write", 
+                MethodInfo writeExceptionMethodInfo = loggerType.GetMethodPortable("Write",
                     logEventLevelType,
                     typeof(Exception),
                     typeof(string),
@@ -1623,7 +1620,7 @@ namespace LibLogAssembly.Logging.LogProviders
                     messageParam,
                     propertyValuesParam);
                 WriteException = Expression.Lambda<Action<object, object, Exception, string, object[]>>(
-                    writeMethodExp, 
+                    writeMethodExp,
                     instanceParam,
                     levelParam,
                     exceptionParam,
@@ -1638,111 +1635,56 @@ namespace LibLogAssembly.Logging.LogProviders
 
             public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception, params object[] formatParameters)
             {
+                var translatedLevel = TranslateLevel(logLevel);
                 if (messageFunc == null)
                 {
-                    return IsEnabled(_logger, logLevel);
+                    return IsEnabled(_logger, translatedLevel);
                 }
+
+                if (!IsEnabled(_logger, translatedLevel))
+                {
+                    return false;
+                }
+
                 if (exception != null)
                 {
-                    return LogException(logLevel, messageFunc, exception, formatParameters);
+                    LogException(translatedLevel, messageFunc, exception, formatParameters);
+                }
+                else
+                {
+                    LogMessage(translatedLevel, messageFunc, formatParameters);
                 }
 
-                switch (logLevel)
-                {
-                    case LogLevel.Debug:
-                        if (IsEnabled(_logger, DebugLevel))
-                        {
-                            Write(_logger, DebugLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Info:
-                        if (IsEnabled(_logger, InformationLevel))
-                        {
-                            Write(_logger, InformationLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Warn:
-                        if (IsEnabled(_logger, WarningLevel))
-                        {
-                            Write(_logger, WarningLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Error:
-                        if (IsEnabled(_logger, ErrorLevel))
-                        {
-                            Write(_logger, ErrorLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Fatal:
-                        if (IsEnabled(_logger, FatalLevel))
-                        {
-                            Write(_logger, FatalLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                    default:
-                        if (IsEnabled(_logger, VerboseLevel))
-                        {
-                            Write(_logger, VerboseLevel, messageFunc(), formatParameters);
-                            return true;
-                        }
-                        break;
-                }
-                return false;
+                return true;
             }
 
-            private bool LogException(LogLevel logLevel, Func<string> messageFunc, Exception exception, object[] formatParams)
+            private void LogMessage(object translatedLevel, Func<string> messageFunc, object[] formatParameters)
+            {
+                Write(_logger, translatedLevel, messageFunc(), formatParameters);
+            }
+
+            private void LogException(object logLevel, Func<string> messageFunc, Exception exception, object[] formatParams)
+            {
+                WriteException(_logger, logLevel, exception, messageFunc(), formatParams);
+            }
+
+            private static object TranslateLevel(LogLevel logLevel)
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
-                        if (IsEnabled(_logger, DebugLevel))
-                        {
-                            WriteException(_logger, DebugLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Info:
-                        if (IsEnabled(_logger, InformationLevel))
-                        {
-                            WriteException(_logger, InformationLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Warn:
-                        if (IsEnabled(_logger, WarningLevel))
-                        {
-                            WriteException(_logger, WarningLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
-                    case LogLevel.Error:
-                        if (IsEnabled(_logger, ErrorLevel))
-                        {
-                            WriteException(_logger, ErrorLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
                     case LogLevel.Fatal:
-                        if (IsEnabled(_logger, FatalLevel))
-                        {
-                            WriteException(_logger, FatalLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
+                        return FatalLevel;
+                    case LogLevel.Error:
+                        return ErrorLevel;
+                    case LogLevel.Warn:
+                        return WarningLevel;
+                    case LogLevel.Info:
+                        return InformationLevel;
+                    case LogLevel.Trace:
+                        return VerboseLevel;
                     default:
-                        if (IsEnabled(_logger, VerboseLevel))
-                        {
-                            WriteException(_logger, VerboseLevel, exception, messageFunc(), formatParams);
-                            return true;
-                        }
-                        break;
+                        return DebugLevel;
                 }
-                return false;
             }
         }
     }
@@ -1814,7 +1756,7 @@ namespace LibLogAssembly.Logging.LogProviders
 
             MethodInfo method = logManagerType.GetMethodPortable(
                 "Write",
-                logMessageSeverityType, typeof(string), typeof(int), typeof(Exception), typeof(bool), 
+                logMessageSeverityType, typeof(string), typeof(int), typeof(Exception), typeof(bool),
                 logWriteModeType, typeof(string), typeof(string), typeof(string), typeof(string), typeof(object[]));
 
             var callDelegate = (WriteDelegate)method.CreateDelegate(typeof(WriteDelegate));
@@ -1912,9 +1854,9 @@ namespace LibLogAssembly.Logging.LogProviders
 
         /// <summary>
         /// Some logging frameworks support structured logging, such as serilog. This will allow you to add names to structured data in a format string:
-        /// For example: Log("Log message to {user}", user). This only works with serilog, but as the user of LibLog, you don't know if serilog is actually 
-        /// used. So, this class simulates that. it will replace any text in {curly braces} with an index number. 
-        /// 
+        /// For example: Log("Log message to {user}", user). This only works with serilog, but as the user of LibLog, you don't know if serilog is actually
+        /// used. So, this class simulates that. it will replace any text in {curly braces} with an index number.
+        ///
         /// "Log {message} to {user}" would turn into => "Log {0} to {1}". Then the format parameters are handled using regular .net string.Format.
         /// </summary>
         /// <param name="messageBuilder">The message builder.</param>
