@@ -15,8 +15,8 @@
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, Log4Net</tags>
     <dependencies>
-      <dependency id="Fody" version="1.29.2"/>
-      <dependency id="log4net" version="2.0"/>		
+      <dependency id="Fody" version="1.29"/>
+      <dependency id="log4net" version="2.0"/>
 	</dependencies>
   </metadata>
 </package>

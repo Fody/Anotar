@@ -15,8 +15,8 @@
     <language>en-AU</language>
     <tags>Logging, ILWeaving, Fody, Cecil, Serilog</tags>
     <dependencies>
-      <dependency id="Fody" version="1.29.2"/>
-      <dependency id="Serilog" version="1.5.0"/>
+      <dependency id="Fody" version="1.29"/>
+      <dependency id="Serilog" version="1.5"/>
 	</dependencies>
   </metadata>
 </package>
