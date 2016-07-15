@@ -7,7 +7,6 @@ namespace Anotar.Serilog
 	/// </summary>
     public static class LogTo
     {
-        
 
         /// <summary>
         /// Returns true if verbose is enabled.

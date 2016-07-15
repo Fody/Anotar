@@ -123,7 +123,7 @@ public class Log4NetTests
     public void ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Count());
+        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Length);
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, Debugs.Count);

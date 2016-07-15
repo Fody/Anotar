@@ -33,7 +33,7 @@ public class ReturnFixerTests
             property1 = value;
         }
     }
-    
+
     [LogToDebugOnException]
     public void WithTernary(decimal? value)
     {
