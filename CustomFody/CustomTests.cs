@@ -14,15 +14,13 @@ public class CustomTests
 
     public CustomTests()
     {
-
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\CustomAssemblyToProcess\bin\Debug\CustomAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CustomAssemblyToProcess\bin\Debug\CustomAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
         afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
         assembly = Assembly.LoadFile(afterAssemblyPath);
-
     }
 
     [TearDown]

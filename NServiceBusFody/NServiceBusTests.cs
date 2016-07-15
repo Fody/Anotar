@@ -20,9 +20,8 @@ public class NServiceBusTests
 
     public NServiceBusTests()
     {
-
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\NServiceBusAssemblyToProcess\bin\Debug\NServiceBusAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\NServiceBusAssemblyToProcess\bin\Debug\NServiceBusAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

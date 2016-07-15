@@ -16,25 +16,26 @@ public static class WeaverHelper
         File.Copy(oldPdb, newPdb, true);
 
         var assemblyResolver = new MockAssemblyResolver
-            {
-                Directory = Path.GetDirectoryName(assemblyPath)
-            };
+        {
+            Directory = Path.GetDirectoryName(assemblyPath)
+        };
 
         using (var symbolStream = File.OpenRead(newPdb))
         {
             var readerParameters = new ReaderParameters
-                {
-                    ReadSymbols = true,
-                    SymbolStream = symbolStream,
-                    SymbolReaderProvider = new PdbReaderProvider()
-                };
+            {
+                ReadSymbols = true,
+                SymbolStream = symbolStream,
+                SymbolReaderProvider = new PdbReaderProvider(),
+                AssemblyResolver = assemblyResolver
+            };
             var moduleDefinition = ModuleDefinition.ReadModule(newAssembly, readerParameters);
 
             var weavingTask = new ModuleWeaver
-                {
-                    ModuleDefinition = moduleDefinition,
-                    AssemblyResolver = assemblyResolver
-                };
+            {
+                ModuleDefinition = moduleDefinition,
+                AssemblyResolver = assemblyResolver
+            };
 
             weavingTask.Execute();
             moduleDefinition.Write(newAssembly);

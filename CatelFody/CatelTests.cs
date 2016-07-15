@@ -20,7 +20,7 @@ public class CatelTests
     public CatelTests()
     {
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\CatelAssemblyToProcess\bin\Debug\CatelAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CatelAssemblyToProcess\bin\Debug\CatelAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

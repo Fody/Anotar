@@ -17,9 +17,9 @@ public class CommonLoggingTests
     public CommonLoggingTests()
     {
 #if (PORTABLE)
-        var path = @"..\..\..\CommonLoggingAssemblyToProcessPortable\bin\Debug\CommonLoggingAssemblyToProcessPortable.dll";
+        var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CommonLoggingAssemblyToProcessPortable\bin\Debug\CommonLoggingAssemblyToProcessPortable.dll");
 #else
-        var path = @"..\..\..\CommonLoggingAssemblyToProcess\bin\Debug\CommonLoggingAssemblyToProcess.dll";
+        var path = Path.Combine(TestContext.CurrentContext.TestDirectory,@"..\..\..\CommonLoggingAssemblyToProcess\bin\Debug\CommonLoggingAssemblyToProcess.dll");
 #endif
         AppDomainAssemblyFinder.Attach();
         beforeAssemblyPath = Path.GetFullPath(path);

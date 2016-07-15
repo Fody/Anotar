@@ -18,7 +18,7 @@ public class LibLogTests
     {
 
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\LibLogAssemblyToProcess\bin\Debug\LibLogAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\LibLogAssemblyToProcess\bin\Debug\LibLogAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

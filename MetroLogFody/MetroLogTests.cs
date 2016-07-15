@@ -24,7 +24,7 @@ public class MetroLogTests
         AppDomainAssemblyFinder.Attach();
         var configuration = LogManagerFactory.DefaultConfiguration;
         configuration.IsEnabled = true;
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\MetroLogAssemblyToProcess\bin\Debug\MetroLogAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\MetroLogAssemblyToProcess\bin\Debug\MetroLogAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

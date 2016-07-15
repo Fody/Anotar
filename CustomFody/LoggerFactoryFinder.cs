@@ -29,7 +29,7 @@ public partial class ModuleWeaver
         else
         {
             var typeReference = (TypeReference) loggerFactoryAttribute.ConstructorArguments.First().Value;
-
+            
             FindGetLogger(typeReference.Resolve());
 
             GetLoggerMethod = ModuleDefinition.ImportReference(GetLoggerMethod);
@@ -48,7 +48,7 @@ public partial class ModuleWeaver
         GetLoggerMethod = typeDefinition
             .Methods
             .FirstOrDefault(x =>
-                x.Name ==  "GetLogger" && 
+                x.Name ==  "GetLogger" &&
                 x.IsStatic &&
                 x.HasGenericParameters &&
                 x.GenericParameters.Count == 1 &&

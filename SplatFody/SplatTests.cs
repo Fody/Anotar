@@ -18,7 +18,7 @@ public class SplatTests
     public SplatTests()
     {
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(@"..\..\..\SplatAssemblyToProcess\bin\Debug\SplatAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\SplatAssemblyToProcess\bin\Debug\SplatAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
