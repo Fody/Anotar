@@ -508,8 +508,8 @@ public class CatelTests
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
-        Assert.AreEqual(1, Debugs.Count);
-        Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
+        var message = Debugs.Skip(1).First();
+        Assert.IsTrue(message.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), message);
     }
 
     [Test]
