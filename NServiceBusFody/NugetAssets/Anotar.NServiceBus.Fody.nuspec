@@ -16,7 +16,7 @@
     <tags>Logging, ILWeaving, Fody, Cecil, NServiceBus</tags>
     <dependencies>
       <dependency id="Fody" version="1.29"/>
-      <dependency id="NServiceBus" version="5.0"/>
+      <dependency id="NServiceBus" version="[6.0.0, 7.0.0)" />
     </dependencies>
   </metadata>
 </package>
