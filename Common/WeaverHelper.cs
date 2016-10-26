@@ -29,7 +29,7 @@ public static class WeaverHelper
                 SymbolReaderProvider = new PdbReaderProvider(),
                 AssemblyResolver = assemblyResolver
             };
-            var moduleDefinition = ModuleDefinition.ReadModule(newAssembly, readerParameters);
+            var moduleDefinition = ModuleDefinition.ReadModule(assemblyPath, readerParameters);
 
             var weavingTask = new ModuleWeaver
             {

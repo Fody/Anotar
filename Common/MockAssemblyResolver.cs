@@ -51,4 +51,7 @@ public class MockAssemblyResolver : IAssemblyResolver
     }
 
     public string Directory;
+    public void Dispose()
+    {
+    }
 }

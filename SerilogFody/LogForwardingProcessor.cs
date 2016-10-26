@@ -245,7 +245,7 @@ public class LogForwardingProcessor
     void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
     {
         int lineNumber;
-        if (!instruction.TryGetPreviousLineNumber(out lineNumber))
+        if (!instruction.TryGetPreviousLineNumber(Method, out lineNumber))
         {
             return;
         }

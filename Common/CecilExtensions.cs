@@ -225,11 +225,11 @@ public static class CecilExtensions
         return null;
     }
 
-    public static bool TryGetPreviousLineNumber(this Instruction instruction, out int lineNumber)
+    public static bool TryGetPreviousLineNumber(this Instruction instruction, MethodDefinition method, out int lineNumber)
     {
         while (true)
         {
-            var sequencePoint = instruction.SequencePoint;
+            var sequencePoint = method.DebugInformation.GetSequencePoint(instruction);
             if (sequencePoint != null)
             {
                 // not a hiddent line http://blogs.msdn.com/b/jmstall/archive/2005/06/19/feefee-sequencepoints.aspx

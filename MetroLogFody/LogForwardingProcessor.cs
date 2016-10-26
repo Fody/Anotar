@@ -237,7 +237,7 @@ public class LogForwardingProcessor
             return string.Empty;
         }
         int lineNumber;
-        if (instruction.TryGetPreviousLineNumber(out lineNumber))
+        if (instruction.TryGetPreviousLineNumber(Method, out lineNumber))
         {
             return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
         }

@@ -16,11 +16,11 @@
     <tags>Logging, ILWeaving, Fody, Cecil, Common.Logging</tags>
     <dependencies>
       <group>
-        <dependency id="Fody" version="1.29"/>
+        <dependency id="Fody" version="[2.0.0, 3.0.0)" />
         <dependency id="Common.Logging" version="3.2"/>
       </group>
       <group targetFramework="netcore45">
-        <dependency id="Fody" version="1.29"/>
+        <dependency id="Fody" version="[2.0.0, 3.0.0)" />
         <dependency id="Common.Logging.Portable" version="3.2"/>
       </group>
     </dependencies>
