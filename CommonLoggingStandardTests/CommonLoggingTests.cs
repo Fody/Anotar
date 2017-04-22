@@ -51,7 +51,7 @@ public class CommonLoggingTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'void Method()'. Line: ~"));
+        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'Void Method()'. Line: ~"));
     }
 
     [Test]
@@ -109,7 +109,7 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToDebug()
     {
-        var expected = "Exception occurred in 'void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, actionAdapter.Debugs, expected);
     }
@@ -125,7 +125,7 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToInfo()
     {
-        var expected = "Exception occurred in 'void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
         CheckException(action, actionAdapter.Informations, expected);
     }
@@ -141,7 +141,7 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToWarn()
     {
-        var expected = "Exception occurred in 'void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
         CheckException(action, actionAdapter.Warnings, expected);
     }
@@ -157,7 +157,7 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToError()
     {
-        var expected = "Exception occurred in 'void ToError(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
         CheckException(action, actionAdapter.Errors, expected);
     }
@@ -173,7 +173,7 @@ public class CommonLoggingTests
     [Test]
     public void OnExceptionToFatal()
     {
-        var expected = "Exception occurred in 'void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
+        var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
         CheckException(action, actionAdapter.Fatals, expected);
     }
@@ -202,7 +202,7 @@ public class CommonLoggingTests
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'void Debug()'. Line: ~"));
+        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
     [Test]
@@ -213,7 +213,7 @@ public class CommonLoggingTests
         instance.DebugString();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugString()'. Line: ~"));
     }
 
     [Test]
@@ -224,7 +224,7 @@ public class CommonLoggingTests
         instance.DebugStringFunc();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -235,7 +235,7 @@ public class CommonLoggingTests
         instance.DebugStringParams();
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -248,7 +248,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringException()'. Line: ~"));
     }
 
     [Test]
@@ -260,7 +260,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -272,7 +272,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Debugs.Count);
         var logEvent = actionAdapter.Debugs.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void DebugStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -292,7 +292,7 @@ public class CommonLoggingTests
         instance.Trace();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Trace()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Trace()'. Line: ~"));
     }
 
     [Test]
@@ -303,7 +303,7 @@ public class CommonLoggingTests
         instance.TraceString();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceString()'. Line: ~"));
     }
 
     [Test]
@@ -314,7 +314,7 @@ public class CommonLoggingTests
         instance.TraceStringFunc();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -325,7 +325,7 @@ public class CommonLoggingTests
         instance.TraceStringParams();
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -338,7 +338,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringException()'. Line: ~"));
     }
 
     [Test]
@@ -350,7 +350,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -362,7 +362,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Traces.Count);
         var logEvent = actionAdapter.Traces.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void TraceStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -382,7 +382,7 @@ public class CommonLoggingTests
         instance.Info();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Info()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Info()'. Line: ~"));
     }
 
     [Test]
@@ -393,7 +393,7 @@ public class CommonLoggingTests
         instance.InfoString();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoString()'. Line: ~"));
     }
 
     [Test]
@@ -404,7 +404,7 @@ public class CommonLoggingTests
         instance.InfoStringFunc();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -415,7 +415,7 @@ public class CommonLoggingTests
         instance.InfoStringParams();
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -428,7 +428,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringException()'. Line: ~"));
     }
 
     [Test]
@@ -440,7 +440,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -452,7 +452,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Informations.Count);
         var logEvent = actionAdapter.Informations.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void InfoStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -472,7 +472,7 @@ public class CommonLoggingTests
         instance.Warn();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Warn()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Warn()'. Line: ~"));
     }
 
     [Test]
@@ -483,7 +483,7 @@ public class CommonLoggingTests
         instance.WarnString();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnString()'. Line: ~"));
     }
 
     [Test]
@@ -494,7 +494,7 @@ public class CommonLoggingTests
         instance.WarnStringFunc();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -505,7 +505,7 @@ public class CommonLoggingTests
         instance.WarnStringParams();
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -518,7 +518,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringException()'. Line: ~"));
     }
 
     [Test]
@@ -530,7 +530,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -542,7 +542,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Warnings.Count);
         var logEvent = actionAdapter.Warnings.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void WarnStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -562,7 +562,7 @@ public class CommonLoggingTests
         instance.Error();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void Error()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Error()'. Line: ~"));
     }
 
     [Test]
@@ -573,7 +573,7 @@ public class CommonLoggingTests
         instance.ErrorString();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorString()'. Line: ~"));
     }
 
     [Test]
@@ -584,7 +584,7 @@ public class CommonLoggingTests
         instance.ErrorStringFunc();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -595,7 +595,7 @@ public class CommonLoggingTests
         instance.ErrorStringParams();
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -608,7 +608,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringException()'. Line: ~"));
     }
 
     [Test]
@@ -620,7 +620,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -632,7 +632,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Errors.Count);
         var logEvent = actionAdapter.Errors.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void ErrorStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -652,7 +652,7 @@ public class CommonLoggingTests
         instance.FatalString();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalString()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalString()'. Line: ~"));
     }
 
     [Test]
@@ -663,7 +663,7 @@ public class CommonLoggingTests
         instance.FatalStringFunc();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringFunc()'. Line: ~"));
     }
 
     [Test]
@@ -674,7 +674,7 @@ public class CommonLoggingTests
         instance.FatalStringParams();
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 
@@ -687,7 +687,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringException()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringException()'. Line: ~"));
     }
 
     [Test]
@@ -699,7 +699,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringExceptionFunc()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~"));
     }
 
     [Test]
@@ -711,7 +711,7 @@ public class CommonLoggingTests
         Assert.AreEqual(1, actionAdapter.Fatals.Count);
         var logEvent = actionAdapter.Fatals.First();
         Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'void FatalStringExceptionParams()'. Line: ~"));
+        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringExceptionParams()'. Line: ~"));
         Assert.AreEqual(1, logEvent.Args.First());
     }
 

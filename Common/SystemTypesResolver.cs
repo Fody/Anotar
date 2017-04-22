@@ -14,11 +14,11 @@ public partial class ModuleWeaver
 
     public void LoadSystemTypes()
     {
-        var mscorlib = AssemblyResolver.Resolve("mscorlib");
+        var mscorlib = AssemblyResolver.Resolve(new AssemblyNameReference("mscorlib", null));
         var typeType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "Type");
         if (typeType == null)
         {
-            var runtime = AssemblyResolver.Resolve("System.Runtime");
+            var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime",null));
             typeType = runtime.MainModule.Types.First(x => x.Name == "Type");
         }
         var funcDefinition = typeType.Module.Types.First(x => x.Name == "Func`1");
@@ -44,7 +44,7 @@ public partial class ModuleWeaver
         var exceptionType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
         if (exceptionType == null)
         {
-            var runtime = AssemblyResolver.Resolve("System.Runtime");
+            var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime",null));
             exceptionType = runtime.MainModule.Types.First(x => x.Name == "Exception");
         }
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);

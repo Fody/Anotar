@@ -12,9 +12,9 @@ public partial class ModuleWeaver
         if (fieldDefinition == null)
         {
             fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LoggerType)
-                {
-                    DeclaringType = type
-                };
+            {
+                DeclaringType = type
+            };
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
@@ -32,21 +32,21 @@ public partial class ModuleWeaver
             }
 
             var onExceptionProcessor = new OnExceptionProcessor
-                {
-                    Method = method,
-                    LoggerField = fieldReference,
-                    FoundUsageInType = () => foundUsage = true,
-                    ModuleWeaver = this
-                };
+            {
+                Method = method,
+                LoggerField = fieldReference,
+                FoundUsageInType = () => foundUsage = true,
+                ModuleWeaver = this
+            };
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
-                {
-					FoundUsageInType = () => foundUsage = true,
-                    Method = method,
-					ModuleWeaver = this,
-                    LoggerField = fieldReference,
-                };
+            {
+                FoundUsageInType = () => foundUsage = true,
+                Method = method,
+                ModuleWeaver = this,
+                LoggerField = fieldReference,
+            };
             logForwardingProcessor.ProcessMethod();
 
         }
@@ -57,15 +57,15 @@ public partial class ModuleWeaver
     }
 
     void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
-	{
-		var staticConstructor = type.GetStaticConstructor();
-	    var instructions = staticConstructor.Body.Instructions;
+    {
+        var staticConstructor = type.GetStaticConstructor();
+        var instructions = staticConstructor.Body.Instructions;
 
         var logName = type.GetNonCompilerGeneratedType().FullName;
 
         instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
-	    instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
-	    instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-	    type.Fields.Add(fieldDefinition);
+        instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
+        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+        type.Fields.Add(fieldDefinition);
     }
 }

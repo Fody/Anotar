@@ -28,7 +28,7 @@ public partial class ModuleWeaver
         }
         LoadSystemTypes();
 
-		Init();
+        Init();
 
         foreach (var type in ModuleDefinition
             .GetTypes()

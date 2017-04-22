@@ -4,14 +4,14 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-	public AssemblyDefinition CommonLoggingReference;
+    public AssemblyDefinition CommonLoggingReference;
     public AssemblyDefinition CommonLoggingCoreReference;
 
-	void FindReference()
-	{
+    void FindReference()
+    {
         CommonLoggingReference = GetReference("Common.Logging", "Common.Logging.Portable");
         CommonLoggingCoreReference = GetReference("Common.Logging.Core");
-	}
+    }
 
     AssemblyDefinition GetReference(params string[] referenceNames)
     {
@@ -26,7 +26,7 @@ public partial class ModuleWeaver
         }
         foreach (var referenceName in referenceNames)
         {
-            var assemblyDefinition = AssemblyResolver.Resolve(referenceName);
+            var assemblyDefinition = AssemblyResolver.Resolve(new AssemblyNameReference(referenceName, null));
 
             if (assemblyDefinition != null)
             {

@@ -29,7 +29,7 @@ public partial class ModuleWeaver
             LogMinimalMessage = true;
         }
         LoadSystemTypes();
-		Init();
+        Init();
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))

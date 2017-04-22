@@ -27,8 +27,8 @@ public partial class ModuleWeaver
             LogMinimalMessage = true;
         }
         LoadSystemTypes();
-	    FindReference();
-		Init();
+        FindReference();
+        Init();
 
         foreach (var type in ModuleDefinition
             .GetTypes()

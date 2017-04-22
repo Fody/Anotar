@@ -28,8 +28,8 @@ public partial class ModuleWeaver
         }
         LoadSystemTypes();
 
-		FindReference();
-		Init();
+        FindReference();
+        Init();
 
         foreach (var type in ModuleDefinition
             .GetTypes()

@@ -4,24 +4,24 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-	public AssemblyDefinition SplatReference;
+    public AssemblyDefinition SplatReference;
 
-	void FindReference()
-	{
+    void FindReference()
+    {
         var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Splat");
 
-		if (existingReference != null)
-		{
+        if (existingReference != null)
+        {
             SplatReference = AssemblyResolver.Resolve(existingReference);
-			return;
-		}
-        var reference = AssemblyResolver.Resolve("Splat");
-		if (reference != null)
-		{
+            return;
+        }
+        var reference = AssemblyResolver.Resolve(new AssemblyNameReference("Splat", null));
+        if (reference != null)
+        {
             SplatReference = reference;
-			return;
-		}
+            return;
+        }
         throw new Exception("Could not resolve a reference to Splat.dll.");
-	}
+    }
 
 }

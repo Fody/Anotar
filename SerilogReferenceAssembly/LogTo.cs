@@ -2,9 +2,9 @@
 
 namespace Anotar.Serilog
 {
-	/// <summary>
-	/// Provides logging functions.
-	/// </summary>
+    /// <summary>
+    /// Provides logging functions.
+    /// </summary>
     public static class LogTo
     {
 
@@ -44,6 +44,7 @@ namespace Anotar.Serilog
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Returns true if debug is enabled.
         /// </summary>
@@ -52,17 +53,17 @@ namespace Anotar.Serilog
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
         public static void Debug()
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
         public static void Debug(string messageTemplate, params object[] propertyValues)
@@ -70,9 +71,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-	    /// <summary>
-	    /// Writes the diagnostic message and exception at the <c>Debug</c> level.
-	    /// </summary>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Debug</c> level.
+        /// </summary>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -81,9 +82,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Info</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
+        /// </summary>
         public static void Information()
         {
             throw new NotImplementedException();
@@ -97,8 +98,8 @@ namespace Anotar.Serilog
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Info</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -107,9 +108,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-	    /// <summary>
-	    /// Writes the diagnostic message and exception at the <c>Info</c> level.
-	    /// </summary>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Info</c> level.
+        /// </summary>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -126,16 +127,16 @@ namespace Anotar.Serilog
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
-		/// </summary>
+        /// </summary>
         public static void Warning()
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Warn</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Warn</c> level.
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -144,9 +145,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-	    /// <summary>
-	    /// Writes the diagnostic message and exception at the <c>Warn</c> level.
-	    /// </summary>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Warn</c> level.
+        /// </summary>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -163,15 +164,15 @@ namespace Anotar.Serilog
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
-		/// </summary>
+        /// </summary>
         public static void Error()
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the Error level.
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
@@ -181,9 +182,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-	    /// <summary>
-	    /// Writes the diagnostic message and exception at the <c>Error</c> level.
-	    /// </summary>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Error</c> level.
+        /// </summary>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -200,16 +201,16 @@ namespace Anotar.Serilog
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Fatal</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// </summary>
         public static void Fatal()
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Fatal</c> level.
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Fatal</c> level.
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
@@ -218,9 +219,9 @@ namespace Anotar.Serilog
             throw new NotImplementedException();
         }
 
-	    /// <summary>
-	    /// Writes the diagnostic message and exception at the <c>Fatal</c> level.
-	    /// </summary>
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Fatal</c> level.
+        /// </summary>
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>

@@ -4,9 +4,9 @@ using JetBrains.Annotations;
 
 namespace Anotar.Log4Net
 {
-	/// <summary>
-	/// Provides logging functions.
-	/// </summary>
+    /// <summary>
+    /// Provides logging functions.
+    /// </summary>
     public static class LogTo
     {
 
@@ -18,9 +18,9 @@ namespace Anotar.Log4Net
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Debug</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Debug</c> level.
+        /// </summary>
         public static void Debug()
         {
             throw new NotImplementedException();
@@ -55,21 +55,21 @@ namespace Anotar.Log4Net
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Debug</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Debug</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void DebugException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Debug</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Debug</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void DebugException(Func<string> message, Exception exception)
         {
             throw new NotImplementedException();
@@ -83,9 +83,9 @@ namespace Anotar.Log4Net
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
-		/// Writes the diagnostic message at the <c>Info</c> level.
-		/// </summary>
+        /// <summary>
+        /// Writes the diagnostic message at the <c>Info</c> level.
+        /// </summary>
         public static void Info()
         {
             throw new NotImplementedException();
@@ -120,21 +120,21 @@ namespace Anotar.Log4Net
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Info</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Info</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void InfoException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Info</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Info</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void InfoException(Func<string> message, Exception exception)
         {
             throw new NotImplementedException();
@@ -148,9 +148,9 @@ namespace Anotar.Log4Net
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
-		/// </summary>
+        /// </summary>
         public static void Warn()
         {
             throw new NotImplementedException();
@@ -185,21 +185,21 @@ namespace Anotar.Log4Net
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Warn</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Warn</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void WarnException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Warn</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Warn</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void WarnException(Func<string> message, Exception exception)
         {
             throw new NotImplementedException();
@@ -213,9 +213,9 @@ namespace Anotar.Log4Net
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
-		/// </summary>
+        /// </summary>
         public static void Error()
         {
             throw new NotImplementedException();
@@ -250,21 +250,21 @@ namespace Anotar.Log4Net
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Error</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Error</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void ErrorException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Error</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Error</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void ErrorException(Func<string> message, Exception exception)
         {
             throw new NotImplementedException();
@@ -278,10 +278,10 @@ namespace Anotar.Log4Net
             get { throw new NotImplementedException(); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.
-		/// </summary>
-		public static void Fatal()
+        /// </summary>
+        public static void Fatal()
         {
             throw new NotImplementedException();
         }
@@ -315,21 +315,21 @@ namespace Anotar.Log4Net
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Fatal</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Fatal</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
-		public static void FatalException(string message, Exception exception)
+        /// <param name="exception">An exception to be logged.</param>
+        public static void FatalException(string message, Exception exception)
         {
             throw new NotImplementedException();
         }
 
-		/// <summary>
-		/// Writes the diagnostic message and exception at the <c>Fatal</c> level.
+        /// <summary>
+        /// Writes the diagnostic message and exception at the <c>Fatal</c> level.
         /// </summary>
         /// <param name="message">The log message.</param>
-		/// <param name="exception">An exception to be logged.</param>
+        /// <param name="exception">An exception to be logged.</param>
         public static void FatalException(Func<string> message, Exception exception)
         {
             throw new NotImplementedException();

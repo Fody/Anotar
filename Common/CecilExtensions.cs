@@ -232,7 +232,7 @@ public static class CecilExtensions
             var sequencePoint = method.DebugInformation.GetSequencePoint(instruction);
             if (sequencePoint != null)
             {
-                // not a hiddent line http://blogs.msdn.com/b/jmstall/archive/2005/06/19/feefee-sequencepoints.aspx
+                // not a hidden line http://blogs.msdn.com/b/jmstall/archive/2005/06/19/feefee-sequencepoints.aspx
                 if (sequencePoint.StartLine != 0xFeeFee)
                 {
                     lineNumber = sequencePoint.StartLine;

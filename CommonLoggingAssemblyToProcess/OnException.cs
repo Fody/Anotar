@@ -6,13 +6,13 @@ public class OnException
 {
 
     [LogToFatalOnException]
-	public void ToFatal(string param1, int param2)
+    public void ToFatal(string param1, int param2)
     {
         throw new Exception("Foo");
     }
 
-	[LogToFatalOnException]
-	public object ToFatalWithReturn(string param1, int param2)
+    [LogToFatalOnException]
+    public object ToFatalWithReturn(string param1, int param2)
     {
         throw new Exception("Foo");
     }
@@ -57,7 +57,7 @@ public class OnException
         ref uint param18,
         ref ulong param19,
         ref UIntPtr param20
-        )
+    )
     {
         throw new Exception("Foo");
     }
@@ -84,7 +84,7 @@ public class OnException
         ref uint param18,
         ref ulong param19,
         ref UIntPtr param20
-        )
+    )
     {
         throw new Exception("Foo");
     }

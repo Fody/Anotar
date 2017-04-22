@@ -9,203 +9,223 @@ public class ClassWithException
     {
         try
         {
-        Trace.WriteLine("Foo");
+            Trace.WriteLine("Foo");
         }
         catch
         {
         }
     }
+
     public void Debug()
     {
         try
         {
-        LogTo.Debug();   
+            LogTo.Debug();
         }
         catch
         {
         }
     }
+
     public void DebugString()
     {
         try
         {
-        LogTo.Debug("TheMessage");
+            LogTo.Debug("TheMessage");
         }
         catch
         {
         }
     }
+
     public void DebugStringParams()
     {
         try
         {
-        LogTo.Debug("TheMessage {0}",1);
+            LogTo.Debug("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void DebugStringException()
     {
         try
         {
-        LogTo.DebugException("TheMessage",new Exception());
+            LogTo.DebugException("TheMessage", new Exception());
         }
         catch
         {
         }
     }
+
     public void Info()
     {
         try
         {
-        LogTo.Info();
+            LogTo.Info();
         }
         catch
         {
         }
     }
+
     public void InfoString()
     {
         try
         {
-        LogTo.Info("TheMessage");
+            LogTo.Info("TheMessage");
         }
         catch
         {
         }
     }
+
     public void InfoStringParams()
     {
         try
         {
-        LogTo.Info("TheMessage {0}", 1);
+            LogTo.Info("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void InfoStringException()
     {
         try
         {
-        LogTo.InfoException("TheMessage", new Exception());
+            LogTo.InfoException("TheMessage", new Exception());
         }
         catch
         {
         }
     }
+
     public void Warn()
     {
         try
         {
-        LogTo.Warn();
+            LogTo.Warn();
         }
         catch
         {
         }
     }
+
     public void WarnString()
     {
         try
         {
-        LogTo.Warn("TheMessage");
+            LogTo.Warn("TheMessage");
         }
         catch
         {
         }
     }
+
     public void WarnStringParams()
     {
         try
         {
-        LogTo.Warn("TheMessage {0}", 1);
+            LogTo.Warn("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void WarnStringException()
     {
         try
         {
-        LogTo.WarnException("TheMessage", new Exception());
+            LogTo.WarnException("TheMessage", new Exception());
         }
         catch
         {
         }
     }
+
     public void Error()
     {
         try
         {
-        LogTo.Error();
+            LogTo.Error();
         }
         catch
         {
         }
     }
+
     public void ErrorString()
     {
         try
         {
-        LogTo.Error("TheMessage");
+            LogTo.Error("TheMessage");
         }
         catch
         {
         }
     }
+
     public void ErrorStringParams()
     {
         try
         {
-        LogTo.Error("TheMessage {0}", 1);
+            LogTo.Error("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void ErrorStringException()
     {
         try
         {
-        LogTo.ErrorException("TheMessage", new Exception());
+            LogTo.ErrorException("TheMessage", new Exception());
         }
         catch
         {
         }
     }
+
     public void Fatal()
     {
         try
         {
-		LogTo.Fatal();
+            LogTo.Fatal();
         }
         catch
         {
         }
     }
-	public void FatalString()
+
+    public void FatalString()
     {
         try
         {
-		LogTo.Fatal("TheMessage");
+            LogTo.Fatal("TheMessage");
         }
         catch
         {
         }
     }
-	public void FatalStringParams()
+
+    public void FatalStringParams()
     {
         try
         {
-		LogTo.Fatal("TheMessage {0}", 1);
+            LogTo.Fatal("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
-	public void FatalStringException()
+
+    public void FatalStringException()
     {
         try
         {

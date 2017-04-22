@@ -6,14 +6,16 @@ public partial class ModuleWeaver
 
     public void Init()
     {
-		var logManagerFactoryType = MetroLogReference.MainModule.Types.First(x => x.Name == "LogManagerFactory");
-        var getDefaultLogManagerDefinition = logManagerFactoryType.Methods.First(x => x.Name == "get_DefaultLogManager");
+        var logManagerFactoryType = MetroLogReference.MainModule.Types.First(x => x.Name == "LogManagerFactory");
+        var getDefaultLogManagerDefinition =
+            logManagerFactoryType.Methods.First(x => x.Name == "get_DefaultLogManager");
         GetDefaultLogManager = ModuleDefinition.ImportReference(getDefaultLogManagerDefinition);
 
-		var logManagerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogManager");
-        var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String", "LoggingConfiguration"));
+        var logManagerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogManager");
+        var getLoggerDefinition =
+            logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String", "LoggingConfiguration"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
-		var loggerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogger");
+        var loggerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogger");
 
         TraceMethod = ModuleDefinition.ImportReference(loggerType.FindMethod("Trace", "String", "Object[]"));
         IsTraceEnabledMethod = ModuleDefinition.ImportReference(loggerType.FindMethod("get_IsTraceEnabled"));
@@ -42,30 +44,30 @@ public partial class ModuleWeaver
         LoggerType = ModuleDefinition.ImportReference(loggerType);
     }
 
-	public MethodReference TraceMethod;
-	public MethodReference TraceExceptionMethod;
+    public MethodReference TraceMethod;
+    public MethodReference TraceExceptionMethod;
 
-	public MethodReference DebugMethod;
-	public MethodReference DebugExceptionMethod;
-	public MethodReference InfoMethod;
-	public MethodReference InfoExceptionMethod;
-	public MethodReference WarnMethod;
-	public MethodReference WarnExceptionMethod;
-	public MethodReference ErrorMethod;
-	public MethodReference ErrorExceptionMethod;
-	public MethodReference FatalMethod;
-	public MethodReference FatalExceptionMethod;
+    public MethodReference DebugMethod;
+    public MethodReference DebugExceptionMethod;
+    public MethodReference InfoMethod;
+    public MethodReference InfoExceptionMethod;
+    public MethodReference WarnMethod;
+    public MethodReference WarnExceptionMethod;
+    public MethodReference ErrorMethod;
+    public MethodReference ErrorExceptionMethod;
+    public MethodReference FatalMethod;
+    public MethodReference FatalExceptionMethod;
 
-	public TypeReference LoggerType;
+    public TypeReference LoggerType;
 
     MethodReference constructLoggerMethod;
-    
 
-   public MethodReference GetDefaultLogManager;
-   public MethodReference IsTraceEnabledMethod;
-   public MethodReference IsInfoEnabledMethod;
-   public MethodReference IsWarnEnabledMethod;
-   public MethodReference IsErrorEnabledMethod;
-   public MethodReference IsFatalEnabledMethod;
-   public MethodReference IsDebugEnabledMethod;
+
+    public MethodReference GetDefaultLogManager;
+    public MethodReference IsTraceEnabledMethod;
+    public MethodReference IsInfoEnabledMethod;
+    public MethodReference IsWarnEnabledMethod;
+    public MethodReference IsErrorEnabledMethod;
+    public MethodReference IsFatalEnabledMethod;
+    public MethodReference IsDebugEnabledMethod;
 }

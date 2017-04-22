@@ -9,12 +9,12 @@ public class ClassWithExistingField
 
     static ClassWithExistingField()
     {
-		existingLogger = Log.ForContext<ClassWithExistingField>();
+        existingLogger = Log.ForContext<ClassWithExistingField>();
     }
 
-	public void Debug()
-	{
-	 	LogTo.Debug();
-	}
-  
+    public void Debug()
+    {
+        LogTo.Debug();
+    }
+
 }

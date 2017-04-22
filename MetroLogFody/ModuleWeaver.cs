@@ -25,10 +25,10 @@ public partial class ModuleWeaver
         if (assemblyContainsAttribute || moduleContainsAttribute)
         {
             LogMinimalMessage = true;
-		}
+        }
         LoadSystemTypes();
-		FindReference();
-		Init();
+        FindReference();
+        Init();
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))

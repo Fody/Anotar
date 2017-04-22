@@ -30,21 +30,31 @@ public partial class ModuleWeaver
         GetLevelMethod = ModuleDefinition.ImportReference(loggerDefinition.FindMethod("get_Level"));
 
         DebugMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Debug", "String"));
-        DebugMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Debug", "String", "Object[]"));
-        DebugExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("DebugException", "String", "Exception"));
+        DebugMethodParams =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Debug", "String", "Object[]"));
+        DebugExceptionMethod =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("DebugException", "String", "Exception"));
         InfoMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Info", "String"));
-        InfoMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Info", "String", "Object[]"));
-        InfoExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("InfoException", "String", "Exception"));
+        InfoMethodParams =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Info", "String", "Object[]"));
+        InfoExceptionMethod =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("InfoException", "String", "Exception"));
         WarnMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Warn", "String"));
-        WarnMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Warn", "String", "Object[]"));
-        WarnExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("WarnException", "String", "Exception"));
+        WarnMethodParams =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Warn", "String", "Object[]"));
+        WarnExceptionMethod =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("WarnException", "String", "Exception"));
         ErrorMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Error", "String"));
-        ErrorMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Error", "String", "Object[]"));
-        ErrorExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("ErrorException", "String", "Exception"));
+        ErrorMethodParams =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Error", "String", "Object[]"));
+        ErrorExceptionMethod =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("ErrorException", "String", "Exception"));
         FatalMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Fatal", "String"));
-        FatalMethodParams = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Fatal", "String", "Object[]"));
-        FatalExceptionMethod = ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("FatalException", "String", "Exception"));
-	
+        FatalMethodParams =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("Fatal", "String", "Object[]"));
+        FatalExceptionMethod =
+            ModuleDefinition.ImportReference(fullLoggerDefinition.FindMethod("FatalException", "String", "Exception"));
+
     }
 
     public MethodReference GetLoggerMethod;
@@ -53,19 +63,19 @@ public partial class ModuleWeaver
     public MethodReference GetLocatorMethod;
     public MethodReference DebugMethod;
     public MethodReference DebugMethodParams;
-	public MethodReference DebugExceptionMethod;
-	public MethodReference InfoMethod;
-	public MethodReference InfoMethodParams;
-	public MethodReference InfoExceptionMethod;
-	public MethodReference WarnMethod;
-	public MethodReference WarnMethodParams;
-	public MethodReference WarnExceptionMethod;
-	public MethodReference ErrorMethod;
-	public MethodReference ErrorMethodParams;
+    public MethodReference DebugExceptionMethod;
+    public MethodReference InfoMethod;
+    public MethodReference InfoMethodParams;
+    public MethodReference InfoExceptionMethod;
+    public MethodReference WarnMethod;
+    public MethodReference WarnMethodParams;
+    public MethodReference WarnExceptionMethod;
+    public MethodReference ErrorMethod;
+    public MethodReference ErrorMethodParams;
     public MethodReference ErrorExceptionMethod;
-	public MethodReference FatalMethod;
-	public MethodReference FatalMethodParams;
-	public MethodReference FatalExceptionMethod;
-	public TypeReference FullLoggerType;
-	public MethodReference GetLevelMethod;
+    public MethodReference FatalMethod;
+    public MethodReference FatalMethodParams;
+    public MethodReference FatalExceptionMethod;
+    public TypeReference FullLoggerType;
+    public MethodReference GetLevelMethod;
 }

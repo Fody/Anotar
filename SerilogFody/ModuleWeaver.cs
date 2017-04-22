@@ -20,8 +20,8 @@ public partial class ModuleWeaver
     public void Execute()
     {
         LoadSystemTypes();
-		FindReference();
-		Init();
+        FindReference();
+        Init();
         foreach (var type in ModuleDefinition
             .GetTypes()
             .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))

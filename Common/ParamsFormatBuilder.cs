@@ -8,19 +8,19 @@ class ParamsFormatBuilder
 
     VariableDefinition paramsArray;
     public StringBuilder MessageBuilder;
-	public List<Instruction> Instructions = new List<Instruction>();
+    public List<Instruction> Instructions = new List<Instruction>();
 
 
-	public ParamsFormatBuilder(MethodDefinition methodDefinition, VariableDefinition paramsArray)
+    public ParamsFormatBuilder(MethodDefinition methodDefinition, VariableDefinition paramsArray)
     {
-		this.paramsArray = paramsArray;
+        this.paramsArray = paramsArray;
 
-		MessageBuilder = new StringBuilder($"Exception occurred in '{methodDefinition.DisplayName()}'. ");
-		foreach (var parameterDefinition in methodDefinition.Parameters)
+        MessageBuilder = new StringBuilder($"Exception occurred in '{methodDefinition.DisplayName()}'. ");
+        foreach (var parameterDefinition in methodDefinition.Parameters)
         {
             foreach (var instruction in ProcessParam(parameterDefinition))
             {
-				Instructions.Add(instruction);
+                Instructions.Add(instruction);
             }
         }
     }
@@ -37,7 +37,7 @@ class ParamsFormatBuilder
         {
             yield break;
         }
-	    yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
+        yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
         yield return Instruction.Create(OpCodes.Ldc_I4, parameterDefinition.Index);
         yield return Instruction.Create(OpCodes.Ldarg, parameterDefinition);
 
@@ -54,65 +54,65 @@ class ParamsFormatBuilder
             var pointerToValueTypeVariable = false;
             switch (referencedTypeSpec.ElementType.MetadataType)
             {
-                    //Indirect load value of type int8 as int32 on the stack
+                //Indirect load value of type int8 as int32 on the stack
                 case MetadataType.Boolean:
                 case MetadataType.SByte:
                     yield return Instruction.Create(OpCodes.Ldind_I1);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type int16 as int32 on the stack
+                // Indirect load value of type int16 as int32 on the stack
                 case MetadataType.Int16:
                     yield return Instruction.Create(OpCodes.Ldind_I2);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type int32 as int32 on the stack
+                // Indirect load value of type int32 as int32 on the stack
                 case MetadataType.Int32:
                     yield return Instruction.Create(OpCodes.Ldind_I4);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type int64 as int64 on the stack
-                    // Indirect load value of type unsigned int64 as int64 on the stack (alias for ldind.i8)
+                // Indirect load value of type int64 as int64 on the stack
+                // Indirect load value of type unsigned int64 as int64 on the stack (alias for ldind.i8)
                 case MetadataType.Int64:
                 case MetadataType.UInt64:
                     yield return Instruction.Create(OpCodes.Ldind_I8);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type unsigned int8 as int32 on the stack
+                // Indirect load value of type unsigned int8 as int32 on the stack
                 case MetadataType.Byte:
                     yield return Instruction.Create(OpCodes.Ldind_U1);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type unsigned int16 as int32 on the stack
+                // Indirect load value of type unsigned int16 as int32 on the stack
                 case MetadataType.UInt16:
                 case MetadataType.Char:
                     yield return Instruction.Create(OpCodes.Ldind_U2);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type unsigned int32 as int32 on the stack
+                // Indirect load value of type unsigned int32 as int32 on the stack
                 case MetadataType.UInt32:
                     yield return Instruction.Create(OpCodes.Ldind_U4);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type float32 as F on the stack
+                // Indirect load value of type float32 as F on the stack
                 case MetadataType.Single:
                     yield return Instruction.Create(OpCodes.Ldind_R4);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type float64 as F on the stack
+                // Indirect load value of type float64 as F on the stack
                 case MetadataType.Double:
                     yield return Instruction.Create(OpCodes.Ldind_R8);
                     pointerToValueTypeVariable = true;
                     break;
 
-                    // Indirect load value of type native int as native int on the stack
+                // Indirect load value of type native int as native int on the stack
                 case MetadataType.IntPtr:
                 case MetadataType.UIntPtr:
                     yield return Instruction.Create(OpCodes.Ldind_I);
@@ -159,9 +159,6 @@ class ParamsFormatBuilder
         // Store parameter in object[] array
         // ------------------------------------------------------------
         yield return Instruction.Create(OpCodes.Stelem_Ref);
-		MessageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, parameterDefinition.Index);
+        MessageBuilder.AppendFormat(" {0} '{{{1}}}'", parameterDefinition.Name, parameterDefinition.Index);
     }
-
-
-    
 }

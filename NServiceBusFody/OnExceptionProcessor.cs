@@ -10,18 +10,18 @@ class OnExceptionProcessor
     public MethodDefinition Method;
     public Action FoundUsageInType;
     public FieldReference LoggerField;
-	public ModuleWeaver ModuleWeaver;
+    public ModuleWeaver ModuleWeaver;
     MethodBody body;
 
     VariableDefinition paramsArrayVariable;
     VariableDefinition messageVariable;
     VariableDefinition exceptionVariable;
-	AttributeFinder attributeFinder;
+    AttributeFinder attributeFinder;
 
-	public void Process()
+    public void Process()
     {
-	    attributeFinder = new AttributeFinder(Method);
-		if (!attributeFinder.Found)
+        attributeFinder = new AttributeFinder(Method);
+        if (!attributeFinder.Found)
         {
             return;
         }
@@ -32,7 +32,7 @@ class OnExceptionProcessor
     }
 
 
-	void ContinueProcessing()
+    void ContinueProcessing()
     {
         body = Method.Body;
 
@@ -41,14 +41,14 @@ class OnExceptionProcessor
         var ilProcessor = body.GetILProcessor();
 
         var returnFixer = new ReturnFixer
-            {
-                Method = Method
-            };
+        {
+            Method = Method
+        };
         returnFixer.MakeLastStatementReturn();
 
-		exceptionVariable = new VariableDefinition(ModuleWeaver.ExceptionType);
+        exceptionVariable = new VariableDefinition(ModuleWeaver.ExceptionType);
         body.Variables.Add(exceptionVariable);
-		messageVariable = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+        messageVariable = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
         body.Variables.Add(messageVariable);
         paramsArrayVariable = new VariableDefinition(ModuleWeaver.ObjectArray);
         body.Variables.Add(paramsArrayVariable);
@@ -65,13 +65,13 @@ class OnExceptionProcessor
         ilProcessor.InsertBefore(returnFixer.NopBeforeReturn, catchInstructions);
 
         var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
-            {
-                CatchType = ModuleWeaver.ExceptionType,
-                TryStart = methodBodyFirstInstruction,
-                TryEnd = tryCatchLeaveInstructions.Next,
-                HandlerStart = catchInstructions.First(),
-                HandlerEnd = catchInstructions.Last().Next
-            };
+        {
+            CatchType = ModuleWeaver.ExceptionType,
+            TryStart = methodBodyFirstInstruction,
+            TryEnd = tryCatchLeaveInstructions.Next,
+            HandlerStart = catchInstructions.First(),
+            HandlerEnd = catchInstructions.Last().Next
+        };
 
         body.ExceptionHandlers.Add(handler);
 
@@ -94,52 +94,52 @@ class OnExceptionProcessor
         var messageLdstr = Instruction.Create(OpCodes.Ldstr, "");
         yield return messageLdstr;
         yield return Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count);
-		yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object);
+        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object);
         yield return Instruction.Create(OpCodes.Stloc, paramsArrayVariable);
 
-	    var paramsFormatBuilder = new ParamsFormatBuilder(Method, paramsArrayVariable);
+        var paramsFormatBuilder = new ParamsFormatBuilder(Method, paramsArrayVariable);
 
-	    foreach (var instruction in paramsFormatBuilder.Instructions)
-	    {
-		    yield return instruction;
-	    }
-		messageLdstr.Operand = paramsFormatBuilder.MessageBuilder.ToString();
+        foreach (var instruction in paramsFormatBuilder.Instructions)
+        {
+            yield return instruction;
+        }
+        messageLdstr.Operand = paramsFormatBuilder.MessageBuilder.ToString();
 
         yield return Instruction.Create(OpCodes.Ldloc, paramsArrayVariable);
-		yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
+        yield return Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod);
         yield return Instruction.Create(OpCodes.Stloc, messageVariable);
 
-		if (attributeFinder.FoundDebug)
+        if (attributeFinder.FoundDebug)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.IsDebugEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.DebugExceptionMethod, ModuleWeaver.IsDebugEnabledMethod))
             {
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundInfo)
+        if (attributeFinder.FoundInfo)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.IsInfoEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.InfoExceptionMethod, ModuleWeaver.IsInfoEnabledMethod))
             {
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundWarn)
+        if (attributeFinder.FoundWarn)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.IsWarnEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.WarnExceptionMethod, ModuleWeaver.IsWarnEnabledMethod))
             {
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundError)
+        if (attributeFinder.FoundError)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod,ModuleWeaver.IsErrorEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.ErrorExceptionMethod, ModuleWeaver.IsErrorEnabledMethod))
             {
                 yield return instruction;
             }
         }
-		if (attributeFinder.FoundFatal)
+        if (attributeFinder.FoundFatal)
         {
-			foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod,ModuleWeaver.IsFatalEnabledMethod))
+            foreach (var instruction in AddWrite(ModuleWeaver.FatalExceptionMethod, ModuleWeaver.IsFatalEnabledMethod))
             {
                 yield return instruction;
             }
@@ -148,11 +148,11 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Rethrow);
     }
 
-	IEnumerable<Instruction> AddWrite(MethodReference writeMethod, MethodReference isEnabledMethod)
-	{
+    IEnumerable<Instruction> AddWrite(MethodReference writeMethod, MethodReference isEnabledMethod)
+    {
         var sectionNop = Instruction.Create(OpCodes.Nop);
-		yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
-		yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
+        yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
+        yield return Instruction.Create(OpCodes.Callvirt, isEnabledMethod);
         yield return Instruction.Create(OpCodes.Brfalse_S, sectionNop);
         yield return Instruction.Create(OpCodes.Ldsfld, LoggerField);
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);

@@ -32,6 +32,7 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
+
     public MethodReference GetFormatOperand(MethodReference methodReference)
     {
         var name = methodReference.Name;
@@ -91,6 +92,7 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
+
     public MethodReference GetLogEnabled(MethodReference methodReference)
     {
         var name = methodReference.Name;
@@ -146,7 +148,7 @@ public partial class ModuleWeaver
         }
         if (name == "FatalException")
         {
-			return FatalExceptionMethod;
+            return FatalExceptionMethod;
         }
         throw new Exception("Invalid method name");
     }

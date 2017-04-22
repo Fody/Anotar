@@ -7,15 +7,17 @@ public partial class ModuleWeaver
 {
     void ProcessType(TypeDefinition type)
     {
-        var fieldDefinition = type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == LoggerType.FullName);
+        var fieldDefinition =
+            type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == LoggerType.FullName);
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LoggerType)
-                {
-                    DeclaringType = type,
-                    IsStatic = true,
-                };
+            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private,
+                LoggerType)
+            {
+                DeclaringType = type,
+                IsStatic = true,
+            };
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
@@ -33,21 +35,21 @@ public partial class ModuleWeaver
             }
 
             var onExceptionProcessor = new OnExceptionProcessor
-                {
-                    Method = method,
-                    LoggerField = fieldReference,
-                    FoundUsageInType = () => foundUsage = true,
-                    ModuleWeaver = this
-                };
+            {
+                Method = method,
+                LoggerField = fieldReference,
+                FoundUsageInType = () => foundUsage = true,
+                ModuleWeaver = this
+            };
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
-                {
-					FoundUsageInType = () => foundUsage = true,
-                    Method = method,
-					ModuleWeaver = this,
-                    LoggerField = fieldReference,
-                };
+            {
+                FoundUsageInType = () => foundUsage = true,
+                Method = method,
+                ModuleWeaver = this,
+                LoggerField = fieldReference,
+            };
             logForwardingProcessor.ProcessMethod();
 
         }
@@ -57,27 +59,27 @@ public partial class ModuleWeaver
         }
     }
 
-	void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
-	{
-		var staticConstructor = type.GetStaticConstructor();
-		var instructions = staticConstructor.Body.Instructions;
+    void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
+    {
+        var staticConstructor = type.GetStaticConstructor();
+        var instructions = staticConstructor.Body.Instructions;
 
-	    if (type.HasGenericParameters)
-	    {
-	        instructions.Insert(0, Instruction.Create(OpCodes.Call, constructLoggerGenericMethod));
-	        instructions.Insert(1, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-	    }
-	    else
-	    {
-	        var logName = type.GetNonCompilerGeneratedType().FullName;
+        if (type.HasGenericParameters)
+        {
+            instructions.Insert(0, Instruction.Create(OpCodes.Call, constructLoggerGenericMethod));
+            instructions.Insert(1, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+        }
+        else
+        {
+            var logName = type.GetNonCompilerGeneratedType().FullName;
 
-	        instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
-	        instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
-	        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
-	    }
+            instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
+            instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
+            instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
+        }
 
-	    type.Fields.Add(fieldDefinition);
-	}
+        type.Fields.Add(fieldDefinition);
+    }
 
 
 }

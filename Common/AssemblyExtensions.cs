@@ -1,8 +1,6 @@
 using System;
 using System.Reflection;
-using Scalpel;
 
-[Remove]
 public static class AssemblyExtensions
 {
 

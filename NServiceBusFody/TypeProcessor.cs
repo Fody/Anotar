@@ -12,10 +12,10 @@ public partial class ModuleWeaver
         if (fieldDefinition == null)
         {
             fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LoggerType)
-                {
-                    DeclaringType = type,
-                    IsStatic = true,
-                };
+            {
+                DeclaringType = type,
+                IsStatic = true,
+            };
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
@@ -33,21 +33,21 @@ public partial class ModuleWeaver
             }
 
             var onExceptionProcessor = new OnExceptionProcessor
-                {
-                    Method = method,
-                    LoggerField = fieldReference,
-                    FoundUsageInType = () => foundUsage = true,
-                    ModuleWeaver = this
-                };
+            {
+                Method = method,
+                LoggerField = fieldReference,
+                FoundUsageInType = () => foundUsage = true,
+                ModuleWeaver = this
+            };
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
-                {
-					FoundUsageInType = () => foundUsage = true,
-                    Method = method,
-					ModuleWeaver = this,
-                    LoggerField = fieldReference,
-                };
+            {
+                FoundUsageInType = () => foundUsage = true,
+                Method = method,
+                ModuleWeaver = this,
+                LoggerField = fieldReference,
+            };
             logForwardingProcessor.ProcessMethod();
 
         }
