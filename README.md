@@ -70,7 +70,7 @@ Simplifies logging through a static class and some IL manipulation
 
 ### Your Code
 
-```
+```c#
 public class MyClass
 {
     void MyMethod()
@@ -85,7 +85,7 @@ public class MyClass
 
 #### In Catel
 
-```
+```c#
 public class MyClass
 {
     static ILog logger = LogManager.GetLogger(typeof(MyClass));
@@ -100,7 +100,7 @@ public class MyClass
 
 #### In CommonLogging
 
-```
+```c#
 public class MyClass
 {
     static ILog logger = LoggerManager.GetLogger("MyClass");
@@ -115,7 +115,7 @@ public class MyClass
 
 #### In Custom
 
-```
+```c#
 public class MyClass
 {
     static ILogger AnotarLogger = LoggerFactory.GetLogger<MyClass>();
@@ -130,7 +130,7 @@ public class MyClass
 
 #### In LibLog
 
-```
+```c#
 public class MyClass
 {
     static ILog logger = LogProvider.GetLogger("MyClass");
@@ -145,7 +145,7 @@ public class MyClass
 
 #### In Log4Net
 
-```
+```c#
 public class MyClass
 {
     static ILog logger = LogManager.GetLogger("MyClass");
@@ -160,7 +160,7 @@ public class MyClass
 
 #### In MetroLog
 
-```
+```c#
 public class MyClass
 {
     static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
@@ -175,7 +175,7 @@ public class MyClass
 
 #### In NLog
 
-```
+```c#
 public class MyClass
 {
     static Logger logger = LogManager.GetLogger("MyClass");
@@ -190,7 +190,7 @@ public class MyClass
 
 #### In NServiceBus
 
-```
+```c#
 public class MyClass
 {
     static ILog logger = LogManager.GetLogger("MyClass");
@@ -205,7 +205,7 @@ public class MyClass
 
 #### In Serilog
 
-```
+```c#
 public class MyClass
 {
     static ILogger logger = Log.ForContext<MyClass>();
@@ -225,7 +225,7 @@ public class MyClass
 
 #### In Splat
 
-```
+```c#
 public class MyClass
 {
     static IFullLogger logger = ((ILogManager) Locator.Current.GetService(typeof(ILogManager), null))
@@ -253,7 +253,7 @@ The `LogTo` class also has `IsLevelEnabled` properties that redirect to the resp
 
 ### Your code
 
-```
+```c#
 public class MyClass
 {
     void MyMethod()
@@ -269,7 +269,7 @@ public class MyClass
 
 ### What gets compiled
 
-```
+```c#
 public class MyClass
 {
     static Logger logger = LogManager.GetLogger("MyClass");
@@ -292,7 +292,7 @@ All the `LogTo` methods have equivalent overloads that accept a `Func<string>` i
 
 ### Your code
 
-```
+```c#
 public class MyClass
 {
     void MyMethod()
@@ -305,7 +305,7 @@ public class MyClass
 
 ### What gets compiled
 
-```
+```c#
 public class MyClass
 {
     static Logger logger = LogManager.GetLogger("MyClass");
@@ -327,11 +327,13 @@ public class MyClass
 
 ### Your code
 
-    [LogToErrorOnException]
-    void MyMethod(string param1, int param2)
-    {
-        //Do Stuff
-    }
+```c#
+[LogToErrorOnException]
+void MyMethod(string param1, int param2)
+{
+    //Do Stuff
+}
+```
 
 
 ### What gets compiled
@@ -339,7 +341,7 @@ public class MyClass
 
 #### In NLog
 
-```
+```c#
 void MyMethod(string param1, int param2)
 {
     try
@@ -383,14 +385,15 @@ The Logger Factory is responsible for building an instance of a logger.
   
 For example
 
-    public class LoggerFactory
+```c#
+public class LoggerFactory
+{
+    public static Logger GetLogger<T>()
     {
-        public static Logger GetLogger<T>()
-        {
-            return new Logger();
-        }
+        return new Logger();
     }
-
+}
+```
 
 #### Instance
 
@@ -404,7 +407,7 @@ The Logger instance is responsible for building an instance of a logger.
   
 For example
 
-```
+```c#
 public class Logger
 {
     public void Trace(string message){}
