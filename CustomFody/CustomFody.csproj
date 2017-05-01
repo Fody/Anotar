@@ -7,6 +7,8 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <NuspecFile>..\NuGetBuild\Custom\Anotar.Custom.Fody.nuspec</NuspecFile>
+    <NuspecProperties>Version=$(Version)</NuspecProperties>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyCecil" Version="2.0.0" />
@@ -41,4 +43,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Target Name="PreparePackage" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
+    <ItemGroup>
+      <FilesToDelete Include="..\NuGetBuild\Custom\**\*.*" />
+      <ReferenceAssemblyBinaries Include="..\CustomReferenceAssembly\bin\$(Configuration)\**\*.dll" />
+      <ReferenceAssemblyXmlDocs Include="..\CustomReferenceAssembly\bin\$(Configuration)\**\*.xml" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <MakeDir Directories="..\CustomNuGetBuild" />
+    <Copy SourceFiles="@(ReferenceAssemblyBinaries)" DestinationFolder="..\NuGetBuild\Custom\Lib\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ReferenceAssemblyXmlDocs)" DestinationFolder="..\NuGetBuild\Custom\Lib\%(RecursiveDir)" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="..\NuGetBuild\Custom" />
+    <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="..\NuGetBuild\Custom" />
+    <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="..\NuGetBuild\Custom" />
+    <Copy SourceFiles="..\install.ps" DestinationFiles="..\NuGetBuild\Custom\Tools\install.ps1" />
+    <Copy SourceFiles="..\uninstall.ps" DestinationFiles="..\NuGetBuild\Custom\Tools\uninstall.ps1" />
+  </Target>
 </Project>

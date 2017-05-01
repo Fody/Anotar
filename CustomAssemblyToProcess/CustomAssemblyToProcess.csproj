@@ -3,6 +3,7 @@
     <RootNamespace>CustomAssemblyToProcess</RootNamespace>
     <AssemblyName>CustomAssemblyToProcess</AssemblyName>
     <TargetFrameworks>netcoreapp1.1;sl5;net462;net35</TargetFrameworks>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

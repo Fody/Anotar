@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
     <DefineConstants>XUNIT</DefineConstants>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
