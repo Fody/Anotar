@@ -1,89 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{565905D3-C4CD-414B-A638-8327DBD9E782}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CustomTests</RootNamespace>
-    <AssemblyName>CustomTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="FodyCecil" Version="2.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.3.0-beta1-build3642" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
+    <ProjectReference Include="..\CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj"/>
+    <ProjectReference Include="..\CustomFody\CustomFody.csproj"/>
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta1-build3642" />
   </ItemGroup>
+  
   <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="..\common\AppDomainAssemblyFinder.cs" Link="TestHelpers\AppDomainAssemblyFinder.cs" />
+    <Compile Include="..\common\AssemblyExtensions.cs" Link="TestHelpers\AssemblyExtensions.cs" />
+    <Compile Include="..\common\MockAssemblyResolver.cs" Link="TestHelpers\MockAssemblyResolver.cs" />
+    <Compile Include="..\common\Verifier.cs" Link="TestHelpers\Verifier.cs" />
+    <Compile Include="..\common\WeaverHelper.cs" Link="TestHelpers\WeaverHelper.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\common\AppDomainAssemblyFinder.cs">
-      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
-    </Compile>
-    <Compile Include="..\common\AssemblyExtensions.cs">
-      <Link>TestHelpers\AssemblyExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\common\MockAssemblyResolver.cs">
-      <Link>TestHelpers\MockAssemblyResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\common\Verifier.cs">
-      <Link>TestHelpers\Verifier.cs</Link>
-    </Compile>
-    <Compile Include="..\common\WeaverHelper.cs">
-      <Link>TestHelpers\WeaverHelper.cs</Link>
-    </Compile>
-    <Compile Include="CustomTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj">
-      <Project>{46899ed4-2ed5-4c8d-bec9-ded828cb1a6c}</Project>
-      <Name>CustomAssemblyWithLogger</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CustomFody\CustomFody.csproj">
-      <Project>{4517d06f-06bb-4003-ba4c-e2f85f77e4b7}</Project>
-      <Name>CustomFody</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

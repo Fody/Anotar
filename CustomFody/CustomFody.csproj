@@ -1,109 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4517D06F-06BB-4003-BA4C-E2F85F77E4B7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Anotar.Custom.Fody</RootNamespace>
     <AssemblyName>Anotar.Custom.Fody</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <TargetFramework>net452</TargetFramework>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FodyCecil" Version="2.0.0" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.Custom.Fody.nuspec">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Common\AsyncChecker.cs">
-      <Link>AsyncChecker.cs</Link>
+    <Compile Include="..\Common\AsyncChecker.cs" Link="AsyncChecker.cs">
     </Compile>
-    <Compile Include="..\Common\CecilExtensions.cs">
-      <Link>CecilExtensions.cs</Link>
+    <Compile Include="..\Common\CecilExtensions.cs" Link="CecilExtensions.cs">
     </Compile>
-    <Compile Include="..\Common\ParamsFormatBuilder.cs">
-      <Link>ParamsFormatBuilder.cs</Link>
+    <Compile Include="..\Common\ParamsFormatBuilder.cs" Link="ParamsFormatBuilder.cs">
     </Compile>
-    <Compile Include="..\Common\ReturnFixer.cs">
-      <Link>ReturnFixer.cs</Link>
+    <Compile Include="..\Common\ReturnFixer.cs" Link="ReturnFixer.cs">
     </Compile>
-    <Compile Include="..\Common\SystemTypesResolver.cs">
-      <Link>SystemTypesResolver.cs</Link>
+    <Compile Include="..\Common\SystemTypesResolver.cs" Link="SystemTypesResolver.cs">
     </Compile>
-    <Compile Include="..\Common\WeavingException.cs">
-      <Link>WeavingException.cs</Link>
+    <Compile Include="..\Common\WeavingException.cs" Link="WeavingException.cs">
     </Compile>
-    <Compile Include="AttributeFinder.cs" />
-    <Compile Include="Lazy.cs" />
-    <Compile Include="OnExceptionProcessor.cs" />
-    <Compile Include="TypeProcessor.cs" />
-    <Compile Include="InjectorExtensions.cs" />
-    <Compile Include="LogForwardingProcessor.cs" />
-    <Compile Include="ModuleWeaver.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
-    <Compile Include="TypeResolver.cs" />
-    <Compile Include="ReferenceCleaner.cs" />
-    <Compile Include="LoggerFactoryFinder.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Lib\NullGuardAnotarBug.dll">
@@ -115,29 +41,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition="$(ConfigurationName) == 'Release'">
-    <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NuGetBuild\Custom\**\*.*" />
-    </ItemGroup>
-    <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="$(SolutionDir)CustomNuGetBuild" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_35\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\net35" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_35\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\net35" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_Portable\bin\$(ConfigurationName)\Anotar.Custom.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net45+netcore45+wpa81+wp8" />
-    <Copy SourceFiles="$(SolutionDir)CustomReferenceAssembly_Portable\bin\$(ConfigurationName)\Anotar.Custom.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Custom\Lib\portable-net45+netcore45+wpa81+wp8" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
-    <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
-    <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Custom" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Custom\Tools\install.ps1" />
-    <Copy SourceFiles="$(SolutionDir)uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\Custom\Tools\uninstall.ps1" />
-    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\Custom" MetadataAssembly="$(TargetPath)" />
-  </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets'))" />
-  </Target>
-  <Import Project="..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" />
 </Project>
