@@ -5,8 +5,8 @@
     <TargetFrameworks>netstandard1.0;net35;portable-net4+sl50+win8+wpa81+wp8</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81+wp8' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'portable-net4+sl50+win8+wpa81+wp8' ">
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
   </PropertyGroup>
 
