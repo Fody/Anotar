@@ -2,7 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+#if XUNIT
+using Xunit;
+#else
 using NUnit.Framework;
+#endif
 
 public static class Verifier
 {
@@ -12,7 +16,7 @@ public static class Verifier
         var after = Validate(afterAssemblyPath);
         var message = $@"Failed processing {Path.GetFileName(afterAssemblyPath)}
 {after}";
-        Assert.AreEqual(TrimLineNumbers(before), TrimLineNumbers(after), message);
+        Assert.True(TrimLineNumbers(before) == TrimLineNumbers(after), message);
     }
 
     static string Validate(string assemblyPath2)

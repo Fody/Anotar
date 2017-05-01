@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>CustomAssemblyToProcess</RootNamespace>
     <AssemblyName>CustomAssemblyToProcess</AssemblyName>
-    <TargetFrameworks>netcoreapp1.1;sl5</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1;sl5;net462</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
