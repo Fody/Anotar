@@ -4,6 +4,7 @@ using Anotar.Custom;
 
 public class ClassWithException
 {
+#if !NET35
     public async void AsyncMethod()
     {
         try
@@ -14,6 +15,8 @@ public class ClassWithException
         {
         }
     }
+#endif
+
     public void Debug()
     {
         try

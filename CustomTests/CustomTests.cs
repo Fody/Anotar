@@ -610,7 +610,7 @@ public class CustomTests : IDisposable
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 
-    [Theory, MemberData(nameof(Targets))]
+    [Theory, MemberData(nameof(TargetsWithAsync))]
     public void AsyncMethod(string target)
     {
         var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
@@ -639,7 +639,7 @@ public class CustomTests : IDisposable
         Assert.True(message.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), message);
     }
 
-    [Theory, MemberData(nameof(Targets))]
+    [Theory, MemberData(nameof(TargetsWithAsync))]
     public void AsyncDelegateMethod(string target)
     {
         var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
@@ -677,9 +677,22 @@ public class CustomTests : IDisposable
     {
         get
         {
-            yield return new object[]{ "sl5" };
-            yield return new object[]{ "net462" };
-            yield return new object[]{ "netcoreapp1.1" };
+            foreach (var target in TargetsWithAsync)
+            {
+                yield return target;
+            }
+
+            yield return new object[] { "net35" };
+        }
+    }
+
+    public static IEnumerable<object[]> TargetsWithAsync
+    {
+        get
+        {
+            yield return new object[] { "sl5" };
+            yield return new object[] { "net462" };
+            yield return new object[] { "netcoreapp1.1" };
         }
     }
 }
