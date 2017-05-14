@@ -50,7 +50,6 @@
       <ReferenceAssemblyXmlDocs Include="..\CustomReferenceAssembly\bin\$(Configuration)\**\*.xml" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="..\CustomNuGetBuild" />
     <Copy SourceFiles="@(ReferenceAssemblyBinaries)" DestinationFolder="..\NuGetBuild\Custom\Lib\%(RecursiveDir)" />
     <Copy SourceFiles="@(ReferenceAssemblyXmlDocs)" DestinationFolder="..\NuGetBuild\Custom\Lib\%(RecursiveDir)" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="..\NuGetBuild\Custom" />
