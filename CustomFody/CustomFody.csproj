@@ -9,9 +9,11 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <NuspecFile>..\NuGetBuild\Custom\Anotar.Custom.Fody.nuspec</NuspecFile>
     <NuspecProperties>Version=$(Version)</NuspecProperties>
+    <AssemblyOriginatorKeyFile>../key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyCecil" Version="2.0.0" />
+    <PackageReference Include="FodyCecil" Version="2.0.9" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
