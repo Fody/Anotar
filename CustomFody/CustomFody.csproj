@@ -57,7 +57,5 @@
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="..\NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="..\NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="..\NuGetBuild\Custom" />
-    <Copy SourceFiles="..\install.ps" DestinationFiles="..\NuGetBuild\Custom\Tools\install.ps1" />
-    <Copy SourceFiles="..\uninstall.ps" DestinationFiles="..\NuGetBuild\Custom\Tools\uninstall.ps1" />
   </Target>
 </Project>
