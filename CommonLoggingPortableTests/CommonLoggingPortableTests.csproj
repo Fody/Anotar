@@ -94,6 +94,9 @@
     <Compile Include="..\common\MockAssemblyResolver.cs">
       <Link>MockAssemblyResolver.cs</Link>
     </Compile>
+    <Compile Include="..\Common\SdkToolsHelper.cs">
+      <Link>SdkToolsHelper.cs</Link>
+    </Compile>
     <Compile Include="..\common\Verifier.cs">
       <Link>Verifier.cs</Link>
     </Compile>

@@ -603,7 +603,7 @@ public class CustomTests : IDisposable
         Assert.True(LoggerFactory.FatalEntries.First().Format.StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~"));
     }
 
-    [Theory, MemberData(nameof(Targets))]
+    [SkippableTheory, MemberData(nameof(Targets))]
     public void PeVerify(string target)
     {
         WeaveAssembly(target);

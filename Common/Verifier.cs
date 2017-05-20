@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 #if XUNIT
@@ -40,13 +39,11 @@ public static class Verifier
 
     static string GetPathToPeVerify()
     {
-        var exePath = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\Microsoft SDKs\Windows\v7.0A\Bin\NETFX 4.0 Tools\PEVerify.exe");
-
-        if (!File.Exists(exePath))
-        {
-            exePath = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\Microsoft SDKs\Windows\v8.0A\Bin\NETFX 4.0 Tools\PEVerify.exe");
-        }
-        return exePath;
+        var pathToPeVerify = SdkToolsHelper.GetSdkToolPath("peverify.exe");
+#if XUNIT
+        Skip.IfNot(File.Exists(pathToPeVerify));
+#endif
+        return pathToPeVerify;
     }
 
     static string TrimLineNumbers(string foo)

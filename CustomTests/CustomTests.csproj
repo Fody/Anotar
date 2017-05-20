@@ -12,6 +12,7 @@
     <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.3.0-beta1-build3642" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
+    <PackageReference Include="Xunit.SkippableFact" Version="1.3.1" />
     <ProjectReference Include="..\CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj" />
     <ProjectReference Include="..\CustomFody\CustomFody.csproj" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta1-build3642" />
@@ -23,6 +24,7 @@
     <Compile Include="..\common\MockAssemblyResolver.cs" Link="TestHelpers\MockAssemblyResolver.cs" />
     <Compile Include="..\common\Verifier.cs" Link="TestHelpers\Verifier.cs" />
     <Compile Include="..\common\WeaverHelper.cs" Link="TestHelpers\WeaverHelper.cs" />
+    <Compile Include="..\common\SdkToolsHelper.cs" Link="TestHelpers\SdkToolsHelper.cs" />
   </ItemGroup>
   
   <ItemGroup>
