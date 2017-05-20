@@ -36,7 +36,7 @@ public partial class ModuleWeaver
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
 
-        var stringType = ModuleDefinition.TypeSystem.String.Resolve();
+        var stringType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "String");
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);

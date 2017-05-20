@@ -6,10 +6,12 @@ using Anotar.Custom;
 
 public class ClassWithCompilerGeneratedClasses
 {
+#if !NET35
     public async void AsyncMethod()
     {
         LogTo.Debug("Foo");
     }
+#endif 
 
     public IEnumerable<int> EnumeratorMethod()
     {
@@ -31,6 +33,7 @@ public class ClassWithCompilerGeneratedClasses
         log("Foo {0}");
     }
 
+#if !NET35
     public void AsyncDelegateMethod()
     {
         var action = new Action(async () =>
@@ -39,4 +42,5 @@ public class ClassWithCompilerGeneratedClasses
         });
         action();
     }
+#endif 
 }
