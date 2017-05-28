@@ -15,7 +15,7 @@ public partial class ModuleWeaver
     public void LoadSystemTypes()
     {
         var mscorlib = AssemblyResolver.Resolve(new AssemblyNameReference("mscorlib", null));
-        var typeType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "Type");
+        var typeType = mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "Type");
         if (typeType == null)
         {
             var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime",null));
@@ -36,12 +36,17 @@ public partial class ModuleWeaver
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
 
-        var stringType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "String");
+        var stringType = mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "String");
+        if (stringType == null)
+        {
+            var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime", null));
+            stringType = runtime.MainModule.Types.First(x => x.Name == "String");
+        }
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        var exceptionType = mscorlib.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
+        var exceptionType = mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
         if (exceptionType == null)
         {
             var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime",null));
