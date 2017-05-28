@@ -21,7 +21,12 @@ public partial class ModuleWeaver
             var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime",null));
             typeType = runtime.MainModule.Types.First(x => x.Name == "Type");
         }
-        var funcDefinition = typeType.Module.Types.First(x => x.Name == "Func`1");
+        var funcDefinition = typeType.Module.Types.FirstOrDefault(x => x.Name == "Func`1");
+        if (funcDefinition == null)
+        {
+            var core = AssemblyResolver.Resolve(new AssemblyNameReference("System.Core", null));
+            funcDefinition = core.MainModule.Types.First(x => x.Name == "Func`1");
+        }
         var genericInstanceType = new GenericInstanceType(funcDefinition);
         genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
         GenericFunc = ModuleDefinition.ImportReference(genericInstanceType);
