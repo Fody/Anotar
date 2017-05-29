@@ -1,4 +1,4 @@
-[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody)
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
 
 ![Icon](https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png)
 
