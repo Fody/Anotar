@@ -1,3 +1,5 @@
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody)
+
 ![Icon](https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png)
 
 
@@ -79,6 +81,7 @@ public class MyClass
     }
 }
 ```
+
 
 ### What gets compiled
 
