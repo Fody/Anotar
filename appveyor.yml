@@ -15,8 +15,8 @@ build:
   verbosity: minimal
 
 after_build:
-  - ps: Get-ChildItem -Recurse -Filter Custom*.csproj | % { dotnet build $_.FullName -c $env:CONFIGURATION }
-  - ps: Get-ChildItem -Recurse -Filter Custom*.csproj | % { dotnet pack $_.FullName -c $env:CONFIGURATION -o ../NuGetBuild /p:Version=$env:GitVersion_NuGetVersion }
+  - dotnet build Anotar.NetStandard.sln
+  - ps: dotnet pack Anotar.NetStandard.sln -c $env:CONFIGURATION -o ../NuGetBuild /p:Version=$env:GitVersion_NuGetVersion
 
 test:
   assemblies:
