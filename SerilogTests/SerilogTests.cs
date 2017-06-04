@@ -10,14 +10,14 @@ using Xunit;
 public class SerilogTests
 {
     static TestAssemblies assemblies = new TestAssemblies("SerilogAssemblyToProcess");
-    List<LogEvent> errors;
-    List<LogEvent> fatals;
-    List<LogEvent> debugs;
-    List<LogEvent> verboses;
-    List<LogEvent> informations;
-    List<LogEvent> warns;
+    static List<LogEvent> errors;
+    static List<LogEvent> fatals;
+    static List<LogEvent> debugs;
+    static List<LogEvent> verboses;
+    static List<LogEvent> informations;
+    static List<LogEvent> warns;
 
-    void LogEvent(LogEvent eventInfo)
+    static void LogEvent(LogEvent eventInfo)
     {
         if (eventInfo.Level == LogEventLevel.Verbose)
         {
@@ -44,7 +44,8 @@ public class SerilogTests
             warns.Add(eventInfo);
         }
     }
-    public SerilogTests()
+
+    static SerilogTests()
     {
         var eventSink = new EventSink
         {
@@ -55,7 +56,10 @@ public class SerilogTests
             .MinimumLevel.Verbose()
             .WriteTo.Sink(eventSink)
             .CreateLogger();
+    }
 
+    public SerilogTests()
+    {
         errors = new List<LogEvent>();
         fatals = new List<LogEvent>();
         debugs = new List<LogEvent>();
@@ -128,7 +132,10 @@ public class SerilogTests
     {
         var type = assemblies.GetAssembly(target).GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
-        var exception = Assert.Throws<Exception>(() => action(instance));
+        Assert.Throws<Exception>(() =>
+        {
+            action(instance);
+        });
         Assert.Equal(1, list.Count);
         var first = list.First();
         Assert.True(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
@@ -660,8 +667,6 @@ public class SerilogTests
         Assert.Equal("Foo {0}", logEvent.MessageTemplate.Text);
         Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
     }
-
-    [Theory, MemberData(nameof(Targets))]
 
     [Fact(Skip = "need to fix ref")]
     public void Issue33()
