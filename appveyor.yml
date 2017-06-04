@@ -6,6 +6,7 @@ install:
 before_build:
   - nuget restore Anotar.sln
   - dotnet restore Anotar.NetStandard.sln
+  - dotnet restore Anotar.IntegrationTests.sln
   - ps: gitversion /l console /output buildserver /updateassemblyinfo
 
 configuration: Release
@@ -32,6 +33,7 @@ after_test:
          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
          Pop-Location 
       }
+  - dotnet build Anotar.IntegrationTests.sln
 
 artifacts:
   - path: 'NuGetBuild\*.nupkg'
