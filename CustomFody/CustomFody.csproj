@@ -45,7 +45,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Target Name="PreparePackage" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
+  <Target Name="PreparePackage" AfterTargets="Build">
     <ItemGroup>
       <FilesToDelete Include="..\NuGetBuild\Custom\**\*.*" />
       <ReferenceAssemblyBinaries Include="..\CustomReferenceAssembly\bin\$(Configuration)\**\*.dll" />
@@ -56,6 +56,7 @@
     <Copy SourceFiles="@(ReferenceAssemblyXmlDocs)" DestinationFolder="..\NuGetBuild\Custom\Lib\%(RecursiveDir)" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Custom.Fody.nuspec" DestinationFolder="..\NuGetBuild\Custom" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="..\NuGetBuild\Custom" />
+    <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.dll" DestinationFolder="..\Tools" />
     <Copy SourceFiles="$(OutputPath)Anotar.Custom.Fody.pdb" DestinationFolder="..\NuGetBuild\Custom" />
   </Target>
 </Project>

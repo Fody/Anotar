@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 14.0.22823.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{FBFC972E-D7DD-4E72-A8C0-118A33A5913D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomReferenceAssembly", "CustomReferenceAssembly\CustomReferenceAssembly.csproj", "{E3DE8267-DA21-48DC-88F8-61A907CD91EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomAssemblyWithLogger", "CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj", "{B7C06B67-01DE-4B4E-B568-42D12A15820E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{D46E44D3-1D39-4816-B334-383034FA6CDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA}.Release|x86.Build.0 = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Debug|x86.Build.0 = Debug|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|x86.ActiveCfg = Release|Any CPU
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E}.Release|x86.Build.0 = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D46E44D3-1D39-4816-B334-383034FA6CDF}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E3DE8267-DA21-48DC-88F8-61A907CD91EA} = {FBFC972E-D7DD-4E72-A8C0-118A33A5913D}
+		{B7C06B67-01DE-4B4E-B568-42D12A15820E} = {FBFC972E-D7DD-4E72-A8C0-118A33A5913D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+	EndGlobalSection
+EndGlobal
