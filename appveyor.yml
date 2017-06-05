@@ -17,6 +17,7 @@ build:
 
 after_build:
   - dotnet build Anotar.NetStandard.sln
+  - msbuild Anotar.IntegrationTests.sln
   - ps: dotnet pack Anotar.NetStandard.sln -c $env:CONFIGURATION -o ../NuGetBuild /p:Version=$env:GitVersion_NuGetVersion
 
 test:
@@ -33,7 +34,6 @@ after_test:
          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
          Pop-Location 
       }
-  - msbuild Anotar.IntegrationTests.sln
 
 artifacts:
   - path: 'NuGetBuild\*.nupkg'
