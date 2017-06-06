@@ -4,12 +4,16 @@ using Mono.Cecil.Pdb;
 
 public static class WeaverHelper
 {
-
-    public static string Weave(string assemblyPath, string suffix = "2")
+    public static string GetNewAssemblyPath(string assemblyPath)
     {
-        var newAssembly = assemblyPath.Replace(".dll", $".{suffix}.dll");
+        return assemblyPath.Replace(".dll", ".2.dll");
+    }
+
+    public static string Weave(string assemblyPath, string newAssembly = null)
+    {
+        newAssembly = newAssembly ?? GetNewAssemblyPath(assemblyPath);
         var oldPdb = assemblyPath.Replace(".dll", ".pdb");
-        var newPdb = assemblyPath.Replace(".dll", $".{suffix}.pdb");
+        var newPdb = assemblyPath.Replace(".dll", ".2.pdb");
         File.Copy(assemblyPath, newAssembly, true);
         File.Copy(oldPdb, newPdb, true);
 

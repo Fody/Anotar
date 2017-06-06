@@ -16,17 +16,21 @@ public class CustomTests : IDisposable
 
     private Assembly WeaveAssembly(string target)
     {
+        var assemblyPathUri = new Uri(new Uri(typeof(CustomTests).GetTypeInfo().Assembly.CodeBase), $"../../../../CustomAssemblyToProcess/bin/Debug/{target}/CustomAssemblyToProcess.dll");
+        beforeAssemblyPath = Path.GetFullPath(assemblyPathUri.LocalPath);
+#if (!DEBUG)
+                beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
+#endif
+
+        afterAssemblyPath = WeaverHelper.GetNewAssemblyPath(beforeAssemblyPath);
+
         lock (weaverLock)
         {
             if (assemblies.ContainsKey(target) == false)
             {
                 AppDomainAssemblyFinder.Attach();
-                var assemblyPathUri = new Uri(new Uri(typeof(CustomTests).GetTypeInfo().Assembly.CodeBase), $"../../../../CustomAssemblyToProcess/bin/Debug/{target}/CustomAssemblyToProcess.dll");
-                beforeAssemblyPath = Path.GetFullPath(assemblyPathUri.LocalPath);
-#if (!DEBUG)
-                beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-                afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath, target);
+      
+                WeaverHelper.Weave(beforeAssemblyPath, afterAssemblyPath);
                 assemblies[target] = Assembly.LoadFile(afterAssemblyPath);
             }
 
