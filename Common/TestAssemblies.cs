@@ -44,7 +44,7 @@ public class TestAssemblies
 #if (!DEBUG)
                 beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
-                var afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath, target);
+                var afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
                 assemblies[target] = Tuple.Create(Assembly.LoadFile(afterAssemblyPath), beforeAssemblyPath, afterAssemblyPath);
             }
         }

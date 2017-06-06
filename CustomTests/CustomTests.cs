@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,35 +7,7 @@ using Xunit;
 
 public class CustomTests : IDisposable
 {
-    static object weaverLock = new object();
-
-    string beforeAssemblyPath;
-    static IDictionary<string, Assembly> assemblies = new Dictionary<string, Assembly>();
-    string afterAssemblyPath;
-
-    private Assembly WeaveAssembly(string target)
-    {
-        var assemblyPathUri = new Uri(new Uri(typeof(CustomTests).GetTypeInfo().Assembly.CodeBase), $"../../../../CustomAssemblyToProcess/bin/Debug/{target}/CustomAssemblyToProcess.dll");
-        beforeAssemblyPath = Path.GetFullPath(assemblyPathUri.LocalPath);
-#if (!DEBUG)
-                beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-
-        afterAssemblyPath = WeaverHelper.GetNewAssemblyPath(beforeAssemblyPath);
-
-        lock (weaverLock)
-        {
-            if (assemblies.ContainsKey(target) == false)
-            {
-                AppDomainAssemblyFinder.Attach();
-      
-                WeaverHelper.Weave(beforeAssemblyPath, afterAssemblyPath);
-                assemblies[target] = Assembly.LoadFile(afterAssemblyPath);
-            }
-
-            return assemblies[target];
-        }
-    }
+    static readonly TestAssemblies assemblies = new TestAssemblies("CustomAssemblyToProcess");
 
     public void Dispose()
     {
@@ -46,7 +17,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Generic(string target)
     {
-        var type = WeaveAssembly(target).GetType("GenericClass`1");
+        var type = assemblies.GetAssembly(target).GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
@@ -58,7 +29,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ClassWithComplexExpressionInLog(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithComplexExpressionInLog");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithComplexExpressionInLog");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -68,14 +39,14 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void EnsureLoggerFactoryAttributeisRemoved(string target)
     {
-        var first = WeaveAssembly(target).GetCustomAttributes(false).FirstOrDefault(x => x.GetType().Name.Contains("LoggerFactoryAttribute"));
+        var first = assemblies.GetAssembly(target).GetCustomAttributes(false).FirstOrDefault(x => x.GetType().Name.Contains("LoggerFactoryAttribute"));
         Assert.Null(first);
     }
 
     [Theory, MemberData(nameof(Targets))]
     public void MethodThatReturns(string target)
     {
-        var type = WeaveAssembly(target).GetType("OnException");
+        var type = assemblies.GetAssembly(target).GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
 
         Assert.Equal("a", instance.MethodThatReturns("x", 6));
@@ -84,7 +55,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ClassWithExistingField(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithExistingField");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithExistingField");
         Assert.Equal(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Length);
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
@@ -96,7 +67,7 @@ public class CustomTests : IDisposable
     void CheckException(Action<object> action, List<LogEntry> list, string expected, string target)
     {
         Exception exception = null;
-        var type = WeaveAssembly(target).GetType("OnException");
+        var type = assemblies.GetAssembly(target).GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
         try
         {
@@ -212,7 +183,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsTraceEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsTraceEnabled());
     }
@@ -220,7 +191,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void TraceString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceString();
         Assert.Equal(1, LoggerFactory.TraceEntries.Count);
@@ -230,7 +201,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void TraceStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringFunc();
         Assert.Equal(1, LoggerFactory.TraceEntries.Count);
@@ -240,7 +211,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void TraceStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringParams();
         Assert.Equal(1, LoggerFactory.TraceEntries.Count);
@@ -250,7 +221,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void TraceStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringException();
         Assert.Equal(1, LoggerFactory.TraceEntries.Count);
@@ -260,7 +231,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void TraceStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.TraceEntries.Count);
@@ -270,7 +241,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsDebugEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsDebugEnabled());
     }
@@ -278,7 +249,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Debug(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -288,7 +259,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DebugString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -298,7 +269,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DebugStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringFunc();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -308,7 +279,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DebugStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -318,7 +289,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DebugStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -328,7 +299,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DebugStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.DebugEntries.Count);
@@ -338,7 +309,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsInformationEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsInformationEnabled());
     }
@@ -346,7 +317,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Information(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Information();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -356,7 +327,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void InformationString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationString();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -366,7 +337,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void InformationStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringFunc();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -376,7 +347,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void InformationStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringParams();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -386,7 +357,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void InformationStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringException();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -396,7 +367,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void InformationStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.InformationEntries.Count);
@@ -406,7 +377,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsWarningEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsWarningEnabled());
     }
@@ -414,7 +385,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Warning(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warning();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -424,7 +395,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void WarningString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningString();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -434,7 +405,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void WarningStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringFunc();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -444,7 +415,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void WarningStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringParams();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -454,7 +425,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void WarningStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringException();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -464,7 +435,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void WarningStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.WarningEntries.Count);
@@ -474,7 +445,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsErrorEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsErrorEnabled());
     }
@@ -482,7 +453,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Error(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -492,7 +463,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ErrorString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -502,7 +473,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ErrorStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringFunc();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -512,7 +483,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ErrorStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -522,7 +493,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ErrorStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -532,7 +503,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void ErrorStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.ErrorEntries.Count);
@@ -542,7 +513,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void IsFatalEnabled(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         Assert.True(instance.IsFatalEnabled());
     }
@@ -550,7 +521,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void Fatal(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -560,7 +531,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void FatalString(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -570,7 +541,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void FatalStringFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringFunc();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -580,7 +551,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void FatalStringParams(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -590,7 +561,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void FatalStringException(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -600,7 +571,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void FatalStringExceptionFunc(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithLogging");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionFunc();
         Assert.Equal(1, LoggerFactory.FatalEntries.Count);
@@ -610,14 +581,13 @@ public class CustomTests : IDisposable
     [SkippableTheory, MemberData(nameof(Targets))]
     public void PeVerify(string target)
     {
-        WeaveAssembly(target);
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
+        Verifier.Verify(assemblies.GetBeforePath(target), assemblies.GetAfterPath(target));
     }
 
     [Theory, MemberData(nameof(TargetsWithAsync))]
     public void AsyncMethod(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
         Assert.True(LoggerFactory.DebugEntries.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
@@ -626,7 +596,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void EnumeratorMethod(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         var message = LoggerFactory.DebugEntries.First().Format;
@@ -636,7 +606,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void DelegateMethod(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         var message = LoggerFactory.DebugEntries.First().Format;
@@ -646,7 +616,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(TargetsWithAsync))]
     public void AsyncDelegateMethod(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         var message = LoggerFactory.DebugEntries.First().Format;
@@ -656,7 +626,7 @@ public class CustomTests : IDisposable
     [Theory, MemberData(nameof(Targets))]
     public void LambdaMethod(string target)
     {
-        var type = WeaveAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
+        var type = assemblies.GetAssembly(target).GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         var message = LoggerFactory.DebugEntries.First().Format;
