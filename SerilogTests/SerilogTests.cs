@@ -45,7 +45,7 @@ public class SerilogTests
         }
     }
 
-    static SerilogTests()
+    public SerilogTests()
     {
         var eventSink = new EventSink
         {
@@ -56,10 +56,7 @@ public class SerilogTests
             .MinimumLevel.Verbose()
             .WriteTo.Sink(eventSink)
             .CreateLogger();
-    }
 
-    public SerilogTests()
-    {
         errors = new List<LogEvent>();
         fatals = new List<LogEvent>();
         debugs = new List<LogEvent>();
