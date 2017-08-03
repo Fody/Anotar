@@ -22,15 +22,23 @@ test:
   assemblies:
     except:
       - CustomTests.dll
+      - SerilogTests.dll
       - Xunit.SkippableFact.dll
 
 after_test:
   - ps: | 
-      Get-ChildItem -Recurse -Filter CustomTests.csproj | %{ 
-         Push-Location $_.Directory; 
-         dotnet xunit -configuration $env:CONFIGURATION;
-         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
-         Pop-Location 
+      $xUnitTestProjects = @(`
+        "CustomTests.csproj",`
+        "SerilogTests.csproj"
+      )
+  
+      $xUnitTestProjects | foreach { 
+        Get-ChildItem -Recurse -Filter $_ | %{ 
+          Push-Location $_.Directory; 
+          dotnet xunit -configuration $env:CONFIGURATION;
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
+          Pop-Location 
+        }
       }
 
 artifacts:

@@ -1,77 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A83DF669-A96F-4494-B962-A91841ABCFB8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SerilogAssemblyToProcess</RootNamespace>
     <AssemblyName>SerilogAssemblyToProcess</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netcoreapp1.1;net462</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.4.0\lib\net45\Serilog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Serilog" Version="2.4.0" />
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs" />
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
-    <Compile Include="ClassWithComplexExpressionInLog.cs" />
-    <Compile Include="ClassWithExistingField.cs" />
-    <Compile Include="Template.cs" />
-    <Compile Include="ClassWithLogging.cs" />
-    <Compile Include="ClassWithMultipleLoggingCalls.cs" />
-    <Compile Include="ClassWithStaticConstructor.cs" />
-    <Compile Include="ClassWithWhileMethod.cs" />
-    <Compile Include="ClassWithException.cs" />
-    <Compile Include="GenericClass.cs" />
-    <Compile Include="Issues.cs" />
-    <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs" />
-    <Compile Include="MyInterface.cs" />
-    <Compile Include="OnException.cs" />
-    <Compile Include="ReturnFixerTests.cs" />
+    <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj">
-      <Project>{16057acc-e523-403b-825d-57ddaedc1ce6}</Project>
-      <Name>SerilogReferenceAssembly</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
