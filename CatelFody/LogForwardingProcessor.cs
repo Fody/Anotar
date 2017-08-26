@@ -119,7 +119,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
-                    Instruction.Create(OpCodes.Call, ModuleWeaver.WriteExceptionMethod),
+                    ModuleWeaver.CreateLogExceptionCallInstruction(),
                 });
             return;
         }
@@ -152,7 +152,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
-                    Instruction.Create(OpCodes.Call, ModuleWeaver.WriteExceptionMethod),
+                    ModuleWeaver.CreateLogExceptionCallInstruction(),
                     sectionNop
                 });
             return;

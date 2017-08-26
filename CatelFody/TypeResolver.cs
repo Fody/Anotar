@@ -3,8 +3,12 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
+    public bool CatelVersion5;
+
     public void Init()
     {
+        CatelVersion5 = CatelReference.MainModule.Assembly.Name.Version.Major == 5;
+
         var logManagerType = CatelReference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerMethod = logManagerType.FindMethod("GetLogger", "Type");
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerMethod);
@@ -19,9 +23,19 @@ public partial class ModuleWeaver
 
         WriteMethod = ModuleDefinition.ImportReference(
             loggerTypeDefinition.FindMethod("WriteWithData", "String", "Object", "LogEvent"));
-        WriteExceptionMethod =
-            ModuleDefinition.ImportReference(
-                logExtensionsDefinition.FindMethod("WriteWithData", "ILog", "Exception", "String", "Object", "LogEvent"));
+        MethodDefinition writeExceptionMethodRef;
+        if (CatelVersion5)
+        {
+            writeExceptionMethodRef =
+                logExtensionsDefinition.FindMethod("WriteWithData", "ILog", "Exception", "String", "Object", "LogEvent");
+        }
+        else
+        {
+            writeExceptionMethodRef =
+                loggerTypeDefinition.FindMethod("WriteWithData", "Exception", "String", "Object", "LogEvent");
+        }
+
+        WriteExceptionMethod = ModuleDefinition.ImportReference(writeExceptionMethodRef);
 
         var logInfoDefinition = logManagerType.NestedTypes.First(x => x.Name == "LogInfo");
         IsDebugEnabledMethod = ModuleDefinition.ImportReference(logInfoDefinition.FindMethod("get_IsDebugEnabled"));
