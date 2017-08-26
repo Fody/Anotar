@@ -32,7 +32,6 @@
   <ItemGroup>
     <Reference Include="Catel.Core, Version=4.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Catel.Core.4.5.4\lib\net45\Catel.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.dll</HintPath>
