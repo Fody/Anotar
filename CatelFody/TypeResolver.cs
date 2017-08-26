@@ -9,6 +9,7 @@ public partial class ModuleWeaver
         var getLoggerMethod = logManagerType.FindMethod("GetLogger", "Type");
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerMethod);
         var loggerTypeDefinition = CatelReference.MainModule.Types.First(x => x.Name == "ILog");
+        var logExtensionsDefinition = CatelReference.MainModule.Types.First(x => x.Name == "LogExtensions");
         LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);
         var logEventDefinition = CatelReference.MainModule.Types.First(x => x.Name == "LogEvent");
         DebugLogEvent = (int) logEventDefinition.Fields.First(x => x.Name == "Debug").Constant;
@@ -20,7 +21,7 @@ public partial class ModuleWeaver
             loggerTypeDefinition.FindMethod("WriteWithData", "String", "Object", "LogEvent"));
         WriteExceptionMethod =
             ModuleDefinition.ImportReference(
-                loggerTypeDefinition.FindMethod("WriteWithData", "Exception", "String", "Object", "LogEvent"));
+                logExtensionsDefinition.FindMethod("WriteWithData", "ILog", "Exception", "String", "Object", "LogEvent"));
 
         var logInfoDefinition = logManagerType.NestedTypes.First(x => x.Name == "LogInfo");
         IsDebugEnabledMethod = ModuleDefinition.ImportReference(logInfoDefinition.FindMethod("get_IsDebugEnabled"));
