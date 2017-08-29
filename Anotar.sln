@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 15.0.26430.13
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catel", "Catel", "{BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log4Net", "Log4Net", "{968B8231-64F3-44BD-8D4F-C279C53571FF}"

@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
-MinimumVisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 15.0.26430.13
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{FBFC972E-D7DD-4E72-A8C0-118A33A5913D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomFody", "CustomFody\CustomFody.csproj", "{4517D06F-06BB-4003-BA4C-E2F85F77E4B7}"
