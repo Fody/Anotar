@@ -35,7 +35,7 @@ public class ClassWithCompilerGeneratedClasses
     {
         var action = new Action(async () =>
         {
-            LogTo.Debug();
+            LogTo.Info();
         });
         action();
     }

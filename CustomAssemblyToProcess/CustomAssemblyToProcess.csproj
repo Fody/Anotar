@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>CustomAssemblyToProcess</RootNamespace>
     <AssemblyName>CustomAssemblyToProcess</AssemblyName>
-    <TargetFrameworks>netcoreapp1.1;sl5;net462;net35</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1;sl5;net462;net35;net45</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9E5BBEF-A48A-42BC-83AB-2B3939915E0A}</ProjectGuid>
+    <ProjectGuid>{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CatelTests</RootNamespace>
@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Catel.Core, Version=4.5.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Catel.Core.4.5.4\lib\net45\Catel.Core.dll</HintPath>
+    <Reference Include="Catel.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Catel.Core.5.0.0\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\FodyCecil.2.1.2\lib\net40\Mono.Cecil.dll</HintPath>
@@ -54,9 +54,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\common\AppDomainAssemblyFinder.cs">
@@ -77,9 +75,13 @@
     <Compile Include="..\Common\WeaverHelper.cs">
       <Link>WeaverHelper.cs</Link>
     </Compile>
-    <Compile Include="Catel4Tests.cs" />
-    <Compile Include="CatelTests.cs" />
-    <Compile Include="TestHelpers\LogListener.cs" />
+    <Compile Include="..\CatelTests\CatelTests.cs">
+      <Link>CatelTests.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelTests\TestHelpers\LogListener.cs">
+      <Link>TestHelpers\LogListener.cs</Link>
+    </Compile>
+    <Compile Include="Catel5Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatelFody\CatelFody.csproj">

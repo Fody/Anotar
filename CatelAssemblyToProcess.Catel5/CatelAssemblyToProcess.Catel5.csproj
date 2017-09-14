@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}</ProjectGuid>
+    <ProjectGuid>{205A56B5-4578-4843-9C65-CF7C5F395F8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CatelAssemblyToProcess</RootNamespace>
@@ -38,59 +38,65 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Catel.Core, Version=4.5.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Catel.Core.4.5.4\lib\net45\Catel.Core.dll</HintPath>
+    <Reference Include="Catel.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Catel.Core.5.0.0\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithComplexExpressionInLog.cs" />
-    <Compile Include="ClassWithException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithExistingField.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithLogging.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithMultipleLoggingCalls.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithWhileMethod.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GenericClass.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Issues.cs" />
-    <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MyInterface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="OnException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ReturnFixerTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CatelReferenceAssembly\CatelReferenceAssembly.csproj">
       <Project>{c2ee6ffe-d6c5-4326-9a7b-3cf3905e930b}</Project>
       <Name>CatelReferenceAssembly</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithAbstract.cs">
+      <Link>ClassWithAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithCompilerGeneratedClasses.cs">
+      <Link>ClassWithCompilerGeneratedClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithComplexExpressionInLog.cs">
+      <Link>ClassWithComplexExpressionInLog.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithException.cs">
+      <Link>ClassWithException.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithExistingField.cs">
+      <Link>ClassWithExistingField.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithLogging.cs">
+      <Link>ClassWithLogging.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithMultipleLoggingCalls.cs">
+      <Link>ClassWithMultipleLoggingCalls.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ClassWithWhileMethod.cs">
+      <Link>ClassWithWhileMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\GenericClass.cs">
+      <Link>GenericClass.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\Issues.cs">
+      <Link>Issues.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\MyDelegate.cs">
+      <Link>MyDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\MyEnum.cs">
+      <Link>MyEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\MyInterface.cs">
+      <Link>MyInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\OnException.cs">
+      <Link>OnException.cs</Link>
+    </Compile>
+    <Compile Include="..\CatelAssemblyToProcess\ReturnFixerTests.cs">
+      <Link>ReturnFixerTests.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
