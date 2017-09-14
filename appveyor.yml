@@ -6,7 +6,7 @@ install:
 before_build:
   - nuget restore Anotar.sln
   - dotnet restore Anotar.NetStandard.sln
-  - ps: gitversion /l console /output buildserver /updateassemblyinfo
+  - ps: gitversion /l console /output buildserver /updateassemblyinfo CommonAssemblyInfo.cs
 
 configuration: Release
 
