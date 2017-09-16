@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>CustomAssemblyWithLogger</RootNamespace>
     <AssemblyName>CustomAssemblyWithLogger</AssemblyName>
-    <TargetFrameworks>netstandard1.0;net35;portable-net4+sl50+win8+wpa81+wp8</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;net35;portable-net4+sl50+win8+wpa81+wp8;net40</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

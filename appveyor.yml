@@ -7,7 +7,7 @@ before_build:
   - nuget restore Anotar.sln
   - dotnet restore Anotar.NetStandard.sln
   - dotnet restore Anotar.IntegrationTests.sln
-  - ps: gitversion /l console /output buildserver /updateassemblyinfo
+  - ps: gitversion /l console /output buildserver /updateassemblyinfo CommonAssemblyInfo.cs
 
 configuration: Release
 
@@ -24,16 +24,24 @@ test:
   assemblies:
     except:
       - CustomTests.dll
+      - SerilogTests.dll
       - Xunit.SkippableFact.dll
 
 after_test:
   - ps: | 
-      Get-ChildItem -Recurse -Filter CustomTests.csproj | %{ 
-         Push-Location $_.Directory; 
-         dotnet xunit -configuration $env:CONFIGURATION;
-         if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
-         Pop-Location 
+      $xUnitTestProjects = @(`
+        "CustomTests.csproj",`
+        "SerilogTests.csproj"
+      )
+  
+      $xUnitTestProjects | foreach { 
+        Get-ChildItem -Recurse -Filter $_ | %{ 
+          Push-Location $_.Directory; 
+          dotnet xunit -configuration $env:CONFIGURATION;
+          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
+          Pop-Location 
+        }
       }
 
 artifacts:
-  - path: 'NuGetBuild\*.nupkg'
+  - path: 'NuGetBuild\**\*.nupkg'

@@ -111,32 +111,28 @@ class OnExceptionProcessor
 
         if (attributeFinder.FoundDebug)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsDebugEnabledMethod,
-                ModuleWeaver.DebugLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.IsDebugEnabledMethod, ModuleWeaver.DebugLogEvent))
             {
                 yield return instruction;
             }
         }
         if (attributeFinder.FoundInfo)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsInfoEnabledMethod,
-                ModuleWeaver.InfoLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.IsInfoEnabledMethod, ModuleWeaver.InfoLogEvent))
             {
                 yield return instruction;
             }
         }
         if (attributeFinder.FoundWarning)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsWarningEnabledMethod,
-                ModuleWeaver.WarningLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.IsWarningEnabledMethod, ModuleWeaver.WarningLogEvent))
             {
                 yield return instruction;
             }
         }
         if (attributeFinder.FoundError)
         {
-            foreach (var instruction in AddWrite(ModuleWeaver.WriteExceptionMethod, ModuleWeaver.IsErrorEnabledMethod,
-                ModuleWeaver.ErrorLogEvent))
+            foreach (var instruction in AddWrite(ModuleWeaver.IsErrorEnabledMethod, ModuleWeaver.ErrorLogEvent))
             {
                 yield return instruction;
             }
@@ -145,7 +141,7 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Rethrow);
     }
 
-    IEnumerable<Instruction> AddWrite(MethodReference writeMethod, MethodReference isEnabledMethod, int logEvent)
+    private IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, int logEvent)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
         yield return Instruction.Create(OpCodes.Call, isEnabledMethod);
@@ -155,7 +151,7 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
         yield return Instruction.Create(OpCodes.Ldnull);
         yield return Instruction.Create(OpCodes.Ldc_I4, logEvent);
-        yield return Instruction.Create(OpCodes.Callvirt, writeMethod);
+        yield return ModuleWeaver.CreateLogExceptionCallInstruction();
         yield return sectionNop;
     }
 }

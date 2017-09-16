@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>portable-net4+sl50+win8+wpa81+wp8;netstandard1.0;net35</TargetFrameworks>
+    <TargetFrameworks>portable-net4+sl50+win8+wpa81+wp8;netstandard1.0;net35;net40</TargetFrameworks>
     <AssemblyName>Anotar.Custom</AssemblyName>
     <RootNamespace>Anotar.Custom</RootNamespace>
     <Version>$(Version)</Version>

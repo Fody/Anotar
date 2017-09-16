@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FodyCecil" Version="2.0.8" />
+    <PackageReference Include="FodyCecil" Version="2.0.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
@@ -22,6 +22,7 @@
     <Compile Include="..\common\AppDomainAssemblyFinder.cs" Link="TestHelpers\AppDomainAssemblyFinder.cs" />
     <Compile Include="..\common\AssemblyExtensions.cs" Link="TestHelpers\AssemblyExtensions.cs" />
     <Compile Include="..\common\MockAssemblyResolver.cs" Link="TestHelpers\MockAssemblyResolver.cs" />
+    <Compile Include="..\Common\TestAssemblies.cs" Link="TestHelpers\TestAssemblies.cs" />
     <Compile Include="..\common\Verifier.cs" Link="TestHelpers\Verifier.cs" />
     <Compile Include="..\common\WeaverHelper.cs" Link="TestHelpers\WeaverHelper.cs" />
     <Compile Include="..\common\SdkToolsHelper.cs" Link="TestHelpers\SdkToolsHelper.cs" />

@@ -7,7 +7,7 @@ using Catel.Logging;
 using NUnit.Framework;
 
 [TestFixture]
-public class CatelTests
+public abstract class CatelTests
 {
     string beforeAssemblyPath;
     Assembly assembly;
@@ -17,10 +17,10 @@ public class CatelTests
     public List<string> Warnings = new List<string>();
     string afterAssemblyPath;
 
-    public CatelTests()
+    protected CatelTests(string assemblyName)
     {
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CatelAssemblyToProcess\bin\Debug\CatelAssemblyToProcess.dll"));
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\{assemblyName}\bin\Debug\CatelAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif
@@ -508,7 +508,7 @@ public class CatelTests
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
-        var message = Debugs.Skip(1).First();
+        var message = Informations.First();
         Assert.IsTrue(message.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), message);
     }
 
