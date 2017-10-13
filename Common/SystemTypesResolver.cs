@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Mono.Cecil;
@@ -20,28 +21,9 @@ public partial class ModuleWeaver
         var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime", null));
         var core = AssemblyResolver.Resolve(new AssemblyNameReference("System.Core", null));
 
-        var typeType =
-            mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "Type")
-            ?? runtime?.MainModule.Types.FirstOrDefault(x => x.Name == "Type")
-            ?? netstandard?.MainModule.Types.FirstOrDefault(x => x.Name == "Type")
-            ?? core?.MainModule.Types.FirstOrDefault(x => x.Name == "Type");
+        var typeType = LoadTypeDefinition("System.Type", mscorlib, netstandard, runtime, core);
 
-        if (typeType == null)
-        {
-            throw new WeavingException("Unable to find System.Type");
-        }
-        Debug.WriteLine("Loaded type {0} from {1}", typeType.FullName, typeType.Module.FileName);
-
-        var funcDefinition =
-            mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "Func`1")
-            ?? runtime?.MainModule.Types.FirstOrDefault(x => x.Name == "Func`1")
-            ?? netstandard?.MainModule.Types.FirstOrDefault(x => x.Name == "Func`1")
-            ?? core?.MainModule.Types.FirstOrDefault(x => x.Name == "Func`1");
-        if (funcDefinition == null)
-        {
-            throw new WeavingException("Unable to find System.Func`1");
-        }
-        Debug.WriteLine("Loaded type {0} from {1}", funcDefinition.FullName, funcDefinition.Module.FileName);
+        var funcDefinition = LoadTypeDefinition("System.Func`1", mscorlib, netstandard, runtime, core);
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);
         genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
@@ -57,35 +39,31 @@ public partial class ModuleWeaver
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
 
-        var stringType =
-            mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "String")
-            ?? runtime?.MainModule.Types.FirstOrDefault(x => x.Name == "String")
-            ?? netstandard?.MainModule.Types.FirstOrDefault(x => x.Name == "String")
-            ?? core?.MainModule.Types.FirstOrDefault(x => x.Name == "String");
-
-        if (stringType == null)
-        {
-            throw new WeavingException("Unable to find System.String");
-        }
-        Debug.WriteLine("Loaded type {0} from {1}", stringType.FullName, stringType.Module.FileName);
+        var stringType = LoadTypeDefinition("System.String", mscorlib, netstandard, runtime, core);
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        var exceptionType =
-            mscorlib?.MainModule.Types.FirstOrDefault(x => x.Name == "Exception")
-            ?? runtime?.MainModule.Types.FirstOrDefault(x => x.Name == "Exception")
-            ?? netstandard?.MainModule.Types.FirstOrDefault(x => x.Name == "Exception")
-            ?? core?.MainModule.Types.FirstOrDefault(x => x.Name == "Exception");
-        if (exceptionType == null)
-        {
-            throw new WeavingException("Unable to find System.Exception");
-        }
-        Debug.WriteLine("Loaded type {0} from {1}", exceptionType.FullName, exceptionType.Module.FileName);
-
+        var exceptionType = LoadTypeDefinition("System.Exception", mscorlib, netstandard, runtime, core);
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
 
+    }
+
+    private static TypeDefinition LoadTypeDefinition(
+        string typeFullName,
+        params AssemblyDefinition[] canidateAssemblies)
+    {
+        foreach (var candidateAssembly in canidateAssemblies)
+        {
+            var typeDef = candidateAssembly?.MainModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
+            if (typeDef != null)
+            {
+                Debug.WriteLine("Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName);
+                return typeDef;
+            }
+        }
+        throw new WeavingException($"Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
     }
 
 }
