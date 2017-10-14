@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Mono.Cecil;
 
@@ -49,7 +48,7 @@ public partial class ModuleWeaver
 
     }
 
-    private static TypeDefinition LoadTypeDefinition(
+    private TypeDefinition LoadTypeDefinition(
         string typeFullName,
         params AssemblyDefinition[] canidateAssemblies)
     {
@@ -64,19 +63,19 @@ public partial class ModuleWeaver
                 var typeDef = assemblyModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
                 if (typeDef != null)
                 {
-                    Debug.WriteLine("Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName);
+                    LogInfo?.Invoke(String.Format("[SystemTypeResolver] Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName));
                     return typeDef;
                 }
                 var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(x => x.FullName == typeFullName);
                 var exportedTypeDef = exportedType?.Resolve();
                 if (exportedTypeDef != null)
                 {
-                    Debug.WriteLine("Loaded type (type-forwarded) {0} from {1}", exportedTypeDef.FullName, exportedTypeDef.Module.FileName);
+                    LogInfo?.Invoke(String.Format("[SystemTypeResolver] Loaded type (type-forwarded) {0} from {1}", exportedTypeDef.FullName, exportedTypeDef.Module.FileName));
                     return exportedTypeDef;
                 }
             }
         }
-        throw new WeavingException($"Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
+        throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
     }
 
 }
