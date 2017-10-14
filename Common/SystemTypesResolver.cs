@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -17,13 +18,12 @@ public partial class ModuleWeaver
     public void LoadSystemTypes()
     {
         var mscorlib = AssemblyResolver.Resolve(new AssemblyNameReference("mscorlib", null));
-        var netstandard = AssemblyResolver.Resolve(new AssemblyNameReference("netstandard", null));
         var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime", null));
         var core = AssemblyResolver.Resolve(new AssemblyNameReference("System.Core", null));
 
-        var typeType = LoadTypeDefinition("System.Type", mscorlib, netstandard, runtime, core);
+        var typeType = LoadTypeDefinition("System.Type", mscorlib, runtime, core);
 
-        var funcDefinition = LoadTypeDefinition("System.Func`1", mscorlib, netstandard, runtime, core);
+        var funcDefinition = LoadTypeDefinition("System.Func`1", mscorlib, runtime, core);
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);
         genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
@@ -39,13 +39,13 @@ public partial class ModuleWeaver
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
 
-        var stringType = LoadTypeDefinition("System.String", mscorlib, netstandard, runtime, core);
+        var stringType = LoadTypeDefinition("System.String", mscorlib, runtime, core);
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        var exceptionType = LoadTypeDefinition("System.Exception", mscorlib, netstandard, runtime, core);
+        var exceptionType = LoadTypeDefinition("System.Exception", mscorlib, runtime, core);
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
 
     }
@@ -56,11 +56,25 @@ public partial class ModuleWeaver
     {
         foreach (var candidateAssembly in canidateAssemblies)
         {
-            var typeDef = candidateAssembly?.MainModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
-            if (typeDef != null)
+            if (candidateAssembly == null)
             {
-                Debug.WriteLine("Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName);
-                return typeDef;
+                continue;
+            }
+            foreach (var assemblyModule in candidateAssembly.Modules)
+            {
+                var typeDef = assemblyModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
+                if (typeDef != null)
+                {
+                    Debug.WriteLine("Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName);
+                    return typeDef;
+                }
+                var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(x => x.FullName == typeFullName);
+                var exportedTypeDef = exportedType?.Resolve();
+                if (exportedTypeDef != null)
+                {
+                    Debug.WriteLine("Loaded type (type-forwarded) {0} from {1}", exportedTypeDef.FullName, exportedTypeDef.Module.FileName);
+                    return exportedTypeDef;
+                }
             }
         }
         throw new WeavingException($"Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
