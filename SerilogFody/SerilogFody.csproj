@@ -56,6 +56,8 @@
     <Copy SourceFiles="@(ReferenceAssemblyBinaries)" DestinationFolder="..\NuGetBuild\Serilog\Lib\%(RecursiveDir)" />
     <Copy SourceFiles="@(ReferenceAssemblyXmlDocs)" DestinationFolder="..\NuGetBuild\Serilog\Lib\%(RecursiveDir)" />
     <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.Serilog.Fody.nuspec" DestinationFolder="..\NuGetBuild\Serilog" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.install.xdt" DestinationFolder="..\NuGetBuild\Serilog\content" />
+    <Copy SourceFiles="$(ProjectDir)NugetAssets\FodyWeavers.xml.uninstall.xdt" DestinationFolder="..\NuGetBuild\Serilog\content" />
     <Copy SourceFiles="$(OutputPath)Anotar.Serilog.Fody.dll" DestinationFolder="..\NuGetBuild\Serilog" />
     <Copy SourceFiles="$(OutputPath)Anotar.Serilog.Fody.pdb" DestinationFolder="..\NuGetBuild\Serilog" />
   </Target>
