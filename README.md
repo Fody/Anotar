@@ -23,6 +23,34 @@ Simplifies logging through a static class and some IL manipulation
 * [Serilog](http://serilog.net/)
 * [Splat](https://github.com/paulcbetts/splat)
 
+## Usage
+
+See also [Fody usage](https://github.com/Fody/Fody#usage).
+
+
+### NuGet installation
+
+Install the [Anotar.xxx.Fody NuGet package](https://www.nuget.org/packages?q=anotar/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
+
+```
+PM> Install-Package Anotar.xxx.Fody
+PM> Update-Package Fody
+```
+
+The `Update-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
+
+
+### Add to FodyWeavers.xml
+
+Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Fody#add-fodyweaversxml)
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<Weavers>
+  <Anotar.xxx/>
+</Weavers>
+```
+
 
 ## Nuget
   
