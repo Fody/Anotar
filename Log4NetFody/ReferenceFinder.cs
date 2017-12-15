@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -8,20 +7,9 @@ public partial class ModuleWeaver
 
     void FindReference()
     {
-        var existingReference = ModuleDefinition.AssemblyReferences.FirstOrDefault(x => x.Name == "Log4Net");
-
-        if (existingReference != null)
-        {
-            Log4NetReference = AssemblyResolver.Resolve(existingReference);
-            return;
-        }
-        var reference = AssemblyResolver.Resolve(new AssemblyNameReference("Log4Net", null));
-        if (reference != null)
-        {
-            Log4NetReference = reference;
-            return;
-        }
-        throw new Exception("Could not resolve a reference to Log4Net.dll.");
+        var reference = AssemblyResolver.Resolve(new AssemblyNameReference("log4net", null));
+        if (reference == null) throw new Exception("Could not resolve a reference to log4net.dll.");
+        Log4NetReference = reference;
+        return;
     }
-
 }
