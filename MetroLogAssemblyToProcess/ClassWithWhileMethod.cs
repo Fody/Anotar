@@ -3,7 +3,6 @@ using Anotar.MetroLog;
 
 public class ClassWithWhileMethod
 {
-
     public void MethodWithWhile()
     {
         while (true)

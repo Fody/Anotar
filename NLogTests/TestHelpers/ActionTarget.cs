@@ -8,5 +8,5 @@ public sealed class ActionTarget: Target
     protected override void Write(LogEventInfo logEvent)
     {
         Action(logEvent);
-    } 
+    }
 }

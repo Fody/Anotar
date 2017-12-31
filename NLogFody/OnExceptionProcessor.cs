@@ -31,7 +31,6 @@ class OnExceptionProcessor
         ContinueProcessing();
     }
 
-
     void ContinueProcessing()
     {
         body = Method.Body;

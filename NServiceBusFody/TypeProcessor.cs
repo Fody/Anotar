@@ -70,5 +70,4 @@ public partial class ModuleWeaver
 
         type.Fields.Add(fieldDefinition);
     }
-
 }

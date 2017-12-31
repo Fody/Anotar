@@ -9,14 +9,10 @@ namespace Anotar.Log4Net
     /// </summary>
     public static class LogTo
     {
-
         /// <summary>
         /// Returns true if debug is enabled.
         /// </summary>
-        public static bool IsDebugEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public static bool IsDebugEnabled => throw new NotImplementedException();
 
         /// <summary>
         /// Writes the diagnostic message at the <c>Debug</c> level.
@@ -78,10 +74,7 @@ namespace Anotar.Log4Net
         /// <summary>
         /// Returns true if info is enabled.
         /// </summary>
-        public static bool IsInfoEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public static bool IsInfoEnabled => throw new NotImplementedException();
 
         /// <summary>
         /// Writes the diagnostic message at the <c>Info</c> level.
@@ -143,10 +136,7 @@ namespace Anotar.Log4Net
         /// <summary>
         /// Returns true if warn is enabled.
         /// </summary>
-        public static bool IsWarnEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public static bool IsWarnEnabled => throw new NotImplementedException();
 
         /// <summary>
         /// Writes the diagnostic message at the <c>Warn</c> level.
@@ -208,10 +198,7 @@ namespace Anotar.Log4Net
         /// <summary>
         /// Returns true if error is enabled.
         /// </summary>
-        public static bool IsErrorEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public static bool IsErrorEnabled => throw new NotImplementedException();
 
         /// <summary>
         /// Writes the diagnostic message at the <c>Error</c> level.
@@ -273,10 +260,7 @@ namespace Anotar.Log4Net
         /// <summary>
         /// Returns true if fatal is enabled.
         /// </summary>
-        public static bool IsFatalEnabled
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public static bool IsFatalEnabled => throw new NotImplementedException();
 
         /// <summary>
         /// Writes the diagnostic message at the <c>Fatal</c> level.

@@ -530,9 +530,6 @@ public class NServiceBusTests
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 
-
-
-
     [Test]
     public void AsyncMethod()
     {
@@ -582,5 +579,4 @@ public class NServiceBusTests
         Assert.AreEqual(1, Debugs.Count);
         Assert.IsTrue(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
     }
-
 }

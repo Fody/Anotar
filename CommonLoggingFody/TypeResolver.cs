@@ -3,10 +3,8 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-
     public void Init()
     {
-
         var logManagerType = CommonLoggingReference.MainModule.Types.First(x => x.Name == "LogManager");
 
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));

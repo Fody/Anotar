@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Logging;
+
 public class ActionAdapter : ILoggerFactoryAdapter
 {
     public List<LogEvent> Errors = new List<LogEvent>();

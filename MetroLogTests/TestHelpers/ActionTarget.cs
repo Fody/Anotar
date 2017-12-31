@@ -13,6 +13,5 @@ public class ActionTarget : SyncTarget
     protected override void Write(LogWriteContext context, LogEventInfo entry)
     {
         Action(entry);
-    } 
- 
+    }
 }

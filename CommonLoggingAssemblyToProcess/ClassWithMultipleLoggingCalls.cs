@@ -31,9 +31,13 @@ public class ClassWithMultipleLoggingCalls
     {
         LogTo.Info("Doing something");
 
-        if (doThrow)
+        if (!doThrow)
+        {
+            LogTo.Info("Doing something");
+        }
+        else
+        {
             throw new Exception();
-
-        LogTo.Info("Doing something");
+        }
     }
 }

@@ -66,7 +66,9 @@ public class ReturnFixerTests
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {

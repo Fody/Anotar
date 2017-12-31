@@ -212,5 +212,4 @@ public class ClassWithLogging
     {
         LogTo.FatalException(()=>"TheMessage", new Exception());
     }
-
 }

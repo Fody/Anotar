@@ -3,7 +3,6 @@ using Mono.Cecil;
 
 public static class AsyncChecker
 {
-
     public static void ThrowIfIsAsync(this MethodDefinition method)
     {
         if (method.CustomAttributes.Any(_ => _.AttributeType.Name == "AsyncStateMachineAttribute"))

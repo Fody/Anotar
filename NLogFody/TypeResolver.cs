@@ -87,5 +87,4 @@ public partial class ModuleWeaver
     public MethodReference IsWarnEnabledMethod;
     public MethodReference IsErrorEnabledMethod;
     public MethodReference IsFatalEnabledMethod;
-
 }

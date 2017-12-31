@@ -7,7 +7,6 @@ using Anotar.Catel;
 
 public class ReturnFixerTests
 {
-
     [LogToDebugOnException]
     public object MethodWithHangingHandlerEnd()
     {
@@ -59,14 +58,15 @@ public class ReturnFixerTests
         }
     }
 
-
     [LogToDebugOnException]
     public void MethodWithHangingHandlerEnd2()
     {
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {

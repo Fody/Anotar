@@ -37,7 +37,7 @@ public class Logger : ILogger
         if (logLevel == LogLevel.Debug)
         {
             Debugs.Add(message);
-        } 
+        }
     }
 
     public LogLevel Level { get; set; }

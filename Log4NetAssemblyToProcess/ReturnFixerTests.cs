@@ -7,7 +7,6 @@ using Anotar.Log4Net;
 
 public class ReturnFixerTests
 {
-
     [LogToDebugOnException]
     public object MethodWithHangingHandlerEnd()
     {
@@ -19,7 +18,6 @@ public class ReturnFixerTests
         {
             Debug.WriteLine("finally");
         }
-
     }
 
     [LogToDebugOnException]
@@ -34,7 +32,7 @@ public class ReturnFixerTests
             property1 = value;
         }
     }
-    
+
     [LogToDebugOnException]
     public void WithTernary(decimal? value)
     {
@@ -46,6 +44,7 @@ public class ReturnFixerTests
     }
 
     decimal? property1;
+
     [LogToDebugOnException]
     public void WithLdfldaShortCircuit(decimal value)
     {
@@ -55,10 +54,10 @@ public class ReturnFixerTests
             {
                 return;
             }
+
             property1 = null;
         }
     }
-
 
     [LogToDebugOnException]
     public void MethodWithHangingHandlerEnd2()
@@ -66,7 +65,9 @@ public class ReturnFixerTests
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {
@@ -79,6 +80,7 @@ public class ReturnFixerTests
 // ReSharper disable NotAccessedField.Local
     int x;
 // ReSharper restore NotAccessedField.Local
+
     public bool HasValue;
 
     [LogToDebugOnException]
@@ -91,7 +93,6 @@ public class ReturnFixerTests
         else
         {
             x++;
-
         }
     }
 #pragma warning disable 168
@@ -116,6 +117,7 @@ public class ReturnFixerTests
                 Debug.WriteLine("aString");
                 throw;
             }
+
             throw new Exception("aString", exception);
         }
         finally
@@ -125,6 +127,7 @@ public class ReturnFixerTests
     }
 
     bool isInSomeMode;
+
 // ReSharper disable once NotAccessedField.Local
     string branchingReturnField;
 

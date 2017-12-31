@@ -8,5 +8,4 @@ public class ClassWithComplexExpressionInLog
     {
         LogTo.Error(field == null ? "X" : "Y");
     }
-
 }

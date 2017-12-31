@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace JetBrains.Annotations
-{ 
+{
 #if (RELEASE)
     [Obsolete("Not for external use.")]
 #endif
@@ -18,6 +18,5 @@ namespace JetBrains.Annotations
         public StringFormatMethodAttribute(string formatParameterName)
         {
         }
-
     }
 }

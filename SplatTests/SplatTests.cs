@@ -6,7 +6,6 @@ using System.Reflection;
 using NUnit.Framework;
 using Splat;
 
-
 [TestFixture]
 public class SplatTests
 {
@@ -42,7 +41,6 @@ public class SplatTests
         currentLogger.Clear();
     }
 
-
     [Test]
     public void ClassWithComplexExpressionInLog()
     {
@@ -62,7 +60,6 @@ public class SplatTests
 
         Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
     }
-
 
     [Test]
     public void Generic()
@@ -105,7 +102,6 @@ public class SplatTests
         var first = list.First();
         Assert.IsTrue(first.Contains(expected), first);
     }
-
 
     [Test]
     public void OnExceptionToDebug()
@@ -186,7 +182,6 @@ public class SplatTests
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
         CheckException(action, currentLogger.Fatals, expected);
     }
-
 
     [Test]
     public void IsDebugEnabled()
@@ -324,7 +319,6 @@ public class SplatTests
         Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoStringExceptionFunc()'. Line: ~"));
     }
 
-
     [Test]
     public void IsWarnEnabled()
     {
@@ -392,7 +386,6 @@ public class SplatTests
         Assert.AreEqual(1, currentLogger.Warns.Count);
         Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnStringExceptionFunc()'. Line: ~"));
     }
-
 
     [Test]
     public void IsErrorEnabled()

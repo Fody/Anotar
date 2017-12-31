@@ -23,5 +23,4 @@ public partial class ModuleWeaver
         }
         throw new Exception("Could not resolve a reference to Splat.dll.");
     }
-
 }

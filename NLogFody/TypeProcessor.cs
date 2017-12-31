@@ -24,6 +24,7 @@ public partial class ModuleWeaver
         {
             foundAction = () => { };
         }
+
         var fieldReference = fieldDefinition.GetGeneric();
         var foundUsage = false;
         foreach (var method in type.Methods)
@@ -53,6 +54,7 @@ public partial class ModuleWeaver
             logForwardingProcessor.ProcessMethod();
 
         }
+
         if (foundUsage)
         {
             foundAction();
@@ -80,6 +82,4 @@ public partial class ModuleWeaver
 
         type.Fields.Add(fieldDefinition);
     }
-
-
 }

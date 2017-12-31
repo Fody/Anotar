@@ -39,5 +39,4 @@ public partial class ModuleWeaver
         //TODO: ensure attributes don't exist on interfaces
         RemoveReference();
     }
-
 }

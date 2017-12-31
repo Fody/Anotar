@@ -82,8 +82,6 @@ public partial class ModuleWeaver
         instructions.Insert(10, Instruction.Create(OpCodes.Callvirt, GetLoggerMethod));
         instructions.Insert(11, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
 
-
         type.Fields.Add(fieldDefinition);
     }
-
 }

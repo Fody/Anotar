@@ -28,6 +28,7 @@ public class LogForwardingProcessor
             {
                 ProcessInstruction(instruction);
             }
+
             if (foundUsageInMethod)
             {
                 Method.Body.OptimizeMacros();
@@ -41,20 +42,22 @@ public class LogForwardingProcessor
 
     void ProcessInstruction(Instruction instruction)
     {
-        var methodReference = instruction.Operand as MethodReference;
-        if (methodReference == null)
+        if (!(instruction.Operand is MethodReference methodReference))
         {
             return;
         }
+
         if (methodReference.DeclaringType.FullName != "Anotar.CommonLogging.LogTo")
         {
             return;
         }
+
         if (!foundUsageInMethod)
         {
             Method.Body.InitLocals = true;
             Method.Body.SimplifyMacros();
         }
+
         foundUsageInMethod = true;
         FoundUsageInType();
 
@@ -88,6 +91,7 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         instruction.OpCode = OpCodes.Callvirt;
         if (methodReference.IsMatch("String", "Exception", "Object[]"))
         {
@@ -96,16 +100,19 @@ public class LogForwardingProcessor
                 messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
                 Method.Body.Variables.Add(messageVar);
             }
+
             if (exceptionVar == null)
             {
                 exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
+
             if (paramsVar == null)
             {
                 paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
                 Method.Body.Variables.Add(paramsVar);
             }
+
             instructions.Replace(instruction,
                 new[]
                 {
@@ -122,6 +129,7 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         if (methodReference.IsMatch("Func`1", "Exception"))
         {
             if (funcVar == null)
@@ -129,11 +137,13 @@ public class LogForwardingProcessor
                 funcVar = new VariableDefinition(ModuleWeaver.GenericFunc);
                 Method.Body.Variables.Add(funcVar);
             }
+
             if (exceptionVar == null)
             {
                 exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
+
             var sectionNop = Instruction.Create(OpCodes.Nop);
             instructions.Replace(instruction,
                 new[]
@@ -155,6 +165,7 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         if (methodReference.IsMatch("String"))
         {
             if (messageVar == null)
@@ -175,6 +186,7 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         if (methodReference.IsMatch("String", "Object[]"))
         {
             if (messageVar == null)
@@ -182,6 +194,7 @@ public class LogForwardingProcessor
                 messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
                 Method.Body.Variables.Add(messageVar);
             }
+
             if (paramsVar == null)
             {
                 paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
@@ -202,6 +215,7 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         if (methodReference.IsMatch("Func`1"))
         {
             if (funcVar == null)
@@ -229,10 +243,9 @@ public class LogForwardingProcessor
                 });
             return;
         }
+
         throw new NotImplementedException();
-
     }
-
 
     string GetMessagePrefix(Instruction instruction)
     {
@@ -241,12 +254,12 @@ public class LogForwardingProcessor
         {
             return string.Empty;
         }
-        int lineNumber;
-        if (instruction.TryGetPreviousLineNumber(Method, out lineNumber))
+
+        if (instruction.TryGetPreviousLineNumber(Method, out var lineNumber))
         {
             return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
         }
+
         return $"Method: '{Method.DisplayName()}'. ";
     }
-
 }

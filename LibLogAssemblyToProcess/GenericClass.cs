@@ -7,4 +7,3 @@ public class GenericClass<T>
         LogTo.Debug();
     }
 }
-

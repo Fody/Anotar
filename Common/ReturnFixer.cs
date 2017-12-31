@@ -30,8 +30,7 @@ public class ReturnFixer
 
         for (var index = 0; index < instructions.Count; index++)
         {
-            var operand = instructions[index].Operand as Instruction;
-            if (operand != null)
+            if (instructions[index].Operand is Instruction operand)
             {
                 if (operand.OpCode == OpCodes.Ret)
                 {

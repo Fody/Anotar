@@ -59,14 +59,15 @@ public class ReturnFixerTests
         }
     }
 
-
     [LogToDebugOnException]
     public void MethodWithHangingHandlerEnd2()
     {
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {
@@ -94,6 +95,7 @@ public class ReturnFixerTests
 
         }
     }
+
 #pragma warning disable 168
     [LogToDebugOnException]
     public int TryCatchFinally()

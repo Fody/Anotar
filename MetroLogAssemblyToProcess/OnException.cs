@@ -4,7 +4,6 @@ using Anotar.MetroLog;
 
 public class OnException
 {
-
     [LogToFatalOnException]
     public void ToFatal(string param1, int param2)
     {

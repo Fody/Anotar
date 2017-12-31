@@ -62,9 +62,7 @@ public partial class ModuleWeaver
         }
 
         throw new WeavingException("Could not find LibLog types in the current assembly or any of the referenced assemblies.");
-
     }
-
 
     IEnumerable<ModuleDefinition> GetAllModules()
     {
@@ -105,5 +103,4 @@ public partial class ModuleWeaver
     public MethodReference IsWarnEnabledMethod;
     public MethodReference IsErrorEnabledMethod;
     public MethodReference IsFatalEnabledMethod;
-
 }

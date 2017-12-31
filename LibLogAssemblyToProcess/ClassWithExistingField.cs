@@ -15,5 +15,4 @@ public class ClassWithExistingField
     {
         LogTo.Debug("Sdf{0}","asd");
     }
-
 }

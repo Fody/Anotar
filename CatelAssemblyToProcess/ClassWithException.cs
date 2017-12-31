@@ -15,7 +15,6 @@ public class ClassWithException
         }
     }
 
-
     public void Debug()
     {
         try
@@ -191,5 +190,4 @@ public class ClassWithException
         {
         }
     }
-
 }

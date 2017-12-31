@@ -57,9 +57,9 @@ public class LogCapture : ILogProvider, ILog
         {
             Traces.Add(message);
         }
-        return true;   
+        return true;
     }
-    
+
     public void Clear()
     {
         Fatals.Clear();
@@ -69,5 +69,4 @@ public class LogCapture : ILogProvider, ILog
         Informations.Clear();
         Warns.Clear();
     }
-
 }

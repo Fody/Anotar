@@ -4,7 +4,6 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-
     public MethodReference GetTypeFromHandle;
     public TypeReference ExceptionType;
     public ArrayType ObjectArray;
@@ -45,10 +44,9 @@ public partial class ModuleWeaver
 
         var exceptionType = LoadTypeDefinition("System.Exception", mscorlib, runtime, core);
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
-
     }
 
-    private TypeDefinition LoadTypeDefinition(
+    TypeDefinition LoadTypeDefinition(
         string typeFullName,
         params AssemblyDefinition[] canidateAssemblies)
     {
@@ -63,19 +61,18 @@ public partial class ModuleWeaver
                 var typeDef = assemblyModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
                 if (typeDef != null)
                 {
-                    LogInfo?.Invoke(String.Format("[SystemTypeResolver] Loaded type {0} from {1}", typeDef.FullName, typeDef.Module.FileName));
+                    LogInfo?.Invoke($"[SystemTypeResolver] Loaded type {typeDef.FullName} from {typeDef.Module.FileName}");
                     return typeDef;
                 }
                 var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(x => x.FullName == typeFullName);
                 var exportedTypeDef = exportedType?.Resolve();
                 if (exportedTypeDef != null)
                 {
-                    LogInfo?.Invoke(String.Format("[SystemTypeResolver] Loaded type (type-forwarded) {0} from {1}", exportedTypeDef.FullName, exportedTypeDef.Module.FileName));
+                    LogInfo?.Invoke($"[SystemTypeResolver] Loaded type (type-forwarded) {exportedTypeDef.FullName} from {exportedTypeDef.Module.FileName}");
                     return exportedTypeDef;
                 }
             }
         }
         throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
     }
-
 }

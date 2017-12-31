@@ -1,7 +1,6 @@
 using System;
 using Anotar.Log4Net;
 
-
 public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()
@@ -32,7 +31,9 @@ public class ClassWithMultipleLoggingCalls
         LogTo.Info("Doing something");
 
         if (doThrow)
+        {
             throw new Exception();
+        }
 
         LogTo.Info("Doing something");
     }

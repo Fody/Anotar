@@ -94,7 +94,6 @@ public class ActionLog : ILog
                                      Format = format,
                                      Args = args
                                  });
-
     }
 
     public void DebugFormat(string format, Exception exception, params object[] args)
@@ -396,13 +395,7 @@ public class ActionLog : ILog
     public bool IsInfoEnabled => true;
     public bool IsWarnEnabled => true;
 
-    public IVariablesContext GlobalVariablesContext
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public IVariablesContext GlobalVariablesContext => throw new NotImplementedException();
 
-    public IVariablesContext ThreadVariablesContext
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public IVariablesContext ThreadVariablesContext => throw new NotImplementedException();
 }

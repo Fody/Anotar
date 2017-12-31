@@ -3,7 +3,6 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-
     public void Init()
     {
         var logManagerFactoryType = MetroLogReference.MainModule.Types.First(x => x.Name == "LogManagerFactory");

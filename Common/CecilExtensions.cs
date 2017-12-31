@@ -19,6 +19,7 @@ public static class CecilExtensions
             indexOf++;
         }
     }
+
     public static void Append(this List<Instruction> collection, params Instruction[] instructions)
     {
         collection.AddRange(instructions);
@@ -33,8 +34,7 @@ public static class CecilExtensions
 
     public static string DisplayName(this TypeReference typeReference)
     {
-        var genericInstanceType = typeReference as GenericInstanceType;
-        if (genericInstanceType != null && genericInstanceType.HasGenericArguments)
+        if (typeReference is GenericInstanceType genericInstanceType && genericInstanceType.HasGenericArguments)
         {
             return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(c => c.DisplayName())) + ">";
         }
@@ -68,7 +68,7 @@ public static class CecilExtensions
         {
             foreach (var parentClassMethod in method.DeclaringType.Methods)
             {
-                if (method.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                if (method.Name.StartsWith($"<{parentClassMethod.Name}>"))
                 {
                     return parentClassMethod;
                 }
@@ -101,8 +101,7 @@ public static class CecilExtensions
     {
         foreach (var instruction in methodDefinition.Body.Instructions)
         {
-            var methodReference = instruction.Operand as MethodReference;
-            if (methodReference != null)
+            if (instruction.Operand is MethodReference methodReference)
             {
                 var declaringType = methodReference.DeclaringType;
                 if (declaringType.Name != "LogTo")
@@ -120,8 +119,8 @@ public static class CecilExtensions
                     throw new WeavingException(message);
                 }
             }
-            var typeReference = instruction.Operand as TypeReference;
-            if (typeReference != null)
+
+            if (instruction.Operand is TypeReference typeReference)
             {
                 if (typeReference.Name != "LogTo")
                 {
@@ -167,7 +166,6 @@ public static class CecilExtensions
             processor.InsertBefore(target, instruction);
         }
     }
-
 
     public static bool IsBasicLogCall(this Instruction instruction)
     {
@@ -247,7 +245,6 @@ public static class CecilExtensions
                 return false;
             }
         }
-
     }
 
     public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
@@ -274,6 +271,7 @@ public static class CecilExtensions
         }
         return firstOrDefault;
     }
+
     public static MethodDefinition FindGenericMethod(this TypeDefinition typeDefinition, string method, params string[] paramTypes)
     {
         var firstOrDefault = typeDefinition.Methods

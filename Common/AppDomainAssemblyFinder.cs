@@ -3,7 +3,6 @@ using System.Reflection;
 
 public static class AppDomainAssemblyFinder
 {
-
     public static void Attach()
     {
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;

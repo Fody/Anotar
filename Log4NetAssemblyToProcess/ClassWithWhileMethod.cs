@@ -3,7 +3,6 @@ using Anotar.Log4Net;
 
 public class ClassWithWhileMethod
 {
-
     public void MethodWithWhile()
     {
         while (true)

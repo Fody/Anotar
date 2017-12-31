@@ -3,7 +3,6 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-
     public int GetLogEvent(MethodReference methodReference)
     {
         var name = methodReference.Name;
@@ -69,5 +68,4 @@ public partial class ModuleWeaver
         }
         throw new Exception("Invalid method name");
     }
-
 }

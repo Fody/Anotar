@@ -4,7 +4,6 @@ using Anotar.Log4Net;
 
 public class OnException
 {
-
     [LogToErrorOnException]
     public object MethodThatReturns(string param1, int param2)
     {

@@ -7,7 +7,6 @@ using Anotar.Splat;
 
 public class ReturnFixerTests
 {
-
     [LogToDebugOnException]
     public object MethodWithHangingHandlerEnd()
     {
@@ -19,7 +18,6 @@ public class ReturnFixerTests
         {
             Debug.WriteLine("finally");
         }
-
     }
 
     [LogToDebugOnException]
@@ -59,14 +57,15 @@ public class ReturnFixerTests
         }
     }
 
-
     [LogToDebugOnException]
     public void MethodWithHangingHandlerEnd2()
     {
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {

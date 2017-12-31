@@ -35,7 +35,6 @@ public class AttributeFinder
             FoundFatal = true;
             Found = true;
         }
-
     }
 
     public bool Found;

@@ -20,7 +20,6 @@ class OnExceptionProcessor
 
     public void Process()
     {
-
         attributeFinder = new AttributeFinder(Method);
         if (!attributeFinder.Found)
         {
@@ -31,7 +30,6 @@ class OnExceptionProcessor
         FoundUsageInType();
         ContinueProcessing();
     }
-
 
     void ContinueProcessing()
     {

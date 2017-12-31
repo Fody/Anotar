@@ -3,7 +3,6 @@ using Anotar.NLog;
 
 public class Issues
 {
-
     public void Issue31()
     {
         var text = "";
@@ -14,7 +13,4 @@ public class Issues
             text = reader.ReadToEnd();
         }
     }
-
-
-
 }

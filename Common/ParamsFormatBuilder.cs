@@ -5,11 +5,9 @@ using Mono.Cecil.Cil;
 
 class ParamsFormatBuilder
 {
-
     VariableDefinition paramsArray;
     public StringBuilder MessageBuilder;
     public List<Instruction> Instructions = new List<Instruction>();
-
 
     public ParamsFormatBuilder(MethodDefinition methodDefinition, VariableDefinition paramsArray)
     {
@@ -24,7 +22,6 @@ class ParamsFormatBuilder
             }
         }
     }
-
 
     IEnumerable<Instruction> ProcessParam(ParameterDefinition parameterDefinition)
     {
@@ -141,12 +138,10 @@ class ParamsFormatBuilder
                 // Box the de-referenced parameter type
                 yield return Instruction.Create(OpCodes.Box, referencedTypeSpec.ElementType);
             }
-
         }
         else
         {
-
-            // If it is a value type then you need to box the instance as we are going 
+            // If it is a value type then you need to box the instance as we are going
             // to add it to an array which is of type object (reference type)
             // ------------------------------------------------------------
             if (paramType.IsValueType)

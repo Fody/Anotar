@@ -74,9 +74,7 @@ public class Log4NetTests
             return;
 // ReSharper restore RedundantJumpStatement
         }
-
     }
-
 
     [Test]
     public void ClassWithComplexExpressionInLog()
@@ -118,7 +116,6 @@ public class Log4NetTests
         Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-
     [Test]
     public void ClassWithExistingField()
     {
@@ -157,7 +154,6 @@ public class Log4NetTests
         Action<dynamic> action = o => o.ToDebug("x", 6);
         CheckException(action, Debugs, expected);
     }
-
 
     [Test]
     public void OnExceptionToDebugWithReturn()

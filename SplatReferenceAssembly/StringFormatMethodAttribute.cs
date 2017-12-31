@@ -19,6 +19,5 @@ namespace JetBrains.Annotations
         public StringFormatMethodAttribute(string formatParameterName)
         {
         }
-
     }
 }

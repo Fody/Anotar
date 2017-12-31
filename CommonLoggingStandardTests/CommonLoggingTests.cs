@@ -43,7 +43,6 @@ public class CommonLoggingTests
         actionAdapter.Traces.Clear();
     }
 
-
     [Test]
     public void ClassWithComplexExpressionInLog()
     {
@@ -789,5 +788,4 @@ public class CommonLoggingTests
 
         Assert.NotNull(instance.DoIt());
     }
-
 }

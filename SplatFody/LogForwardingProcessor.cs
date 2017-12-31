@@ -41,8 +41,7 @@ public class LogForwardingProcessor
 
     void ProcessInstruction(Instruction instruction)
     {
-        var methodReference = instruction.Operand as MethodReference;
-        if (methodReference == null)
+        if (!(instruction.Operand is MethodReference methodReference))
         {
             return;
         }
@@ -225,9 +224,7 @@ public class LogForwardingProcessor
             return;
         }
         throw new NotImplementedException();
-
     }
-
 
     string GetMessagePrefix(Instruction instruction)
     {
@@ -236,12 +233,11 @@ public class LogForwardingProcessor
         {
             return string.Empty;
         }
-        int lineNumber;
-        if (instruction.TryGetPreviousLineNumber(Method, out lineNumber))
+
+        if (instruction.TryGetPreviousLineNumber(Method, out var lineNumber))
         {
             return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
         }
         return $"Method: '{Method.DisplayName()}'. ";
     }
-
 }

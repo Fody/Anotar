@@ -16,7 +16,6 @@ public class LibLogTests
 
     public LibLogTests()
     {
-
         AppDomainAssemblyFinder.Attach();
         beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\LibLogAssemblyToProcess\bin\Debug\LibLogAssemblyToProcess.dll"));
 #if (!DEBUG)
@@ -28,7 +27,6 @@ public class LibLogTests
         logProvider = new LogCapture();
         LogProvider.SetCurrentLogProvider(logProvider);
     }
-
 
     [Test]
     public void ClassWithComplexExpressionInLog()
@@ -66,7 +64,6 @@ public class LibLogTests
         //Assert.IsTrue(message.StartsWith("Method: 'Void Debug()'. Line: ~"));
     }
 
-
     [Test]
     public void ClassWithExistingField()
     {
@@ -97,7 +94,6 @@ public class LibLogTests
         var first = list.First();
         Assert.IsTrue(first.StartsWith(expected), first);
     }
-
 
     [Test]
     public void OnExceptionToTrace()
@@ -427,7 +423,6 @@ public class LibLogTests
         Assert.IsTrue(logProvider.Warns.First().StartsWith("Method: 'Void WarnString()'. Line: ~"));
     }
 
-
     [Test]
     public void WarnStringFunc()
     {
@@ -610,7 +605,6 @@ public class LibLogTests
         Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
     }
 
-
     [Test]
     public void AsyncMethod()
     {
@@ -660,6 +654,4 @@ public class LibLogTests
         Assert.AreEqual(1, logProvider.Debugs.Count);
         Assert.IsTrue(logProvider.Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), logProvider.Debugs.First());
     }
-
-
 }

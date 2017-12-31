@@ -67,5 +67,4 @@ public partial class ModuleWeaver
         instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
         type.Fields.Add(fieldDefinition);
     }
-
 }

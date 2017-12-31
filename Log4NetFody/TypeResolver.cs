@@ -3,10 +3,8 @@ using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
-
     public void Init()
     {
-
         var logManagerType = Log4NetReference.MainModule.Types.First(x => x.Name == "LogManager");
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
@@ -48,7 +46,6 @@ public partial class ModuleWeaver
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "Object", "Exception"));
         LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);
     }
-
 
     public MethodReference DebugMethod;
     public MethodReference DebugFormatMethod;
