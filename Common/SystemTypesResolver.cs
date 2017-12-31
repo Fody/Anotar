@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Fody;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -14,13 +15,9 @@ public partial class ModuleWeaver
 
     public void LoadSystemTypes()
     {
-        var mscorlib = AssemblyResolver.Resolve(new AssemblyNameReference("mscorlib", null));
-        var runtime = AssemblyResolver.Resolve(new AssemblyNameReference("System.Runtime", null));
-        var core = AssemblyResolver.Resolve(new AssemblyNameReference("System.Core", null));
+        var typeType = FindType("System.Type");
 
-        var typeType = LoadTypeDefinition("System.Type", mscorlib, runtime, core);
-
-        var funcDefinition = LoadTypeDefinition("System.Func`1", mscorlib, runtime, core);
+        var funcDefinition = FindType("System.Func`1");
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);
         genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
@@ -36,19 +33,17 @@ public partial class ModuleWeaver
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
 
-        var stringType = LoadTypeDefinition("System.String", mscorlib, runtime, core);
+        var stringType = FindType("System.String");
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
 
-        var exceptionType = LoadTypeDefinition("System.Exception", mscorlib, runtime, core);
+        var exceptionType = FindType("System.Exception");
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
     }
 
-    TypeDefinition LoadTypeDefinition(
-        string typeFullName,
-        params AssemblyDefinition[] canidateAssemblies)
+    TypeDefinition LoadTypeDefinition(string typeFullName, params AssemblyDefinition[] canidateAssemblies)
     {
         foreach (var candidateAssembly in canidateAssemblies)
         {

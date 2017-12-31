@@ -5,7 +5,14 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyHelpers" Version="2.3.14" />
+    <PackageReference Include="FodyCecil" Version="2.0.9" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\Common\AsyncChecker.cs">
       <Link>AsyncChecker.cs</Link>
     </Compile>
@@ -21,5 +28,4 @@
     <Compile Include="..\Common\SystemTypesResolver.cs">
       <Link>SystemTypesResolver.cs</Link>
     </Compile>
-  </ItemGroup>
 </Project>

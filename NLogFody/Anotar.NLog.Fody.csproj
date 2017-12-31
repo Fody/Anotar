@@ -1,71 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{29AD34AB-9416-4E53-95CA-9B00072D8802}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Anotar.NLog.Fody</RootNamespace>
-    <AssemblyName>Anotar.NLog.Fody</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FodyHelpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\FodyHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.NLog.Fody.nuspec">
-      <SubType>Designer</SubType>
-    </None>
+    <PackageReference Include="FodyHelpers" Version="2.3.14" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AsyncChecker.cs">
@@ -83,56 +23,5 @@
     <Compile Include="..\Common\SystemTypesResolver.cs">
       <Link>SystemTypesResolver.cs</Link>
     </Compile>
-    <Compile Include="..\Common\WeavingException.cs">
-      <Link>WeavingException.cs</Link>
-    </Compile>
-    <Compile Include="AttributeFinder.cs" />
-    <Compile Include="ReferenceFinder.cs" />
-    <Compile Include="OnExceptionProcessor.cs" />
-    <Compile Include="TypeProcessor.cs" />
-    <Compile Include="InjectorExtensions.cs" />
-    <Compile Include="LogForwardingProcessor.cs" />
-    <Compile Include="ModuleWeaver.cs" />
-    <Compile Include="..\CommonAssemblyInfo.cs" />
-    <Compile Include="TypeResolver.cs" />
-    <Compile Include="ReferenceCleaner.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\Lib\NullGuardAnotarBug.dll">
-      <Link>NullGuardAnotarBug.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Lib\NullGuardAnotarBug.pdb">
-      <Link>NullGuardAnotarBug.pdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition="$(ConfigurationName) == 'Release'">
-    <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NuGetBuild\NLog\**\*.*" />
-    </ItemGroup>
-    <Delete Files="@(FilesToDelete)" />
-    <MakeDir Directories="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
-    <Copy SourceFiles="$(SolutionDir)NLogReferenceAssembly\bin\$(ConfigurationName)\Anotar.NLog.xml" DestinationFolder="$(SolutionDir)NuGetBuild\NLog\Lib" />
-    <Copy SourceFiles="$(ProjectDir)NugetAssets\Anotar.NLog.Fody.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.dll" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(OutputPath)Anotar.NLog.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\NLog" />
-    <Copy SourceFiles="$(SolutionDir)install.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NLog\Tools\install.ps1" />
-    <Copy SourceFiles="$(SolutionDir)uninstall.ps" DestinationFiles="$(SolutionDir)NuGetBuild\NLog\Tools\uninstall.ps1" />
-    <PepitaPackage.CreatePackageTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild\NLog" MetadataAssembly="$(TargetPath)" />
-  </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets'))" />
-  </Target>
-  <Import Project="..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets" Condition="Exists('..\packages\PepitaPackage.1.21.4\build\PepitaPackage.targets')" />
 </Project>

@@ -1,92 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4476558B-9C1A-4EBB-AD80-825553E5CA2A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBusTests</RootNamespace>
-    <AssemblyName>NServiceBusTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FodyHelpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1ca091877d12ca03, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\FodyHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyHelpers.2.3.14\lib\net46\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.2.1\lib\net452\NServiceBus.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="FodyHelpers" Version="2.3.14" />
+    <PackageReference Include="NServiceBus" Version="6.2.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <ProjectReference Include="..\NServiceBusFody\Anotar.NServiceBus.Fody.csproj" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\common\AppDomainAssemblyFinder.cs">
-      <Link>TestHelpers\AppDomainAssemblyFinder.cs</Link>
-    </Compile>
-    <Compile Include="..\common\AssemblyExtensions.cs">
-      <Link>TestHelpers\AssemblyExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\common\MockAssemblyResolver.cs">
-      <Link>TestHelpers\MockAssemblyResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SdkToolsHelper.cs">
-      <Link>TestHelpers\SdkToolsHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\common\Verifier.cs">
-      <Link>TestHelpers\Verifier.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\WeaverHelper.cs">
-      <Link>WeaverHelper.cs</Link>
-    </Compile>
-    <Compile Include="NServiceBusTests.cs" />
-    <Compile Include="TestHelpers\LogCapture.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NServiceBusFody\Anotar.NServiceBus.Fody.csproj">
-      <Project>{ff465742-96b9-40ef-a5e6-34b52dc92499}</Project>
-      <Name>Anotar.NServiceBus.Fody</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

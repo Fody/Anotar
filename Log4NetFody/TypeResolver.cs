@@ -5,10 +5,10 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = Log4NetReference.MainModule.Types.First(x => x.Name == "LogManager");
+        var logManagerType = FindType("log4net.LogManager");
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
-        var loggerTypeDefinition = Log4NetReference.MainModule.Types.First(x => x.Name == "ILog");
+        var loggerTypeDefinition = FindType("log4net.ILog");
 
         DebugFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));

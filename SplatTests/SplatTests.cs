@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using NUnit.Framework;
+using Fody;
 using Splat;
+using Xunit;
 
-[TestFixture]
 public class SplatTests
 {
-    string beforeAssemblyPath;
     Assembly assembly;
-    string afterAssemblyPath;
     Logger currentLogger = new Logger();
 
     public SplatTests()
     {
-        AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\SplatAssemblyToProcess\bin\Debug\SplatAssemblyToProcess.dll"));
-#if (!DEBUG)
-        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
-        assembly = Assembly.LoadFile(afterAssemblyPath);
+        var moduleWeaver = new ModuleWeaver();
+        assembly = moduleWeaver.ExecuteTestRun("SplatAssemblyToProcess.dll").Assembly;
 
         Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger), typeof(ILogManager));
     }
@@ -35,33 +27,33 @@ public class SplatTests
         };
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        currentLogger.Clear();
-    }
+    //[TearDown]
+    //public void TearDown()
+    //{
+    //    currentLogger.Clear();
+    //}
 
-    [Test]
+    [Fact]
     public void ClassWithComplexExpressionInLog()
     {
         var type = assembly.GetType("ClassWithComplexExpressionInLog");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
+        Assert.Single(currentLogger.Errors);
         var error = currentLogger.Errors.First();
-        Assert.IsTrue(error.Contains("Method: 'Void Method()'. Line: ~"));
+        Assert.Contains("Method: 'Void Method()'. Line: ~", error);
     }
 
-    [Test]
+    [Fact]
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
+        Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
 
-    [Test]
+    [Fact]
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
@@ -69,18 +61,18 @@ public class SplatTests
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = currentLogger.Debugs.First();
-        Assert.IsTrue(message.Contains("Method: 'Void Debug()'. Line: ~"));
+        Assert.Contains("Method: 'Void Debug()'. Line: ~", message);
     }
 
-    [Test]
+    [Fact]
     public void ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Length);
+        Assert.Single(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static));
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void Debug()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void Debug()'. Line: ~", currentLogger.Debugs.First());
     }
 
     // ReSharper disable once UnusedParameter.Local
@@ -97,13 +89,13 @@ public class SplatTests
         {
             exception = e;
         }
-        Assert.IsNotNull(exception);
-        Assert.AreEqual(1, list.Count);
+        Assert.NotNull(exception);
+        Assert.Single(list);
         var first = list.First();
-        Assert.IsTrue(first.Contains(expected), first);
+        Assert.True(first.Contains(expected), first);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
@@ -111,7 +103,7 @@ public class SplatTests
         CheckException(action, currentLogger.Debugs, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToDebugWithReturn()
     {
         var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -119,7 +111,7 @@ public class SplatTests
         CheckException(action, currentLogger.Debugs, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToInfo()
     {
         var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
@@ -127,7 +119,7 @@ public class SplatTests
         CheckException(action, currentLogger.Informations, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToInfoWithReturn()
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -135,7 +127,7 @@ public class SplatTests
         CheckException(action, currentLogger.Informations, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToWarn()
     {
         var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
@@ -143,7 +135,7 @@ public class SplatTests
         CheckException(action, currentLogger.Warns, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToWarnWithReturn()
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -151,7 +143,7 @@ public class SplatTests
         CheckException(action, currentLogger.Warns, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToError()
     {
         var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
@@ -159,7 +151,7 @@ public class SplatTests
         CheckException(action, currentLogger.Errors, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToErrorWithReturn()
     {
         var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -167,7 +159,7 @@ public class SplatTests
         CheckException(action, currentLogger.Errors, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToFatal()
     {
         var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
@@ -175,7 +167,7 @@ public class SplatTests
         CheckException(action, currentLogger.Fatals, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToFatalWithReturn()
     {
         var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -183,415 +175,394 @@ public class SplatTests
         CheckException(action, currentLogger.Fatals, expected);
     }
 
-    [Test]
+    [Fact]
     public void IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsDebugEnabled());
+        Assert.True(instance.IsDebugEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void Debug()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void Debug()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DebugString()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void DebugString()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringFunc();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DebugStringFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void DebugStringFunc()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DebugStringParams()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void DebugStringParams()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DebugStringException()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void DebugStringException()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DebugStringExceptionFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void DebugStringExceptionFunc()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void IsInfoEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsInfoEnabled());
+        Assert.True(instance.IsInfoEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void Info()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void Info()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoString()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void InfoString()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringFunc();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoStringFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void InfoStringFunc()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoStringParams()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void InfoStringParams()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoStringException()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void InfoStringException()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionFunc();
-        Assert.AreEqual(1, currentLogger.Informations.Count);
-        Assert.IsTrue(currentLogger.Informations.First().Contains("Method: 'Void InfoStringExceptionFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Informations);
+        Assert.Contains("Method: 'Void InfoStringExceptionFunc()'. Line: ~", currentLogger.Informations.First());
     }
 
-    [Test]
+    [Fact]
     public void IsWarnEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsWarnEnabled());
+        Assert.True(instance.IsWarnEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void Warn()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void Warn()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnString()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void WarnString()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringFunc();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnStringFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void WarnStringFunc()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnStringParams()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void WarnStringParams()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnStringException()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void WarnStringException()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionFunc();
-        Assert.AreEqual(1, currentLogger.Warns.Count);
-        Assert.IsTrue(currentLogger.Warns.First().Contains("Method: 'Void WarnStringExceptionFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Warns);
+        Assert.Contains("Method: 'Void WarnStringExceptionFunc()'. Line: ~", currentLogger.Warns.First());
     }
 
-    [Test]
+    [Fact]
     public void IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.IsTrue(instance.IsErrorEnabled());
+        Assert.True(instance.IsErrorEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void Error()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void Error()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void ErrorString()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void ErrorString()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringFunc();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void ErrorStringFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void ErrorStringFunc()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void ErrorStringParams()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void ErrorStringParams()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void ErrorStringException()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void ErrorStringException()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
-        Assert.AreEqual(1, currentLogger.Errors.Count);
-        Assert.IsTrue(currentLogger.Errors.First().Contains("Method: 'Void ErrorStringExceptionFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Errors);
+        Assert.Contains("Method: 'Void ErrorStringExceptionFunc()'. Line: ~", currentLogger.Errors.First());
     }
 
-    [Test]
+    [Fact]
     public void IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsFatalEnabled());
+        Assert.True(instance.IsFatalEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void Fatal()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void Fatal()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void FatalString()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void FatalString()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringFunc();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void FatalStringFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void FatalStringFunc()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void FatalStringParams()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void FatalStringParams()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void FatalStringException()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void FatalStringException()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionFunc();
-        Assert.AreEqual(1, currentLogger.Fatals.Count);
-        Assert.IsTrue(currentLogger.Fatals.First().Contains("Method: 'Void FatalStringExceptionFunc()'. Line: ~"));
+        Assert.Single(currentLogger.Fatals);
+        Assert.Contains("Method: 'Void FatalStringExceptionFunc()'. Line: ~", currentLogger.Fatals.First());
     }
 
-    [Test]
-    public void PeVerify()
-    {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
-    }
-
-    [Test]
+    [Fact]
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void AsyncMethod()'. Line: ~"));
+        Assert.Single(currentLogger.Debugs);
+        Assert.Contains("Method: 'Void AsyncMethod()'. Line: ~", currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), currentLogger.Debugs.First());
+        Assert.Single(currentLogger.Debugs);
+        Assert.True(currentLogger.Debugs.First().Contains("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void DelegateMethod()'. Line: ~"), currentLogger.Debugs.First());
+        Assert.Single(currentLogger.Debugs);
+        Assert.True(currentLogger.Debugs.First().Contains("Method: 'Void DelegateMethod()'. Line: ~"), currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void AsyncDelegateMethod()'. Line: ~"), currentLogger.Debugs.First());
+        Assert.Single(currentLogger.Debugs);
+        Assert.True(currentLogger.Debugs.First().Contains("Method: 'Void AsyncDelegateMethod()'. Line: ~"), currentLogger.Debugs.First());
     }
 
-    [Test]
+    [Fact]
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
-        Assert.AreEqual(1, currentLogger.Debugs.Count);
-        Assert.IsTrue(currentLogger.Debugs.First().Contains("Method: 'Void LambdaMethod()'. Line: ~"), currentLogger.Debugs.First());
-    }
-
-    [Test]
-    [Explicit]
-    public void Issue33()
-    {
-        // We need to load a custom assembly because the C# compiler won't generate the IL
-        // that caused the issue, but NullGuard does.
-        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
-        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
-
-        var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic) Activator.CreateInstance(type);
-
-        Assert.NotNull(instance.DoIt());
+        Assert.Single(currentLogger.Debugs);
+        Assert.True(currentLogger.Debugs.First().Contains("Method: 'Void LambdaMethod()'. Line: ~"), currentLogger.Debugs.First());
     }
 }

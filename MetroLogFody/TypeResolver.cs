@@ -5,16 +5,16 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerFactoryType = MetroLogReference.MainModule.Types.First(x => x.Name == "LogManagerFactory");
+        var logManagerFactoryType = FindType("MetroLog.LogManagerFactory");
         var getDefaultLogManagerDefinition =
             logManagerFactoryType.Methods.First(x => x.Name == "get_DefaultLogManager");
         GetDefaultLogManager = ModuleDefinition.ImportReference(getDefaultLogManagerDefinition);
 
-        var logManagerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogManager");
+        var logManagerType = FindType("MetroLog.ILogManager");
         var getLoggerDefinition =
             logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String", "LoggingConfiguration"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
-        var loggerType = MetroLogReference.MainModule.Types.First(x => x.Name == "ILogger");
+        var loggerType = FindType("MetroLog.ILogger");
 
         TraceMethod = ModuleDefinition.ImportReference(loggerType.FindMethod("Trace", "String", "Object[]"));
         IsTraceEnabledMethod = ModuleDefinition.ImportReference(loggerType.FindMethod("get_IsTraceEnabled"));

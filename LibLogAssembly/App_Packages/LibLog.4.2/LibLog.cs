@@ -48,6 +48,9 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper disable IdentifierTypo
 // ReSharper disable ArrangeThisQualifier
 // ReSharper disable SuggestVarOrType_BuiltInTypes
+// ReSharper disable ArrangeAccessorOwnerBody
+// ReSharper disable EnforceIfStatementBraces
+// ReSharper disable InlineOutVariableDeclaration
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "LibLogAssembly.Logging")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "LibLogAssembly.Logging.Logger.#Invoke(LibLogAssembly.Logging.LogLevel,System.Func`1<System.String>,System.Exception,System.Object[])")]

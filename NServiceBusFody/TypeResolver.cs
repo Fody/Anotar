@@ -1,15 +1,14 @@
-using System.Linq;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = NServiceBusReference.MainModule.Types.First(x => x.Name == "LogManager");
+        var logManagerType = FindType("NServiceBus.Logging.LogManager");
         var getLoggerDefinition = logManagerType.FindMethod("GetLogger", "String");
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
-        var loggerTypeDefinition = NServiceBusReference.MainModule.Types.First(x => x.Name == "ILog");
+        var loggerTypeDefinition = FindType("NServiceBus.Logging.ILog");
 
         DebugFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));

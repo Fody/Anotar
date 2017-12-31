@@ -1,45 +1,17 @@
+version: 1.0.{build}
 image: Visual Studio 2017
-
-install:
-  - choco install gitversion.portable -pre -y
-
-before_build:
-  - nuget restore Anotar.sln
-  - dotnet restore Anotar.NetStandard.sln
-  - ps: gitversion /l console /output buildserver /updateassemblyinfo CommonAssemblyInfo.cs
-
 configuration: Release
-
+platform: Any CPU
+install:
+- cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+before_build:
+- ps: nuget restore
 build:
-  project: Anotar.sln
   verbosity: minimal
+test_script:
+- ps: >-
+    nunit3-console Tests\bin\Release\net452\Tests.dll
 
-after_build:
-  - dotnet build Anotar.NetStandard.sln
-  - ps: dotnet pack Anotar.NetStandard.sln -c $env:CONFIGURATION -o ../NuGetBuild /p:Version=$env:GitVersion_NuGetVersion
-
-test:
-  assemblies:
-    except:
-      - CustomTests.dll
-      - SerilogTests.dll
-      - Xunit.SkippableFact.dll
-
-after_test:
-  - ps: | 
-      $xUnitTestProjects = @(`
-        "CustomTests.csproj",`
-        "SerilogTests.csproj"
-      )
-  
-      $xUnitTestProjects | foreach { 
-        Get-ChildItem -Recurse -Filter $_ | %{ 
-          Push-Location $_.Directory; 
-          dotnet xunit -configuration $env:CONFIGURATION;
-          if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  };
-          Pop-Location 
-        }
-      }
-
+    dotnet test "Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 artifacts:
-  - path: 'NuGetBuild\**\*.nupkg'
+- path: nugets\**\*.nupkg

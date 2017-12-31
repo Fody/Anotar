@@ -1,21 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>SerilogAssemblyToProcess</RootNamespace>
-    <AssemblyName>SerilogAssemblyToProcess</AssemblyName>
-    <TargetFrameworks>netcoreapp1.1;net462</TargetFrameworks>
-    <IsPackable>false</IsPackable>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.4.0" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SerilogReferenceAssembly\SerilogReferenceAssembly.csproj" />
   </ItemGroup>
-
 </Project>

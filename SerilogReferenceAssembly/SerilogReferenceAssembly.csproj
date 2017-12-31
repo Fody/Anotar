@@ -1,22 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.0</TargetFrameworks>
-    <AssemblyName>Anotar.Serliog</AssemblyName>
-    <RootNamespace>Anotar.Serliog</RootNamespace>
-    <Version>$(Version)</Version>
-    <AssemblyOriginatorKeyFile>../key.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworks>net452;netstandard1.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs" Link="CommonAssemblyInfo.cs" />
+    <PackageReference Include="Fody" Version="2.3.14" />
+    <PackageReference Include="FodyPackaging" Version="2.3.14" PrivateAssets="All" />
   </ItemGroup>
-
 </Project>

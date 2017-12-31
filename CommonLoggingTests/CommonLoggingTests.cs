@@ -1,68 +1,55 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using Common.Logging;
-using NUnit.Framework;
+using Fody;
+using Xunit;
 
-[TestFixture]
 public class CommonLoggingTests
 {
-    string beforeAssemblyPath;
     Assembly assembly;
-    string afterAssemblyPath;
     ActionAdapter actionAdapter;
 
     public CommonLoggingTests()
     {
-#if (PORTABLE)
-        var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CommonLoggingAssemblyToProcessPortable\bin\Debug\CommonLoggingAssemblyToProcessPortable.dll");
-#else
-        var path = Path.Combine(TestContext.CurrentContext.TestDirectory,@"..\..\..\CommonLoggingAssemblyToProcess\bin\Debug\CommonLoggingAssemblyToProcess.dll");
-#endif
-        AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(path);
-#if (!DEBUG)
-        beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
-#endif
-        afterAssemblyPath = WeaverHelper.Weave(beforeAssemblyPath);
-        assembly = Assembly.LoadFile(afterAssemblyPath);
+        var moduleWeaver = new ModuleWeaver();
+        assembly = moduleWeaver.ExecuteTestRun("CommonLoggingAssemblyToProcess.dll").Assembly;
         actionAdapter = new ActionAdapter();
         LogManager.Adapter = actionAdapter;
     }
 
-    [SetUp]
-    public void Setup()
-    {
-        actionAdapter.Fatals.Clear();
-        actionAdapter.Errors.Clear();
-        actionAdapter.Debugs.Clear();
-        actionAdapter.Informations.Clear();
-        actionAdapter.Warnings.Clear();
-        actionAdapter.Traces.Clear();
-    }
+    //[SetUp]
+    //public void Setup()
+    //{
+    //    actionAdapter.Fatals.Clear();
+    //    actionAdapter.Errors.Clear();
+    //    actionAdapter.Debugs.Clear();
+    //    actionAdapter.Informations.Clear();
+    //    actionAdapter.Warnings.Clear();
+    //    actionAdapter.Traces.Clear();
+    //}
 
-    [Test]
+    [Fact]
     public void ClassWithComplexExpressionInLog()
     {
         var type = assembly.GetType("ClassWithComplexExpressionInLog");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
-        Assert.IsTrue(actionAdapter.Errors.First().Format.StartsWith("Method: 'Void Method()'. Line: ~"));
+        Assert.Single(actionAdapter.Errors);
+        Assert.StartsWith("Method: 'Void Method()'. Line: ~", actionAdapter.Errors.First().Format);
     }
 
-    [Test]
+    [Fact]
     public void MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.AreEqual("a", instance.MethodThatReturns("x", 6));
+        Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
 
-    [Test]
+    [Fact]
     public void Generic()
     {
         var type = assembly.GetType("GenericClass`1");
@@ -70,19 +57,19 @@ public class CommonLoggingTests
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = actionAdapter.Debugs.First();
-        Assert.IsTrue(message.Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", message.Format);
     }
 
 
-    [Test]
+    [Fact]
     public void ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.AreEqual(1, type.GetFields(BindingFlags.NonPublic | BindingFlags.Static).Length);
+        Assert.Single(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static));
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
+        Assert.Single(actionAdapter.Debugs);
+        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", actionAdapter.Debugs.First().Format);
     }
 
     // ReSharper disable once UnusedParameter.Local
@@ -99,13 +86,14 @@ public class CommonLoggingTests
         {
             exception = e;
         }
-        Assert.IsNotNull(exception);
-        Assert.AreEqual(1, list.Count);
+
+        Assert.NotNull(exception);
+        Assert.Single(list);
         var first = list.First();
-        Assert.IsTrue(first.Format.StartsWith(expected), first.Format);
+        Assert.True(first.Format.StartsWith(expected), first.Format);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
@@ -113,7 +101,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Debugs, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToDebugWithReturn()
     {
         var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -121,7 +109,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Debugs, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToInfo()
     {
         var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
@@ -129,7 +117,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Informations, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToInfoWithReturn()
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -137,7 +125,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Informations, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToWarn()
     {
         var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
@@ -145,7 +133,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Warnings, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToWarnWithReturn()
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -153,7 +141,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Warnings, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToError()
     {
         var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
@@ -161,7 +149,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Errors, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToErrorWithReturn()
     {
         var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -169,7 +157,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Errors, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToFatal()
     {
         var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
@@ -177,7 +165,7 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Fatals, expected);
     }
 
-    [Test]
+    [Fact]
     public void OnExceptionToFatalWithReturn()
     {
         var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
@@ -185,607 +173,586 @@ public class CommonLoggingTests
         CheckException(action, actionAdapter.Fatals, expected);
     }
 
-    [Test]
+    [Fact]
     public void IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsDebugEnabled());
+        Assert.True(instance.IsDebugEnabled());
     }
 
 
-    [Test]
+    [Fact]
     public void Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void Debug()'. Line: ~"));
+        Assert.Single(actionAdapter.Debugs);
+        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", actionAdapter.Debugs.First().Format);
     }
 
-    [Test]
+    [Fact]
     public void DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void DebugString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void DebugStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringFunc();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void DebugStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void DebugStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void DebugStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void DebugStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void DebugStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void DebugStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DebugStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void DebugStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void IsTraceEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsTraceEnabled());
+        Assert.True(instance.IsTraceEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Trace();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Trace()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void Trace()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void TraceString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceString();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void TraceString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void TraceStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringFunc();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void TraceStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void TraceStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringParams();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void TraceStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void TraceStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringException();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void TraceStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void TraceStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void TraceStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void TraceStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Traces.Count);
+        Assert.Single(actionAdapter.Traces);
         var logEvent = actionAdapter.Traces.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void TraceStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void TraceStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void IsInfoEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsInfoEnabled());
+        Assert.True(instance.IsInfoEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Info()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Info()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void Info()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void InfoString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void InfoStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringFunc();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void InfoStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void InfoStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void InfoStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void InfoStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void InfoStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void InfoStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Informations.Count);
+        Assert.Single(actionAdapter.Informations);
         var logEvent = actionAdapter.Informations.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void InfoStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void InfoStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void IsWarnEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsWarnEnabled());
+        Assert.True(instance.IsWarnEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Warn()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void Warn()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void WarnString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void WarnString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void WarnStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringFunc();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void WarnStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void WarnStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void WarnStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void WarnStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void WarnStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void WarnStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void WarnStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Warnings.Count);
+        Assert.Single(actionAdapter.Warnings);
         var logEvent = actionAdapter.Warnings.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void WarnStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void WarnStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsErrorEnabled());
+        Assert.True(instance.IsErrorEnabled());
     }
 
-    [Test]
+    [Fact]
     public void Error()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void Error()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void Error()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void ErrorString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringFunc();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void ErrorStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void ErrorStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void ErrorStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void ErrorStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void ErrorStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Errors.Count);
+        Assert.Single(actionAdapter.Errors);
         var logEvent = actionAdapter.Errors.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void ErrorStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void ErrorStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.IsTrue(instance.IsFatalEnabled());
+        Assert.True(instance.IsFatalEnabled());
     }
 
-    [Test]
+    [Fact]
     public void FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalString()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void FatalString()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void FatalStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringFunc();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringFunc()'. Line: ~"));
+        Assert.StartsWith("Method: 'Void FatalStringFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.StartsWith("Method: 'Void FatalStringParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
+    [Fact]
     public void FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringException()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void FatalStringException()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void FatalStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionFunc();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~"));
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~", logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void FatalStringExceptionParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionParams();
-        Assert.AreEqual(1, actionAdapter.Fatals.Count);
+        Assert.Single(actionAdapter.Fatals);
         var logEvent = actionAdapter.Fatals.First();
-        Assert.IsNotNull(logEvent.Exception);
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void FatalStringExceptionParams()'. Line: ~"));
-        Assert.AreEqual(1, logEvent.Args.First());
+        Assert.NotNull(logEvent.Exception);
+        Assert.StartsWith("Method: 'Void FatalStringExceptionParams()'. Line: ~", logEvent.Format);
+        Assert.Equal(1, logEvent.Args.First());
     }
 
-    [Test]
-    public void PeVerify()
-    {
-        Verifier.Verify(beforeAssemblyPath, afterAssemblyPath);
-    }
-
-    [Test]
+    [Fact]
     public void AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncMethod();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
-        Assert.IsTrue(actionAdapter.Debugs.First().Format.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
+        Assert.Single(actionAdapter.Debugs);
+        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", actionAdapter.Debugs.First().Format);
     }
 
-    [Test]
+    [Fact]
     public void EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), logEvent.Format);
+        Assert.True(logEvent.Format.StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), logEvent.Format);
+        Assert.True(logEvent.Format.StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), logEvent.Format);
+        Assert.True(logEvent.Format.StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), logEvent.Format);
     }
 
-    [Test]
+    [Fact]
     public void LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
-        Assert.AreEqual(1, actionAdapter.Debugs.Count);
+        Assert.Single(actionAdapter.Debugs);
         var logEvent = actionAdapter.Debugs.First();
-        Assert.IsTrue(logEvent.Format.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), logEvent.Format);
-    }
-
-    [Test]
-    [Explicit("need to fix ref")]
-    public void Issue33()
-    {
-        // We need to load a custom assembly because the C# compiler won't generate the IL
-        // that caused the issue, but NullGuard does.
-        var afterIssue33Path = WeaverHelper.Weave(Path.GetFullPath("NullGuardAnotarBug.dll"));
-        var issue33Assembly = Assembly.LoadFile(afterIssue33Path);
-
-        var type = issue33Assembly.GetType("NullGuardAnotarBug");
-        var instance = (dynamic) Activator.CreateInstance(type);
-
-        Assert.NotNull(instance.DoIt());
+        Assert.True(logEvent.Format.StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), logEvent.Format);
     }
 }

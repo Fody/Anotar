@@ -1,74 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BBD67CFC-A887-464B-9003-406D9FF3F330}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBusAssemblyToProcess</RootNamespace>
-    <AssemblyName>NServiceBusAssemblyToProcess</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>3</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TargetFrameworks>net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NServiceBus.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.6.2.1\lib\net452\NServiceBus.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="NServiceBus" Version="6.0.0" />
+    <ProjectReference Include="..\NServiceBusReferenceAssembly\Anotar.NServiceBus.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs" />
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
-    <Compile Include="ClassWithComplexExpressionInLog.cs" />
-    <Compile Include="ClassWithExistingField.cs" />
-    <Compile Include="ClassWithLogging.cs" />
-    <Compile Include="ClassWithMultipleLoggingCalls.cs" />
-    <Compile Include="ClassWithWhileMethod.cs" />
-    <Compile Include="ClassWithException.cs" />
-    <Compile Include="GenericClass.cs" />
-    <Compile Include="Issues.cs" />
-    <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs" />
-    <Compile Include="MyInterface.cs" />
-    <Compile Include="OnException.cs" />
-    <Compile Include="ReturnFixerTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NServiceBusReferenceAssembly\Anotar.NServiceBus.csproj">
-      <Project>{56842706-496d-4c2c-9ee5-3935872323a4}</Project>
-      <Name>Anotar.NServiceBus</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

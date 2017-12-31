@@ -5,13 +5,13 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = NLogReference.MainModule.Types.First(x => x.Name == "LogManager");
+        var logManagerType = FindType("NLog.LogManager");
         var getLoggerGenericDefinition = logManagerType.Methods.First(x => x.Name == "GetCurrentClassLogger");
         constructLoggerGenericMethod = ModuleDefinition.ImportReference(getLoggerGenericDefinition);
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
-        var loggerTypeDefinition = NLogReference.MainModule.Types.First(x => x.Name == "Logger");
+        var loggerTypeDefinition = FindType("NLog.Logger");
 
         TraceFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Trace", "String", "Object[]"));

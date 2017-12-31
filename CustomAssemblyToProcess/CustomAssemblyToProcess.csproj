@@ -1,37 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>CustomAssemblyToProcess</RootNamespace>
-    <AssemblyName>CustomAssemblyToProcess</AssemblyName>
-    <TargetFrameworks>netcoreapp1.1;sl5;net462;net35;net45</TargetFrameworks>
-    <IsPackable>false</IsPackable>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NLog" Version="5.0.0-beta07" />
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.4.0" />
     <ProjectReference Include="..\CustomAssemblyWithLogger\CustomAssemblyWithLogger.csproj" />
     <ProjectReference Include="..\CustomReferenceAssembly\CustomReferenceAssembly.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
-    <DefineConstant>NET35</DefineConstant>
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'sl5'">
-    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-
 </Project>

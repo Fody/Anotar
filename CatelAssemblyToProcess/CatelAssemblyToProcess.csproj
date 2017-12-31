@@ -1,99 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CatelAssemblyToProcess</RootNamespace>
-    <AssemblyName>CatelAssemblyToProcess</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>3</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Catel.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Catel.Core.5.0.0\lib\net45\Catel.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <ProjectReference Include="..\CommonLoggingReferenceAssembly\Anotar.CommonLogging.csproj"/>
+    <PackageReference Include="Catel.Core" Version="5.0.0" />
+    <ProjectReference Include="..\CatelReferenceAssembly\Anotar.Catel.csproj"/>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithComplexExpressionInLog.cs" />
-    <Compile Include="ClassWithException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithExistingField.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithLogging.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithMultipleLoggingCalls.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClassWithWhileMethod.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GenericClass.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Issues.cs" />
-    <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MyInterface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="OnException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ReturnFixerTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CatelReferenceAssembly\Anotar.Catel.csproj">
-      <Project>{c2ee6ffe-d6c5-4326-9a7b-3cf3905e930b}</Project>
-      <Name>Anotar.Catel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

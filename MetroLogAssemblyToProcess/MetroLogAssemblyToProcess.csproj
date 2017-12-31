@@ -1,75 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FB619D27-E000-434D-8167-54490A640444}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetroLogAssemblyToProcess</RootNamespace>
-    <AssemblyName>MetroLogAssemblyToProcess</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>3</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroLog, Version=1.0.1.0, Culture=neutral, PublicKeyToken=ba4ace74c3b410f3, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroLog.1.0.1\lib\net45\MetroLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="MetroLog" Version="1.0.1" />
+    <ProjectReference Include="..\MetroLogReferenceAssembly\Anotar.MetroLog.csproj"/>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ClassWithAbstract.cs" />
-    <Compile Include="ClassWithCompilerGeneratedClasses.cs" />
-    <Compile Include="ClassWithComplexExpressionInLog.cs" />
-    <Compile Include="ClassWithLogging.cs" />
-    <Compile Include="ClassWithExistingField.cs" />
-    <Compile Include="ClassWithMultipleLoggingCalls.cs" />
-    <Compile Include="ClassWithWhileMethod.cs" />
-    <Compile Include="ClassWithException.cs" />
-    <Compile Include="GenericClass.cs" />
-    <Compile Include="Issues.cs" />
-    <Compile Include="MyDelegate.cs" />
-    <Compile Include="MyEnum.cs" />
-    <Compile Include="MyInterface.cs" />
-    <Compile Include="OnException.cs" />
-    <Compile Include="ReturnFixerTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetroLogReferenceAssembly\Anotar.MetroLog.csproj">
-      <Project>{c57b07df-f89a-427d-9e73-fa9f7e3455a6}</Project>
-      <Name>Anotar.MetroLog</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

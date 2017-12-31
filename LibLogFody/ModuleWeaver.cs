@@ -1,24 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Fody;
 using Mono.Cecil;
 
-public partial class ModuleWeaver
+public partial class ModuleWeaver : BaseModuleWeaver
 {
-    public Action<string> LogInfo { get; set; }
     public IAssemblyResolver AssemblyResolver { get; set; }
-    public Action<string> LogWarning { get; set; }
-    public Action<string> LogError { get; set; }
-    public ModuleDefinition ModuleDefinition { get; set; }
     public bool LogMinimalMessage;
 
-    public ModuleWeaver()
-    {
-        LogInfo = s => { };
-        LogWarning = s => { };
-        LogError = s => { };
-    }
-
-    public void Execute()
+    public override void Execute()
     {
         var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.LibLog.LogMinimalMessageAttribute");
         var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.LibLog.LogMinimalMessageAttribute");
@@ -36,8 +26,14 @@ public partial class ModuleWeaver
         {
             ProcessType(type);
         }
-
-        //TODO: ensure attributes don't exist on interfaces
-        RemoveReference();
     }
+
+    public override IEnumerable<string> GetAssembliesForScanning()
+    {
+        yield return "mscorlib";
+        yield return "System.Runtime";
+        yield return "System.Core";
+    }
+
+    public override bool ShouldCleanReference => true;
 }

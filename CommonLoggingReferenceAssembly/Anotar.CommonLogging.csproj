@@ -1,54 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonLoggingReferenceAssembly</RootNamespace>
-    <AssemblyName>Anotar.CommonLogging</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Anotar.CommonLogging.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Anotar.CommonLogging.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
+    <TargetFrameworks>net452;netstandard1.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="LogMinimalMessageAttribute.cs" />
-    <Compile Include="LogTo.cs" />
-    <Compile Include="LogToDebugOnExceptionAttribute.cs" />
-    <Compile Include="LogToErrorOnExceptionAttribute.cs" />
-    <Compile Include="LogToFatalOnExceptionAttribute.cs" />
-    <Compile Include="LogToInfoOnExceptionAttribute.cs" />
-    <Compile Include="LogToTraceOnExceptionAttribute.cs" />
-    <Compile Include="LogToWarnOnExceptionAttribute.cs" />
-    <Compile Include="StringFormatMethodAttribute.cs" />
+    <PackageReference Include="Fody" Version="2.3.14" />
+    <PackageReference Include="FodyPackaging" Version="2.3.14" PrivateAssets="All" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="..\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
+  </ItemGroup>
 </Project>
