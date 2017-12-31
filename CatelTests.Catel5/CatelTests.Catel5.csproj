@@ -81,7 +81,6 @@
     <Compile Include="..\CatelTests\TestHelpers\LogListener.cs">
       <Link>TestHelpers\LogListener.cs</Link>
     </Compile>
-    <Compile Include="Catel5Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatelFody\CatelFody.csproj">

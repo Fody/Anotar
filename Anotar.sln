@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 14.0.22823.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catel", "Catel", "{BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}"
 EndProject
@@ -113,10 +113,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogTests", "MetroLogTests\MetroLogTests.csproj", "{2A0045CE-9ADF-4D87-A044-0DB01F520381}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogTests", "LibLogTests\LibLogTests.csproj", "{CE1B64C7-9064-4485-9788-BC62BC8294D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelAssemblyToProcess.Catel5", "CatelAssemblyToProcess.Catel5\CatelAssemblyToProcess.Catel5.csproj", "{205A56B5-4578-4843-9C65-CF7C5F395F8F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelTests.Catel5", "CatelTests.Catel5\CatelTests.Catel5.csproj", "{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -492,30 +488,6 @@ Global
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|x86.Build.0 = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Debug|x86.Build.0 = Debug|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|x86.ActiveCfg = Release|Any CPU
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F}.Release|x86.Build.0 = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Debug|x86.Build.0 = Debug|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|x86.ActiveCfg = Release|Any CPU
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -556,11 +528,9 @@ Global
 		{02F30E0B-0054-4A4C-901E-D1109EA37D70} = {CD21958E-E5B6-40BE-862B-22356507A494}
 		{2A0045CE-9ADF-4D87-A044-0DB01F520381} = {71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7} = {98335BA5-6DEF-45D9-929C-2AD44CDDD99D}
-		{205A56B5-4578-4843-9C65-CF7C5F395F8F} = {BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}
-		{96B021D9-01B1-4E64-BCC3-9FBB0BA458FD} = {BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
 		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
 	EndGlobalSection
 EndGlobal

@@ -7,7 +7,7 @@ using Catel.Logging;
 using NUnit.Framework;
 
 [TestFixture]
-public abstract class CatelTests
+public class CatelTests
 {
     string beforeAssemblyPath;
     Assembly assembly;
@@ -17,10 +17,10 @@ public abstract class CatelTests
     public List<string> Warnings = new List<string>();
     string afterAssemblyPath;
 
-    protected CatelTests(string assemblyName)
+    public CatelTests()
     {
         AppDomainAssemblyFinder.Attach();
-        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, $@"..\..\..\{assemblyName}\bin\Debug\CatelAssemblyToProcess.dll"));
+        beforeAssemblyPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\CatelAssemblyToProcess\bin\Debug\CatelAssemblyToProcess.dll"));
 #if (!DEBUG)
         beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
 #endif

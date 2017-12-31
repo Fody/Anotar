@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Catel.Core, Version=4.5.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Catel.Core.4.5.4\lib\net45\Catel.Core.dll</HintPath>
+    <Reference Include="Catel.Core, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Catel.Core.5.2.0\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\FodyCecil.2.1.2\lib\net40\Mono.Cecil.dll</HintPath>
@@ -77,7 +77,6 @@
     <Compile Include="..\Common\WeaverHelper.cs">
       <Link>WeaverHelper.cs</Link>
     </Compile>
-    <Compile Include="Catel4Tests.cs" />
     <Compile Include="CatelTests.cs" />
     <Compile Include="TestHelpers\LogListener.cs" />
   </ItemGroup>
