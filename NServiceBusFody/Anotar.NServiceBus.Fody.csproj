@@ -62,7 +62,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <None Include="NugetAssets\Anotar.NServiceBus.Fody.nuspec" />
+    <None Include="NugetAssets\Anotar.NServiceBus.Fody.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\AsyncChecker.cs">
