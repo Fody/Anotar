@@ -99,9 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SplatReferenceAssembly\SplatReferenceAssembly.csproj">
+    <ProjectReference Include="..\SplatReferenceAssembly\Anotar.Splat.csproj">
       <Project>{efe9370b-89a6-45e9-b323-3c26785c1d9c}</Project>
-      <Name>SplatReferenceAssembly</Name>
+      <Name>Anotar.Splat</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -81,9 +81,9 @@
     <Compile Include="TestHelpers\LogListener.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CatelFody\CatelFody.csproj">
+    <ProjectReference Include="..\CatelFody\Anotar.Catel.Fody.csproj">
       <Project>{4a7fd49a-7190-4bcb-b2b7-f765fe2bc4ec}</Project>
-      <Name>CatelFody</Name>
+      <Name>Anotar.Catel.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

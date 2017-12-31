@@ -80,9 +80,9 @@
       <Project>{3a12baa3-d72b-40cd-8d89-51ae5d6b20a2}</Project>
       <Name>LibLogAssembly</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibLogFody\LibLogFody.csproj">
+    <ProjectReference Include="..\LibLogFody\Anotar.LibLog.Fody.csproj">
       <Project>{0c6d9d08-4f93-44ac-b71a-7063f54106ed}</Project>
-      <Name>LibLogFody</Name>
+      <Name>Anotar.LibLog.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

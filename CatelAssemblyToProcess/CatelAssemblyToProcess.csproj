@@ -87,9 +87,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CatelReferenceAssembly\CatelReferenceAssembly.csproj">
+    <ProjectReference Include="..\CatelReferenceAssembly\Anotar.Catel.csproj">
       <Project>{c2ee6ffe-d6c5-4326-9a7b-3cf3905e930b}</Project>
-      <Name>CatelReferenceAssembly</Name>
+      <Name>Anotar.Catel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

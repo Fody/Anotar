@@ -82,9 +82,9 @@
     <Compile Include="SplatTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SplatFody\SplatFody.csproj">
+    <ProjectReference Include="..\SplatFody\Anotar.Splat.Fody.csproj">
       <Project>{b72c38e4-2dc7-4e7f-b177-36ef47d49572}</Project>
-      <Name>SplatFody</Name>
+      <Name>Anotar.Splat.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

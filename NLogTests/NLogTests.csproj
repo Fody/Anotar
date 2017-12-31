@@ -80,9 +80,9 @@
     <Compile Include="TestHelpers\ActionTarget.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLogFody\NLogFody.csproj">
+    <ProjectReference Include="..\NLogFody\Anotar.NLog.Fody.csproj">
       <Project>{29ad34ab-9416-4e53-95ca-9b00072d8802}</Project>
-      <Name>NLogFody</Name>
+      <Name>Anotar.NLog.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

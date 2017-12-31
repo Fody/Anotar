@@ -80,9 +80,9 @@
     <Compile Include="TestHelpers\ActionAppender.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Log4NetFody\Log4NetFody.csproj">
+    <ProjectReference Include="..\Log4NetFody\Anotar.Log4Net.Fody.csproj">
       <Project>{c3578a7b-09a6-4444-9383-0deafa4958bd}</Project>
-      <Name>Log4NetFody</Name>
+      <Name>Anotar.Log4Net.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

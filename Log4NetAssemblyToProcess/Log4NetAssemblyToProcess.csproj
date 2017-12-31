@@ -61,9 +61,9 @@
     <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Log4NetReferenceAssembly\Log4NetReferenceAssembly.csproj">
+    <ProjectReference Include="..\Log4NetReferenceAssembly\Anotar.Log4.csproj">
       <Project>{9c9f7f26-edcf-4d95-9f6a-af8504528d95}</Project>
-      <Name>Log4NetReferenceAssembly</Name>
+      <Name>Anotar.Log4</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

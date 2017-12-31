@@ -87,9 +87,9 @@
       <Project>{3A12BAA3-D72B-40CD-8D89-51AE5D6B20A2}</Project>
       <Name>LibLogAssembly</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LibLogReferenceAssembly\LibLogReferenceAssembly.csproj">
+    <ProjectReference Include="..\LibLogReferenceAssembly\Anotar.LibLog.csproj">
       <Project>{7afcfd73-d16e-4543-a65c-1baf167d620e}</Project>
-      <Name>LibLogReferenceAssembly</Name>
+      <Name>Anotar.LibLog</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

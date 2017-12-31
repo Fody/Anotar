@@ -80,9 +80,9 @@
     <Compile Include="TestHelpers\ActionTarget.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetroLogFody\MetroLogFody.csproj">
+    <ProjectReference Include="..\MetroLogFody\Anotar.MetroLog.Fody.csproj">
       <Project>{4f579111-5cf3-4ecc-afca-397820c3a495}</Project>
-      <Name>MetroLogFody</Name>
+      <Name>Anotar.MetroLog.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

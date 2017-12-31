@@ -62,9 +62,9 @@
     <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBusReferenceAssembly\NServiceBusReferenceAssembly.csproj">
+    <ProjectReference Include="..\NServiceBusReferenceAssembly\Anotar.NServiceBus.csproj">
       <Project>{56842706-496d-4c2c-9ee5-3935872323a4}</Project>
-      <Name>NServiceBusReferenceAssembly</Name>
+      <Name>Anotar.NServiceBus</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -16,64 +16,64 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Splat", "Splat", "{CC172335
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetAssemblyToProcess", "Log4NetAssemblyToProcess\Log4NetAssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetReferenceAssembly", "Log4NetReferenceAssembly\Log4NetReferenceAssembly.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Log4", "Log4NetReferenceAssembly\Anotar.Log4.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetFody", "Log4NetFody\Log4NetFody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Log4Net.Fody", "Log4NetFody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95} = {9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogFody", "MetroLogFody\MetroLogFody.csproj", "{4F579111-5CF3-4ECC-AFCA-397820C3A495}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.MetroLog.Fody", "MetroLogFody\Anotar.MetroLog.Fody.csproj", "{4F579111-5CF3-4ECC-AFCA-397820C3A495}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6} = {C57B07DF-F89A-427D-9E73-FA9F7E3455A6}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogReferenceAssembly", "MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj", "{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.MetroLog", "MetroLogReferenceAssembly\Anotar.MetroLog.csproj", "{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogAssemblyToProcess", "NLogAssemblyToProcess\NLogAssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogFody", "NLogFody\NLogFody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NLog.Fody", "NLogFody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7} = {C1B99F92-63D3-4F01-B8FE-6DF359B407F7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogReferenceAssembly", "NLogReferenceAssembly\NLogReferenceAssembly.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NLog", "NLogReferenceAssembly\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogAssemblyToProcess", "MetroLogAssemblyToProcess\MetroLogAssemblyToProcess.csproj", "{FB619D27-E000-434D-8167-54490A640444}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelAssemblyToProcess", "CatelAssemblyToProcess\CatelAssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelFody", "CatelFody\CatelFody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Catel.Fody", "CatelFody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B} = {C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelReferenceAssembly", "CatelReferenceAssembly\CatelReferenceAssembly.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Catel", "CatelReferenceAssembly\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingAssemblyToProcess", "CommonLoggingAssemblyToProcess\CommonLoggingAssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingFody", "CommonLoggingFody\CommonLoggingFody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.CommonLogging.Fody", "CommonLoggingFody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42003303-85D5-4944-A138-56CC51A6A092} = {42003303-85D5-4944-A138-56CC51A6A092}
 		{1EF58623-A71E-4C13-A654-B8EC5A3F8D53} = {1EF58623-A71E-4C13-A654-B8EC5A3F8D53}
 		{26B366D7-FB5A-4D75-8FE9-29B4333D96A7} = {26B366D7-FB5A-4D75-8FE9-29B4333D96A7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingReferenceAssembly", "CommonLoggingReferenceAssembly\CommonLoggingReferenceAssembly.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.CommonLogging", "CommonLoggingReferenceAssembly\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatFody", "SplatFody\SplatFody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Splat.Fody", "SplatFody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatAssemblyToProcess", "SplatAssemblyToProcess\SplatAssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatReferenceAssembly", "SplatReferenceAssembly\SplatReferenceAssembly.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Splat", "SplatReferenceAssembly\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibLog", "LibLog", "{98335BA5-6DEF-45D9-929C-2AD44CDDD99D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogAssemblyToProcess", "LibLogAssemblyToProcess\LibLogAssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogReferenceAssembly", "LibLogReferenceAssembly\LibLogReferenceAssembly.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.LibLog", "LibLogReferenceAssembly\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogFody", "LibLogFody\LibLogFody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.LibLog.Fody", "LibLogFody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7AFCFD73-D16E-4543-A65C-1BAF167D620E} = {7AFCFD73-D16E-4543-A65C-1BAF167D620E}
 	EndProjectSection
@@ -84,12 +84,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NServiceBus", "NServiceBus"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusAssemblyToProcess", "NServiceBusAssemblyToProcess\NServiceBusAssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusFody", "NServiceBusFody\NServiceBusFody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NServiceBus.Fody", "NServiceBusFody\Anotar.NServiceBus.Fody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BBD67CFC-A887-464B-9003-406D9FF3F330} = {BBD67CFC-A887-464B-9003-406D9FF3F330}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusReferenceAssembly", "NServiceBusReferenceAssembly\NServiceBusReferenceAssembly.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NServiceBus", "NServiceBusReferenceAssembly\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingAssemblyToProcessPortable", "CommonLoggingAssemblyToProcessPortable\CommonLoggingAssemblyToProcessPortable.csproj", "{1EF58623-A71E-4C13-A654-B8EC5A3F8D53}"
 EndProject
@@ -530,7 +530,7 @@ Global
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7} = {98335BA5-6DEF-45D9-929C-2AD44CDDD99D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 	EndGlobalSection
 EndGlobal

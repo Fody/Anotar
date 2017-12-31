@@ -111,9 +111,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonLoggingFody\CommonLoggingFody.csproj">
+    <ProjectReference Include="..\CommonLoggingFody\Anotar.CommonLogging.Fody.csproj">
       <Project>{06818777-13f8-45bb-9d97-573eec035291}</Project>
-      <Name>CommonLoggingFody</Name>
+      <Name>Anotar.CommonLogging.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

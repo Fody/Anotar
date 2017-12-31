@@ -63,9 +63,9 @@
     <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetroLogReferenceAssembly\MetroLogReferenceAssembly.csproj">
+    <ProjectReference Include="..\MetroLogReferenceAssembly\Anotar.MetroLog.csproj">
       <Project>{c57b07df-f89a-427d-9e73-fa9f7e3455a6}</Project>
-      <Name>MetroLogReferenceAssembly</Name>
+      <Name>Anotar.MetroLog</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

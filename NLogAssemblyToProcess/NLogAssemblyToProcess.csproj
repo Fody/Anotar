@@ -62,9 +62,9 @@
     <Compile Include="ReturnFixerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLogReferenceAssembly\NLogReferenceAssembly.csproj">
+    <ProjectReference Include="..\NLogReferenceAssembly\Anotar.NLog.csproj">
       <Project>{c1b99f92-63d3-4f01-b8fe-6df359b407f7}</Project>
-      <Name>NLogReferenceAssembly</Name>
+      <Name>Anotar.NLog</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

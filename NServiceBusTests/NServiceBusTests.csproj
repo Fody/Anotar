@@ -80,9 +80,9 @@
     <Compile Include="TestHelpers\LogCapture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NServiceBusFody\NServiceBusFody.csproj">
+    <ProjectReference Include="..\NServiceBusFody\Anotar.NServiceBus.Fody.csproj">
       <Project>{ff465742-96b9-40ef-a5e6-34b52dc92499}</Project>
-      <Name>NServiceBusFody</Name>
+      <Name>Anotar.NServiceBus.Fody</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

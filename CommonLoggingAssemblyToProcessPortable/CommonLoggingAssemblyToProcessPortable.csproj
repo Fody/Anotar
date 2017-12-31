@@ -39,9 +39,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonLoggingReferenceAssembly\CommonLoggingReferenceAssembly.csproj">
+    <ProjectReference Include="..\CommonLoggingReferenceAssembly\Anotar.CommonLogging.csproj">
       <Project>{26b366d7-fb5a-4d75-8fe9-29b4333d96a7}</Project>
-      <Name>CommonLoggingReferenceAssembly</Name>
+      <Name>Anotar.CommonLogging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
