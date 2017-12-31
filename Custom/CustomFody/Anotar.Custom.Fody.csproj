@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FodyCecil" Version="2.0.9" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(SolutionDir)\Common\AsyncChecker.cs">
+      <Link>AsyncChecker.cs</Link>
+    </Compile>
+    <Compile Include="$(SolutionDir)\Common\CecilExtensions.cs">
+      <Link>CecilExtensions.cs</Link>
+    </Compile>
+    <Compile Include="$(SolutionDir)\Common\ParamsFormatBuilder.cs">
+      <Link>ParamsFormatBuilder.cs</Link>
+    </Compile>
+    <Compile Include="$(SolutionDir)\Common\ReturnFixer.cs">
+      <Link>ReturnFixer.cs</Link>
+    </Compile>
+    <Compile Include="$(SolutionDir)\Common\SystemTypesResolver.cs">
+      <Link>SystemTypesResolver.cs</Link>
+    </Compile>
+</Project>
