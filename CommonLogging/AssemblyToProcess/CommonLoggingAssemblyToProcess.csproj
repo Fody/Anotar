@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Common.Logging" Version="3.3.1" />
-    <ProjectReference Include="..\CommonLoggingReferenceAssembly\Anotar.CommonLogging.csproj" />
+    <ProjectReference Include="..\Anotar.CommonLogging\Anotar.CommonLogging.csproj" />
   </ItemGroup>
 </Project>

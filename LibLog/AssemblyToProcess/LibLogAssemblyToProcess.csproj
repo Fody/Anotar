@@ -6,6 +6,6 @@
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <ProjectReference Include="..\LibLogAssembly\LibLogAssembly.csproj" />
-    <ProjectReference Include="..\LibLogReferenceAssembly\Anotar.LibLog.csproj" />
+    <ProjectReference Include="..\Anotar.LibLog\Anotar.LibLog.csproj" />
   </ItemGroup>
 </Project>

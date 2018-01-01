@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.4.6" />
-    <ProjectReference Include="..\NLogReferenceAssembly\Anotar.NLog.csproj" />
+    <ProjectReference Include="..\Anotar.NLog\Anotar.NLog.csproj" />
   </ItemGroup>
 </Project>

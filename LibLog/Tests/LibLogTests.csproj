@@ -10,6 +10,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\LibLogAssembly\LibLogAssembly.csproj" />
-    <ProjectReference Include="..\LibLogFody\Anotar.LibLog.Fody.csproj" />
+    <ProjectReference Include="..\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj" />
+    <ProjectReference Include="..\Anotar.LibLog\Anotar.LibLog.csproj" />
   </ItemGroup>
 </Project>
