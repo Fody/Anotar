@@ -7,7 +7,7 @@
     <LangVersion>latest</LangVersion>
     <DebugType>full</DebugType>
     <Authors>Simon Cropp, Tomasz Pluskiewicz</Authors>
-    <Description>Simplifies logging through a static class and some IL manipulation.</Description>
+    <Description>Simplifies logging through a static helper class and some IL manipulation.</Description>
     <PackageTags>Logging, ILWeaving, Fody, Cecil</PackageTags>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <NoWarn>CS0618;NU1701</NoWarn>
