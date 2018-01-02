@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Fody;
-using Mono.Cecil;
 
 public partial class ModuleWeaver : BaseModuleWeaver
 {
-    public IAssemblyResolver AssemblyResolver { get; set; }
     public bool LogMinimalMessage;
 
     public override void Execute()

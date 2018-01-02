@@ -398,4 +398,5 @@ public class ActionLog : ILog
     public IVariablesContext GlobalVariablesContext => throw new NotImplementedException();
 
     public IVariablesContext ThreadVariablesContext => throw new NotImplementedException();
+    public INestedVariablesContext NestedThreadVariablesContext { get; }
 }

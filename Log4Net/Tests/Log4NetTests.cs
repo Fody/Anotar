@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Fody;
 using log4net;
 using log4net.Config;
@@ -11,17 +12,19 @@ using Xunit;
 
 public class Log4NetTests
 {
-    Assembly assembly;
-    public List<string> Errors = new List<string>();
-    public List<string> Debugs = new List<string>();
-    public List<string> Informations = new List<string>();
-    public List<string> Warns = new List<string>();
-    public List<string> Fatals = new List<string>();
+    static Assembly assembly;
+    public static List<string> Errors = new List<string>();
+    public static List<string> Debugs = new List<string>();
+    public static List<string> Informations = new List<string>();
+    public static List<string> Warns = new List<string>();
+    public static List<string> Fatals = new List<string>();
 
-    public Log4NetTests()
+    static Log4NetTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("Log4NetAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes:new[]{ "0x80131869" }).Assembly;
         var loggerRepository = LogManager.GetRepository(typeof(Log4NetTests).Assembly);
         var hierarchy = (Hierarchy) loggerRepository;
         hierarchy.Root.RemoveAllAppenders();
@@ -33,7 +36,16 @@ public class Log4NetTests
         BasicConfigurator.Configure(loggerRepository, target);
     }
 
-    void LogEvent(LoggingEvent loggingEvent)
+    public Log4NetTests()
+    {
+        Fatals.Clear();
+        Errors.Clear();
+        Debugs.Clear();
+        Informations.Clear();
+        Warns.Clear();
+    }
+
+    static void LogEvent(LoggingEvent loggingEvent)
     {
         if (loggingEvent.Level == Level.Fatal)
         {
@@ -87,16 +99,6 @@ public class Log4NetTests
 
         Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
-
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    Fatals.Clear();
-    //    Errors.Clear();
-    //    Debugs.Clear();
-    //    Informations.Clear();
-    //    Warns.Clear();
-    //}
 
     [Fact]
     public void Generic()
@@ -551,13 +553,14 @@ public class Log4NetTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", Debugs.First());
+        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", Debugs.First());
     }
 
     [Fact]

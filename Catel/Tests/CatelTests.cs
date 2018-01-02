@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Catel.Logging;
 using Fody;
 using Xunit;
 
 public class CatelTests
 {
-    Assembly assembly;
-    public List<string> Errors = new List<string>();
-    public List<string> Debugs = new List<string>();
-    public List<string> Informations = new List<string>();
-    public List<string> Warnings = new List<string>();
+    static Assembly assembly;
+    public static List<string> Errors = new List<string>();
+    public static List<string> Debugs = new List<string>();
+    public static List<string> Informations = new List<string>();
+    public static List<string> Warnings = new List<string>();
 
-    public CatelTests()
+    static CatelTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("CatelAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
 
         LogManager.AddListener(new LogListener
         {
@@ -25,7 +28,15 @@ public class CatelTests
         });
     }
 
-    void LogMessage(string message, LogEvent logEvent)
+    public CatelTests()
+    {
+        Errors.Clear();
+        Debugs.Clear();
+        Informations.Clear();
+        Warnings.Clear();
+    }
+
+    static void LogMessage(string message, LogEvent logEvent)
     {
         if (logEvent == LogEvent.Error)
         {
@@ -52,15 +63,6 @@ public class CatelTests
             return;
         }
     }
-
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    Errors.Clear();
-    //    Debugs.Clear();
-    //    Informations.Clear();
-    //    Warnings.Clear();
-    //}
 
     [Fact]
     public void Generic()
@@ -462,12 +464,13 @@ public class CatelTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
-        Assert.Contains(Debugs, x => x.StartsWith("Method: 'Void AsyncMethod()'. Line: ~"));
+        Task task = instance.AsyncMethod();
+        await task;
+        Assert.Contains(Debugs, x => x.StartsWith("Method: 'Task AsyncMethod()'. Line: ~"));
     }
 
     [Fact]

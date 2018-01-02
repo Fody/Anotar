@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Anotar.CommonLogging;
 #pragma warning disable 1998
 
 public class ClassWithCompilerGeneratedClasses
 {
-    public async void AsyncMethod()
+    public async Task AsyncMethod()
     {
         LogTo.Debug("Foo");
+        await Task.Delay(1);
     }
 
     public IEnumerable<int> EnumeratorMethod()

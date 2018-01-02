@@ -7,7 +7,6 @@ using Anotar.NLog;
 
 public class ReturnFixerTests
 {
-
     [LogToDebugOnException]
     public object MethodWithHangingHandlerEnd()
     {
@@ -19,7 +18,6 @@ public class ReturnFixerTests
         {
             Debug.WriteLine("finally");
         }
-
     }
 
     [LogToDebugOnException]

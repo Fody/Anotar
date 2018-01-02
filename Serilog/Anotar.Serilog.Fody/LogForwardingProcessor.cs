@@ -41,8 +41,7 @@ public class LogForwardingProcessor
 
     void ProcessInstruction(Instruction instruction)
     {
-        var methodReference = instruction.Operand as MethodReference;
-        if (methodReference == null)
+        if (!(instruction.Operand is MethodReference methodReference))
         {
             return;
         }
@@ -105,7 +104,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Stloc, paramsVar),
             Instruction.Create(OpCodes.Stloc, messageVar),
 
-            //Append if 
+            //Append if
             Instruction.Create(OpCodes.Ldsfld, LoggerField),
             Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
@@ -123,7 +122,6 @@ public class LogForwardingProcessor
             );
         instructions.Replace(instruction, replacement);
     }
-
 
     void HandleExceptionAndStringAndArray(Instruction instruction, MethodReference methodReference)
     {
@@ -147,12 +145,12 @@ public class LogForwardingProcessor
         var instructions = Method.Body.Instructions;
         var replacement = new List<Instruction>
                           {
-                              //store variables 
+                              //store variables
                               Instruction.Create(OpCodes.Stloc, paramsVar),
                               Instruction.Create(OpCodes.Stloc, messageVar),
                               Instruction.Create(OpCodes.Stloc, exceptionVar),
 
-                              //Append if 
+                              //Append if
                               Instruction.Create(OpCodes.Ldsfld, LoggerField),
                               Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
                               Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
@@ -198,7 +196,6 @@ public class LogForwardingProcessor
             return;
         }
 
-
         if (paramsVar == null)
         {
             paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
@@ -208,7 +205,7 @@ public class LogForwardingProcessor
         var exitNop = Instruction.Create(OpCodes.Nop);
         var replacement = new List<Instruction>
                           {
-                              //Append if 
+                              //Append if
                               Instruction.Create(OpCodes.Ldsfld, LoggerField),
                               Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
                               Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
@@ -244,8 +241,7 @@ public class LogForwardingProcessor
 
     void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
     {
-        int lineNumber;
-        if (!instruction.TryGetPreviousLineNumber(Method, out lineNumber))
+        if (!instruction.TryGetPreviousLineNumber(Method, out var lineNumber))
         {
             return;
         }
@@ -258,5 +254,4 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
             );
     }
-
 }

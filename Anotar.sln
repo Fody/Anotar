@@ -6,73 +6,62 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catel", "Catel", "{BE199712
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log4Net", "Log4Net", "{968B8231-64F3-44BD-8D4F-C279C53571FF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MetroLog", "MetroLog", "{71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NLog", "NLog", "{CD21958E-E5B6-40BE-862B-22356507A494}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLogging", "CommonLogging", "{68A4F6BA-E72B-4FC2-BDD6-9263EA5C0103}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Splat", "Splat", "{CC172335-BE39-4AE0-8829-B125531C62C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetAssemblyToProcess", "Log4Net\AssemblyToProcess\Log4NetAssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Log4Net\AssemblyToProcess\AssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Log4Net.Fody", "Log4Net\Anotar.Log4Net.Fody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net.Fody", "Log4Net\Anotar.Log4Net.Fody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95} = {9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.MetroLog.Fody", "MetroLog\Anotar.MetroLog.Fody\Anotar.MetroLog.Fody.csproj", "{4F579111-5CF3-4ECC-AFCA-397820C3A495}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6} = {C57B07DF-F89A-427D-9E73-FA9F7E3455A6}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NLog\AssemblyToProcess\AssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.MetroLog", "MetroLog\Anotar.MetroLog\Anotar.MetroLog.csproj", "{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogAssemblyToProcess", "NLog\AssemblyToProcess\NLogAssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NLog.Fody", "NLog\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog.Fody", "NLog\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7} = {C1B99F92-63D3-4F01-B8FE-6DF359B407F7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogAssemblyToProcess", "MetroLog\AssemblyToProcess\MetroLogAssemblyToProcess.csproj", "{FB619D27-E000-434D-8167-54490A640444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Catel\AssemblyToProcess\AssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelAssemblyToProcess", "Catel\AssemblyToProcess\CatelAssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Catel.Fody", "Catel\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel.Fody", "Catel\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B} = {C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingAssemblyToProcess", "CommonLogging\AssemblyToProcess\CommonLoggingAssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "CommonLogging\AssemblyToProcess\AssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.CommonLogging.Fody", "CommonLogging\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging.Fody", "CommonLogging\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42003303-85D5-4944-A138-56CC51A6A092} = {42003303-85D5-4944-A138-56CC51A6A092}
 		{26B366D7-FB5A-4D75-8FE9-29B4333D96A7} = {26B366D7-FB5A-4D75-8FE9-29B4333D96A7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Splat.Fody", "Splat\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat.Fody", "Splat\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatAssemblyToProcess", "Splat\AssemblyToProcess\SplatAssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Splat\AssemblyToProcess\AssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibLog", "LibLog", "{98335BA5-6DEF-45D9-929C-2AD44CDDD99D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogAssemblyToProcess", "LibLog\AssemblyToProcess\LibLogAssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "LibLog\AssemblyToProcess\AssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.LibLog", "LibLog\Anotar.LibLog\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog", "LibLog\Anotar.LibLog\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.LibLog.Fody", "LibLog\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog.Fody", "LibLog\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7AFCFD73-D16E-4543-A65C-1BAF167D620E} = {7AFCFD73-D16E-4543-A65C-1BAF167D620E}
 	EndProjectSection
@@ -81,33 +70,41 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogAssembly", "LibLog\Li
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NServiceBus", "NServiceBus", "{6E02CD87-1526-49AA-82E8-08E497F99CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusAssemblyToProcess", "NServiceBus\AssemblyToProcess\NServiceBusAssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NServiceBus\AssemblyToProcess\AssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NServiceBus.Fody", "NServiceBus\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus.Fody", "NServiceBus\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BBD67CFC-A887-464B-9003-406D9FF3F330} = {BBD67CFC-A887-464B-9003-406D9FF3F330}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLoggingTests", "CommonLogging\Tests\CommonLoggingTests.csproj", "{5A6A1002-0D9E-4D70-A685-FE851E9BD525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "CommonLogging\Tests\Tests.csproj", "{5A6A1002-0D9E-4D70-A685-FE851E9BD525}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42003303-85D5-4944-A138-56CC51A6A092} = {42003303-85D5-4944-A138-56CC51A6A092}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatelTests", "Catel\Tests\CatelTests.csproj", "{F9E5BBEF-A48A-42BC-83AB-2B3939915E0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Catel\Tests\Tests.csproj", "{F9E5BBEF-A48A-42BC-83AB-2B3939915E0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4NetTests", "Log4Net\Tests\Log4NetTests.csproj", "{3B48B56E-43D9-4AC0-976B-A51894EF8360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Log4Net\Tests\Tests.csproj", "{3B48B56E-43D9-4AC0-976B-A51894EF8360}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplatTests", "Splat\Tests\SplatTests.csproj", "{CED1E28D-B7C0-4DD5-AC93-BA105D308BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Splat\Tests\Tests.csproj", "{CED1E28D-B7C0-4DD5-AC93-BA105D308BC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusTests", "NServiceBus\Tests\NServiceBusTests.csproj", "{4476558B-9C1A-4EBB-AD80-825553E5CA2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "NServiceBus\Tests\Tests.csproj", "{4476558B-9C1A-4EBB-AD80-825553E5CA2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogTests", "NLog\Tests\NLogTests.csproj", "{02F30E0B-0054-4A4C-901E-D1109EA37D70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "NLog\Tests\Tests.csproj", "{02F30E0B-0054-4A4C-901E-D1109EA37D70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLogTests", "MetroLog\Tests\MetroLogTests.csproj", "{2A0045CE-9ADF-4D87-A044-0DB01F520381}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "LibLog\Tests\Tests.csproj", "{CE1B64C7-9064-4485-9788-BC62BC8294D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogTests", "LibLog\Tests\LibLogTests.csproj", "{CE1B64C7-9064-4485-9788-BC62BC8294D7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog", "Serilog\Anotar.Serilog\Anotar.Serilog.csproj", "{51CBF808-6F09-46BF-9265-217F64E1DB68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog.Fody", "Serilog\Anotar.Serilog.Fody\Anotar.Serilog.Fody.csproj", "{D951B73D-5762-4472-A3F5-AD7C587B91A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Serilog\Tests\Tests.csproj", "{94402B73-32A8-47B7-91B5-480C6B9A9EEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Serilog\AssemblyToProcess\AssemblyToProcess.csproj", "{D487E57A-3619-40F4-A87F-9C4D803A54AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,26 +146,6 @@ Global
 		{C3578A7B-09A6-4444-9383-0DEAFA4958BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C3578A7B-09A6-4444-9383-0DEAFA4958BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C3578A7B-09A6-4444-9383-0DEAFA4958BD}.Release|x86.ActiveCfg = Release|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495}.Release|x86.ActiveCfg = Release|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6}.Release|x86.ActiveCfg = Release|Any CPU
 		{7DEC4E2D-F872-434E-A267-0BAD65299950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DEC4E2D-F872-434E-A267-0BAD65299950}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DEC4E2D-F872-434E-A267-0BAD65299950}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -199,16 +176,6 @@ Global
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}.Release|x86.ActiveCfg = Release|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FB619D27-E000-434D-8167-54490A640444}.Release|x86.ActiveCfg = Release|Any CPU
 		{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -439,18 +406,6 @@ Global
 		{02F30E0B-0054-4A4C-901E-D1109EA37D70}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{02F30E0B-0054-4A4C-901E-D1109EA37D70}.Release|x86.ActiveCfg = Release|Any CPU
 		{02F30E0B-0054-4A4C-901E-D1109EA37D70}.Release|x86.Build.0 = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Debug|x86.Build.0 = Debug|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|x86.ActiveCfg = Release|Any CPU
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381}.Release|x86.Build.0 = Release|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -463,6 +418,54 @@ Global
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7}.Release|x86.Build.0 = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Debug|x86.Build.0 = Debug|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|x86.ActiveCfg = Release|Any CPU
+		{51CBF808-6F09-46BF-9265-217F64E1DB68}.Release|x86.Build.0 = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Debug|x86.Build.0 = Debug|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7}.Release|x86.Build.0 = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF}.Release|x86.Build.0 = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -471,12 +474,9 @@ Global
 		{DCFDFA1D-B13A-4979-9560-91B527375418} = {968B8231-64F3-44BD-8D4F-C279C53571FF}
 		{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95} = {968B8231-64F3-44BD-8D4F-C279C53571FF}
 		{C3578A7B-09A6-4444-9383-0DEAFA4958BD} = {968B8231-64F3-44BD-8D4F-C279C53571FF}
-		{4F579111-5CF3-4ECC-AFCA-397820C3A495} = {71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}
-		{C57B07DF-F89A-427D-9E73-FA9F7E3455A6} = {71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}
 		{7DEC4E2D-F872-434E-A267-0BAD65299950} = {CD21958E-E5B6-40BE-862B-22356507A494}
 		{29AD34AB-9416-4E53-95CA-9B00072D8802} = {CD21958E-E5B6-40BE-862B-22356507A494}
 		{C1B99F92-63D3-4F01-B8FE-6DF359B407F7} = {CD21958E-E5B6-40BE-862B-22356507A494}
-		{FB619D27-E000-434D-8167-54490A640444} = {71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}
 		{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A} = {BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}
 		{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC} = {BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}
 		{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B} = {BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}
@@ -499,8 +499,11 @@ Global
 		{CED1E28D-B7C0-4DD5-AC93-BA105D308BC3} = {CC172335-BE39-4AE0-8829-B125531C62C3}
 		{4476558B-9C1A-4EBB-AD80-825553E5CA2A} = {6E02CD87-1526-49AA-82E8-08E497F99CB5}
 		{02F30E0B-0054-4A4C-901E-D1109EA37D70} = {CD21958E-E5B6-40BE-862B-22356507A494}
-		{2A0045CE-9ADF-4D87-A044-0DB01F520381} = {71D3BA9B-B35B-47A3-A4EF-CEE0CA6C0E45}
 		{CE1B64C7-9064-4485-9788-BC62BC8294D7} = {98335BA5-6DEF-45D9-929C-2AD44CDDD99D}
+		{51CBF808-6F09-46BF-9265-217F64E1DB68} = {1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7} = {1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}
+		{94402B73-32A8-47B7-91B5-480C6B9A9EEF} = {1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}
+		{D487E57A-3619-40F4-A87F-9C4D803A54AF} = {1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35

@@ -1,13 +1,22 @@
 using System;
+using System.Collections.Generic;
 using NServiceBus.Logging;
 
 public class LogCapture : ILoggerFactory, ILog
 {
-    NServiceBusTests test;
+    List<string> fatals;
+    List<string> errors;
+    List<string> debugs;
+    List<string> infos;
+    List<string> warns;
 
-    public LogCapture(NServiceBusTests test)
+    public LogCapture(List<string> fatals, List<string> errors, List<string> debugs, List<string> infos, List<string> warns)
     {
-        this.test = test;
+        this.fatals = fatals;
+        this.errors = errors;
+        this.debugs = debugs;
+        this.infos = infos;
+        this.warns = warns;
     }
 
     public ILog GetLogger(Type type)
@@ -22,77 +31,77 @@ public class LogCapture : ILoggerFactory, ILog
 
     public void Debug(string message)
     {
-        test.Debugs.Add(message);
+        debugs.Add(message);
     }
 
     public void Debug(string message, Exception exception)
     {
-        test.Debugs.Add(message);
+        debugs.Add(message);
     }
 
     public void DebugFormat(string format, params object[] args)
     {
-        test.Debugs.Add(string.Format(format,args));
+        debugs.Add(string.Format(format,args));
     }
 
     public void Info(string message)
     {
-        test.Infos.Add(message);
+        infos.Add(message);
     }
 
     public void Info(string message, Exception exception)
     {
-        test.Infos.Add(message);
+        infos.Add(message);
     }
 
     public void InfoFormat(string format, params object[] args)
     {
-        test.Infos.Add(string.Format(format, args));
+        infos.Add(string.Format(format, args));
     }
 
     public void Warn(string message)
     {
-        test.Warns.Add(message);
+        warns.Add(message);
     }
 
     public void Warn(string message, Exception exception)
     {
-        test.Warns.Add(message);
+        warns.Add(message);
     }
 
     public void WarnFormat(string format, params object[] args)
     {
-        test.Warns.Add(string.Format(format, args));
+        warns.Add(string.Format(format, args));
     }
 
     public void Error(string message)
     {
-        test.Errors.Add(message);
+        errors.Add(message);
     }
 
     public void Error(string message, Exception exception)
     {
-        test.Errors.Add(message);
+        errors.Add(message);
     }
 
     public void ErrorFormat(string format, params object[] args)
     {
-        test.Errors.Add(string.Format(format, args));
+        errors.Add(string.Format(format, args));
     }
 
     public void Fatal(string message)
     {
-        test.Fatals.Add(message);
+        fatals.Add(message);
     }
 
     public void Fatal(string message, Exception exception)
     {
-        test.Fatals.Add(message);
+        fatals.Add(message);
     }
 
     public void FatalFormat(string format, params object[] args)
     {
-        test.Fatals.Add(string.Format(format, args));
+        fatals.Add(string.Format(format, args));
     }
 
     public bool IsDebugEnabled => true;

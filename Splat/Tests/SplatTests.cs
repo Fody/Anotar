@@ -2,36 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Fody;
 using Splat;
 using Xunit;
 
-public class SplatTests
+public class SplatTests: IDisposable
 {
-    Assembly assembly;
-    Logger currentLogger = new Logger();
+    static Assembly assembly;
+    static Logger currentLogger = new Logger();
 
-    public SplatTests()
+    static SplatTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("SplatAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
 
         Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger), typeof(ILogManager));
     }
 
-    IFullLogger GetLogger(Type arg)
+    static IFullLogger GetLogger(Type arg)
     {
-        return new WrappingFullLogger(currentLogger, GetType())
+        return new WrappingFullLogger(currentLogger, typeof(SplatTests))
         {
             Level = LogLevel.Debug
         };
     }
 
-    //[TearDown]
-    //public void TearDown()
-    //{
-    //    currentLogger.Clear();
-    //}
+    public void Dispose()
+    {
+        currentLogger.Clear();
+    }
 
     [Fact]
     public void ClassWithComplexExpressionInLog()
@@ -517,13 +519,14 @@ public class SplatTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(currentLogger.Debugs);
-        Assert.Contains("Method: 'Void AsyncMethod()'. Line: ~", currentLogger.Debugs.First());
+        Assert.Contains("Method: 'Task AsyncMethod()'. Line: ~", currentLogger.Debugs.First());
     }
 
     [Fact]

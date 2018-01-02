@@ -6,9 +6,13 @@ public partial class ModuleWeaver
     public void Init()
     {
         var logManagerType = FindType("log4net.LogManager");
-        var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
+        var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("Assembly", "String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
         var loggerTypeDefinition = FindType("log4net.ILog");
+
+        var assembly = FindType("System.Reflection.Assembly");
+        var getExecutingAssembly = assembly.Methods.First(x => x.Name == "GetExecutingAssembly");
+        GetExecutingAssemblyMethod = ModuleDefinition.ImportReference(getExecutingAssembly);
 
         DebugFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
@@ -69,4 +73,5 @@ public partial class ModuleWeaver
     public MethodReference IsDebugEnabledMethod;
     public MethodReference IsInfoEnabledMethod;
     public MethodReference IsWarnEnabledMethod;
+    public MethodReference GetExecutingAssemblyMethod;
 }

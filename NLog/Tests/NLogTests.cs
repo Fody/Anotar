@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Fody;
 using NLog;
 using NLog.Config;
@@ -9,18 +10,20 @@ using Xunit;
 
 public class NLogTests
 {
-    Assembly assembly;
-    public List<string> Errors = new List<string>();
-    public List<string> Fatals = new List<string>();
-    public List<string> Debugs = new List<string>();
-    public List<string> Traces = new List<string>();
-    public List<string> Informations = new List<string>();
-    public List<string> Warns = new List<string>();
+    static Assembly assembly;
+    public static List<string> Errors = new List<string>();
+    public static List<string> Fatals = new List<string>();
+    public static List<string> Debugs = new List<string>();
+    public static List<string> Traces = new List<string>();
+    public static List<string> Informations = new List<string>();
+    public static List<string> Warns = new List<string>();
 
-    public NLogTests()
+    static NLogTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("NLogAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
         var config = new LoggingConfiguration();
         var target = new ActionTarget
         {
@@ -32,7 +35,17 @@ public class NLogTests
         LogManager.Configuration = config;
     }
 
-    void LogEvent(LogEventInfo eventInfo)
+    public NLogTests()
+    {
+        Fatals.Clear();
+        Errors.Clear();
+        Traces.Clear();
+        Debugs.Clear();
+        Informations.Clear();
+        Warns.Clear();
+    }
+
+    static void LogEvent(LogEventInfo eventInfo)
     {
         if (eventInfo.Level == LogLevel.Fatal)
         {
@@ -91,17 +104,6 @@ public class NLogTests
 
         Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
-
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    Fatals.Clear();
-    //    Errors.Clear();
-    //    Traces.Clear();
-    //    Debugs.Clear();
-    //    Informations.Clear();
-    //    Warns.Clear();
-    //}
 
     [Fact]
     public void Generic()
@@ -654,13 +656,14 @@ public class NLogTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", Debugs.First());
+        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", Debugs.First());
     }
 
     [Fact]

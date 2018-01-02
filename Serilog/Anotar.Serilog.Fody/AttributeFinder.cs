@@ -45,5 +45,4 @@ public class AttributeFinder
     public bool FoundWarn;
     public bool FoundError;
     public bool FoundFatal;
-
 }

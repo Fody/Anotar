@@ -2,25 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Fody;
 using NServiceBus.Logging;
 using Xunit;
 
 public class NServiceBusTests
 {
-    Assembly assembly;
-    public List<string> Errors = new List<string>();
-    public List<string> Fatals = new List<string>();
-    public List<string> Debugs = new List<string>();
-    public List<string> Infos = new List<string>();
-    public List<string> Warns = new List<string>();
+    static Assembly assembly;
+    public static List<string> Errors = new List<string>();
+    public static List<string> Fatals = new List<string>();
+    public static List<string> Debugs = new List<string>();
+    public static List<string> Infos = new List<string>();
+    public static List<string> Warns = new List<string>();
+
+    static NServiceBusTests()
+    {
+        var moduleWeaver = new ModuleWeaver();
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
+
+        LogManager.UseFactory(new LogCapture(Fatals,
+        Errors,
+        Debugs,
+        Infos,
+        Warns));
+    }
 
     public NServiceBusTests()
     {
-        var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("NServiceBusAssemblyToProcess.dll").Assembly;
-
-        LogManager.UseFactory(new LogCapture(this));
+        Fatals.Clear();
+        Errors.Clear();
+        Debugs.Clear();
+        Infos.Clear();
+        Warns.Clear();
     }
 
     [Fact]
@@ -31,16 +47,6 @@ public class NServiceBusTests
 
         Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
-
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    Fatals.Clear();
-    //    Errors.Clear();
-    //    Debugs.Clear();
-    //    Infos.Clear();
-    //    Warns.Clear();
-    //}
 
     [Fact]
     public void Generic()
@@ -517,13 +523,14 @@ public class NServiceBusTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", Debugs.First());
+        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", Debugs.First());
     }
 
     [Fact]

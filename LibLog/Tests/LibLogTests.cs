@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Fody;
 using LibLogAssembly.Logging;
 using Xunit;
 
 public class LibLogTests
 {
-    Assembly assembly;
-    LogCapture logProvider;
+    static Assembly assembly;
+    static LogCapture logProvider;
 
-    public LibLogTests()
+    static LibLogTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("LibLogAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
 
         logProvider = new LogCapture();
         LogProvider.SetCurrentLogProvider(logProvider);
+    }
+
+    public LibLogTests()
+    {
+        logProvider.Clear();
     }
 
     [Fact]
@@ -38,12 +46,6 @@ public class LibLogTests
 
         Assert.Equal("a", instance.MethodThatReturns("x", 6));
     }
-
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    logProvider.Clear();
-    //}
 
     [Fact]
     public void Generic()
@@ -592,13 +594,14 @@ public class LibLogTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(logProvider.Debugs);
-        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", logProvider.Debugs.First());
+        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", logProvider.Debugs.First());
     }
 
     [Fact]

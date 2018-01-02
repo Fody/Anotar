@@ -5,8 +5,8 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = SerilogReference.MainModule.Types.First(x => x.Name == "Log");
-        var logEventLevelType = SerilogReference.MainModule.Types.First(x => x.Name == "LogEventLevel");
+        var logManagerType = FindType("Serilog.Log");
+        var logEventLevelType = FindType("Serilog.Events.LogEventLevel");
         VerboseLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Verbose").Constant;
         DebugLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Debug").Constant;
         ErrorLevel = (int) logEventLevelType.Fields.First(x => x.Name == "Error").Constant;
@@ -18,7 +18,7 @@ public partial class ModuleWeaver
             ModuleDefinition.ImportReference(
                 logManagerType.Methods.First(x => x.Name == "ForContext" && x.HasGenericParameters && x.IsMatch()));
 
-        var loggerTypeDefinition = SerilogReference.MainModule.Types.First(x => x.Name == "ILogger");
+        var loggerTypeDefinition = FindType("Serilog.ILogger");
 
         ForPropertyContextDefinition = ModuleDefinition.ImportReference(loggerTypeDefinition.Methods.First(
             x => x.Name == "ForContext" && !x.IsStatic && !x.HasGenericParameters &&

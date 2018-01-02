@@ -70,7 +70,7 @@ public partial class ModuleWeaver
         yield return ModuleDefinition;
         foreach (var assembly in ModuleDefinition
             .AssemblyReferences
-            .Select(_ => AssemblyResolver.Resolve(_)))
+            .Select(_ => ResolveAssembly(_.Name)))
         {
             yield return assembly.MainModule;
         }

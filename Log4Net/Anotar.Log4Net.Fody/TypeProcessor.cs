@@ -63,9 +63,11 @@ public partial class ModuleWeaver
 
         var logName = type.GetNonCompilerGeneratedType().FullName;
 
-        instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
-        instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
-        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+        instructions.Insert(0, Instruction.Create(OpCodes.Call, GetExecutingAssemblyMethod));
+
+        instructions.Insert(1, Instruction.Create(OpCodes.Ldstr, logName));
+        instructions.Insert(2, Instruction.Create(OpCodes.Call, constructLoggerMethod));
+        instructions.Insert(3, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
         type.Fields.Add(fieldDefinition);
     }
 }

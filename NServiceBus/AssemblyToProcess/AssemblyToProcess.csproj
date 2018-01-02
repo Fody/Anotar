@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="NServiceBus" Version="7.0.0-beta0012" />
+    <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
+  </ItemGroup>
+</Project>

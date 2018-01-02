@@ -16,8 +16,7 @@ Simplifies logging through a static class and some IL manipulation
 * Custom (for frameworks/toolkits with custom logging)
 * [CommonLogging](http://netcommon.sourceforge.net/)
 * [LibLog](https://github.com/damianh/LibLog) 
-* [Log4Net](http://logging.apache.org/log4net/) 
-* [MetroLog](https://github.com/mbrit/MetroLog)
+* [Log4Net](http://logging.apache.org/log4net/)
 * [NLog](http://nlog-project.org/) 
 * [NServiceBus](http://particular.net/nservicebus) 
 * [Serilog](http://serilog.net/)
@@ -73,10 +72,6 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Fody#add-fodywe
  * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Log4Net.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Log4Net.Fody/)
 
     PM> Install-Package Anotar.Log4Net.Fody
- 
- * MetroLog package http://nuget.org/packages/Anotar.MetroLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.MetroLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.MetroLog.Fody/)
-
-    PM> Install-Package Anotar.MetroLog.Fody
 
  * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
 
@@ -184,21 +179,6 @@ public class MyClass
     void MyMethod()
     {
         logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-    }
-}
-```
-
-
-#### In MetroLog
-
-```c#
-public class MyClass
-{
-    static ILogger logger = LogManagerFactory.DefaultLogManager.GetLogger("MyClass");
-
-    void MyMethod()
-    {
-        logger.Debug("Method: 'Void :MyMethod()'. Line: ~24. TheMessage");
     }
 }
 ```
@@ -396,7 +376,7 @@ void MyMethod(string param1, int param2)
 
 The custom logging variant exist for several reasons
 
-  1. Projects targeting an obscure logging libraries i.e. not NLog, MetroLog, SeriLog or Log4Net. Or wraps a logging library with a custom API.
+  1. Projects targeting an obscure logging libraries i.e. not NLog, SeriLog or Log4Net. Or wraps a logging library with a custom API.
   2. Projects that have their own logging custom logging libraries
   3. Projects that support multiple different logging libraries
   

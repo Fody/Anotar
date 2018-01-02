@@ -2,33 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Common.Logging;
 using Fody;
 using Xunit;
 
 public class CommonLoggingTests
 {
-    Assembly assembly;
-    ActionAdapter actionAdapter;
+    static Assembly assembly;
+    static ActionAdapter actionAdapter;
 
-    public CommonLoggingTests()
+    static CommonLoggingTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun("CommonLoggingAssemblyToProcess.dll").Assembly;
+        assembly = moduleWeaver.ExecuteTestRun(
+            assemblyPath: "AssemblyToProcess.dll",
+            ignoreCodes: new[] { "0x80131869" }).Assembly;
         actionAdapter = new ActionAdapter();
         LogManager.Adapter = actionAdapter;
     }
 
-    //[SetUp]
-    //public void Setup()
-    //{
-    //    actionAdapter.Fatals.Clear();
-    //    actionAdapter.Errors.Clear();
-    //    actionAdapter.Debugs.Clear();
-    //    actionAdapter.Informations.Clear();
-    //    actionAdapter.Warnings.Clear();
-    //    actionAdapter.Traces.Clear();
-    //}
+    public CommonLoggingTests()
+    {
+        actionAdapter.Fatals.Clear();
+        actionAdapter.Errors.Clear();
+        actionAdapter.Debugs.Clear();
+        actionAdapter.Informations.Clear();
+        actionAdapter.Warnings.Clear();
+        actionAdapter.Traces.Clear();
+    }
 
     [Fact]
     public void ClassWithComplexExpressionInLog()
@@ -703,13 +705,14 @@ public class CommonLoggingTests
     }
 
     [Fact]
-    public void AsyncMethod()
+    public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
-        instance.AsyncMethod();
+        Task task = instance.AsyncMethod();
+        await task;
         Assert.Single(actionAdapter.Debugs);
-        Assert.StartsWith("Method: 'Void AsyncMethod()'. Line: ~", actionAdapter.Debugs.First().Format);
+        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", actionAdapter.Debugs.First().Format);
     }
 
     [Fact]
