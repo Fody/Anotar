@@ -15,6 +15,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Log4Net\AssemblyToProcess\AssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3578A7B-09A6-4444-9383-0DEAFA4958BD} = {C3578A7B-09A6-4444-9383-0DEAFA4958BD}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net.Fody", "Log4Net\Anotar.Log4Net.Fody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
 EndProject
@@ -23,30 +26,45 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog.Fody", "NLog\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29AD34AB-9416-4E53-95CA-9B00072D8802} = {29AD34AB-9416-4E53-95CA-9B00072D8802}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Catel\AssemblyToProcess\AssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel.Fody", "Catel\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC} = {4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "CommonLogging\AssemblyToProcess\AssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging.Fody", "CommonLogging\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06818777-13F8-45BB-9D97-573EEC035291} = {06818777-13F8-45BB-9D97-573EEC035291}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat.Fody", "Splat\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Splat\AssemblyToProcess\AssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B72C38E4-2DC7-4E7F-B177-36EF47D49572} = {B72C38E4-2DC7-4E7F-B177-36EF47D49572}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibLog", "LibLog", "{98335BA5-6DEF-45D9-929C-2AD44CDDD99D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "LibLog\AssemblyToProcess\AssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog", "LibLog\Anotar.LibLog\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C6D9D08-4F93-44AC-B71A-7063F54106ED} = {0C6D9D08-4F93-44AC-B71A-7063F54106ED}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog.Fody", "LibLog\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
 EndProject
@@ -57,6 +75,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NServiceBus\AssemblyToProcess\AssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF465742-96B9-40EF-A5E6-34B52DC92499} = {FF465742-96B9-40EF-A5E6-34B52DC92499}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus.Fody", "NServiceBus\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
 EndProject
@@ -77,6 +98,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog", "Serilog\Anotar.Serilog\Anotar.Serilog.csproj", "{51CBF808-6F09-46BF-9265-217F64E1DB68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7} = {D951B73D-5762-4472-A3F5-AD7C587B91A7}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog.Fody", "Serilog\Anotar.Serilog.Fody\Anotar.Serilog.Fody.csproj", "{D951B73D-5762-4472-A3F5-AD7C587B91A7}"
 EndProject
@@ -484,7 +508,7 @@ Global
 		{D487E57A-3619-40F4-A87F-9C4D803A54AF} = {1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 	EndGlobalSection
 EndGlobal
