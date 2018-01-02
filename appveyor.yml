@@ -8,8 +8,6 @@ before_build:
 - ps: nuget restore
 build_script:
 - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" Anotar.sln  /Build Release'
-build:
-  verbosity: minimal
 test_script:
 - ps: >-
     nunit3-console Tests\bin\Release\net452\Tests.dll
