@@ -5,6 +5,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Fody" Version="2.3.14" />
     <PackageReference Include="FodyPackaging" Version="2.3.14" PrivateAssets="All" />
   </ItemGroup>

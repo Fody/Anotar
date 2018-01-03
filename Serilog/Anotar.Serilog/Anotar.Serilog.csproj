@@ -8,5 +8,6 @@
     <PackageReference Include="Fody" Version="2.3.15" />
     <PackageReference Include="FodyPackaging" Version="2.3.15" PrivateAssets="All" />
     <PackageReference Include="Serilog" Version="2.6.0" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 </Project>

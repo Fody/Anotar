@@ -4,6 +4,7 @@
     <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <ProjectReference Include="..\LibLogAssembly\LibLogAssembly.csproj" />
     <ProjectReference Include="..\Anotar.LibLog\Anotar.LibLog.csproj" />
