@@ -10,35 +10,35 @@ build_script:
 - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" Anotar.sln  /Build Release'
 test_script:
 - ps: >-
-    nunit3-console Catel\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console Catel\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "Catel\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console CommonLogging\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console CommonLogging\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "CommonLogging\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console LibLog\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console LibLog\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "LibLog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console Log4Net\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console Log4Net\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "Log4Net\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console NLog\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console NLog\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "NLog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console NServiceBus\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console NServiceBus\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "NServiceBus\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console Serilog\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console Serilog\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "Serilog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
-    nunit3-console Splat\Tests\bin\Release\net462\Tests.dll
+    %xunit20%\xunit.console Splat\Tests\bin\Release\net462\Tests.dll
     
     dotnet test "Splat\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
