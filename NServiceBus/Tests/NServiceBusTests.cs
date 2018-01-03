@@ -19,9 +19,10 @@ public class NServiceBusTests
     static NServiceBusTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun(
+        var testResult = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            runPeVerify:false);
+        assembly = testResult.Assembly;
 
         LogManager.UseFactory(new LogCapture(Fatals,
         Errors,
