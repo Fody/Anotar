@@ -4,7 +4,6 @@
     <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Serilog" Version="2.6.0" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <ProjectReference Include="..\Anotar.Serilog\Anotar.Serilog.csproj" />
