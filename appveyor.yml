@@ -20,8 +20,6 @@ test_script:
 
     %xunit20%\xunit.console LibLog\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "LibLog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
-
     %xunit20%\xunit.console Log4Net\Tests\bin\Release\net462\Tests.dll
 
     dotnet test "Log4Net\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
