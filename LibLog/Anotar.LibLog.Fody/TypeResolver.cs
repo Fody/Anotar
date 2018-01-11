@@ -7,7 +7,6 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-
         foreach (var module in GetAllModules())
         {
             var logManagerType = module.Types.FirstOrDefault(x => x.Name == "LogProvider");
@@ -24,7 +23,6 @@ public partial class ModuleWeaver
 
             var getLoggerDefinition = logManagerType.FindMethod("GetLogger","String");
             constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
-
 
             TraceMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("Trace", "ILog", "String"));
             TraceFormatMethod = ModuleDefinition.ImportReference(logExtensionsTypeDefinition.FindMethod("TraceFormat", "ILog", "String", "Object[]"));

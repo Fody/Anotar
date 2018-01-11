@@ -95,7 +95,7 @@ public static class CecilExtensions
     public static bool IsCompilerGenerated(this TypeDefinition typeDefinition)
     {
         return typeDefinition.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute") ||
-            (typeDefinition.IsNested && typeDefinition.DeclaringType.IsCompilerGenerated());
+            typeDefinition.IsNested && typeDefinition.DeclaringType.IsCompilerGenerated();
     }
 
     public static void CheckForInvalidLogToUsages(this MethodDefinition methodDefinition)

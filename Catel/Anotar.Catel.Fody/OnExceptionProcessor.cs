@@ -141,7 +141,7 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Rethrow);
     }
 
-    private IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, int logEvent)
+    IEnumerable<Instruction> AddWrite(MethodReference isEnabledMethod, int logEvent)
     {
         var sectionNop = Instruction.Create(OpCodes.Nop);
         yield return Instruction.Create(OpCodes.Call, isEnabledMethod);

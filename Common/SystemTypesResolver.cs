@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Fody;
 using Mono.Cecil;
@@ -31,7 +30,6 @@ public partial class ModuleWeaver
                         x.Parameters.Count == 1 &&
                         x.Parameters[0].ParameterType.Name == "RuntimeTypeHandle");
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
-
 
         var stringType = FindType("System.String");
 
@@ -68,6 +66,6 @@ public partial class ModuleWeaver
                 }
             }
         }
-        throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{String.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
+        throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{string.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
     }
 }
