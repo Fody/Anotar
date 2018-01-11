@@ -39,6 +39,7 @@
 #pragma warning disable 1591
 
 using System.Diagnostics.CodeAnalysis;
+#pragma warning disable IDE0007 // Use implicit type
 // ReSharper disable RedundantNameQualifier
 // ReSharper disable ArrangeTypeMemberModifiers
 // ReSharper disable UnusedMember.Local
@@ -51,6 +52,12 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper disable ArrangeAccessorOwnerBody
 // ReSharper disable EnforceIfStatementBraces
 // ReSharper disable InlineOutVariableDeclaration
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable InconsistentNaming
+// ReSharper disable RedundantVerbatimStringPrefix
+// ReSharper disable NotAccessedVariable
+// ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable JoinDeclarationAndInitializer
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "LibLogAssembly.Logging")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "LibLogAssembly.Logging.Logger.#Invoke(LibLogAssembly.Logging.LogLevel,System.Func`1<System.String>,System.Exception,System.Object[])")]
@@ -938,7 +945,7 @@ namespace LibLogAssembly.Logging.LogProviders
                 {
                     if (IsLogLevelEnable(logLevel))
                     {
-                        var nlogLevel = this.TranslateLevel(logLevel);
+                        var nlogLevel = TranslateLevel(logLevel);
                         Type s_callerStackBoundaryType;
 #if !LIBLOG_PORTABLE
                         StackTrace stack = new StackTrace();

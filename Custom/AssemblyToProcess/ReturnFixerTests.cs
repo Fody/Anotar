@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Anotar.Custom;
 // ReSharper disable UnusedVariable
+// ReSharper disable RedundantCheckBeforeAssignment
 #pragma warning disable 649
 
 public class ReturnFixerTests
@@ -65,7 +66,9 @@ public class ReturnFixerTests
         try
         {
             if (DateTime.Now == DateTime.Now)
+            {
                 throw new Exception("Foo");
+            }
         }
         finally
         {

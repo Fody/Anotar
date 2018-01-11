@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using Anotar.Custom;
+// ReSharper disable NotAccessedVariable
+// ReSharper disable RedundantAssignment
 
 public class Issues
 {
-
     public void Issue31()
     {
         var text = "";
@@ -14,7 +15,4 @@ public class Issues
             text = reader.ReadToEnd();
         }
     }
-
-
-
 }

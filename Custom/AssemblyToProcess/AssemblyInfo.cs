@@ -1,4 +1,3 @@
-﻿using System.Reflection;
-using Anotar.Custom;
+﻿using Anotar.Custom;
 
 [assembly: LoggerFactory(typeof(LoggerFactory))]

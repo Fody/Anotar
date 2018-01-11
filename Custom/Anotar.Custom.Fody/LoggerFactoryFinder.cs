@@ -1,4 +1,5 @@
 using System.Linq;
+using Fody;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -29,7 +30,7 @@ public partial class ModuleWeaver
         else
         {
             var typeReference = (TypeReference) loggerFactoryAttribute.ConstructorArguments.First().Value;
-            
+
             FindGetLogger(typeReference.Resolve());
 
             GetLoggerMethod = ModuleDefinition.ImportReference(GetLoggerMethod);

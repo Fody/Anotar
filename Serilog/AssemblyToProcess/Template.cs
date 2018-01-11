@@ -12,11 +12,9 @@ public class Template
         if (anotarLogger.IsEnabled(LogEventLevel.Debug))
         {
             anotarLogger
-                .ForContext("MethodName", "Void Debug()", false)
-                .ForContext("LineNumber", 13, false)
+                .ForContext("MethodName", "Void Debug()")
+                .ForContext("LineNumber", 13)
                 .Debug("");
         }
     }
-
-
 }

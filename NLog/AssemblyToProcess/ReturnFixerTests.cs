@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Anotar.NLog;
 // ReSharper disable UnusedVariable
+// ReSharper disable RedundantCheckBeforeAssignment
 #pragma warning disable 649
 #pragma warning disable 162
 

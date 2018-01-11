@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
+    <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Splat" Version="2.0.0" />

@@ -1,4 +1,5 @@
 using Anotar.NServiceBus;
+// ReSharper disable UnusedTypeParameter
 
 public class GenericClass<T>
 {

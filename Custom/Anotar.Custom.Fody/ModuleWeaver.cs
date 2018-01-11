@@ -1,24 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Mono.Cecil;
+using Fody;
 
-public partial class ModuleWeaver
+public partial class ModuleWeaver: BaseModuleWeaver
 {
-    public Action<string> LogInfo { get; set; }
-    public IAssemblyResolver AssemblyResolver { get; set; }
-    public Action<string> LogWarning { get; set; }
-    public Action<string> LogError { get; set; }
-    public ModuleDefinition ModuleDefinition { get; set; }
     public bool LogMinimalMessage;
 
-    public ModuleWeaver()
-    {
-        LogInfo = s => { };
-        LogWarning = s => { };
-        LogError = s => { };
-    }
-
-    public void Execute()
+    public override void Execute()
     {
         FindGetLoggerMethod();
 
@@ -28,17 +16,23 @@ public partial class ModuleWeaver
         {
             LogMinimalMessage = true;
         }
+
         LoadSystemTypes();
         Init();
         foreach (var type in ModuleDefinition
             .GetTypes()
-            .Where(x => (x.BaseType != null) && !x.IsEnum && !x.IsInterface))
+            .Where(x => x.BaseType != null && !x.IsEnum && !x.IsInterface))
         {
             ProcessType(type);
         }
-
-        //TODO: ensure attributes don't exist on interfaces
-        RemoveReference();
     }
 
+    public override IEnumerable<string> GetAssembliesForScanning()
+    {
+        yield return "mscorlib";
+        yield return "System.Runtime";
+        yield return "System.Core";
+    }
+
+    public override bool ShouldCleanReference => true;
 }

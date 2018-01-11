@@ -33,7 +33,7 @@ public class ClassWithException
         {
            LogTo.Debug("TheMessage");
         }
-        catch 
+        catch
         {
         }
     }

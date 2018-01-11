@@ -2,7 +2,7 @@ using System;
 using Anotar.CommonLogging;
 
 public class ClassWithLogging
-{  
+{
     public bool IsDebugEnabled()
     {
         return LogTo.IsDebugEnabled;

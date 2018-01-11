@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using Anotar.NLog;
+// ReSharper disable NotAccessedVariable
+// ReSharper disable RedundantAssignment
 
 public class Issues
 {

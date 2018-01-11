@@ -5,8 +5,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="2.3.15" />
-    <PackageReference Include="FodyPackaging" Version="2.3.15" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="2.3.18" PrivateAssets="None"/>
+    <PackageReference Include="FodyPackaging" Version="2.3.18" PrivateAssets="All" />
     <PackageReference Include="Common.Logging" Version="3.4.1" />
   </ItemGroup>
   <ItemGroup>

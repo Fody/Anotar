@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Anotar.Custom;
+// ReSharper disable UnusedMember.Global
 #pragma warning disable 1998
 
 
@@ -11,7 +12,7 @@ public class ClassWithCompilerGeneratedClasses
     {
         LogTo.Debug("Foo");
     }
-#endif 
+#endif
 
     public IEnumerable<int> EnumeratorMethod()
     {
@@ -42,5 +43,5 @@ public class ClassWithCompilerGeneratedClasses
         });
         action();
     }
-#endif 
+#endif
 }

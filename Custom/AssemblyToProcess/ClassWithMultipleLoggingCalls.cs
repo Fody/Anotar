@@ -32,7 +32,9 @@ public class ClassWithMultipleLoggingCalls
         LogTo.Information("Doing something");
 
         if (doThrow)
+        {
             throw new Exception();
+        }
 
         LogTo.Information("Doing something");
     }

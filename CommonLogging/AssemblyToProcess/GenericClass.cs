@@ -1,4 +1,5 @@
 using Anotar.CommonLogging;
+// ReSharper disable UnusedTypeParameter
 
 public class GenericClass<T>
 {
@@ -7,4 +8,3 @@ public class GenericClass<T>
         LogTo.Debug();
     }
 }
-

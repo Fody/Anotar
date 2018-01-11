@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Anotar.Catel;
 // ReSharper disable UnusedVariable
+// ReSharper disable RedundantCheckBeforeAssignment
 #pragma warning disable 162
 #pragma warning disable 649
 
