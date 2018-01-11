@@ -18,6 +18,10 @@ test_script:
 
     dotnet test "CommonLogging\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
 
+    %xunit20%\xunit.console Custom\Tests\bin\Release\net462\Tests.dll
+
+    dotnet test "Custom\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+
     %xunit20%\xunit.console LibLog\Tests\bin\Release\net462\Tests.dll
 
     %xunit20%\xunit.console Log4Net\Tests\bin\Release\net462\Tests.dll
