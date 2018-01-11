@@ -7,7 +7,7 @@ install:
 before_build:
 - ps: nuget restore
 build_script:
-- cmd: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.com" Anotar.sln  /Build Release'
+- cmd: dotnet build
 test_script:
 - cmd: >-
     %xunit20%\xunit.console Catel\Tests\bin\Release\net462\Tests.dll
