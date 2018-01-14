@@ -1,6 +1,6 @@
 [![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat&max-age=86400)](https://gitter.im/Fody/Fody)
 
-![Icon](https://raw.github.com/Fody/Anotar/master/Icons/package_icon.png)
+![Icon](https://raw.githubusercontent.com/Fody/Anotar/master/Icons/package_icon.png)
 
 
 ## This is an add-in for [Fody](https://github.com/Fody/Fody) 
