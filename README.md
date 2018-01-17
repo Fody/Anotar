@@ -29,7 +29,7 @@ See also [Fody usage](https://github.com/Fody/Fody#usage).
 
 ### NuGet installation
 
-Install the [Anotar.xxx.Fody NuGet package](https://www.nuget.org/packages?q=anotar/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
+Install the [Anotar.xxx.Fody NuGet package](https://www.nuget.org/packages?q=anotar) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
 
 ```
 PM> Install-Package Anotar.xxx.Fody
