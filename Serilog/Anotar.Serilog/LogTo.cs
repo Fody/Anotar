@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog.Core;
 
 namespace Anotar.Serilog
 {
@@ -25,6 +26,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Verbose(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -36,6 +38,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Verbose(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -59,6 +62,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Debug(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -70,6 +74,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Debug(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -93,6 +98,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Information(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -104,6 +110,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Information(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -127,6 +134,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Warning(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -138,6 +146,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Warning(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -161,6 +170,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Error(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -172,6 +182,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Error(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -195,6 +206,7 @@ namespace Anotar.Serilog
         /// </summary>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Fatal(string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
@@ -206,6 +218,7 @@ namespace Anotar.Serilog
         /// <param name="exception">An exception to be logged.</param>
         /// <param name="messageTemplate">Message template describing the event.</param>
         /// <param name="propertyValues">Objects positionally formatted into the message template.</param>
+        [MessageTemplateFormatMethod("messageTemplate")]
         public static void Fatal(Exception exception, string messageTemplate, params object[] propertyValues)
         {
             throw new NotImplementedException();
