@@ -52,11 +52,11 @@ public static class CecilExtensions
             {
                 foreach (var parentClassMethod in rootType.Methods)
                 {
-                    if (method.DeclaringType.Name.Contains("<" + parentClassMethod.Name + ">"))
+                    if (method.DeclaringType.Name.Contains($"<{parentClassMethod.Name}>"))
                     {
                         return parentClassMethod;
                     }
-                    if (method.Name.StartsWith("<" + parentClassMethod.Name + ">"))
+                    if (method.Name.StartsWith($"<{parentClassMethod.Name}>"))
                     {
                         return parentClassMethod;
                     }
@@ -92,10 +92,10 @@ public static class CecilExtensions
         return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
     }
 
-    public static bool IsCompilerGenerated(this TypeDefinition typeDefinition)
+    public static bool IsCompilerGenerated(this TypeDefinition type)
     {
-        return typeDefinition.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute") ||
-            typeDefinition.IsNested && typeDefinition.DeclaringType.IsCompilerGenerated();
+        return type.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute") ||
+            type.IsNested && type.DeclaringType.IsCompilerGenerated();
     }
 
     public static void CheckForInvalidLogToUsages(this MethodDefinition methodDefinition)
@@ -127,7 +127,8 @@ public static class CecilExtensions
                 {
                     continue;
                 }
-                if (typeReference.Namespace == null || !typeReference.Namespace.StartsWith("Anotar"))
+                if (typeReference.Namespace == null ||
+                    !typeReference.Namespace.StartsWith("Anotar"))
                 {
                     continue;
                 }

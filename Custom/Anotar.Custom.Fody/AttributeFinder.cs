@@ -4,38 +4,37 @@ public class AttributeFinder
 {
     public AttributeFinder(MethodDefinition method)
     {
-        var customAttributes = method.CustomAttributes;
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToTraceOnExceptionAttribute"))
+        var attributes = method.CustomAttributes;
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToTraceOnExceptionAttribute"))
         {
             FoundTrace = true;
             Found = true;
         }
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToDebugOnExceptionAttribute"))
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToDebugOnExceptionAttribute"))
         {
             FoundDebug = true;
             Found = true;
         }
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToInformationOnExceptionAttribute"))
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToInformationOnExceptionAttribute"))
         {
             FoundInformation = true;
             Found = true;
         }
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToWarningOnExceptionAttribute"))
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToWarningOnExceptionAttribute"))
         {
             FoundWarning = true;
             Found = true;
         }
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToErrorOnExceptionAttribute"))
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToErrorOnExceptionAttribute"))
         {
             FoundError = true;
             Found = true;
         }
-        if (customAttributes.ContainsAttribute("Anotar.Custom.LogToFatalOnExceptionAttribute"))
+        if (attributes.ContainsAttribute("Anotar.Custom.LogToFatalOnExceptionAttribute"))
         {
             FoundFatal = true;
             Found = true;
         }
-
     }
 
     public bool Found;

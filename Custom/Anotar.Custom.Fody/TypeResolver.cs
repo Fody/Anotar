@@ -96,5 +96,4 @@ public partial class ModuleWeaver
     public Lazy<MethodReference> IsWarningEnabledMethod;
     public Lazy<MethodReference> IsErrorEnabledMethod;
     public Lazy<MethodReference> IsFatalEnabledMethod;
-
 }
