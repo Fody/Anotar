@@ -5,9 +5,9 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="2.3.25" PrivateAssets="None" />
-    <PackageReference Include="FodyPackaging" Version="2.3.25" PrivateAssets="All" />
-    <PackageReference Include="Catel.Core" Version="5.2.0" />
+    <PackageReference Include="Catel.Core" Version="5.3.0" />
+    <PackageReference Include="Fody" Version="2.4.6" PrivateAssets="None" />
+    <PackageReference Include="FodyPackaging" Version="2.4.6" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />

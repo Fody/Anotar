@@ -6,8 +6,8 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyHelpers" Version="2.3.25" />
-    <PackageReference Include="Catel.Core" Version="5.2.0" />
+    <PackageReference Include="Catel.Core" Version="5.3.0" />
+    <PackageReference Include="FodyHelpers" Version="2.4.6" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0-preview1-25914-04" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
