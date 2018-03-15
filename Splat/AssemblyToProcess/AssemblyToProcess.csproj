@@ -5,7 +5,9 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Splat" Version="2.0.0" />
     <ProjectReference Include="..\Anotar.Splat\Anotar.Splat.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Splat" Version="3.0.0" />
   </ItemGroup>
 </Project>
