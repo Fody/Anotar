@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Fody" Version="2.4.6" PrivateAssets="None" />
     <PackageReference Include="FodyPackaging" Version="2.4.6" PrivateAssets="All" />
-    <PackageReference Include="NLog" Version="4.5.0-rc03" />
+    <PackageReference Include="NLog" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
