@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Version>4.3.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <DebugType>full</DebugType>
     <Authors>Simon Cropp, Tomasz Pluskiewicz</Authors>
