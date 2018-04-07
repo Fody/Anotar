@@ -1,7 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
-MinimumVisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 15.0.27130.2020
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{3F0BAF48-DF6E-47D9-9609-BAA7D18ADFF9}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catel", "Catel", "{BE199712-0ACF-4F9F-8B6A-8AF5BF75D3A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log4Net", "Log4Net", "{968B8231-64F3-44BD-8D4F-C279C53571FF}"
@@ -12,53 +14,49 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLogging", "CommonLogg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Splat", "Splat", "{CC172335-BE39-4AE0-8829-B125531C62C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Log4Net\AssemblyToProcess\AssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net.Fody", "Log4Net\Anotar.Log4Net.Fody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NLog\AssemblyToProcess\AssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog.Fody", "NLog\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Catel\AssemblyToProcess\AssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel.Fody", "Catel\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "CommonLogging\AssemblyToProcess\AssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging.Fody", "CommonLogging\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat.Fody", "Splat\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Splat\AssemblyToProcess\AssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibLog", "LibLog", "{98335BA5-6DEF-45D9-929C-2AD44CDDD99D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "LibLog\AssemblyToProcess\AssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog", "LibLog\Anotar.LibLog\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog.Fody", "LibLog\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogAssembly", "LibLog\LibLogAssembly\LibLogAssembly.csproj", "{3A12BAA3-D72B-40CD-8D89-51AE5D6B20A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NServiceBus", "NServiceBus", "{6E02CD87-1526-49AA-82E8-08E497F99CB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NServiceBus\AssemblyToProcess\AssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net.Fody", "Log4Net\Anotar.Log4Net.Fody\Anotar.Log4Net.Fody.csproj", "{C3578A7B-09A6-4444-9383-0DEAFA4958BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog.Fody", "NLog\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj", "{29AD34AB-9416-4E53-95CA-9B00072D8802}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Custom.Fody", "Custom\Anotar.Custom.Fody\Anotar.Custom.Fody.csproj", "{C9A88E56-D58F-45B2-AF8B-5897182F0104}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog.Fody", "Serilog\Anotar.Serilog.Fody\Anotar.Serilog.Fody.csproj", "{D951B73D-5762-4472-A3F5-AD7C587B91A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus.Fody", "NServiceBus\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj", "{FF465742-96B9-40EF-A5E6-34B52DC92499}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging.Fody", "CommonLogging\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj", "{06818777-13F8-45BB-9D97-573EEC035291}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat.Fody", "Splat\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj", "{B72C38E4-2DC7-4E7F-B177-36EF47D49572}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog.Fody", "LibLog\Anotar.LibLog.Fody\Anotar.LibLog.Fody.csproj", "{0C6D9D08-4F93-44AC-B71A-7063F54106ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel.Fody", "Catel\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj", "{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLogAssembly", "LibLog\LibLogAssembly\LibLogAssembly.csproj", "{3A12BAA3-D72B-40CD-8D89-51AE5D6B20A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NServiceBus\AssemblyToProcess\AssemblyToProcess.csproj", "{BBD67CFC-A887-464B-9003-406D9FF3F330}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "NLog\AssemblyToProcess\AssemblyToProcess.csproj", "{7DEC4E2D-F872-434E-A267-0BAD65299950}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Catel\AssemblyToProcess\AssemblyToProcess.csproj", "{8562527D-6A0A-4FCC-8EC0-4CA115EFFB3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "CommonLogging\AssemblyToProcess\AssemblyToProcess.csproj", "{42003303-85D5-4944-A138-56CC51A6A092}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Splat\AssemblyToProcess\AssemblyToProcess.csproj", "{C1596A1F-15EE-4A27-B15A-8D0FA2EF41DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Log4Net\AssemblyToProcess\AssemblyToProcess.csproj", "{DCFDFA1D-B13A-4979-9560-91B527375418}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "LibLog\AssemblyToProcess\AssemblyToProcess.csproj", "{D0947887-0667-4638-9DFC-D2E15C4DE93E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Serilog\AssemblyToProcess\AssemblyToProcess.csproj", "{D487E57A-3619-40F4-A87F-9C4D803A54AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Custom\AssemblyToProcess\AssemblyToProcess.csproj", "{EBAAC271-4C90-40B8-844B-4E6898DD8FEF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "CommonLogging\Tests\Tests.csproj", "{5A6A1002-0D9E-4D70-A685-FE851E9BD525}"
 EndProject
@@ -74,27 +72,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "NLog\Tests\Tests.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "LibLog\Tests\Tests.csproj", "{CE1B64C7-9064-4485-9788-BC62BC8294D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serilog", "Serilog", "{1DAA8766-FBAA-40BB-85A0-95FA07E05BDD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog", "Serilog\Anotar.Serilog\Anotar.Serilog.csproj", "{51CBF808-6F09-46BF-9265-217F64E1DB68}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog.Fody", "Serilog\Anotar.Serilog.Fody\Anotar.Serilog.Fody.csproj", "{D951B73D-5762-4472-A3F5-AD7C587B91A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Custom\Tests\Tests.csproj", "{0917C14C-F971-43AB-912B-52B7D4760135}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Serilog\Tests\Tests.csproj", "{94402B73-32A8-47B7-91B5-480C6B9A9EEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Serilog\AssemblyToProcess\AssemblyToProcess.csproj", "{D487E57A-3619-40F4-A87F-9C4D803A54AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyWithLogger", "Custom\AssemblyWithLogger\AssemblyWithLogger.csproj", "{5493D52A-B951-4A17-83F6-9063FBB1FD5C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{3F0BAF48-DF6E-47D9-9609-BAA7D18ADFF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Custom.Fody", "Custom\Anotar.Custom.Fody\Anotar.Custom.Fody.csproj", "{C9A88E56-D58F-45B2-AF8B-5897182F0104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog", "Serilog\Anotar.Serilog\Anotar.Serilog.csproj", "{51CBF808-6F09-46BF-9265-217F64E1DB68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Custom", "Custom\Anotar.Custom\Anotar.Custom.csproj", "{92F0878B-811B-457C-9B93-2A7EC98E3B13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Custom\Tests\Tests.csproj", "{0917C14C-F971-43AB-912B-52B7D4760135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyWithLogger", "Custom\AssemblyWithLogger\AssemblyWithLogger.csproj", "{5493D52A-B951-4A17-83F6-9063FBB1FD5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyToProcess", "Custom\AssemblyToProcess\AssemblyToProcess.csproj", "{EBAAC271-4C90-40B8-844B-4E6898DD8FEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.LibLog", "LibLog\Anotar.LibLog\Anotar.LibLog.csproj", "{7AFCFD73-D16E-4543-A65C-1BAF167D620E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BDDD56A-E73E-498C-AE70-B4BF6D5D9E99}"
 	ProjectSection(SolutionItems) = preProject
