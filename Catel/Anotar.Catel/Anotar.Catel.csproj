@@ -6,8 +6,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Catel.Core" Version="5.3.0" />
-    <PackageReference Include="Fody" Version="3.0.1" />
-    <PackageReference Include="FodyPackaging" Version="3.0.1" />
+    <PackageReference Include="Fody" Version="3.0.3" />
+    <PackageReference Include="FodyPackaging" Version="3.0.3" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
