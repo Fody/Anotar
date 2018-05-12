@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net46;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Anotar.Splat\Anotar.Splat.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Splat" Version="3.0.0" />
+    <PackageReference Include="Splat" Version="4.0.0" />
   </ItemGroup>
 </Project>
