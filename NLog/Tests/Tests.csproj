@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="3.0.3" />
-    <PackageReference Include="NLog" Version="4.5.2" />
+    <PackageReference Include="NLog" Version="4.5.6" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <ProjectReference Include="..\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj" />
