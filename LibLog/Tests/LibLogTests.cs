@@ -17,7 +17,7 @@ public class LibLogTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            ignoreCodes: new[] { "0x80131869", "0x80131252", "0x80131B2C" }).Assembly;
 
         logProvider = new LogCapture();
         LogProvider.SetCurrentLogProvider(logProvider);
