@@ -12,37 +12,37 @@ test_script:
 - cmd: >-
     %xunit20%\xunit.console Catel\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "Catel\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "Catel\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console CommonLogging\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "CommonLogging\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "CommonLogging\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console Custom\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "Custom\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "Custom\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console LibLog\Tests\bin\Release\net462\Tests.dll
 
     %xunit20%\xunit.console Log4Net\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "Log4Net\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "Log4Net\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console NLog\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "NLog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "NLog\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console NServiceBus\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "NServiceBus\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "NServiceBus\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console Serilog\Tests\bin\Release\net462\Tests.dll
 
-    dotnet test "Serilog\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "Serilog\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
     %xunit20%\xunit.console Splat\Tests\bin\Release\net462\Tests.dll
     
-    dotnet test "Splat\Tests\Tests.csproj" --framework netcoreapp2.0 --configuration Release --no-build --output bin\Release\netcoreapp2.0
+    dotnet test "Splat\Tests\Tests.csproj" --framework netcoreapp2.1 --configuration Release --no-build --output bin\Release\netcoreapp2.1
 
 artifacts:
 - path: nugets\**\*.nupkg
