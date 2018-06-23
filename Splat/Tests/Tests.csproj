@@ -6,7 +6,7 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyHelpers" Version="3.0.4" />
+    <PackageReference Include="FodyHelpers" Version="3.1.0" />
     <PackageReference Include="Splat" Version="4.0.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
