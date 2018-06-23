@@ -50,7 +50,7 @@ public partial class ModuleWeaver
         }
         if (name == "Warn")
         {
-            return WarnForatMethod;
+            return WarnFormatMethod;
         }
         if (name == "Error")
         {

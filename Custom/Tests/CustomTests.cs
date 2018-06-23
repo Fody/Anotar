@@ -45,7 +45,7 @@ public class CustomTests
     }
 
     [Fact]
-    public void EnsureLoggerFactoryAttributeisRemoved()
+    public void EnsureLoggerFactoryAttributeIsRemoved()
     {
         var first = assembly.GetCustomAttributes(false).FirstOrDefault(x => x.GetType().Name.Contains("LoggerFactoryAttribute"));
         Assert.Null(first);

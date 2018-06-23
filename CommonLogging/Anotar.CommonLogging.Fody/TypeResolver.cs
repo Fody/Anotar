@@ -36,7 +36,7 @@ public partial class ModuleWeaver
             ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("InfoFormat", "String", "Exception", "Object[]"));
 
-        WarnForatMethod =
+        WarnFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("WarnFormat", "String", "Object[]"));
         WarnMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warn", "Object"));
         IsWarnEnabledMethod = ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsWarnEnabled"));
@@ -70,7 +70,7 @@ public partial class ModuleWeaver
     public MethodReference InfoFormatMethod;
     public MethodReference InfoMethod;
     public MethodReference InfoExceptionMethod;
-    public MethodReference WarnForatMethod;
+    public MethodReference WarnFormatMethod;
     public MethodReference WarnMethod;
     public MethodReference WarnExceptionMethod;
     public MethodReference ErrorFormatMethod;
