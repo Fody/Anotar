@@ -41,9 +41,9 @@ public partial class ModuleWeaver
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
     }
 
-    TypeDefinition LoadTypeDefinition(string typeFullName, params AssemblyDefinition[] canidateAssemblies)
+    TypeDefinition LoadTypeDefinition(string typeFullName, params AssemblyDefinition[] candidateAssemblies)
     {
-        foreach (var candidateAssembly in canidateAssemblies)
+        foreach (var candidateAssembly in candidateAssemblies)
         {
             if (candidateAssembly == null)
             {
@@ -66,6 +66,6 @@ public partial class ModuleWeaver
                 }
             }
         }
-        throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{string.Join(", ", canidateAssemblies.OfType<AssemblyDefinition>())}]");
+        throw new WeavingException($"[SystemTypeResolver] Unable to find {typeFullName} among [{string.Join(", ", candidateAssemblies.OfType<AssemblyDefinition>())}]");
     }
 }
