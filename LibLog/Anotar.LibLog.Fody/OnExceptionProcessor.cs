@@ -47,7 +47,7 @@ class OnExceptionProcessor
 
         exceptionVariable = new VariableDefinition(ModuleWeaver.ExceptionType);
         body.Variables.Add(exceptionVariable);
-        messageVariable = new VariableDefinition(ModuleWeaver.StringReference);
+        messageVariable = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
         body.Variables.Add(messageVariable);
         paramsArrayVariable = new VariableDefinition(ModuleWeaver.ObjectArray);
         body.Variables.Add(paramsArrayVariable);
@@ -93,7 +93,7 @@ class OnExceptionProcessor
         var messageLdstr = Instruction.Create(OpCodes.Ldstr, "");
         yield return messageLdstr;
         yield return Instruction.Create(OpCodes.Ldc_I4, Method.Parameters.Count);
-        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ObjectReference);
+        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.TypeSystem.ObjectReference);
         yield return Instruction.Create(OpCodes.Stloc, paramsArrayVariable);
 
         var paramsFormatBuilder = new ParamsFormatBuilder(Method, paramsArrayVariable);
@@ -164,7 +164,7 @@ class OnExceptionProcessor
         yield return Instruction.Create(OpCodes.Ldloc, messageVariable);
         yield return Instruction.Create(OpCodes.Ldloc, exceptionVariable);
         yield return Instruction.Create(OpCodes.Ldc_I4_0);
-        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.ObjectReference);
+        yield return Instruction.Create(OpCodes.Newarr, ModuleWeaver.TypeSystem.ObjectReference);
         yield return Instruction.Create(OpCodes.Call, writeMethod);
         yield return sectionNop;
     }

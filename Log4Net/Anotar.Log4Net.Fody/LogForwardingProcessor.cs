@@ -81,7 +81,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
                     Instruction.Create(OpCodes.Ldstr, messagePrefix),
                     Instruction.Create(OpCodes.Ldc_I4_0),
-                    Instruction.Create(OpCodes.Newarr, ModuleWeaver.ObjectReference),
+                    Instruction.Create(OpCodes.Newarr, ModuleWeaver.TypeSystem.ObjectReference),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetFormatOperand(methodReference))
                 });
             return;
@@ -92,7 +92,7 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.StringReference);
+                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
             if (exceptionVar == null)
@@ -150,7 +150,7 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.StringReference);
+                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
 
@@ -170,7 +170,7 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.StringReference);
+                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
             if (paramsVar == null)

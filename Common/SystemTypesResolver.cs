@@ -11,24 +11,22 @@ public partial class ModuleWeaver
     public MethodReference FormatMethod;
     public MethodReference FuncInvokeMethod;
     public TypeReference GenericFunc;
-    public TypeReference ObjectReference;
-    public TypeReference StringReference;
-    public TypeReference IntReference;
 
     public void LoadSystemTypes()
     {
         var typeType = FindType("System.Type");
 
-        ObjectReference = ModuleDefinition.ImportReference(FindType("System.Object"));
-        StringReference = ModuleDefinition.ImportReference(FindType("System.String"));
-        IntReference = ModuleDefinition.ImportReference(FindType("System.Int32"));
         var funcDefinition = FindType("System.Func`1");
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);
-        genericInstanceType.GenericArguments.Add(ModuleDefinition.TypeSystem.String);
+        genericInstanceType.GenericArguments.Add(TypeSystem.StringReference);
         GenericFunc = ModuleDefinition.ImportReference(genericInstanceType);
 
-        var methodReference = new MethodReference("Invoke", funcDefinition.FindMethod("Invoke").ReturnType, genericInstanceType) { HasThis = true };
+        var returnType = funcDefinition.FindMethod("Invoke").ReturnType;
+        var methodReference = new MethodReference("Invoke", returnType, genericInstanceType)
+        {
+            HasThis = true
+        };
         FuncInvokeMethod = ModuleDefinition.ImportReference(methodReference);
 
         GetTypeFromHandle = typeType.Methods
@@ -41,7 +39,7 @@ public partial class ModuleWeaver
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
-        ObjectArray = new ArrayType(ObjectReference);
+        ObjectArray = new ArrayType(TypeSystem.ObjectReference);
 
         var exceptionType = FindType("System.Exception");
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
