@@ -142,7 +142,7 @@ public static class CecilExtensions
         }
     }
 
-    public static MethodDefinition GetStaticConstructor(this TypeDefinition type)
+    public static MethodDefinition GetStaticConstructor(this BaseModuleWeaver weaver, TypeDefinition type)
     {
         var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
         if (staticConstructor == null)
@@ -152,7 +152,7 @@ public static class CecilExtensions
                                                 | MethodAttributes.RTSpecialName
                                                 | MethodAttributes.HideBySig
                                                 | MethodAttributes.Private;
-            staticConstructor = new MethodDefinition(".cctor", attributes, type.Module.TypeSystem.Void);
+            staticConstructor = new MethodDefinition(".cctor", attributes, weaver.TypeSystem.VoidReference);
 
             staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             type.Methods.Add(staticConstructor);

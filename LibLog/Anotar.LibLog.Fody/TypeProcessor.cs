@@ -60,7 +60,7 @@ public partial class ModuleWeaver
     void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
     {
         var logName = type.GetNonCompilerGeneratedType().FullName;
-        var staticConstructor = type.GetStaticConstructor();
+        var staticConstructor = this.GetStaticConstructor(type);
         var instructions = staticConstructor.Body.Instructions;
         instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
         instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
