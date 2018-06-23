@@ -41,7 +41,7 @@ public partial class ModuleWeaver
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
-        ObjectArray = new ArrayType(ModuleDefinition.TypeSystem.Object);
+        ObjectArray = new ArrayType(ObjectReference);
 
         var exceptionType = FindType("System.Exception");
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
