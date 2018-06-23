@@ -57,14 +57,14 @@ public partial class ModuleWeaver
         }
     }
 
-    void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
+    void InjectField(TypeDefinition type, FieldDefinition field)
     {
         var logName = type.GetNonCompilerGeneratedType().FullName;
         var staticConstructor = this.GetStaticConstructor(type);
         var instructions = staticConstructor.Body.Instructions;
         instructions.Insert(0, Instruction.Create(OpCodes.Ldstr, logName));
         instructions.Insert(1, Instruction.Create(OpCodes.Call, constructLoggerMethod));
-        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
-        type.Fields.Add(fieldDefinition);
+        instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, field.GetGeneric()));
+        type.Fields.Add(field);
     }
 }
