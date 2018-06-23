@@ -11,11 +11,17 @@ public partial class ModuleWeaver
     public MethodReference FormatMethod;
     public MethodReference FuncInvokeMethod;
     public TypeReference GenericFunc;
+    public TypeReference ObjectReference;
+    public TypeReference StringReference;
+    public TypeReference IntReference;
 
     public void LoadSystemTypes()
     {
         var typeType = FindType("System.Type");
 
+        ObjectReference = ModuleDefinition.ImportReference(FindType("System.Object"));
+        StringReference = ModuleDefinition.ImportReference(FindType("System.String"));
+        IntReference = ModuleDefinition.ImportReference(FindType("System.Int32"));
         var funcDefinition = FindType("System.Func`1");
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);

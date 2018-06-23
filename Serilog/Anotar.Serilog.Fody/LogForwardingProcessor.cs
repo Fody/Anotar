@@ -87,7 +87,7 @@ public class LogForwardingProcessor
         var instructions = Method.Body.Instructions;
         if (messageVar == null)
         {
-            messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            messageVar = new VariableDefinition(ModuleWeaver.StringReference);
             Method.Body.Variables.Add(messageVar);
         }
         if (paramsVar == null)
@@ -127,7 +127,7 @@ public class LogForwardingProcessor
     {
         if (messageVar == null)
         {
-            messageVar = new VariableDefinition(ModuleWeaver.ModuleDefinition.TypeSystem.String);
+            messageVar = new VariableDefinition(ModuleWeaver.StringReference);
             Method.Body.Variables.Add(messageVar);
         }
         if (exceptionVar == null)
@@ -217,7 +217,7 @@ public class LogForwardingProcessor
             //Write empty array
             Instruction.Create(OpCodes.Ldstr, ""),
             Instruction.Create(OpCodes.Ldc_I4_0),
-            Instruction.Create(OpCodes.Newarr, ModuleWeaver.ModuleDefinition.TypeSystem.Object),
+            Instruction.Create(OpCodes.Newarr, ModuleWeaver.ObjectReference),
 
             //call the write method
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
@@ -249,7 +249,7 @@ public class LogForwardingProcessor
             //Write LineNumber
             Instruction.Create(OpCodes.Ldstr, "LineNumber"),
             Instruction.Create(OpCodes.Ldc_I4, lineNumber),
-            Instruction.Create(OpCodes.Box, ModuleWeaver.ModuleDefinition.TypeSystem.Int32),
+            Instruction.Create(OpCodes.Box, ModuleWeaver.IntReference),
             Instruction.Create(OpCodes.Ldc_I4_0),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
             );
