@@ -502,9 +502,9 @@ So some of this could be achieved using these attributes however there are a cou
 So this makes it a little difficult to use with other runtimes.
 
 
-### 2. Cant be used when passing arrays as `params`
+### 2. Can't be used when passing arrays as `params`
 
-Logging APIs all make use of `params` to pass arguments to a `string.Format`. Since you cant use `params` with CallerInfoAttributes most logging APIs choose not to use these attributes.
+Logging APIs all make use of `params` to pass arguments to a `string.Format`. Since you can't use `params` with CallerInfoAttributes most logging APIs choose not to use these attributes.
 
 You can vote for [Compatibility between `params` with CallerInfoAttributes](http://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/2762025-caller-membername-filepath-linenumber-of-net-4-5-) 
 
