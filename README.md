@@ -223,13 +223,13 @@ public class MyClass
 
     void MyMethod()
     {
-		if (logger.IsEnabled(LogEventLevel.Debug))
-		{
-			logger
-				.ForContext("MethodName", "Void MyMethod()")
-				.ForContext("LineNumber", 8)
-				.Debug("TheMessage");
-		}
+        if (logger.IsEnabled(LogEventLevel.Debug))
+        {
+            logger
+                .ForContext("MethodName", "Void MyMethod()")
+                .ForContext("LineNumber", 8)
+                .Debug("TheMessage");
+        }
     }
 }
 ```
@@ -240,7 +240,7 @@ public class MyClass
 public class MyClass
 {
     static IFullLogger logger = ((ILogManager) Locator.Current.GetService(typeof(ILogManager), null))
-								.GetLogger(typeof(ClassWithLogging));
+                                .GetLogger(typeof(ClassWithLogging));
 
     void MyMethod()
     {
