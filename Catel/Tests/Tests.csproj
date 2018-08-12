@@ -6,11 +6,11 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.5.0" />
+    <PackageReference Include="Catel.Core" Version="5.6.0" />
     <PackageReference Include="FodyHelpers" Version="3.1.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj" />
     <ProjectReference Include="..\Anotar.Catel\Anotar.Catel.csproj" />

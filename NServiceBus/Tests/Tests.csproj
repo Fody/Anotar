@@ -8,8 +8,8 @@
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="3.1.4" />
     <PackageReference Include="NServiceBus" Version="7.0.1" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <ProjectReference Include="..\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />

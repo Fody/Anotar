@@ -8,6 +8,6 @@
     <ProjectReference Include="..\Anotar.Splat\Anotar.Splat.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Splat" Version="4.0.0" />
+    <PackageReference Include="Splat" Version="4.0.2" />
   </ItemGroup>
 </Project>
