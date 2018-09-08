@@ -6,8 +6,8 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyHelpers" Version="3.1.7" />
-    <PackageReference Include="NServiceBus" Version="7.0.1" />
+    <PackageReference Include="FodyHelpers" Version="3.2.1" />
+    <PackageReference Include="NServiceBus" Version="7.1.3" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <ProjectReference Include="..\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj" />

@@ -9,6 +9,6 @@
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NServiceBus" Version="7.0.1" />
+    <PackageReference Include="NServiceBus" Version="7.1.3" />
   </ItemGroup>
 </Project>
