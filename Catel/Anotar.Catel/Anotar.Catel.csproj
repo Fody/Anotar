@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Catel.Core" Version="5.7.0" />
-    <PackageReference Include="Fody" Version="3.2.10" PrivateAssets="None" />
+    <PackageReference Include="Fody" Version="3.2.13" PrivateAssets="None" />
     <PackageReference Include="FodyPackaging" Version="3.2.13" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
