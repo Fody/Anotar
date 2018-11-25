@@ -236,6 +236,6 @@ public class LogForwardingProcessor
         {
             return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
         }
-        return $@"Method: '{Method.DisplayName()}'. ";
+        return $"Method: '{Method.DisplayName()}'. ";
     }
 }

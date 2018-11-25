@@ -5,6 +5,10 @@
     <DefineConstants>$(DefineConstants);LIBLOG_PUBLIC</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LibLog" Version="5.0.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="LibLog" Version="5.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

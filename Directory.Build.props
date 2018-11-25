@@ -9,7 +9,5 @@
     <PackageTags>Logging, ILWeaving, Fody, Cecil</PackageTags>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <NoWarn>CS0618;NU1701;NU5118</NoWarn>
-    <DebugType>embedded</DebugType>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 </Project>
