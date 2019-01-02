@@ -49,7 +49,6 @@ public partial class ModuleWeaver
                 LoggerField = fieldReference,
             };
             logForwardingProcessor.ProcessMethod();
-
         }
         if (foundUsage)
         {
