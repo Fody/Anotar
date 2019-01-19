@@ -24,7 +24,7 @@ public class SplatTests: IDisposable
 
     static IFullLogger GetLogger(Type arg)
     {
-        return new WrappingFullLogger(currentLogger, typeof(SplatTests))
+        return new WrappingFullLogger(currentLogger)
         {
             Level = LogLevel.Debug
         };

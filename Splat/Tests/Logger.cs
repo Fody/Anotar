@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Splat;
 
@@ -38,6 +39,11 @@ public class Logger : ILogger
         {
             Debugs.Add(message);
         }
+    }
+
+    public void Write(string message, Type type, LogLevel logLevel)
+    {
+        throw new NotImplementedException();
     }
 
     public LogLevel Level { get; set; }
