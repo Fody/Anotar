@@ -5,7 +5,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.8.0" />
+    <PackageReference Include="Catel.Core" Version="5.9.0" />
     <PackageReference Include="Fody" Version="3.3.5" PrivateAssets="None" />
     <PackageReference Include="FodyPackaging" Version="3.3.5" PrivateAssets="All" />
   </ItemGroup>
