@@ -8,6 +8,6 @@
     <ProjectReference Include="..\Anotar.Catel\Anotar.Catel.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.8.0" />
+    <PackageReference Include="Catel.Core" Version="5.9.0" />
   </ItemGroup>
 </Project>
