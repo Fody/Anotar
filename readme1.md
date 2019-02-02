@@ -3,11 +3,9 @@
 ![Icon](https://github.com/Fody/Anotar/raw/master/package_icon.png)
 
 
-## This is an add-in for [Fody](https://github.com/Fody/Fody) 
+## This is an add-in for [Fody](https://github.com/Fody/Home/)
 
 Simplifies logging through a static class and some IL manipulation
-
-[Introduction to Fody](https://github.com/Fody/Fody/wiki/SampleUsage)
 
 
 ## Supported Logging Libraries
@@ -22,9 +20,10 @@ Simplifies logging through a static class and some IL manipulation
 * [Serilog](http://serilog.net/)
 * [Splat](https://github.com/paulcbetts/splat)
 
+
 ## Usage
 
-See also [Fody usage](https://github.com/Fody/Fody#usage).
+See also [Fody usage](https://github.com/Fody/Home/blob/master/pages/usage.md).
 
 
 ### NuGet installation
@@ -41,7 +40,7 @@ The `Install-Package Fody` is required since NuGet always defaults to the oldest
 
 ### Add to FodyWeavers.xml
 
-Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Fody#add-fodyweaversxml)
+Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/master/pages/usage.md#add-fodyweaversxml)
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
