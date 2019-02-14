@@ -9,5 +9,6 @@
     <PackageTags>Logging, ILWeaving, Fody, Cecil</PackageTags>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
     <NoWarn>CS0618;NU1701;NU5118</NoWarn>
+    <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
   </PropertyGroup>
 </Project>
