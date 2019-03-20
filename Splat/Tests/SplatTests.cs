@@ -24,10 +24,7 @@ public class SplatTests: IDisposable
 
     static IFullLogger GetLogger(Type arg)
     {
-        return new WrappingFullLogger(currentLogger)
-        {
-            Level = LogLevel.Debug
-        };
+        return new WrappingFullLogger(currentLogger);
     }
 
     public void Dispose()
@@ -78,7 +75,7 @@ public class SplatTests: IDisposable
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<string> list, string expected)
+    void CheckException(Action<object> action, List<(Exception exception,string message,LogLevel level)> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");
@@ -93,7 +90,7 @@ public class SplatTests: IDisposable
         }
         Assert.NotNull(exception);
         Assert.Single(list);
-        var first = list.First();
+        var first = list.First().message;
         Assert.True(first.Contains(expected), first);
     }
 
@@ -102,7 +99,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
-        CheckException(action, currentLogger.Debugs, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -110,7 +107,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
-        CheckException(action, currentLogger.Debugs, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -118,7 +115,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, currentLogger.Informations, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -126,7 +123,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, currentLogger.Informations, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -134,7 +131,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
-        CheckException(action, currentLogger.Warns, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -142,7 +139,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-        CheckException(action, currentLogger.Warns, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -150,7 +147,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
-        CheckException(action, currentLogger.Errors, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -158,7 +155,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
-        CheckException(action, currentLogger.Errors, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -166,7 +163,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
-        CheckException(action, currentLogger.Fatals, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -174,7 +171,7 @@ public class SplatTests: IDisposable
     {
         var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-        CheckException(action, currentLogger.Fatals, expected);
+        CheckException(action, currentLogger.Exceptions, expected);
     }
 
     [Fact]
@@ -231,8 +228,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
-        Assert.Single(currentLogger.Debugs);
-        Assert.Contains("Method: 'Void DebugStringException()'. Line: ~", currentLogger.Debugs.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void DebugStringException()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -241,8 +238,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
-        Assert.Single(currentLogger.Debugs);
-        Assert.Contains("Method: 'Void DebugStringExceptionFunc()'. Line: ~", currentLogger.Debugs.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void DebugStringExceptionFunc()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -299,8 +296,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.Single(currentLogger.Informations);
-        Assert.Contains("Method: 'Void InfoStringException()'. Line: ~", currentLogger.Informations.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void InfoStringException()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -309,8 +306,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionFunc();
-        Assert.Single(currentLogger.Informations);
-        Assert.Contains("Method: 'Void InfoStringExceptionFunc()'. Line: ~", currentLogger.Informations.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void InfoStringExceptionFunc()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -367,8 +364,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
-        Assert.Single(currentLogger.Warns);
-        Assert.Contains("Method: 'Void WarnStringException()'. Line: ~", currentLogger.Warns.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void WarnStringException()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -377,8 +374,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionFunc();
-        Assert.Single(currentLogger.Warns);
-        Assert.Contains("Method: 'Void WarnStringExceptionFunc()'. Line: ~", currentLogger.Warns.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void WarnStringExceptionFunc()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -436,8 +433,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
-        Assert.Single(currentLogger.Errors);
-        Assert.Contains("Method: 'Void ErrorStringException()'. Line: ~", currentLogger.Errors.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void ErrorStringException()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -446,8 +443,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
-        Assert.Single(currentLogger.Errors);
-        Assert.Contains("Method: 'Void ErrorStringExceptionFunc()'. Line: ~", currentLogger.Errors.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void ErrorStringExceptionFunc()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -504,8 +501,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
-        Assert.Single(currentLogger.Fatals);
-        Assert.Contains("Method: 'Void FatalStringException()'. Line: ~", currentLogger.Fatals.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void FatalStringException()'. Line: ~", error.message);
     }
 
     [Fact]
@@ -514,8 +511,8 @@ public class SplatTests: IDisposable
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionFunc();
-        Assert.Single(currentLogger.Fatals);
-        Assert.Contains("Method: 'Void FatalStringExceptionFunc()'. Line: ~", currentLogger.Fatals.First());
+        var error = currentLogger.Exceptions.Single();
+        Assert.Contains("Method: 'Void FatalStringExceptionFunc()'. Line: ~", error.message);
     }
 
     [Fact]
