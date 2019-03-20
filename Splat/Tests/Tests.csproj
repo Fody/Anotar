@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="4.0.2" />
-    <PackageReference Include="Splat" Version="6.1.7" />
+    <PackageReference Include="Splat" Version="7.0.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <ProjectReference Include="..\Anotar.Splat.Fody\Anotar.Splat.Fody.csproj" />
