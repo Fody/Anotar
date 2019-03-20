@@ -13,6 +13,7 @@ public class Logger : ILogger
     public List<string> Debugs = new List<string>();
     public List<string> Informations = new List<string>();
     public List<string> Warns = new List<string>();
+    public List<(Exception exception,string message,LogLevel level)> Exceptions = new List<(Exception,string,LogLevel)>();
     public void Write(string message, LogLevel logLevel)
     {
         if (logLevel == LogLevel.Fatal)
@@ -41,7 +42,17 @@ public class Logger : ILogger
         }
     }
 
+    public void Write(Exception exception, string message, LogLevel logLevel)
+    {
+        Exceptions.Add((exception, message, logLevel));
+    }
+
     public void Write(string message, Type type, LogLevel logLevel)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Write(Exception exception, string message, Type type, LogLevel logLevel)
     {
         throw new NotImplementedException();
     }
@@ -50,6 +61,7 @@ public class Logger : ILogger
 
     public void Clear()
     {
+        Exceptions.Clear();
         Debugs.Clear();
         Informations.Clear();
         Warns.Clear();

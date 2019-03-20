@@ -9,7 +9,7 @@ public partial class ModuleWeaver
         var getLocator = locatorType.Methods.First(x => x.Name == "get_Current");
         GetLocatorMethod = ModuleDefinition.ImportReference(getLocator);
 
-        var dependencyResolver = FindType("Splat.IDependencyResolver");
+        var dependencyResolver = FindType("Splat.IReadonlyDependencyResolver");
         var getServiceDefinition = dependencyResolver.Methods.First(x => x.Name == "GetService");
         GetServiceMethod = ModuleDefinition.ImportReference(getServiceDefinition);
 
