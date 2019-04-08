@@ -43,7 +43,6 @@ The `Install-Package Fody` is required since NuGet always defaults to the oldest
 Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/master/pages/usage.md#add-fodyweaversxml)
 
 ```xml
-<?xml version="1.0" encoding="utf-8" ?>
 <Weavers>
   <Anotar.xxx/>
 </Weavers>
