@@ -1,7 +1,6 @@
 using System;
 using Anotar.Custom;
 
-
 public class ClassWithMultipleLoggingCalls
 {
     public void LogNoArgs()

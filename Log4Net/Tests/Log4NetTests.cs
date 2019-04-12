@@ -9,8 +9,10 @@ using log4net.Config;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
 using Xunit;
+using Xunit.Abstractions;
 
-public class Log4NetTests
+public class Log4NetTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -36,7 +38,8 @@ public class Log4NetTests
         BasicConfigurator.Configure(loggerRepository, target);
     }
 
-    public Log4NetTests()
+    public Log4NetTests(ITestOutputHelper output) : 
+        base(output)
     {
         Fatals.Clear();
         Errors.Clear();

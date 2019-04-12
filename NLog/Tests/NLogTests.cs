@@ -7,8 +7,10 @@ using Fody;
 using NLog;
 using NLog.Config;
 using Xunit;
+using Xunit.Abstractions;
 
-public class NLogTests
+public class NLogTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -35,7 +37,8 @@ public class NLogTests
         LogManager.Configuration = config;
     }
 
-    public NLogTests()
+    public NLogTests(ITestOutputHelper output) : 
+        base(output)
     {
         Fatals.Clear();
         Errors.Clear();

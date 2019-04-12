@@ -4,8 +4,10 @@ using System.Linq;
 using System.Reflection;
 using Fody;
 using Xunit;
+using Xunit.Abstractions;
 
-public class CustomTests
+public class CustomTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
 
@@ -17,7 +19,8 @@ public class CustomTests
             ignoreCodes: new[] {"0x80131869"}).Assembly;
     }
 
-    public CustomTests()
+    public CustomTests(ITestOutputHelper output) : 
+        base(output)
     {
         LoggerFactory.Clear();
     }

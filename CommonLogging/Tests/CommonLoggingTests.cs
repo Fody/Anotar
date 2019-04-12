@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Common.Logging;
 using Fody;
 using Xunit;
+using Xunit.Abstractions;
 
-public class CommonLoggingTests
+public class CommonLoggingTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     static ActionAdapter actionAdapter;
@@ -22,7 +24,8 @@ public class CommonLoggingTests
         LogManager.Adapter = actionAdapter;
     }
 
-    public CommonLoggingTests()
+    public CommonLoggingTests(ITestOutputHelper output) : 
+        base(output)
     {
         actionAdapter.Fatals.Clear();
         actionAdapter.Errors.Clear();

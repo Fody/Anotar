@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Catel.Logging;
 using Fody;
 using Xunit;
+using Xunit.Abstractions;
 
-public class CatelTests
+public class CatelTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -28,7 +30,8 @@ public class CatelTests
         });
     }
 
-    public CatelTests()
+    public CatelTests(ITestOutputHelper output) : 
+        base(output)
     {
         Errors.Clear();
         Debugs.Clear();

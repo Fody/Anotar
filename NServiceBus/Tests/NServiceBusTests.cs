@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Fody;
 using NServiceBus.Logging;
 using Xunit;
+using Xunit.Abstractions;
 
-public class NServiceBusTests
+public class NServiceBusTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -31,7 +33,8 @@ public class NServiceBusTests
         Warns));
     }
 
-    public NServiceBusTests()
+    public NServiceBusTests(ITestOutputHelper output) : 
+        base(output)
     {
         Fatals.Clear();
         Errors.Clear();

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Fody;
 using LibLogAssembly.Logging;
 using Xunit;
+using Xunit.Abstractions;
 
-public class LibLogTests
+public class LibLogTests :
+    XunitLoggingBase
 {
     static Assembly assembly;
     static LogCapture logProvider;
@@ -23,7 +25,8 @@ public class LibLogTests
         LogProvider.SetCurrentLogProvider(logProvider);
     }
 
-    public LibLogTests()
+    public LibLogTests(ITestOutputHelper output) : 
+        base(output)
     {
         logProvider.Clear();
     }

@@ -6,8 +6,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Common.Logging" Version="3.4.1" />
-    <PackageReference Include="FodyHelpers" Version="5.0.0-beta.7" />
-    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="FodyHelpers" Version="5.0.0-beta.9" />
+    <PackageReference Include="Xunit" Version="2.4.1" />
+    <PackageReference Include="XunitLogger" Version="1.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.CommonLogging.Fody\Anotar.CommonLogging.Fody.csproj" />
