@@ -5,8 +5,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="5.0.0-beta.9" PrivateAssets="None" />
-    <PackageReference Include="FodyPackaging" Version="5.0.0-beta.9" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="5.0.0-beta.11" PrivateAssets="None" />
+    <PackageReference Include="FodyPackaging" Version="5.0.0-beta.11" PrivateAssets="All" />
     <PackageReference Include="Splat" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
