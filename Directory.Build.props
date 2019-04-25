@@ -11,7 +11,7 @@
     <NoWarn>NU5118</NoWarn>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Anotar/master/package_icon.png</PackageIconUrl>
-    <PackageProjectUrl>http://github.com/Fody/Anotar</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Fody/Anotar</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 </Project>
