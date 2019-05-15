@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Splat" Version="7.2.1" />
-    <PackageReference Include="Fody" Version="5.0.5" PrivateAssets="None" />
+    <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="None" />
     <PackageReference Include="FodyPackaging" Version="5.0.6" PrivateAssets="All" />
     <PackageReference Include="Splat" Version="7.2.1" />
   </ItemGroup>
