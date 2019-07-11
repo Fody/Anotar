@@ -52,40 +52,14 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/maste
 ## Nuget
   
  * Catel package http://nuget.org/packages/Anotar.Catel.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
-
-    PM> Install-Package Anotar.Catel.Fody
- 
  * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
-
-    PM> Install-Package Anotar.CommonLogging.Fody
- 
  * Custom package http://nuget.org/packages/Anotar.Custom.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
-
-    PM> Install-Package Anotar.Custom.Fody
-
  * LibLog package http://nuget.org/packages/Anotar.LibLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.LibLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.LibLog.Fody/)
-
-    PM> Install-Package Anotar.LibLog.Fody
-
  * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Log4Net.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Log4Net.Fody/)
-
-    PM> Install-Package Anotar.Log4Net.Fody
-
  * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
-
-    PM> Install-Package Anotar.NLog.Fody
- 
  * NServiceBus package http://nuget.org/packages/Anotar.NServiceBus.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NServiceBus.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NServiceBus.Fody/)
-
-    PM> Install-Package Anotar.NServiceBus.Fody
- 
  * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Serilog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Serilog.Fody/)
-
-    PM> Install-Package Anotar.Serilog.Fody
- 
  * Splat package http://nuget.org/packages/Anotar.Splat.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Splat.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Splat.Fody/)
-
-    PM> Install-Package Anotar.Splat.Fody
 
 
 ## Explicit Logging
