@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 // ReSharper disable UnusedTypeParameter
 
-public class LoggerFactory
+public static class LoggerFactory
 {
     public static List<LogEntry> ErrorEntries = new List<LogEntry>();
     public static List<LogEntry> FatalEntries = new List<LogEntry>();

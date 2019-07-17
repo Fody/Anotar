@@ -457,9 +457,87 @@ Often when I am logging I want to know the method and line number I am logging f
 
 ## I don't want extra information
 
-If you don't want the extra information, method name and line number, then add this to `AssemblyInfo.cs`:
+You can remove method name or line number by defining the following attributes accordingly in `AssemblyInfo.cs`:
+
+```c#
+[assembly: DoNotLogMethodName]
+[assembly: DoNotLogLineNumber]
+```
+
+### What gets compiled
+
+When you define `DoNotLogMethodName` attribute
+
+#### In Catel
+
+```c#
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger(typeof(MyClass));
+
+    void MyMethod()
+    {
+        logger.WriteWithData("Line: ~12. TheMessage", null, LogEvent.Debug);
+    }
+}
+
+```
+
+When you define `DoNotLogLineNumber` attribute
+
+#### In Log4Net
+
+```c#
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'Void MyMethod()'. TheMessage");
+    }
+}
+```
+
+If you just want to log the method name but in a more minimal way instead (eg. Void MyMethod() => MyMethod) you can define the following assembly attribute in `AssemblyInfo.cs`:
+
+     [assembly: LogMinimalMethodName]
+
+### What gets compiled
+
+#### In NLog
+
+```c#
+public class MyClass
+{
+    static Logger logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.Debug("Method: 'MyMethod'. Line: ~12. TheMessage");
+    }
+}
+```
+
+If you just don't want the extra information, method name and line number, then add this to `AssemblyInfo.cs`:
 
     [assembly: LogMinimalMessage]
+
+### What gets compiled
+
+#### In NServiceBus
+
+```c#
+public class MyClass
+{
+    static ILog logger = LogManager.GetLogger("MyClass");
+
+    void MyMethod()
+    {
+        logger.DebugFormat("TheMessage");
+    }
+}
+```
 
 
 ## Why not use CallerInfoAttributes

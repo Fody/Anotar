@@ -5,15 +5,38 @@ using Fody;
 public partial class ModuleWeaver : BaseModuleWeaver
 {
     public bool LogMinimalMessage;
+    public bool LogMinimalMethodName;
+    public bool DoNotLogMethodName;
+    public bool DoNotLogLineNumber;
 
     public override void Execute()
     {
-        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMessageAttribute");
-        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMessageAttribute");
-        if (assemblyContainsAttribute || moduleContainsAttribute)
+        if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMessageAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMessageAttribute"))
         {
             LogMinimalMessage = true;
         }
+        else
+        {
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMethodNameAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.LogMinimalMethodNameAttribute"))
+            {
+                LogMinimalMethodName = true;
+            }
+
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.DoNotLogMethodNameAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.DoNotLogMethodNameAttribute"))
+            {
+                DoNotLogMethodName = true;
+            }
+
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.DoNotLogLineNumberAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.CommonLogging.DoNotLogLineNumberAttribute"))
+            {
+                DoNotLogLineNumber = true;
+            }
+        }
+
         LoadSystemTypes();
         Init();
 

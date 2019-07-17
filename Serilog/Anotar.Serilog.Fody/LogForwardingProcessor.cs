@@ -177,8 +177,21 @@ public class LogForwardingProcessor
     {
         //add logger to stack
         replacement.Append(Instruction.Create(OpCodes.Ldsfld, LoggerField));
-        AppendMethodName(replacement);
-        AppendLineNumber(instruction, replacement);
+
+        if (ModuleWeaver.LogMinimalMessage)
+        {
+            return;
+        }
+
+        if (!ModuleWeaver.DoNotLogMethodName)
+        {
+            AppendMethodName(replacement);
+        }
+
+        if (!ModuleWeaver.DoNotLogLineNumber)
+        {
+            AppendLineNumber(instruction, replacement);
+        }
     }
 
     void HandleNoParams(Instruction instruction, MethodReference methodReference)

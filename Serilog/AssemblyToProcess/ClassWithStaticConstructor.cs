@@ -5,7 +5,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Log = Serilog.Log;
 
-public class ClassWithStaticConstructor
+public static class ClassWithStaticConstructor
 {
     public static string Message;
     public class EventSink : ILogEventSink

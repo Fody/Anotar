@@ -2,18 +2,41 @@
 using System.Linq;
 using Fody;
 
-public partial class ModuleWeaver: BaseModuleWeaver
+public partial class ModuleWeaver : BaseModuleWeaver
 {
     public bool LogMinimalMessage;
+    public bool LogMinimalMethodName;
+    public bool DoNotLogMethodName;
+    public bool DoNotLogLineNumber;
 
     public override void Execute()
     {
-        var assemblyContainsAttribute = ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute");
-        var moduleContainsAttribute = ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute");
-        if (assemblyContainsAttribute || moduleContainsAttribute)
+        if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMessageAttribute"))
         {
             LogMinimalMessage = true;
         }
+        else
+        {
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMethodNameAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.LogMinimalMethodNameAttribute"))
+            {
+                LogMinimalMethodName = true;
+            }
+
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.DoNotLogMethodNameAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.DoNotLogMethodNameAttribute"))
+            {
+                DoNotLogMethodName = true;
+            }
+
+            if (ModuleDefinition.Assembly.CustomAttributes.ContainsAttribute("Anotar.Log4Net.DoNotLogLineNumberAttribute")
+            || ModuleDefinition.CustomAttributes.ContainsAttribute("Anotar.Log4Net.DoNotLogLineNumberAttribute"))
+            {
+                DoNotLogLineNumber = true;
+            }
+        }
+
         LoadSystemTypes();
         Init();
         foreach (var type in ModuleDefinition

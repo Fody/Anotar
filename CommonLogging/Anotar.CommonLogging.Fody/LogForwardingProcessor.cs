@@ -3,6 +3,7 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using Mono.Cecil.Cil;
+using System.Text;
 
 public class LogForwardingProcessor
 {
@@ -255,11 +256,32 @@ public class LogForwardingProcessor
             return string.Empty;
         }
 
-        if (instruction.TryGetPreviousLineNumber(Method, out var lineNumber))
+        var sb = new StringBuilder();
+
+        string methodName = null;
+
+        if (!ModuleWeaver.DoNotLogMethodName)
         {
-            return $"Method: '{Method.DisplayName()}'. Line: ~{lineNumber}. ";
+            if (ModuleWeaver.LogMinimalMethodName)
+            {
+                methodName = Method.MinimalDisplayName();
+            }
+            else
+            {
+                methodName = Method.DisplayName();
+            }
         }
 
-        return $"Method: '{Method.DisplayName()}'. ";
+        if (methodName != null)
+        {
+            sb.Append("Method: '").Append(methodName).Append("'. ");
+        }
+
+        if (!ModuleWeaver.DoNotLogLineNumber && instruction.TryGetPreviousLineNumber(Method, out var lineNumber))
+        {
+            sb.Append("Line: ~").Append(lineNumber).Append(". ");
+        }
+
+        return sb.ToString();
     }
 }

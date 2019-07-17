@@ -33,6 +33,12 @@ public static class CecilExtensions
         return $"{method.ReturnType.DisplayName()} {method.Name}({paramNames})";
     }
 
+    public static string MinimalDisplayName(this MethodDefinition method)
+    {
+        method = GetActualMethod(method);
+        return $"{method.Name}";
+    }
+
     public static string DisplayName(this TypeReference typeReference)
     {
         if (typeReference is GenericInstanceType genericInstanceType && genericInstanceType.HasGenericArguments)
