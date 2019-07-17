@@ -246,6 +246,7 @@ public class LogForwardingProcessor
             return string.Empty;
         }
 
+        var sb = new StringBuilder();
 
         string methodName = null;
 
