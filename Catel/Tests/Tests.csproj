@@ -5,7 +5,7 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.11.0" />
+    <PackageReference Include="Catel.Core" Version="5.11.1" />
     <PackageReference Include="FodyHelpers" Version="5.1.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="Xunit" Version="2.4.1" />
