@@ -6,11 +6,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Splat" Version="8.2.4" />
+    <PackageReference Include="FodyPackaging" Version="5.2.0" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="5.2.0" PrivateAssets="None" />
-    <PackageReference Include="FodyPackaging" Version="5.1.1" PrivateAssets="All" />
     <PackageReference Include="Splat" Version="8.2.4" />
-  </ItemGroup>
-  <ItemGroup>
+
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
   </ItemGroup>
 </Project>
