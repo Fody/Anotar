@@ -22,6 +22,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FodyHelpers" Version="5.2.1-beta.1" />
+    <PackageReference Include="FodyHelpers" Version="6.0.0-beta.1" />
   </ItemGroup>
 </Project>
