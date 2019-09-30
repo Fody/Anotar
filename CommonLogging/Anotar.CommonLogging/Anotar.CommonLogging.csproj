@@ -8,8 +8,7 @@
     <PackageReference Include="Fody" Version="6.0.0" PrivateAssets="none" />
     <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="FodyPackaging" Version="6.0.0" PrivateAssets="All" />
-  </ItemGroup>
-  <ItemGroup>
+
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
   </ItemGroup>
 </Project>
