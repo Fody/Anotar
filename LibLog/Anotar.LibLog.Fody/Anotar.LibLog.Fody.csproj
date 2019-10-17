@@ -21,6 +21,6 @@
       <Link>SystemTypesResolver.cs</Link>
     </Compile>
 
-    <PackageReference Include="FodyHelpers" Version="6.0.0" />
+    <PackageReference Include="FodyHelpers" Version="6.0.1" />
   </ItemGroup>
 </Project>
