@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyPackaging" Version="6.0.4" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="6.0.4" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.0.5" PrivateAssets="none" />
     <PackageReference Include="Serilog" Version="2.9.0" />
   </ItemGroup>
 </Project>
