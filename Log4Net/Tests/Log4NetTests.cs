@@ -8,11 +8,12 @@ using log4net;
 using log4net.Config;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class Log4NetTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Fody;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class CustomTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
 
@@ -19,7 +20,7 @@ public class CustomTests :
             ignoreCodes: new[] {"0x80131869"}).Assembly;
     }
 
-    public CustomTests(ITestOutputHelper output) : 
+    public CustomTests(ITestOutputHelper output) :
         base(output)
     {
         LoggerFactory.Clear();

@@ -5,11 +5,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Fody;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class CommonLoggingTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
     static ActionAdapter actionAdapter;
@@ -24,7 +25,7 @@ public class CommonLoggingTests :
         LogManager.Adapter = actionAdapter;
     }
 
-    public CommonLoggingTests(ITestOutputHelper output) : 
+    public CommonLoggingTests(ITestOutputHelper output) :
         base(output)
     {
         actionAdapter.Fatals.Clear();

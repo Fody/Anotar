@@ -5,11 +5,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Fody;
 using LibLogAssembly.Logging;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class LibLogTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
     static LogCapture logProvider;
@@ -25,7 +26,7 @@ public class LibLogTests :
         LogProvider.SetCurrentLogProvider(logProvider);
     }
 
-    public LibLogTests(ITestOutputHelper output) : 
+    public LibLogTests(ITestOutputHelper output) :
         base(output)
     {
         logProvider.Clear();

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Fody;
 using NLog;
 using NLog.Config;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class NLogTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();

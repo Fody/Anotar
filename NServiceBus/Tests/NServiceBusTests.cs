@@ -5,11 +5,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Fody;
 using NServiceBus.Logging;
+using VerifyXunit;
 using Xunit;
 using Xunit.Abstractions;
 
 public class NServiceBusTests :
-    XunitLoggingBase
+    VerifyBase
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
