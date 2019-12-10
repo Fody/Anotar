@@ -13,7 +13,6 @@ Simplifies logging through a static class and some IL manipulation
 * [Catel](http://www.catelproject.com/)
 * Custom (for frameworks/toolkits with custom logging)
 * [CommonLogging](http://netcommon.sourceforge.net/)
-* [LibLog](https://github.com/damianh/LibLog) 
 * [Log4Net](http://logging.apache.org/log4net/)
 * [NLog](http://nlog-project.org/) 
 * [NServiceBus](http://particular.net/nservicebus) 
@@ -54,8 +53,6 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/maste
  * Catel package http://nuget.org/packages/Anotar.Catel.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
  * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
  * Custom package http://nuget.org/packages/Anotar.Custom.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
- * LibLog package http://nuget.org/packages/Anotar.LibLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.LibLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.LibLog.Fody/)
- * Log4Net package http://nuget.org/packages/Anotar.Log4Net.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Log4Net.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Log4Net.Fody/)
  * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
  * NServiceBus package http://nuget.org/packages/Anotar.NServiceBus.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NServiceBus.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NServiceBus.Fody/)
  * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Serilog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Serilog.Fody/)
@@ -121,21 +118,6 @@ public class MyClass
     void MyMethod()
     {
         AnotarLogger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-    }
-}
-```
-
-
-#### In LibLog
-
-```c#
-public class MyClass
-{
-    static ILog logger = LogProvider.GetLogger("MyClass");
-
-    void MyMethod()
-    {
-        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
 }
 ```

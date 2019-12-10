@@ -9,10 +9,8 @@ public class Issues
     {
         var text = "";
         LogTo.Debug("test");
-        using (var reader = new StreamReader(new MemoryStream()))
-        {
-            LogTo.Debug("test");
-            text = reader.ReadToEnd();
-        }
+        using var reader = new StreamReader(new MemoryStream());
+        LogTo.Debug("test");
+        text = reader.ReadToEnd();
     }
 }
