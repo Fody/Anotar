@@ -1,4 +1,4 @@
-[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat&max-age=86400)](https://gitter.im/Fody/Fody)
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg)](https://gitter.im/Fody/Fody)
 
 ![Icon](https://github.com/Fody/Anotar/raw/master/package_icon.png)
 
@@ -50,13 +50,13 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/maste
 
 ## Nuget
   
- * Catel package http://nuget.org/packages/Anotar.Catel.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
- * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
- * Custom package http://nuget.org/packages/Anotar.Custom.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
- * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
- * NServiceBus package http://nuget.org/packages/Anotar.NServiceBus.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NServiceBus.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.NServiceBus.Fody/)
- * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Serilog.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Serilog.Fody/)
- * Splat package http://nuget.org/packages/Anotar.Splat.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Splat.Fody.svg?style=flat&max-age=86400)](https://www.nuget.org/packages/Anotar.Splat.Fody/)
+ * Catel package http://nuget.org/packages/Anotar.Catel.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
+ * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
+ * Custom package http://nuget.org/packages/Anotar.Custom.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
+ * NLog package http://nuget.org/packages/Anotar.NLog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
+ * NServiceBus package http://nuget.org/packages/Anotar.NServiceBus.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NServiceBus.Fody.svg)](https://www.nuget.org/packages/Anotar.NServiceBus.Fody/)
+ * Serilog package http://nuget.org/packages/Anotar.Serilog.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Serilog.Fody.svg)](https://www.nuget.org/packages/Anotar.Serilog.Fody/)
+ * Splat package http://nuget.org/packages/Anotar.Splat.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Splat.Fody.svg)](https://www.nuget.org/packages/Anotar.Splat.Fody/)
 
 
 ## Explicit Logging
