@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyPackaging" Version="6.0.6" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="6.0.6" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.0.7" PrivateAssets="none" />
     <PackageReference Include="NServiceBus" Version="7.2.0" />
 
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
