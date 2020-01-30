@@ -1,11 +1,13 @@
+# <img src="/package_icon.png" height="30px"> Anotar.Fody
+
 [![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg)](https://gitter.im/Fody/Fody)
 
-![Icon](https://github.com/Fody/Anotar/raw/master/package_icon.png)
-
-
-## This is an add-in for [Fody](https://github.com/Fody/Home/)
-
 Simplifies logging through a static class and some IL manipulation
+
+
+### This is an add-in for [Fody](https://github.com/Fody/Home/)
+
+**It is expected that all developers using Fody either [become a Patron on OpenCollective](https://opencollective.com/fody/), or have a [Tidelift Subscription](https://tidelift.com/subscription/pkg/nuget-fody?utm_source=nuget-fody&utm_medium=referral&utm_campaign=enterprise).**
 
 
 ## Supported Logging Libraries
@@ -14,8 +16,8 @@ Simplifies logging through a static class and some IL manipulation
 * Custom (for frameworks/toolkits with custom logging)
 * [CommonLogging](http://netcommon.sourceforge.net/)
 * [Log4Net](http://logging.apache.org/log4net/)
-* [NLog](http://nlog-project.org/) 
-* [NServiceBus](http://particular.net/nservicebus) 
+* [NLog](http://nlog-project.org/)
+* [NServiceBus](http://particular.net/nservicebus)
 * [Serilog](http://serilog.net/)
 * [Splat](https://github.com/paulcbetts/splat)
 
@@ -48,8 +50,8 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/maste
 ```
 
 
-## Nuget
-  
+## NuGets
+
  * Catel package http://nuget.org/packages/Anotar.Catel.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
  * CommonLogging package http://nuget.org/packages/Anotar.CommonLogging.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
  * Custom package http://nuget.org/packages/Anotar.Custom.Fody [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
