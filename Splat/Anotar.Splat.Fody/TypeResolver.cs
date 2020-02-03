@@ -5,24 +5,24 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var locatorType = FindType("Splat.Locator");
+        var locatorType = FindTypeDefinition("Splat.Locator");
         var getLocator = locatorType.Methods.First(x => x.Name == "get_Current");
         GetLocatorMethod = ModuleDefinition.ImportReference(getLocator);
 
-        var dependencyResolver = FindType("Splat.IReadonlyDependencyResolver");
+        var dependencyResolver = FindTypeDefinition("Splat.IReadonlyDependencyResolver");
         var getServiceDefinition = dependencyResolver.Methods.First(x => x.Name == "GetService");
         GetServiceMethod = ModuleDefinition.ImportReference(getServiceDefinition);
 
-        var logManagerDefinition = FindType("Splat.ILogManager");
+        var logManagerDefinition = FindTypeDefinition("Splat.ILogManager");
         LogManagerType = ModuleDefinition.ImportReference(logManagerDefinition);
         var getLoggerDefinition = logManagerDefinition.Methods.First(x => x.Name == "GetLogger");
         GetLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
 
-        var fullLoggerDefinition = FindType("Splat.IFullLogger");
+        var fullLoggerDefinition = FindTypeDefinition("Splat.IFullLogger");
         FullLoggerType = ModuleDefinition.ImportReference(fullLoggerDefinition);
 
-        var loggerDefinition = FindType("Splat.ILogger");
+        var loggerDefinition = FindTypeDefinition("Splat.ILogger");
 
         GetLevelMethod = ModuleDefinition.ImportReference(loggerDefinition.FindMethod("get_Level"));
 

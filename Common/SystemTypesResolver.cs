@@ -14,9 +14,9 @@ public partial class ModuleWeaver
 
     public void LoadSystemTypes()
     {
-        var typeType = FindType("System.Type");
+        var typeType = FindTypeDefinition("System.Type");
 
-        var funcDefinition = FindType("System.Func`1");
+        var funcDefinition = FindTypeDefinition("System.Func`1");
 
         var genericInstanceType = new GenericInstanceType(funcDefinition);
         genericInstanceType.GenericArguments.Add(TypeSystem.StringReference);
@@ -35,13 +35,13 @@ public partial class ModuleWeaver
                         x.Parameters[0].ParameterType.Name == "RuntimeTypeHandle");
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
-        var stringType = FindType("System.String");
+        var stringType = FindTypeDefinition("System.String");
 
         ConcatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Concat", "String", "String"));
         FormatMethod = ModuleDefinition.ImportReference(stringType.FindMethod("Format", "String", "Object[]"));
         ObjectArray = new ArrayType(TypeSystem.ObjectReference);
 
-        var exceptionType = FindType("System.Exception");
+        var exceptionType = FindTypeDefinition("System.Exception");
         ExceptionType = ModuleDefinition.ImportReference(exceptionType);
     }
 
@@ -58,14 +58,14 @@ public partial class ModuleWeaver
                 var typeDef = assemblyModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
                 if (typeDef != null)
                 {
-                    LogInfo?.Invoke($"[SystemTypeResolver] Loaded type {typeDef.FullName} from {typeDef.Module.FileName}");
+                    WriteInfo($"[SystemTypeResolver] Loaded type {typeDef.FullName} from {typeDef.Module.FileName}");
                     return typeDef;
                 }
                 var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(x => x.FullName == typeFullName);
                 var exportedTypeDef = exportedType?.Resolve();
                 if (exportedTypeDef != null)
                 {
-                    LogInfo?.Invoke($"[SystemTypeResolver] Loaded type (type-forwarded) {exportedTypeDef.FullName} from {exportedTypeDef.Module.FileName}");
+                    WriteInfo($"[SystemTypeResolver] Loaded type (type-forwarded) {exportedTypeDef.FullName} from {exportedTypeDef.Module.FileName}");
                     return exportedTypeDef;
                 }
             }

@@ -15,7 +15,7 @@ public partial class ModuleWeaver
 
         if (loggerFactoryAttribute == null)
         {
-            LogInfo("Could not find a 'LoggerFactoryAttribute' on the current assembly. Going to search current assembly for 'LoggerFactory'.");
+            WriteInfo("Could not find a 'LoggerFactoryAttribute' on the current assembly. Going to search current assembly for 'LoggerFactory'.");
 
             var typeDefinition = ModuleDefinition
                 .GetTypes()

@@ -5,12 +5,12 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = FindType("Common.Logging.LogManager");
+        var logManagerType = FindTypeDefinition("Common.Logging.LogManager");
 
         var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
-        var loggerTypeDefinition = FindType("Common.Logging.ILog");
+        var loggerTypeDefinition = FindTypeDefinition("Common.Logging.ILog");
 
         DebugFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));

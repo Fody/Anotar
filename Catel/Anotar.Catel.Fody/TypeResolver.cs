@@ -5,13 +5,13 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = FindType("Catel.Logging.LogManager");
+        var logManagerType = FindTypeDefinition("Catel.Logging.LogManager");
         var getLoggerMethod = logManagerType.FindMethod("GetLogger", "Type");
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerMethod);
-        var loggerTypeDefinition = FindType("Catel.Logging.ILog");
-        var logExtensionsDefinition = FindType("Catel.Logging.LogExtensions");
+        var loggerTypeDefinition = FindTypeDefinition("Catel.Logging.ILog");
+        var logExtensionsDefinition = FindTypeDefinition("Catel.Logging.LogExtensions");
         LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);
-        var logEventDefinition = FindType("Catel.Logging.LogEvent");
+        var logEventDefinition = FindTypeDefinition("Catel.Logging.LogEvent");
         DebugLogEvent = (int) logEventDefinition.Fields.First(x => x.Name == "Debug").Constant;
         ErrorLogEvent = (int) logEventDefinition.Fields.First(x => x.Name == "Error").Constant;
         InfoLogEvent = (int) logEventDefinition.Fields.First(x => x.Name == "Info").Constant;

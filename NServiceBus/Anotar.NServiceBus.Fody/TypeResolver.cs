@@ -4,11 +4,11 @@ public partial class ModuleWeaver
 {
     public void Init()
     {
-        var logManagerType = FindType("NServiceBus.Logging.LogManager");
+        var logManagerType = FindTypeDefinition("NServiceBus.Logging.LogManager");
         var getLoggerDefinition = logManagerType.FindMethod("GetLogger", "String");
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
-        var loggerTypeDefinition = FindType("NServiceBus.Logging.ILog");
+        var loggerTypeDefinition = FindTypeDefinition("NServiceBus.Logging.ILog");
 
         DebugFormatMethod =
             ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("DebugFormat", "String", "Object[]"));
