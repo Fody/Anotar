@@ -76,9 +76,10 @@ public partial class ModuleWeaver
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
 
+        var fieldReference = fieldDefinition.GetGeneric();
         foreach (var loggerSet in loggerSets)
         {
-            ilProcessor.InsertAfter(loggerSet, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+            ilProcessor.InsertAfter(loggerSet, Instruction.Create(OpCodes.Stsfld, fieldReference));
             ilProcessor.InsertAfter(loggerSet, Instruction.Create(OpCodes.Call, genericInstanceMethod));
         }
 
@@ -87,7 +88,7 @@ public partial class ModuleWeaver
             var newReturn = Instruction.Create(OpCodes.Ret);
             ilProcessor.InsertAfter(returnInstruction, newReturn);
             ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Call, genericInstanceMethod));
-            ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+            ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldReference));
             returnInstruction.OpCode = OpCodes.Nop;
         }
 
