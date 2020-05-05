@@ -128,9 +128,10 @@ public class SerilogTests:IDisposable
     public void WithStaticConstructor()
     {
         var type = assembly.GetType("ClassWithStaticConstructor");
-        type.GetMethod("StaticMethod", BindingFlags.Static | BindingFlags.Public).Invoke(null, null);
+        var flags = BindingFlags.Static | BindingFlags.Public;
+        type.GetMethod("StaticMethod", flags).Invoke(null, null);
         // ReSharper disable once PossibleNullReferenceException
-        var message = (string) type.GetField("Message", BindingFlags.Static | BindingFlags.Public).GetValue(null);
+        var message = (string) type.GetField("Message", flags).GetValue(null);
         Assert.Equal("Foo", message);
     }
 
