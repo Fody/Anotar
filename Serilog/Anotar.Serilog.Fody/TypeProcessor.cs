@@ -104,16 +104,13 @@ public partial class ModuleWeaver
                     return false;
                 }
 
-                if (_.Operand is MethodReference reference)
+                if (!(_.Operand is MethodReference reference))
                 {
-                    if (reference.Name == "set_Logger" &&
-                        reference.DeclaringType?.FullName == "Serilog.Log")
-                    {
-                        return true;
-                    }
+                    return false;
                 }
 
-                return false;
+                return reference.Name == "set_Logger" &&
+                       reference.DeclaringType?.FullName == "Serilog.Log";
             })
             .ToList();
     }
