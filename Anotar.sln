@@ -69,20 +69,44 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyWithLogger", "Custom\AssemblyWithLogger\AssemblyWithLogger.csproj", "{5493D52A-B951-4A17-83F6-9063FBB1FD5C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NServiceBus", "NServiceBus\Anotar.NServiceBus\Anotar.NServiceBus.csproj", "{56842706-496D-4C2C-9EE5-3935872323A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF465742-96B9-40EF-A5E6-34B52DC92499} = {FF465742-96B9-40EF-A5E6-34B52DC92499}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Serilog", "Serilog\Anotar.Serilog\Anotar.Serilog.csproj", "{51CBF808-6F09-46BF-9265-217F64E1DB68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D951B73D-5762-4472-A3F5-AD7C587B91A7} = {D951B73D-5762-4472-A3F5-AD7C587B91A7}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Custom", "Custom\Anotar.Custom\Anotar.Custom.csproj", "{92F0878B-811B-457C-9B93-2A7EC98E3B13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9A88E56-D58F-45B2-AF8B-5897182F0104} = {C9A88E56-D58F-45B2-AF8B-5897182F0104}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Log4Net", "Log4Net\Anotar.Log4Net\Anotar.Log4Net.csproj", "{9C9F7F26-EDCF-4D95-9F6A-AF8504528D95}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C3578A7B-09A6-4444-9383-0DEAFA4958BD} = {C3578A7B-09A6-4444-9383-0DEAFA4958BD}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.NLog", "NLog\Anotar.NLog\Anotar.NLog.csproj", "{C1B99F92-63D3-4F01-B8FE-6DF359B407F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29AD34AB-9416-4E53-95CA-9B00072D8802} = {29AD34AB-9416-4E53-95CA-9B00072D8802}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Catel", "Catel\Anotar.Catel\Anotar.Catel.csproj", "{C2EE6FFE-D6C5-4326-9A7B-3CF3905E930B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC} = {4A7FD49A-7190-4BCB-B2B7-F765FE2BC4EC}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.CommonLogging", "CommonLogging\Anotar.CommonLogging\Anotar.CommonLogging.csproj", "{26B366D7-FB5A-4D75-8FE9-29B4333D96A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06818777-13F8-45BB-9D97-573EEC035291} = {06818777-13F8-45BB-9D97-573EEC035291}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anotar.Splat\Anotar.Splat.csproj", "{EFE9370B-89A6-45E9-B323-3C26785C1D9C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B72C38E4-2DC7-4E7F-B177-36EF47D49572} = {B72C38E4-2DC7-4E7F-B177-36EF47D49572}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BDDD56A-E73E-498C-AE70-B4BF6D5D9E99}"
 	ProjectSection(SolutionItems) = preProject
@@ -267,7 +291,7 @@ Global
 		{EFE9370B-89A6-45E9-B323-3C26785C1D9C} = {CC172335-BE39-4AE0-8829-B125531C62C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 	EndGlobalSection
 EndGlobal
