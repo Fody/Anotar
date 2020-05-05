@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
+using Mono.Collections.Generic;
 
 public partial class ModuleWeaver
 {
@@ -22,6 +24,7 @@ public partial class ModuleWeaver
         {
             foundAction = () => { };
         }
+
         var fieldReference = fieldDefinition.GetGeneric();
         var foundUsage = false;
         foreach (var method in type.Methods)
@@ -50,6 +53,7 @@ public partial class ModuleWeaver
             };
             logForwardingProcessor.ProcessMethod();
         }
+
         if (foundUsage)
         {
             foundAction();
@@ -66,9 +70,19 @@ public partial class ModuleWeaver
         type.Fields.Add(fieldDefinition);
 
         var returns = instructions.Where(_ => _.OpCode == OpCodes.Ret)
-                                  .ToList();
+            .ToList();
+
+
+        var loggerSets = GetLoggerSets(instructions);
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
+
+        foreach (var loggerSet in loggerSets)
+        {
+            ilProcessor.InsertAfter(loggerSet, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
+            ilProcessor.InsertAfter(loggerSet, Instruction.Create(OpCodes.Call, genericInstanceMethod));
+        }
+
         foreach (var returnInstruction in returns)
         {
             var newReturn = Instruction.Create(OpCodes.Ret);
@@ -77,6 +91,30 @@ public partial class ModuleWeaver
             ilProcessor.InsertBefore(newReturn, Instruction.Create(OpCodes.Stsfld, fieldDefinition.GetGeneric()));
             returnInstruction.OpCode = OpCodes.Nop;
         }
+
         staticConstructor.Body.OptimizeMacros();
+    }
+
+    static IEnumerable<Instruction> GetLoggerSets(Collection<Instruction> instructions)
+    {
+        return instructions.Where(
+            _ =>
+            {
+                if (_.OpCode != OpCodes.Call)
+                {
+                    return false;
+                }
+
+                if (_.Operand is MethodReference reference)
+                {
+                    if (reference.Name == "set_Logger" &&
+                        reference.DeclaringType?.FullName == "Serilog.Log")
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
     }
 }
