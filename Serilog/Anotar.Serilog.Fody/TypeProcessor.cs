@@ -72,7 +72,6 @@ public partial class ModuleWeaver
         var returns = instructions.Where(_ => _.OpCode == OpCodes.Ret)
             .ToList();
 
-
         var loggerSets = GetLoggerSets(instructions);
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
@@ -95,7 +94,7 @@ public partial class ModuleWeaver
         staticConstructor.Body.OptimizeMacros();
     }
 
-    static IEnumerable<Instruction> GetLoggerSets(Collection<Instruction> instructions)
+    static IReadOnlyList<Instruction> GetLoggerSets(Collection<Instruction> instructions)
     {
         return instructions.Where(
             _ =>
@@ -115,6 +114,7 @@ public partial class ModuleWeaver
                 }
 
                 return false;
-            });
+            })
+            .ToList();
     }
 }
