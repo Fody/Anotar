@@ -113,6 +113,7 @@ public class LogForwardingProcessor
 
             //Append if
             Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue),
             Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
             Instruction.Create(OpCodes.Brfalse, exitNop)
@@ -161,6 +162,7 @@ public class LogForwardingProcessor
 
             //Append if
             Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue),
             Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
             Instruction.Create(OpCodes.Brfalse, exitNop)
@@ -186,6 +188,7 @@ public class LogForwardingProcessor
     {
         //add logger to stack
         replacement.Append(Instruction.Create(OpCodes.Ldsfld, LoggerField));
+        replacement.Append(Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue));
         AppendMethodName(replacement);
         AppendLineNumber(instruction, replacement);
     }
@@ -199,6 +202,7 @@ public class LogForwardingProcessor
                 new[]
                 {
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue),
                     Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
                 });
@@ -216,6 +220,7 @@ public class LogForwardingProcessor
         {
             //Append if
             Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue),
             Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
             Instruction.Create(OpCodes.Brfalse, exitNop)
