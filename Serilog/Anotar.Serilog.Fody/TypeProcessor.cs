@@ -87,13 +87,6 @@ public partial class ModuleWeaver
         instructions.Insert(3, Instruction.Create(OpCodes.Ldc_I4, PublicationOnly));
         instructions.Insert(4, Instruction.Create(OpCodes.Newobj, LazyCtor));
         instructions.Insert(5, Instruction.Create(OpCodes.Stsfld, lazyFieldDefinition));
-        //IL_0000: ldnull
-        //IL_0001: ldftn class [Serilog]Serilog.ILogger [Serilog]Serilog.Log::ForContext<class ClassWithLogging>()
-        //IL_0007: newobj instance void class [System.Runtime]System.Func`1<class [Serilog]Serilog.ILogger>::.ctor(object, native int)
-        //IL_000c: ldc.i4.2
-        //IL_000d: newobj instance void class [System.Runtime]System.Lazy`1<class [Serilog]Serilog.ILogger>::.ctor(class [System.Runtime]System.Func`1<!0>, valuetype [System.Runtime]System.Threading.LazyThreadSafetyMode)
-        //IL_0012: stsfld class [System.Runtime]System.Lazy`1<class [Serilog]Serilog.ILogger> Template::anotarLogger
-        //IL_0017: ret
 
         var fieldReference = fieldDefinition.GetGeneric();
         foreach (var loggerSet in loggerSets)
