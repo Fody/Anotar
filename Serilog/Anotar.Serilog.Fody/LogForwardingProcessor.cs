@@ -28,6 +28,7 @@ public class LogForwardingProcessor
             {
                 ProcessInstruction(instruction);
             }
+
             if (foundUsageInMethod)
             {
                 Method.Body.OptimizeMacros();
@@ -45,16 +46,19 @@ public class LogForwardingProcessor
         {
             return;
         }
+
         var declaringTypeName = methodReference.DeclaringType.FullName;
         if (declaringTypeName != "Anotar.Serilog.LogTo")
         {
             return;
         }
+
         if (!foundUsageInMethod)
         {
             Method.Body.InitLocals = true;
             Method.Body.SimplifyMacros();
         }
+
         foundUsageInMethod = true;
         FoundUsageInType();
 
@@ -68,11 +72,13 @@ public class LogForwardingProcessor
             HandleNoParams(instruction, methodReference);
             return;
         }
+
         if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
             HandleExceptionAndStringAndArray(instruction, methodReference);
             return;
         }
+
         if (methodReference.IsMatch("String", "Object[]"))
         {
             HandleStringAndArray(instruction, methodReference);
@@ -90,6 +96,7 @@ public class LogForwardingProcessor
             messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
             Method.Body.Variables.Add(messageVar);
         }
+
         if (paramsVar == null)
         {
             paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
@@ -119,7 +126,7 @@ public class LogForwardingProcessor
             //call the write method
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
             exitNop
-            );
+        );
         instructions.Replace(instruction, replacement);
     }
 
@@ -130,11 +137,13 @@ public class LogForwardingProcessor
             messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
             Method.Body.Variables.Add(messageVar);
         }
+
         if (exceptionVar == null)
         {
             exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
             Method.Body.Variables.Add(exceptionVar);
         }
+
         if (paramsVar == null)
         {
             paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
@@ -144,18 +153,18 @@ public class LogForwardingProcessor
         var exitNop = Instruction.Create(OpCodes.Nop);
         var instructions = Method.Body.Instructions;
         var replacement = new List<Instruction>
-                          {
-                              //store variables
-                              Instruction.Create(OpCodes.Stloc, paramsVar),
-                              Instruction.Create(OpCodes.Stloc, messageVar),
-                              Instruction.Create(OpCodes.Stloc, exceptionVar),
+        {
+            //store variables
+            Instruction.Create(OpCodes.Stloc, paramsVar),
+            Instruction.Create(OpCodes.Stloc, messageVar),
+            Instruction.Create(OpCodes.Stloc, exceptionVar),
 
-                              //Append if
-                              Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                              Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
-                              Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
-                              Instruction.Create(OpCodes.Brfalse, exitNop)
-                          };
+            //Append if
+            Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
+            Instruction.Create(OpCodes.Brfalse, exitNop)
+        };
 
         AppendExtraContext(instruction, replacement);
         replacement.Append(
@@ -169,7 +178,7 @@ public class LogForwardingProcessor
 
             //add exit back in
             exitNop
-            );
+        );
         instructions.Replace(instruction, replacement);
     }
 
@@ -188,11 +197,11 @@ public class LogForwardingProcessor
         {
             instructions.Replace(instruction,
                 new[]
-                                              {
-                                                  Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                                                  Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),
-                                                  Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
-                                              });
+                {
+                    Instruction.Create(OpCodes.Ldsfld, LoggerField),
+                    Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
+                });
             return;
         }
 
@@ -204,13 +213,13 @@ public class LogForwardingProcessor
 
         var exitNop = Instruction.Create(OpCodes.Nop);
         var replacement = new List<Instruction>
-                          {
-                              //Append if
-                              Instruction.Create(OpCodes.Ldsfld, LoggerField),
-                              Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
-                              Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
-                              Instruction.Create(OpCodes.Brfalse, exitNop)
-                          };
+        {
+            //Append if
+            Instruction.Create(OpCodes.Ldsfld, LoggerField),
+            Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForMethodName(methodReference)),
+            Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod),
+            Instruction.Create(OpCodes.Brfalse, exitNop)
+        };
 
         AppendExtraContext(instruction, replacement);
         replacement.Append(
@@ -223,7 +232,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.GetNormalOperand(methodReference)),
 
             exitNop
-            );
+        );
         instructions.Replace(instruction, replacement);
     }
 
@@ -236,7 +245,7 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Ldstr, Method.DisplayName()),
             Instruction.Create(OpCodes.Ldc_I4_0),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
-            );
+        );
     }
 
     void AppendLineNumber(Instruction instruction, List<Instruction> replacement)
@@ -245,6 +254,7 @@ public class LogForwardingProcessor
         {
             return;
         }
+
         replacement.Append(
             //Write LineNumber
             Instruction.Create(OpCodes.Ldstr, "LineNumber"),
@@ -252,6 +262,6 @@ public class LogForwardingProcessor
             Instruction.Create(OpCodes.Box, ModuleWeaver.TypeSystem.Int32Reference),
             Instruction.Create(OpCodes.Ldc_I4_0),
             Instruction.Create(OpCodes.Callvirt, ModuleWeaver.ForPropertyContextDefinition)
-            );
+        );
     }
 }
