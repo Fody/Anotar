@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Threading;
 using Mono.Cecil;
+using Mono.Cecil.Rocks;
 
 public partial class ModuleWeaver
 {
@@ -14,11 +16,37 @@ public partial class ModuleWeaver
         WarningLevel = (int) logLevel.Fields.First(x => x.Name == "Warning").Constant;
         FatalLevel = (int) logLevel.Fields.First(x => x.Name == "Fatal").Constant;
 
-        forContextDefinition =
-            ModuleDefinition.ImportReference(
-                logManagerType.Methods.First(x => x.Name == "ForContext" && x.HasGenericParameters && x.IsMatch()));
+        PublicationOnly = (int) LazyThreadSafetyMode.PublicationOnly;
 
         var loggerDefinition = FindTypeDefinition("Serilog.ILogger");
+        loggerType = ModuleDefinition.ImportReference(loggerDefinition);
+        var func = FindTypeDefinition("System.Func`1");
+        var funcType = ModuleDefinition.ImportReference(func);
+
+        var genericFunc = funcType.MakeGenericInstanceType(loggerType);
+
+        FuncCtor = ModuleDefinition.ImportReference(genericFunc.Resolve()
+                .Methods.First(m => m.IsConstructor && m.Parameters.Count == 2))
+            .MakeHostInstanceGeneric(loggerType);
+
+        var lazy = ModuleDefinition.ImportReference(FindTypeDefinition("System.Lazy`1"));
+        LazyDefinition = lazy.MakeGenericInstanceType(loggerType);
+        var resolvedLazy = LazyDefinition.Resolve();
+        LazyCtor =
+            ModuleDefinition.ImportReference(resolvedLazy
+                    .GetConstructors()
+                    .First(m => m.IsMatch("Func`1","LazyThreadSafetyMode")))
+                .MakeHostInstanceGeneric(loggerType);
+        LazyValue =
+            ModuleDefinition.ImportReference(resolvedLazy
+                    .Methods
+                    .First(m => m.Name=="get_Value"))
+                .MakeHostInstanceGeneric(loggerType);
+
+        forContextDefinition =
+            ModuleDefinition.ImportReference(
+                logManagerType.Methods.First(x => x.Name == "ForContext" && x.HasGenericParameters));
+
 
         ForPropertyContextDefinition = ModuleDefinition.ImportReference(loggerDefinition.Methods.First(
             x => x.Name == "ForContext" && !x.IsStatic && !x.HasGenericParameters &&
@@ -54,8 +82,17 @@ public partial class ModuleWeaver
         FatalExceptionMethod =
             ModuleDefinition.ImportReference(
                 loggerDefinition.FindMethod("Fatal", "Exception", "String", "Object[]"));
-        loggerType = ModuleDefinition.ImportReference(loggerDefinition);
     }
+
+    public MethodReference LazyValue;
+
+    public MethodReference FuncCtor;
+
+    public MethodReference LazyCtor;
+
+    public GenericInstanceType LazyDefinition;
+
+    public int PublicationOnly;
 
     MethodReference debugMethod;
     MethodReference verboseMethod;
@@ -81,4 +118,6 @@ public partial class ModuleWeaver
     public int ErrorLevel;
     public int InformationLevel;
     public MethodReference ForPropertyContextDefinition;
+
+
 }
