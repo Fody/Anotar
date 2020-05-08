@@ -3,10 +3,35 @@ using System.Linq;
 using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 using Mono.Collections.Generic;
 
 public static class CecilExtensions
 {
+    public static MethodReference MakeHostInstanceGeneric(
+        this MethodReference self,
+        params TypeReference[] args)
+    {
+        var reference = new MethodReference(
+            self.Name,
+            self.ReturnType,
+            self.DeclaringType.MakeGenericInstanceType(args))
+        {
+            HasThis = self.HasThis,
+            ExplicitThis = self.ExplicitThis,
+            CallingConvention = self.CallingConvention
+        };
+
+        foreach (var parameter in self.Parameters) {
+            reference.Parameters.Add(new ParameterDefinition(parameter.ParameterType));
+        }
+
+        foreach (var genericParam in self.GenericParameters) {
+            reference.GenericParameters.Add(new GenericParameter(genericParam.Name, reference));
+        }
+
+        return reference;
+    }
     public static void Replace(this Collection<Instruction> collection, Instruction instruction, ICollection<Instruction> instructions)
     {
         var newInstruction = instructions.First();

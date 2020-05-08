@@ -1,19 +1,20 @@
+using System;
+using System.Threading;
 using Serilog;
 using Serilog.Events;
 #pragma warning disable 169
 
 public class Template
 {
-    static ILogger anotarLogger = Log.ForContext<ClassWithLogging>();
-    ILogger forContext;
+    static Lazy<ILogger> lazyAnotarLogger = new Lazy<ILogger>(
+        Log.ForContext<ClassWithLogging>,
+        LazyThreadSafetyMode.ExecutionAndPublication);
 
     public void Debug()
     {
-        if (anotarLogger.IsEnabled(LogEventLevel.Debug))
+        if (lazyAnotarLogger.Value.IsEnabled(LogEventLevel.Debug))
         {
-            anotarLogger
-                .ForContext("MethodName", "Void Debug()")
-                .ForContext("LineNumber", 13)
+            lazyAnotarLogger.Value
                 .Debug("");
         }
     }

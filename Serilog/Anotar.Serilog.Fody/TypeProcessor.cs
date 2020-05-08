@@ -18,7 +18,11 @@ public partial class ModuleWeaver
             {
                 DeclaringType = type
             };
-            foundAction = () => InjectField(type, fieldDefinition);
+            var lazyFieldDefinition = new FieldDefinition("LazyAnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LazyDefinition)
+            {
+                DeclaringType = type
+            };
+            foundAction = () => InjectField(type, fieldDefinition,lazyFieldDefinition);
         }
         else
         {
@@ -60,7 +64,7 @@ public partial class ModuleWeaver
         }
     }
 
-    void InjectField(TypeDefinition type, FieldDefinition fieldDefinition)
+    void InjectField(TypeDefinition type, FieldDefinition fieldDefinition, FieldDefinition lazyFieldDefinition)
     {
         var staticConstructor = this.GetStaticConstructor(type);
         staticConstructor.Body.SimplifyMacros();
@@ -68,6 +72,7 @@ public partial class ModuleWeaver
         genericInstanceMethod.GenericArguments.Add(type.GetNonCompilerGeneratedType().GetGeneric());
         var instructions = staticConstructor.Body.Instructions;
         type.Fields.Add(fieldDefinition);
+        type.Fields.Add(lazyFieldDefinition);
 
         var returns = instructions.Where(_ => _.OpCode == OpCodes.Ret)
             .ToList();
@@ -75,6 +80,20 @@ public partial class ModuleWeaver
         var loggerSets = GetLoggerSets(instructions);
 
         var ilProcessor = staticConstructor.Body.GetILProcessor();
+
+        instructions.Insert(0, Instruction.Create(OpCodes.Ldnull));
+        instructions.Insert(1, Instruction.Create(OpCodes.Ldftn, genericInstanceMethod));
+        instructions.Insert(2, Instruction.Create(OpCodes.Newobj, FuncCtor));
+        instructions.Insert(3, Instruction.Create(OpCodes.Ldc_I4, PublicationOnly));
+        instructions.Insert(4, Instruction.Create(OpCodes.Newobj, LazyCtor));
+        instructions.Insert(5, Instruction.Create(OpCodes.Stsfld, lazyFieldDefinition));
+        //IL_0000: ldnull
+        //IL_0001: ldftn class [Serilog]Serilog.ILogger [Serilog]Serilog.Log::ForContext<class ClassWithLogging>()
+        //IL_0007: newobj instance void class [System.Runtime]System.Func`1<class [Serilog]Serilog.ILogger>::.ctor(object, native int)
+        //IL_000c: ldc.i4.2
+        //IL_000d: newobj instance void class [System.Runtime]System.Lazy`1<class [Serilog]Serilog.ILogger>::.ctor(class [System.Runtime]System.Func`1<!0>, valuetype [System.Runtime]System.Threading.LazyThreadSafetyMode)
+        //IL_0012: stsfld class [System.Runtime]System.Lazy`1<class [Serilog]Serilog.ILogger> Template::anotarLogger
+        //IL_0017: ret
 
         var fieldReference = fieldDefinition.GetGeneric();
         foreach (var loggerSet in loggerSets)
