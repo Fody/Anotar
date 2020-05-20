@@ -15,7 +15,6 @@ Simplifies logging through a static class and some IL manipulation
 * [Catel](http://www.catelproject.com/)
 * Custom (for frameworks/toolkits with custom logging)
 * [CommonLogging](http://netcommon.sourceforge.net/)
-* [Log4Net](http://logging.apache.org/log4net/)
 * [NLog](http://nlog-project.org/)
 * [NServiceBus](http://particular.net/nservicebus)
 * [Serilog](http://serilog.net/)
@@ -120,21 +119,6 @@ public class MyClass
     void MyMethod()
     {
         AnotarLogger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
-    }
-}
-```
-
-
-#### In Log4Net
-
-```c#
-public class MyClass
-{
-    static ILog logger = LogManager.GetLogger("MyClass");
-
-    void MyMethod()
-    {
-        logger.Debug("Method: 'Void MyMethod()'. Line: ~12. TheMessage");
     }
 }
 ```
@@ -332,7 +316,7 @@ void MyMethod(string param1, int param2)
 
 The custom logging variant exist for several reasons
 
-  1. Projects targeting an obscure logging libraries i.e. not NLog, SeriLog or Log4Net. Or wraps a logging library with a custom API.
+  1. Projects targeting an obscure logging libraries i.e. not NLog or SeriLog. Or wraps a logging library with a custom API.
   2. Projects that have their own logging custom logging libraries
   3. Projects that support multiple different logging libraries
   
