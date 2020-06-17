@@ -5,12 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Catel.Logging;
 using Fody;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class CatelTests :
-    VerifyBase
+public class CatelTests
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -31,8 +28,7 @@ public class CatelTests :
         });
     }
 
-    public CatelTests(ITestOutputHelper output) :
-        base(output)
+    public CatelTests()
     {
         Errors.Clear();
         Debugs.Clear();

@@ -5,12 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Fody;
 using NServiceBus.Logging;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class NServiceBusTests :
-    VerifyBase
+public class NServiceBusTests
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -34,8 +31,7 @@ public class NServiceBusTests :
         Warns));
     }
 
-    public NServiceBusTests(ITestOutputHelper output) : 
-        base(output)
+    public NServiceBusTests()
     {
         Fatals.Clear();
         Errors.Clear();

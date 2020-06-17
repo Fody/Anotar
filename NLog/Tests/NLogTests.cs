@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 using Fody;
 using NLog;
 using NLog.Config;
-using VerifyXunit;
 using Xunit;
-using Xunit.Abstractions;
 
-public class NLogTests :
-    VerifyBase
+public class NLogTests
 {
     static Assembly assembly;
     public static List<string> Errors = new List<string>();
@@ -38,8 +35,7 @@ public class NLogTests :
         LogManager.Configuration = config;
     }
 
-    public NLogTests(ITestOutputHelper output) : 
-        base(output)
+    public NLogTests()
     {
         Fatals.Clear();
         Errors.Clear();
