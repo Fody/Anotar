@@ -21,14 +21,14 @@ public class NServiceBusTests
         var moduleWeaver = new ModuleWeaver();
         var testResult = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            runPeVerify:false);
+            runPeVerify: false);
         assembly = testResult.Assembly;
 
         LogManager.UseFactory(new LogCapture(Fatals,
-        Errors,
-        Debugs,
-        Infos,
-        Warns));
+            Errors,
+            Debugs,
+            Infos,
+            Warns));
     }
 
     public NServiceBusTests()
