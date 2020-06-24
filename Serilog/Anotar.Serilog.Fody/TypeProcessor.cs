@@ -72,7 +72,7 @@ public partial class ModuleWeaver
         instructions.Insert(2, Instruction.Create(OpCodes.Newobj, FuncCtor));
         instructions.Insert(3, Instruction.Create(OpCodes.Ldc_I4, PublicationOnly));
         instructions.Insert(4, Instruction.Create(OpCodes.Newobj, LazyCtor));
-        instructions.Insert(5, Instruction.Create(OpCodes.Stsfld, lazyFieldDefinition));
+        instructions.Insert(5, Instruction.Create(OpCodes.Stsfld, lazyFieldDefinition.GetGeneric()));
 
         staticConstructor.Body.OptimizeMacros();
     }
