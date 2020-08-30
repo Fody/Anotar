@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="6.2.4" />
-    <PackageReference Include="Splat" Version="9.5.20" />
+    <PackageReference Include="Splat" Version="9.5.35" />
     <PackageReference Include="Xunit" Version="2.4.1" />
     <PackageReference Include="Verify.Xunit" Version="6.10.5" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
