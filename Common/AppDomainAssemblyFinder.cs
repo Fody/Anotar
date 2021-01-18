@@ -10,7 +10,7 @@ public static class AppDomainAssemblyFinder
 
     static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
     {
-        var unqualifiedName = args.Name.Substring(0, args.Name.IndexOf(","));
+        var unqualifiedName = args.Name.Substring(0, args.Name.IndexOf(','));
 
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
         {
