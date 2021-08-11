@@ -5,10 +5,10 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Splat" Version="12.1.4" />
+    <PackageReference Include="Splat" Version="12.1.6" />
     <PackageReference Include="FodyPackaging" Version="6.5.2" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="6.5.2" PrivateAssets="none" />
-    <PackageReference Include="Splat" Version="12.1.4" />
+    <PackageReference Include="Splat" Version="12.1.6" />
 
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
   </ItemGroup>
