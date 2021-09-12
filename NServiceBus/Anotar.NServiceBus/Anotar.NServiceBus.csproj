@@ -5,8 +5,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FodyPackaging" Version="6.5.2" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="6.5.2" PrivateAssets="none" />
+    <PackageReference Include="FodyPackaging" Version="6.5.3" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="6.5.3" PrivateAssets="none" />
     <PackageReference Include="NServiceBus" Version="7.5.0" />
 
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
