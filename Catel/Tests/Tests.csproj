@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Catel.Core" Version="5.12.19" />
-    <PackageReference Include="FodyHelpers" Version="6.5.4" />
+    <PackageReference Include="FodyHelpers" Version="6.5.5" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="Xunit" Version="2.4.1" />
     <PackageReference Include="Verify.Xunit" Version="13.3.0" />
