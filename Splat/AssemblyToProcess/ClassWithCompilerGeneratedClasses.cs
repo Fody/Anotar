@@ -21,7 +21,7 @@ public class ClassWithCompilerGeneratedClasses
 
     public void DelegateMethod()
     {
-        Action action = () => LogTo.Debug("Foo");
+        var action = () => LogTo.Debug("Foo");
         action();
     }
 

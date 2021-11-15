@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28721.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 16.0.28721.148
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{3F0BAF48-DF6E-47D9-9609-BAA7D18ADFF9}"
 EndProject
@@ -97,6 +97,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anota
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BDDD56A-E73E-498C-AE70-B4BF6D5D9E99}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
@@ -258,7 +259,7 @@ Global
 		{EFE9370B-89A6-45E9-B323-3C26785C1D9C} = {CC172335-BE39-4AE0-8829-B125531C62C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+		SolutionGuid = {B54C660B-4BA9-4636-92F5-EB2817EB750D}
 	EndGlobalSection
 EndGlobal
