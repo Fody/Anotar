@@ -39,7 +39,7 @@ public class TestAssemblies
             if (assemblies.ContainsKey(target) == false)
             {
                 AppDomainAssemblyFinder.Attach();
-                var assemblyPathUri = new Uri(new Uri(typeof(TestAssemblies).GetTypeInfo().Assembly.CodeBase), $"../../../../{assemblyToProcessName}/bin/Debug/{target}/{assemblyToProcessName}.dll");
+                var assemblyPathUri = new Uri(new Uri(typeof(TestAssemblies).Assembly.CodeBase), $"../../../../{assemblyToProcessName}/bin/Debug/{target}/{assemblyToProcessName}.dll");
                 var beforeAssemblyPath = Path.GetFullPath(assemblyPathUri.LocalPath);
 #if (!DEBUG)
                 beforeAssemblyPath = beforeAssemblyPath.Replace("Debug", "Release");
