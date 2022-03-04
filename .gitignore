@@ -33,7 +33,6 @@
 .builds
 *.dotCover
 
-*.DotSettings
 *.ncrunchsolution
 
 ##  If you have NuGet Package Restore enabled, uncomment this
