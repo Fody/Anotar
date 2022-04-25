@@ -5,7 +5,7 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Splat" Version="14.1.45" />
+    <PackageReference Include="Splat" Version="14.2.8" />
     <PackageReference Include="FodyHelpers" Version="6.6.0" />
     <PackageReference Include="Xunit" Version="2.4.1" />
     <PackageReference Include="Verify.Xunit" Version="16.6.0" />
