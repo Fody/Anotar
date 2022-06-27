@@ -5,7 +5,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.6.1" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.6.3" PrivateAssets="none" />
     <PackageReference Include="Splat" Version="14.3.1" />
     <PackageReference Include="FodyPackaging" Version="6.6.1" PrivateAssets="All" />
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />

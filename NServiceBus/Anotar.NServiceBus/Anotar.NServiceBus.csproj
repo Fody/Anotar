@@ -5,7 +5,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.6.1" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.6.3" PrivateAssets="none" />
     <PackageReference Include="FodyPackaging" Version="6.6.1" PrivateAssets="All" />
     <PackageReference Include="NServiceBus" Version="7.7.3" />
 
