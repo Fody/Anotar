@@ -7,6 +7,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
-    <PackageReference Include="NServiceBus" Version="7.7.4" />
+    <PackageReference Include="NServiceBus" Version="7.8.0" />
   </ItemGroup>
 </Project>
