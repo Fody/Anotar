@@ -1,4 +1,3 @@
-using System;
 using Anotar.Splat;
 #pragma warning disable 1998
 

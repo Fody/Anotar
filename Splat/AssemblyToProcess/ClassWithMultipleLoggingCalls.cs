@@ -1,4 +1,3 @@
-using System;
 using Anotar.Splat;
 
 public class ClassWithMultipleLoggingCalls

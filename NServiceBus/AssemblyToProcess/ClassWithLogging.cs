@@ -1,4 +1,3 @@
-using System;
 using Anotar.NServiceBus;
 
 public class ClassWithLogging

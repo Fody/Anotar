@@ -1,4 +1,3 @@
-using System;
 using Anotar.NServiceBus;
 #pragma warning disable 1998
 

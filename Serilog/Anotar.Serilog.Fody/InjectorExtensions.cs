@@ -1,4 +1,3 @@
-using System;
 using Mono.Cecil;
 
 public partial class ModuleWeaver

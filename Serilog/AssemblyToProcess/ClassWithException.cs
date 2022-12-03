@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using Anotar.Serilog;
 #pragma warning disable 1998
