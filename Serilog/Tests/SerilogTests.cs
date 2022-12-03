@@ -58,12 +58,12 @@ public class SerilogTests:IDisposable
             .WriteTo.Sink(eventSink)
             .CreateLogger();
 
-        errors = new List<LogEvent>();
-        fatals = new List<LogEvent>();
-        debugs = new List<LogEvent>();
-        verboses = new List<LogEvent>();
-        informations = new List<LogEvent>();
-        warns = new List<LogEvent>();
+        errors = new();
+        fatals = new();
+        debugs = new();
+        verboses = new();
+        informations = new();
+        warns = new();
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
@@ -82,12 +82,12 @@ public class SerilogTests:IDisposable
 
     static void Clear()
     {
-        errors = new List<LogEvent>();
-        fatals = new List<LogEvent>();
-        debugs = new List<LogEvent>();
-        verboses = new List<LogEvent>();
-        informations = new List<LogEvent>();
-        warns = new List<LogEvent>();
+        errors = new();
+        fatals = new();
+        debugs = new();
+        verboses = new();
+        informations = new();
+        warns = new();
     }
 
     [Fact]
@@ -151,7 +151,7 @@ public class SerilogTests:IDisposable
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<LogEvent> list, string expected)
+    static void CheckException(Action<object> action, List<LogEvent> list, string expected)
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);

@@ -12,7 +12,7 @@ public partial class ModuleWeaver
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new FieldDefinition("LazyAnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LazyDefinition)
+            fieldDefinition = new("LazyAnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LazyDefinition)
             {
                 DeclaringType = type
             };

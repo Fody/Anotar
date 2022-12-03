@@ -30,12 +30,12 @@ public class ClassWithLogging
 
     public void DebugStringException()
     {
-        LogTo.DebugException("TheMessage", new Exception());
+        LogTo.DebugException("TheMessage", new());
     }
 
     public void DebugStringExceptionFunc()
     {
-        LogTo.DebugException(() => "TheMessage", new Exception());
+        LogTo.DebugException(() => "TheMessage", new());
     }
 
     public bool IsInfoEnabled()
@@ -65,12 +65,12 @@ public class ClassWithLogging
 
     public void InfoStringException()
     {
-        LogTo.InfoException("TheMessage", new Exception());
+        LogTo.InfoException("TheMessage", new());
     }
 
     public void InfoStringExceptionFunc()
     {
-        LogTo.InfoException(() => "TheMessage", new Exception());
+        LogTo.InfoException(() => "TheMessage", new());
     }
 
     public bool IsWarnEnabled()
@@ -100,12 +100,12 @@ public class ClassWithLogging
 
     public void WarnStringException()
     {
-        LogTo.WarnException("TheMessage", new Exception());
+        LogTo.WarnException("TheMessage", new());
     }
 
     public void WarnStringExceptionFunc()
     {
-        LogTo.WarnException(() => "TheMessage", new Exception());
+        LogTo.WarnException(() => "TheMessage", new());
     }
 
     public bool IsErrorEnabled()
@@ -135,12 +135,12 @@ public class ClassWithLogging
 
     public void ErrorStringException()
     {
-        LogTo.ErrorException("TheMessage", new Exception());
+        LogTo.ErrorException("TheMessage", new());
     }
 
     public void ErrorStringExceptionFunc()
     {
-        LogTo.ErrorException(() => "TheMessage", new Exception());
+        LogTo.ErrorException(() => "TheMessage", new());
     }
 
     public bool IsFatalEnabled()
@@ -170,11 +170,11 @@ public class ClassWithLogging
 
     public void FatalStringException()
     {
-        LogTo.FatalException("TheMessage", new Exception());
+        LogTo.FatalException("TheMessage", new());
     }
 
     public void FatalStringExceptionFunc()
     {
-        LogTo.FatalException(() => "TheMessage", new Exception());
+        LogTo.FatalException(() => "TheMessage", new());
     }
 }

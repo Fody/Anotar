@@ -10,10 +10,10 @@ using Xunit;
 public class CatelTests
 {
     static Assembly assembly;
-    public static List<string> Errors = new List<string>();
-    public static List<string> Debugs = new List<string>();
-    public static List<string> Informations = new List<string>();
-    public static List<string> Warnings = new List<string>();
+    public static List<string> Errors = new();
+    public static List<string> Debugs = new();
+    public static List<string> Informations = new();
+    public static List<string> Warnings = new();
 
     static CatelTests()
     {
@@ -115,7 +115,7 @@ public class CatelTests
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<string> list, string expected)
+    static void CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");

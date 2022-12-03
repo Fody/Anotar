@@ -13,26 +13,26 @@ public class OnException
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToErrorOnException]
     public object ToErrorWithReturn(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
 
     [LogToFatalOnException]
     public void ToFatal(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToFatalOnException]
     public object ToFatalWithReturn(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
 
@@ -60,7 +60,7 @@ public class OnException
         ref UIntPtr param20
     )
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToErrorOnException]
@@ -87,45 +87,45 @@ public class OnException
         ref UIntPtr param20
     )
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToInformationOnException]
     public void ToInfo(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToInformationOnException]
     public object ToInfoWithReturn(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToWarningOnException]
     public void ToWarn(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToWarningOnException]
     public object ToWarnWithReturn(string param1, int param2)
     {
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToVerboseOnException]
     public void ToVerbose(string param1, int param2)
     {
         Debug.WriteLine("aString");
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToVerboseOnException]
     public object ToVerboseWithReturn(string param1, int param2)
     {
         Debug.WriteLine("aString");
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     //TODO: add tests for these combos. for now it is ok to peVerify it
@@ -134,11 +134,11 @@ public class OnException
     {
         try
         {
-            throw new Exception("Foo");
+            throw new("Foo");
         }
         catch (Exception exception)
         {
-            throw new Exception("Foo", exception);
+            throw new("Foo", exception);
         }
         finally
         {
@@ -150,14 +150,14 @@ public class OnException
     public void ToDebug(string param1, int param2)
     {
         Debug.WriteLine("aString");
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     [LogToDebugOnException]
     public object ToDebugWithReturn(string param1, int param2)
     {
         Debug.WriteLine("aString");
-        throw new Exception("Foo");
+        throw new("Foo");
     }
 
     //TODO: add tests for these combos. for now it is ok to peVerify it
@@ -166,11 +166,11 @@ public class OnException
     {
         try
         {
-            throw new Exception("Foo");
+            throw new("Foo");
         }
         catch (Exception exception)
         {
-            throw new Exception("Foo", exception);
+            throw new("Foo", exception);
         }
         finally
         {

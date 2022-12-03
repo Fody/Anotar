@@ -42,7 +42,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Verbose(new Exception(), "TheMessage");
+            LogTo.Verbose(new(), "TheMessage");
         }
         catch
         {
@@ -86,7 +86,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Debug(new Exception(), "TheMessage");
+            LogTo.Debug(new(), "TheMessage");
         }
         catch
         {
@@ -130,7 +130,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Information(new Exception(), "TheMessage");
+            LogTo.Information(new(), "TheMessage");
         }
         catch
         {
@@ -174,7 +174,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Warning(new Exception(), "TheMessage");
+            LogTo.Warning(new(), "TheMessage");
         }
         catch
         {
@@ -218,7 +218,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Error(new Exception(), "TheMessage");
+            LogTo.Error(new(), "TheMessage");
         }
         catch
         {
@@ -262,7 +262,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Fatal(new Exception(), "TheMessage");
+            LogTo.Fatal(new(), "TheMessage");
         }
         catch
         {

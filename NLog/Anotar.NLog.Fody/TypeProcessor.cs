@@ -12,7 +12,7 @@ public partial class ModuleWeaver
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new FieldDefinition("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private,
+            fieldDefinition = new("AnotarLogger", FieldAttributes.Static | FieldAttributes.Private,
                 LoggerType)
             {
                 DeclaringType = type,

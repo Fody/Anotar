@@ -6,64 +6,64 @@ public partial class ModuleWeaver
     {
         var loggerTypeDefinition = GetLoggerMethod.ReturnType.Resolve();
 
-        TraceFormatMethod = new Lazy<MethodReference>(
+        TraceFormatMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Trace", "String", "Object[]")));
-        TraceMethod = new Lazy<MethodReference>(
+        TraceMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Trace", "String")));
-        IsTraceEnabledMethod = new Lazy<MethodReference>(
+        IsTraceEnabledMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsTraceEnabled")));
-        TraceExceptionMethod = new Lazy<MethodReference>(
+        TraceExceptionMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Trace", "Exception", "String", "Object[]")));
 
-        DebugFormatMethod = new Lazy<MethodReference>(
+        DebugFormatMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String", "Object[]")));
-        DebugMethod = new Lazy<MethodReference>(
+        DebugMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Debug", "String")));
-        IsDebugEnabledMethod = new Lazy<MethodReference>(
+        IsDebugEnabledMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsDebugEnabled")));
-        DebugExceptionMethod = new Lazy<MethodReference>(
+        DebugExceptionMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Debug", "Exception", "String", "Object[]")));
 
-        InformationFormatMethod = new Lazy<MethodReference>(
+        InformationFormatMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Information", "String", "Object[]")));
-        InformationMethod = new Lazy<MethodReference>(
+        InformationMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Information", "String")));
         IsInformationEnabledMethod =
-            new Lazy<MethodReference>(
+            new(
                 () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsInformationEnabled")));
-        InformationExceptionMethod = new Lazy<MethodReference>(() => ModuleDefinition.ImportReference(
+        InformationExceptionMethod = new(() => ModuleDefinition.ImportReference(
             loggerTypeDefinition.FindMethod("Information", "Exception", "String", "Object[]")));
 
-        WarningFormatMethod = new Lazy<MethodReference>(
+        WarningFormatMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warning", "String", "Object[]")));
-        WarningMethod = new Lazy<MethodReference>(
+        WarningMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Warning", "String")));
-        IsWarningEnabledMethod = new Lazy<MethodReference>(
+        IsWarningEnabledMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsWarningEnabled")));
-        WarningExceptionMethod = new Lazy<MethodReference>(
+        WarningExceptionMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Warning", "Exception", "String", "Object[]")));
 
-        ErrorFormatMethod = new Lazy<MethodReference>(
+        ErrorFormatMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "String", "Object[]")));
-        ErrorMethod = new Lazy<MethodReference>(
+        ErrorMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Error", "String")));
-        IsErrorEnabledMethod = new Lazy<MethodReference>(
+        IsErrorEnabledMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsErrorEnabled")));
-        ErrorExceptionMethod = new Lazy<MethodReference>(
+        ErrorExceptionMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Error", "Exception", "String", "Object[]")));
 
-        FatalFormatMethod = new Lazy<MethodReference>(
+        FatalFormatMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "String", "Object[]")));
-        FatalMethod = new Lazy<MethodReference>(
+        FatalMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("Fatal", "String")));
-        IsFatalEnabledMethod = new Lazy<MethodReference>(
+        IsFatalEnabledMethod = new(
             () => ModuleDefinition.ImportReference(loggerTypeDefinition.FindMethod("get_IsFatalEnabled")));
-        FatalExceptionMethod = new Lazy<MethodReference>(
+        FatalExceptionMethod = new(
             () => ModuleDefinition.ImportReference(
                 loggerTypeDefinition.FindMethod("Fatal", "Exception", "String", "Object[]")));
         LoggerType = ModuleDefinition.ImportReference(loggerTypeDefinition);

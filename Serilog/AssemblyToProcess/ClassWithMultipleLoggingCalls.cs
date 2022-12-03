@@ -21,9 +21,9 @@ public class ClassWithMultipleLoggingCalls
 
     public void LogErrors()
     {
-        LogTo.Debug(new Exception(), "Debug");
-        LogTo.Information(new Exception(), "Info");
-        LogTo.Warning(new Exception(), "Warn");
+        LogTo.Debug(new(), "Debug");
+        LogTo.Information(new(), "Info");
+        LogTo.Warning(new(), "Warn");
     }
 
     public void LogThrowLog(bool doThrow)
@@ -32,7 +32,7 @@ public class ClassWithMultipleLoggingCalls
 
         if (doThrow)
         {
-            throw new Exception();
+            throw new();
         }
 
         LogTo.Information("Doing something");

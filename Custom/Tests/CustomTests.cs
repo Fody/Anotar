@@ -72,7 +72,7 @@ public class CustomTests
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<LogEntry> list, string expected)
+    static void CheckException(Action<object> action, List<LogEntry> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");

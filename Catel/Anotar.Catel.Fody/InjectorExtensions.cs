@@ -1,4 +1,3 @@
-using System;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -22,7 +21,7 @@ public partial class ModuleWeaver
         {
             return ErrorLogEvent;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetLogEnabledForLog(MethodReference methodReference)
@@ -44,7 +43,7 @@ public partial class ModuleWeaver
         {
             return IsErrorEnabledMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetLogEnabledForIs(MethodReference methodReference)
@@ -66,6 +65,6 @@ public partial class ModuleWeaver
         {
             return IsErrorEnabledMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 }

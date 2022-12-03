@@ -53,7 +53,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.DebugException("TheMessage", new Exception());
+            LogTo.DebugException("TheMessage", new());
         }
         catch
         {
@@ -97,7 +97,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.TraceException("TheMessage", new Exception());
+            LogTo.TraceException("TheMessage", new());
         }
         catch
         {
@@ -141,7 +141,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.InfoException("TheMessage", new Exception());
+            LogTo.InfoException("TheMessage", new());
         }
         catch
         {
@@ -185,7 +185,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.WarnException("TheMessage", new Exception());
+            LogTo.WarnException("TheMessage", new());
         }
         catch
         {
@@ -229,7 +229,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.ErrorException("TheMessage", new Exception());
+            LogTo.ErrorException("TheMessage", new());
         }
         catch
         {
@@ -273,7 +273,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.FatalException("TheMessage", new Exception());
+            LogTo.FatalException("TheMessage", new());
         }
         catch
         {

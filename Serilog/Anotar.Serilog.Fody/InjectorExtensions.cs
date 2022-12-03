@@ -30,7 +30,7 @@ public partial class ModuleWeaver
         {
             return FatalLevel;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public int GetLevelForIsEnabled(MethodReference methodReference)
@@ -60,7 +60,7 @@ public partial class ModuleWeaver
         {
             return FatalLevel;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetNormalOperand(MethodReference methodReference)
@@ -90,7 +90,7 @@ public partial class ModuleWeaver
         {
             return fatalMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
@@ -120,6 +120,6 @@ public partial class ModuleWeaver
         {
             return FatalExceptionMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Anotar.Catel;
 #pragma warning disable 1998
 
@@ -52,7 +51,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Debug(new Exception(),"TheMessage");
+            LogTo.Debug(new(),"TheMessage");
         }
         catch
         {
@@ -96,7 +95,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Info(new Exception(), "TheMessage");
+            LogTo.Info(new(), "TheMessage");
         }
         catch
         {
@@ -140,7 +139,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Warning(new Exception(), "TheMessage");
+            LogTo.Warning(new(), "TheMessage");
         }
         catch
         {
@@ -184,7 +183,7 @@ public class ClassWithException
     {
         try
         {
-            LogTo.Error(new Exception(),"TheMessage");
+            LogTo.Error(new(),"TheMessage");
         }
         catch
         {

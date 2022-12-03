@@ -12,7 +12,7 @@ public class ActionLog : ILog
 
     public void Trace(object message)
     {
-        actionAdapter.Traces.Add(new LogEvent
+        actionAdapter.Traces.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] { }
@@ -26,8 +26,8 @@ public class ActionLog : ILog
 
     public void TraceFormat(string format, params object[] args)
     {
-        actionAdapter.Traces.Add(new LogEvent
-                                 {
+        actionAdapter.Traces.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                  });
@@ -35,8 +35,8 @@ public class ActionLog : ILog
 
     public void TraceFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Traces.Add(new LogEvent
-                                 {
+        actionAdapter.Traces.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                      Exception = exception
@@ -75,7 +75,7 @@ public class ActionLog : ILog
 
     public void Debug(object message)
     {
-        actionAdapter.Debugs.Add(new LogEvent
+        actionAdapter.Debugs.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] { }
@@ -89,8 +89,8 @@ public class ActionLog : ILog
 
     public void DebugFormat(string format, params object[] args)
     {
-        actionAdapter.Debugs.Add(new LogEvent
-                                 {
+        actionAdapter.Debugs.Add(new()
+        {
                                      Format = format,
                                      Args = args
                                  });
@@ -98,8 +98,8 @@ public class ActionLog : ILog
 
     public void DebugFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Debugs.Add(new LogEvent
-                                 {
+        actionAdapter.Debugs.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                      Exception = exception
@@ -138,7 +138,7 @@ public class ActionLog : ILog
 
     public void Info(object message)
     {
-        actionAdapter.Informations.Add(new LogEvent
+        actionAdapter.Informations.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] {}
@@ -152,8 +152,8 @@ public class ActionLog : ILog
 
     public void InfoFormat(string format, params object[] args)
     {
-        actionAdapter.Informations.Add(new LogEvent
-                                {
+        actionAdapter.Informations.Add(new()
+        {
                                     Format = format,
                                     Args = args
                                 });
@@ -161,8 +161,8 @@ public class ActionLog : ILog
 
     public void InfoFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Informations.Add(new LogEvent
-                                {
+        actionAdapter.Informations.Add(new()
+        {
                                     Format = format,
                                     Args = args,
                                     Exception = exception
@@ -201,7 +201,7 @@ public class ActionLog : ILog
 
     public void Warn(object message)
     {
-        actionAdapter.Warnings.Add(new LogEvent
+        actionAdapter.Warnings.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] { }
@@ -215,8 +215,8 @@ public class ActionLog : ILog
 
     public void WarnFormat(string format, params object[] args)
     {
-        actionAdapter.Warnings.Add(new LogEvent
-                                {
+        actionAdapter.Warnings.Add(new()
+        {
                                     Format = format,
                                     Args = args
                                 });
@@ -224,8 +224,8 @@ public class ActionLog : ILog
 
     public void WarnFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Warnings.Add(new LogEvent
-                                {
+        actionAdapter.Warnings.Add(new()
+        {
                                     Format = format,
                                     Args = args,
                                     Exception = exception
@@ -264,7 +264,7 @@ public class ActionLog : ILog
 
     public void Error(object message)
     {
-        actionAdapter.Errors.Add(new LogEvent
+        actionAdapter.Errors.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] { }
@@ -278,8 +278,8 @@ public class ActionLog : ILog
 
     public void ErrorFormat(string format, params object[] args)
     {
-        actionAdapter.Errors.Add(new LogEvent
-                                 {
+        actionAdapter.Errors.Add(new()
+        {
                                      Format = format,
                                      Args = args
                                  });
@@ -287,8 +287,8 @@ public class ActionLog : ILog
 
     public void ErrorFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Errors.Add(new LogEvent
-                                 {
+        actionAdapter.Errors.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                      Exception = exception
@@ -327,7 +327,7 @@ public class ActionLog : ILog
 
     public void Fatal(object message)
     {
-        actionAdapter.Fatals.Add(new LogEvent
+        actionAdapter.Fatals.Add(new()
         {
             Format = message.ToString(),
             Args = new object[] { }
@@ -341,8 +341,8 @@ public class ActionLog : ILog
 
     public void FatalFormat(string format, params object[] args)
     {
-        actionAdapter.Fatals.Add(new LogEvent
-                                 {
+        actionAdapter.Fatals.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                  });
@@ -350,8 +350,8 @@ public class ActionLog : ILog
 
     public void FatalFormat(string format, Exception exception, params object[] args)
     {
-        actionAdapter.Fatals.Add(new LogEvent
-                                 {
+        actionAdapter.Fatals.Add(new()
+        {
                                      Format = format,
                                      Args = args,
                                      Exception = exception

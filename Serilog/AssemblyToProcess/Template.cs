@@ -6,7 +6,7 @@ using Serilog.Events;
 
 public class Template
 {
-    static Lazy<ILogger> lazyAnotarLogger = new Lazy<ILogger>(
+    static Lazy<ILogger> lazyAnotarLogger = new(
         Log.ForContext<ClassWithLogging>,
         LazyThreadSafetyMode.ExecutionAndPublication);
 

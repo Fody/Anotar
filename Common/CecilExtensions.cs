@@ -23,11 +23,11 @@ public static class CecilExtensions
         };
 
         foreach (var parameter in self.Parameters) {
-            reference.Parameters.Add(new ParameterDefinition(parameter.ParameterType));
+            reference.Parameters.Add(new(parameter.ParameterType));
         }
 
         foreach (var genericParam in self.GenericParameters) {
-            reference.GenericParameters.Add(new GenericParameter(genericParam.Name, reference));
+            reference.GenericParameters.Add(new(genericParam.Name, reference));
         }
 
         return reference;
@@ -177,7 +177,7 @@ public static class CecilExtensions
                                                 | MethodAttributes.RTSpecialName
                                                 | MethodAttributes.HideBySig
                                                 | MethodAttributes.Private;
-            staticConstructor = new MethodDefinition(".cctor", attributes, weaver.TypeSystem.VoidReference);
+            staticConstructor = new(".cctor", attributes, weaver.TypeSystem.VoidReference);
 
             staticConstructor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             type.Methods.Add(staticConstructor);
@@ -341,7 +341,7 @@ public static class CecilExtensions
             {
                 declaringType.GenericArguments.Add(parameter);
             }
-            return new FieldReference(definition.Name, definition.FieldType, declaringType);
+            return new(definition.Name, definition.FieldType, declaringType);
         }
 
         return definition;

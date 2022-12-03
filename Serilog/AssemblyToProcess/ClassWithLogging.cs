@@ -25,7 +25,7 @@ public class ClassWithLogging
 
     public void VerboseStringException()
     {
-        LogTo.Verbose(new Exception(), "TheMessage");
+        LogTo.Verbose(new(), "TheMessage");
     }
     public bool IsDebugEnabled()
     {
@@ -49,7 +49,7 @@ public class ClassWithLogging
 
     public void DebugStringException()
     {
-        LogTo.Debug(new Exception(), "TheMessage");
+        LogTo.Debug(new(), "TheMessage");
     }
 
     public bool IsInformationEnabled()
@@ -74,7 +74,7 @@ public class ClassWithLogging
 
     public void InformationStringException()
     {
-        LogTo.Information(new Exception(), "TheMessage");
+        LogTo.Information(new(), "TheMessage");
     }
 
     public bool IsWarningEnabled()
@@ -99,7 +99,7 @@ public class ClassWithLogging
 
     public void WarningStringException()
     {
-        LogTo.Warning(new Exception(), "TheMessage");
+        LogTo.Warning(new(), "TheMessage");
     }
 
     public bool IsErrorEnabled()
@@ -124,7 +124,7 @@ public class ClassWithLogging
 
     public void ErrorStringException()
     {
-        LogTo.Error(new Exception(), "TheMessage");
+        LogTo.Error(new(), "TheMessage");
     }
 
     public bool IsFatalEnabled()
@@ -149,6 +149,6 @@ public class ClassWithLogging
 
     public void FatalStringException()
     {
-        LogTo.Fatal(new Exception(), "TheMessage");
+        LogTo.Fatal(new(), "TheMessage");
     }
 }

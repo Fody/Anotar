@@ -20,7 +20,7 @@ class OnExceptionProcessor
 
     public void Process()
     {
-        attributeFinder = new AttributeFinder(Method);
+        attributeFinder = new(Method);
         if (!attributeFinder.Found)
         {
             return;
@@ -45,11 +45,11 @@ class OnExceptionProcessor
         };
         returnFixer.MakeLastStatementReturn();
 
-        exceptionVariable = new VariableDefinition(ModuleWeaver.ExceptionType);
+        exceptionVariable = new(ModuleWeaver.ExceptionType);
         body.Variables.Add(exceptionVariable);
-        messageVariable = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
+        messageVariable = new(ModuleWeaver.TypeSystem.StringReference);
         body.Variables.Add(messageVariable);
-        paramsArrayVariable = new VariableDefinition(ModuleWeaver.ObjectArray);
+        paramsArrayVariable = new(ModuleWeaver.ObjectArray);
         body.Variables.Add(paramsArrayVariable);
 
 

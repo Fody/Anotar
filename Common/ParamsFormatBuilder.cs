@@ -7,13 +7,13 @@ class ParamsFormatBuilder
 {
     VariableDefinition paramsArray;
     public StringBuilder MessageBuilder;
-    public List<Instruction> Instructions = new List<Instruction>();
+    public List<Instruction> Instructions = new();
 
     public ParamsFormatBuilder(MethodDefinition methodDefinition, VariableDefinition paramsArray)
     {
         this.paramsArray = paramsArray;
 
-        MessageBuilder = new StringBuilder($"Exception occurred in '{methodDefinition.DisplayName()}'. ");
+        MessageBuilder = new($"Exception occurred in '{methodDefinition.DisplayName()}'. ");
         foreach (var parameterDefinition in methodDefinition.Parameters)
         {
             foreach (var instruction in ProcessParam(parameterDefinition))
@@ -27,17 +27,17 @@ class ParamsFormatBuilder
     {
 
         var paramMetaData = parameterDefinition.ParameterType.MetadataType;
-        if (paramMetaData == MetadataType.UIntPtr ||
-            paramMetaData == MetadataType.FunctionPointer ||
-            paramMetaData == MetadataType.IntPtr ||
-            paramMetaData == MetadataType.Pointer)
+        if (paramMetaData is
+            MetadataType.UIntPtr or
+            MetadataType.FunctionPointer or
+            MetadataType.IntPtr or
+            MetadataType.Pointer)
         {
             yield break;
         }
         yield return Instruction.Create(OpCodes.Ldloc, paramsArray);
         yield return Instruction.Create(OpCodes.Ldc_I4, parameterDefinition.Index);
         yield return Instruction.Create(OpCodes.Ldarg, parameterDefinition);
-
 
         // Reset boolean flag variable to false
 

@@ -35,13 +35,13 @@ public class LogForwardingProcessor
         }
         catch (Exception exception)
         {
-            throw new Exception($"Failed to process '{Method.FullName}'.", exception);
+            throw new($"Failed to process '{Method.FullName}'.", exception);
         }
     }
 
     void ProcessInstruction(Instruction instruction)
     {
-        if (!(instruction.Operand is MethodReference methodReference))
+        if (instruction.Operand is not MethodReference methodReference)
         {
             return;
         }
@@ -56,7 +56,6 @@ public class LogForwardingProcessor
         }
         foundUsageInMethod = true;
         FoundUsageInType();
-
 
         var parameters = methodReference.Parameters;
 
@@ -91,17 +90,17 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
+                messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
             if (exceptionVar == null)
             {
-                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+                exceptionVar = new(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
             if (paramsVar == null)
             {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                paramsVar = new(ModuleWeaver.ObjectArray);
                 Method.Body.Variables.Add(paramsVar);
             }
 
@@ -125,12 +124,12 @@ public class LogForwardingProcessor
         {
             if (funcVar == null)
             {
-                funcVar = new VariableDefinition(ModuleWeaver.GenericFunc);
+                funcVar = new(ModuleWeaver.GenericFunc);
                 Method.Body.Variables.Add(funcVar);
             }
             if (exceptionVar == null)
             {
-                exceptionVar = new VariableDefinition(ModuleWeaver.ExceptionType);
+                exceptionVar = new(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
 
@@ -159,12 +158,12 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
+                messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
             if (paramsVar == null)
             {
-                paramsVar = new VariableDefinition(ModuleWeaver.ObjectArray);
+                paramsVar = new(ModuleWeaver.ObjectArray);
                 Method.Body.Variables.Add(paramsVar);
             }
 
@@ -186,7 +185,7 @@ public class LogForwardingProcessor
         {
             if (messageVar == null)
             {
-                messageVar = new VariableDefinition(ModuleWeaver.TypeSystem.StringReference);
+                messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
 
@@ -206,7 +205,7 @@ public class LogForwardingProcessor
         {
             if (funcVar == null)
             {
-                funcVar = new VariableDefinition(ModuleWeaver.GenericFunc);
+                funcVar = new(ModuleWeaver.GenericFunc);
                 Method.Body.Variables.Add(funcVar);
             }
             var sectionNop = Instruction.Create(OpCodes.Nop);

@@ -1,22 +1,19 @@
 ﻿using System;
 
-namespace Anotar.Custom
+namespace Anotar.Custom;
+
+/// <summary>
+/// Used to point to the correct logger factory Template.
+/// </summary>
+[AttributeUsage(AttributeTargets.Assembly)]
+public class LoggerFactoryAttribute : Attribute
 {
     /// <summary>
-    /// Used to point to the correct logger factory Template.
+    /// Construct a new instance of <see cref="LoggerFactoryAttribute"/>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly)]
-    public class LoggerFactoryAttribute : Attribute
+    /// <param name="loggerFactory">The logger factory <see cref="Type"/> to use.</param>
+    // ReSharper disable once UnusedParameter.Local
+    public LoggerFactoryAttribute(Type loggerFactory)
     {
-
-        /// <summary>
-        /// Construct a new instance of <see cref="LoggerFactoryAttribute"/>
-        /// </summary>
-        /// <param name="loggerFactory">The logger factory <see cref="Type"/> to use.</param>
-        // ReSharper disable once UnusedParameter.Local
-        public LoggerFactoryAttribute(Type loggerFactory)
-        {
-
-        }
     }
 }

@@ -8,12 +8,12 @@ public class Logger : ILogger
     {
         Level = LogLevel.Debug;
     }
-    public List<string> Errors = new List<string>();
-    public List<string> Fatals = new List<string>();
-    public List<string> Debugs = new List<string>();
-    public List<string> Informations = new List<string>();
-    public List<string> Warns = new List<string>();
-    public List<(Exception exception,string message,LogLevel level)> Exceptions = new List<(Exception,string,LogLevel)>();
+    public List<string> Errors = new();
+    public List<string> Fatals = new();
+    public List<string> Debugs = new();
+    public List<string> Informations = new();
+    public List<string> Warns = new();
+    public List<(Exception exception,string message,LogLevel level)> Exceptions = new();
     public void Write(string message, LogLevel logLevel)
     {
         if (logLevel == LogLevel.Fatal)

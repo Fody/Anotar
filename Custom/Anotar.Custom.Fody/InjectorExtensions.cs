@@ -1,4 +1,3 @@
-using System;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -30,7 +29,7 @@ public partial class ModuleWeaver
         {
             return IsFatalEnabledMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetLogEnabledForLog(MethodReference methodReference)
@@ -60,7 +59,7 @@ public partial class ModuleWeaver
         {
             return IsFatalEnabledMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetFormatOperand(MethodReference methodReference)
@@ -90,7 +89,7 @@ public partial class ModuleWeaver
         {
             return FatalFormatMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetNormalOperand(MethodReference methodReference)
@@ -120,7 +119,7 @@ public partial class ModuleWeaver
         {
             return FatalMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
@@ -150,6 +149,6 @@ public partial class ModuleWeaver
         {
             return FatalExceptionMethod;
         }
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 }

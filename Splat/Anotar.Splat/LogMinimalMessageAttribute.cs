@@ -1,12 +1,11 @@
 using System;
 
-namespace Anotar.Splat
+namespace Anotar.Splat;
+
+/// <summary>
+/// Used to suppress message prefixing.
+/// </summary>
+[AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module)]
+public class LogMinimalMessageAttribute : Attribute
 {
-    /// <summary>
-    /// Used to suppress message prefixing.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module)]
-    public class LogMinimalMessageAttribute : Attribute
-    {
-    }
 }

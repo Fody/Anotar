@@ -18,7 +18,7 @@ public class CommonLoggingTests
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
             ignoreCodes: new[] { "0x80131869" }).Assembly;
-        actionAdapter = new ActionAdapter();
+        actionAdapter = new();
         LogManager.Adapter = actionAdapter;
     }
 
@@ -75,7 +75,7 @@ public class CommonLoggingTests
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<LogEvent> list, string expected)
+    static void CheckException(Action<object> action, List<LogEvent> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");

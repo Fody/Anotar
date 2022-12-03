@@ -1,4 +1,3 @@
-using System;
 using Mono.Cecil;
 
 public partial class ModuleWeaver
@@ -6,32 +5,32 @@ public partial class ModuleWeaver
     public MethodReference GetLogEnabledForLog(MethodReference methodReference)
     {
         var name = methodReference.Name;
-        if (name == "Debug" || name == "DebugException")
+        if (name is "Debug" or "DebugException")
         {
             return IsDebugEnabledMethod;
         }
 
-        if (name == "Info" || name == "InfoException")
+        if (name is "Info" or "InfoException")
         {
             return IsInfoEnabledMethod;
         }
 
-        if (name == "Warn" || name == "WarnException")
+        if (name is "Warn" or "WarnException")
         {
             return IsWarnEnabledMethod;
         }
 
-        if (name == "Error" || name == "ErrorException")
+        if (name is "Error" or "ErrorException")
         {
             return IsErrorEnabledMethod;
         }
 
-        if (name == "Fatal" || name == "FatalException")
+        if (name is "Fatal" or "FatalException")
         {
             return IsFatalEnabledMethod;
         }
 
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetLogEnabled(MethodReference methodReference)
@@ -62,7 +61,7 @@ public partial class ModuleWeaver
             return IsFatalEnabledMethod;
         }
 
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetNormalFormatOperand(MethodReference methodReference)
@@ -93,7 +92,7 @@ public partial class ModuleWeaver
             return FatalFormatMethod;
         }
 
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetNormalOperand(MethodReference methodReference)
@@ -124,7 +123,7 @@ public partial class ModuleWeaver
             return FatalMethod;
         }
 
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 
     public MethodReference GetExceptionOperand(MethodReference methodReference)
@@ -155,6 +154,6 @@ public partial class ModuleWeaver
             return FatalExceptionMethod;
         }
 
-        throw new Exception("Invalid method name");
+        throw new("Invalid method name");
     }
 }

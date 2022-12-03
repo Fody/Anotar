@@ -1,4 +1,3 @@
-using System;
 using Anotar.Custom;
 
 public class ClassWithLogging
@@ -30,12 +29,12 @@ public class ClassWithLogging
 
     public void TraceStringException()
     {
-        LogTo.Trace(new Exception(), "TheMessage");
+        LogTo.Trace(new(), "TheMessage");
     }
 
     public void TraceStringExceptionFunc()
     {
-        LogTo.Trace(new Exception(), ()=>"TheMessage");
+        LogTo.Trace(new(), ()=>"TheMessage");
     }
 
     public bool IsDebugEnabled()
@@ -65,12 +64,12 @@ public class ClassWithLogging
 
     public void DebugStringException()
     {
-        LogTo.Debug(new Exception(), "TheMessage");
+        LogTo.Debug(new(), "TheMessage");
     }
 
     public void DebugStringExceptionFunc()
     {
-        LogTo.Debug(new Exception(), ()=>"TheMessage");
+        LogTo.Debug(new(), ()=>"TheMessage");
     }
 
     public bool IsInformationEnabled()
@@ -100,12 +99,12 @@ public class ClassWithLogging
 
     public void InformationStringException()
     {
-        LogTo.Information(new Exception(), "TheMessage");
+        LogTo.Information(new(), "TheMessage");
     }
 
     public void InformationStringExceptionFunc()
     {
-        LogTo.Information(new Exception(),()=> "TheMessage");
+        LogTo.Information(new(),()=> "TheMessage");
     }
 
     public bool IsWarningEnabled()
@@ -135,12 +134,12 @@ public class ClassWithLogging
 
     public void WarningStringException()
     {
-        LogTo.Warning(new Exception(), "TheMessage");
+        LogTo.Warning(new(), "TheMessage");
     }
 
     public void WarningStringExceptionFunc()
     {
-        LogTo.Warning(new Exception(),()=> "TheMessage");
+        LogTo.Warning(new(),()=> "TheMessage");
     }
 
     public bool IsErrorEnabled()
@@ -170,12 +169,12 @@ public class ClassWithLogging
 
     public void ErrorStringException()
     {
-        LogTo.Error(new Exception(), "TheMessage");
+        LogTo.Error(new(), "TheMessage");
     }
 
     public void ErrorStringExceptionFunc()
     {
-        LogTo.Error(new Exception(),()=> "TheMessage");
+        LogTo.Error(new(),()=> "TheMessage");
     }
 
     public bool IsFatalEnabled()
@@ -205,11 +204,11 @@ public class ClassWithLogging
 
     public void FatalStringException()
     {
-        LogTo.Fatal(new Exception(), "TheMessage");
+        LogTo.Fatal(new(), "TheMessage");
     }
 
     public void FatalStringExceptionFunc()
     {
-        LogTo.Fatal(new Exception(),()=> "TheMessage");
+        LogTo.Fatal(new(),()=> "TheMessage");
     }
 }

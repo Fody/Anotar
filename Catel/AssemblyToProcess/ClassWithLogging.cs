@@ -1,4 +1,3 @@
-using System;
 using Anotar.Catel;
 
 public class ClassWithLogging
@@ -35,12 +34,12 @@ public class ClassWithLogging
 
     public void DebugStringException()
     {
-        LogTo.Debug(new Exception(), "TheMessage");
+        LogTo.Debug(new(), "TheMessage");
     }
 
     public void DebugStringExceptionFunc()
     {
-        LogTo.Debug(new Exception(),()=> "TheMessage");
+        LogTo.Debug(new(),()=> "TheMessage");
     }
 
     public bool IsInfoEnabled()
@@ -70,12 +69,12 @@ public class ClassWithLogging
 
     public void InfoStringException()
     {
-        LogTo.Info(new Exception(), "TheMessage");
+        LogTo.Info(new(), "TheMessage");
     }
 
     public void InfoStringExceptionFunc()
     {
-        LogTo.Info(new Exception(), ()=>"TheMessage");
+        LogTo.Info(new(), ()=>"TheMessage");
     }
 
     public bool IsWarningEnabled()
@@ -105,12 +104,12 @@ public class ClassWithLogging
 
     public void WarningStringException()
     {
-        LogTo.Warning(new Exception(), "TheMessage");
+        LogTo.Warning(new(), "TheMessage");
     }
 
     public void WarningStringExceptionFunc()
     {
-        LogTo.Warning(new Exception(), ()=>"TheMessage");
+        LogTo.Warning(new(), ()=>"TheMessage");
     }
 
     public bool IsErrorEnabled()
@@ -140,11 +139,11 @@ public class ClassWithLogging
 
     public void ErrorStringException()
     {
-        LogTo.Error(new Exception(), "TheMessage");
+        LogTo.Error(new(), "TheMessage");
     }
 
     public void ErrorStringExceptionFunc()
     {
-        LogTo.Error(new Exception(), () => "TheMessage");
+        LogTo.Error(new(), () => "TheMessage");
     }
 }

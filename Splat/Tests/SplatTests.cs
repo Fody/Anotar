@@ -10,7 +10,7 @@ using Xunit;
 public class SplatTests: IDisposable
 {
     static Assembly assembly;
-    static Logger currentLogger = new Logger();
+    static Logger currentLogger = new();
 
     static SplatTests()
     {
@@ -75,7 +75,7 @@ public class SplatTests: IDisposable
     }
 
     // ReSharper disable once UnusedParameter.Local
-    void CheckException(Action<object> action, List<(Exception exception,string message,LogLevel level)> list, string expected)
+    static void CheckException(Action<object> action, List<(Exception exception,string message,LogLevel level)> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");

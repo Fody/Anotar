@@ -13,7 +13,7 @@ public class ReturnFixerTests
     {
         try
         {
-            throw new Exception("Foo");
+            throw new("Foo");
         }
         finally
         {
@@ -67,7 +67,7 @@ public class ReturnFixerTests
         {
             if (DateTime.Now == DateTime.Now)
             {
-                throw new Exception("Foo");
+                throw new("Foo");
             }
         }
         finally
@@ -120,12 +120,12 @@ public class ReturnFixerTests
                 throw;
             }
 #pragma warning disable 162
-            throw new Exception("aString", exception);
+            throw new("aString", exception);
 #pragma warning restore 162
         }
         finally
         {
-            throw new Exception("aString");
+            throw new("aString");
         }
     }
 

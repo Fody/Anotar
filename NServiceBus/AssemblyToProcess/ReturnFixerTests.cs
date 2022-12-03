@@ -13,7 +13,7 @@ public class ReturnFixerTests
     {
         try
         {
-            throw new Exception("Foo");
+            throw new("Foo");
         }
         finally
         {
@@ -65,7 +65,7 @@ public class ReturnFixerTests
         {
             if (DateTime.Now == DateTime.Now)
             {
-                throw new Exception("Foo");
+                throw new("Foo");
             }
         }
         finally
@@ -118,11 +118,11 @@ public class ReturnFixerTests
                 throw;
             }
             // ReSharper disable once HeuristicUnreachableCode
-            throw new Exception("aString", exception);
+            throw new("aString", exception);
         }
         finally
         {
-            throw new Exception("aString");
+            throw new("aString");
         }
     }
 

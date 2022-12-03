@@ -24,7 +24,7 @@ public class ReturnFixer
 
         if (IsMethodReturnValue())
         {
-            returnVariable = new VariableDefinition(Method.MethodReturnType.ReturnType);
+            returnVariable = new(Method.MethodReturnType.ReturnType);
             Method.Body.Variables.Add(returnVariable);
         }
 
