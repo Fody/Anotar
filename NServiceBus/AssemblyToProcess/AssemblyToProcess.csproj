@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net48;net7.0</TargetFrameworks>
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
-    <PackageReference Include="NServiceBus" Version="7.7.4" />
+    <PackageReference Include="NServiceBus" Version="8.0.1" />
   </ItemGroup>
 </Project>

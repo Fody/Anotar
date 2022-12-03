@@ -4,7 +4,6 @@ using Anotar.NServiceBus;
 
 public class OnException
 {
-
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
