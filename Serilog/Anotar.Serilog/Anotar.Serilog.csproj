@@ -5,7 +5,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.6.3" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.6.4" PrivateAssets="none" />
     <PackageReference Include="FodyPackaging" Version="6.6.3" PrivateAssets="All" />
     <PackageReference Include="Serilog" Version="2.12.0" />
   </ItemGroup>
