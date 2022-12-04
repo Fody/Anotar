@@ -12,7 +12,7 @@
     <PackageReference Include="Verify.Xunit" Version="19.3.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <ProjectReference Include="..\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj" />
     <ProjectReference Include="..\Anotar.Catel\Anotar.Catel.csproj" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
