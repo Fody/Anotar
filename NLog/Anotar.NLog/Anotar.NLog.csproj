@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Fody" Version="6.6.4" PrivateAssets="none" />
     <PackageReference Include="FodyPackaging" Version="6.6.4" PrivateAssets="All" />
-    <PackageReference Include="NLog" Version="5.1.2" />
+    <PackageReference Include="NLog" Version="5.1.3" />
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
   </ItemGroup>
 </Project>
