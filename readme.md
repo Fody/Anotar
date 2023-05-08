@@ -8,56 +8,6 @@ Simplifies logging through a static class and some IL manipulation
 
 **It is expected that all developers using Fody [become a Patron on OpenCollective](https://opencollective.com/fody/contribute/patron-3059). [See Licensing/Patron FAQ](https://github.com/Fody/Home/blob/master/pages/licensing-patron-faq.md) for more information.**
 
----
-
-<!-- This TOC can be maintained using VS Code's 'Markdown All in One' extension -->
-<!-- Just set the Toc: Levels setting to '2..4', open the command palette,  -->
-<!-- and run 'Markdown All in One: Update Table of Contents'  -->
-* [Supported Logging Libraries](#supported-logging-libraries)
-* [Usage](#usage)
-  * [NuGet installation](#nuget-installation)
-  * [Add to FodyWeavers.xml](#add-to-fodyweaversxml)
-* [NuGets](#nugets)
-* [Explicit Logging](#explicit-logging)
-  * [Your Code](#your-code)
-  * [What gets compiled](#what-gets-compiled)
-    * [In Catel](#in-catel)
-    * [In CommonLogging](#in-commonlogging)
-    * [In Custom](#in-custom)
-    * [In NLog](#in-nlog)
-    * [In NServiceBus](#in-nservicebus)
-    * [In Serilog](#in-serilog)
-    * [In Splat](#in-splat)
-  * [Other Log Overloads in Explicit Logging](#other-log-overloads-in-explicit-logging)
-* [Checking logging level](#checking-logging-level)
-  * [Your code](#your-code-1)
-  * [What gets compiled](#what-gets-compiled-1)
-* [Delegate Logging](#delegate-logging)
-  * [Your code](#your-code-2)
-  * [What gets compiled](#what-gets-compiled-2)
-* [Exception logging](#exception-logging)
-  * [Your code](#your-code-3)
-  * [What gets compiled](#what-gets-compiled-3)
-    * [In NLog](#in-nlog-1)
-* [Custom logging](#custom-logging)
-  * [Expected factory and instance formats](#expected-factory-and-instance-formats)
-    * [Factory](#factory)
-    * [Instance](#instance)
-  * [Discovery](#discovery)
-    * [Current Assembly](#current-assembly)
-    * [Other Assembly](#other-assembly)
-* [Nothing to deploy](#nothing-to-deploy)
-* [But why? What purpose does this serve?](#but-why-what-purpose-does-this-serve)
-  * [1. Don't make me think](#1-dont-make-me-think)
-  * [2. I want some extra information](#2-i-want-some-extra-information)
-* [I don't want extra information](#i-dont-want-extra-information)
-* [Why not use CallerInfoAttributes](#why-not-use-callerinfoattributes)
-  * [1. Only .net 4.5 and up](#1-only-net-45-and-up)
-  * [2. Can't be used when passing arrays as `params`](#2-cant-be-used-when-passing-arrays-as-params)
-* [Icon](#icon)
-
----
-
 ## Supported Logging Libraries
 
 * [Catel](http://www.catelproject.com/)
