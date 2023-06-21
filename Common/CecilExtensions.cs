@@ -54,7 +54,7 @@ public static class CecilExtensions
     public static string DisplayName(this MethodDefinition method)
     {
         method = GetActualMethod(method);
-        var paramNames = string.Join(", ", method.Parameters.Select(x => x.ParameterType.DisplayName()));
+        var paramNames = string.Join(", ", method.Parameters.Select(_ => _.ParameterType.DisplayName()));
         return $"{method.ReturnType.DisplayName()} {method.Name}({paramNames})";
     }
 
@@ -169,7 +169,7 @@ public static class CecilExtensions
 
     public static MethodDefinition GetStaticConstructor(this BaseModuleWeaver weaver, TypeDefinition type)
     {
-        var staticConstructor = type.Methods.FirstOrDefault(x => x.IsConstructor && x.IsStatic);
+        var staticConstructor = type.Methods.FirstOrDefault(_ => _.IsConstructor && _.IsStatic);
         if (staticConstructor == null)
         {
             const MethodAttributes attributes = MethodAttributes.Static
@@ -276,7 +276,7 @@ public static class CecilExtensions
 
     public static bool ContainsAttribute(this Collection<CustomAttribute> attributes, string attributeName)
     {
-        var containsAttribute = attributes.FirstOrDefault(x => x.AttributeType.FullName == attributeName);
+        var containsAttribute = attributes.FirstOrDefault(_ => _.AttributeType.FullName == attributeName);
         if (containsAttribute != null)
         {
             attributes.Remove(containsAttribute);

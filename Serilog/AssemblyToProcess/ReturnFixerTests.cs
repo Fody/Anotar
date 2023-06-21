@@ -129,18 +129,19 @@ public class ReturnFixerTests
     }
 
     bool isInSomeMode;
+    // ReSharper disable once NotAccessedField.Local
     string branchingReturnField;
 
     [LogToDebugOnException]
+    // ReSharper disable once UnusedMember.Global
     public void BranchingReturn(string value)
     {
         branchingReturnField = value;
         if (isInSomeMode)
         {
             Console.WriteLine("code here so 'if' does not get optimized away in release mode");
-// ReSharper disable RedundantJumpStatement
+// ReSharper disable once RedundantJumpStatement
             return;
-// ReSharper restore RedundantJumpStatement
         }
     }
 }

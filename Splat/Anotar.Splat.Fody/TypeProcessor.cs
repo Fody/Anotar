@@ -8,7 +8,8 @@ public partial class ModuleWeaver
     void ProcessType(TypeDefinition type)
     {
         var fieldDefinition =
-            type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == FullLoggerType.FullName);
+            type.Fields.FirstOrDefault(_ => _.IsStatic &&
+                                            _.FieldType.FullName == FullLoggerType.FullName);
         Action foundAction;
         if (fieldDefinition == null)
         {
@@ -24,6 +25,7 @@ public partial class ModuleWeaver
         {
             foundAction = () => { };
         }
+
         var fieldReference = fieldDefinition.GetGeneric();
         var foundUsage = false;
         foreach (var method in type.Methods)
@@ -53,6 +55,7 @@ public partial class ModuleWeaver
             logForwardingProcessor.ProcessMethod();
 
         }
+
         if (foundUsage)
         {
             foundAction();

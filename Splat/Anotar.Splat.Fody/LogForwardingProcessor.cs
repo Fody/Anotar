@@ -22,7 +22,7 @@ public class LogForwardingProcessor
         Method.CheckForInvalidLogToUsages();
         try
         {
-            var instructions = Method.Body.Instructions.Where(x => x.OpCode == OpCodes.Call).ToList();
+            var instructions = Method.Body.Instructions.Where(_ => _.OpCode == OpCodes.Call).ToList();
 
             foreach (var instruction in instructions)
             {

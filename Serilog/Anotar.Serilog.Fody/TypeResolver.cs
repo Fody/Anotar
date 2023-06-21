@@ -9,12 +9,12 @@ public partial class ModuleWeaver
     {
         var logManagerType = FindTypeDefinition("Serilog.Log");
         var logLevel = FindTypeDefinition("Serilog.Events.LogEventLevel");
-        VerboseLevel = (int) logLevel.Fields.First(x => x.Name == "Verbose").Constant;
-        DebugLevel = (int) logLevel.Fields.First(x => x.Name == "Debug").Constant;
-        ErrorLevel = (int) logLevel.Fields.First(x => x.Name == "Error").Constant;
-        InformationLevel = (int) logLevel.Fields.First(x => x.Name == "Information").Constant;
-        WarningLevel = (int) logLevel.Fields.First(x => x.Name == "Warning").Constant;
-        FatalLevel = (int) logLevel.Fields.First(x => x.Name == "Fatal").Constant;
+        VerboseLevel = (int) logLevel.Fields.First(_ => _.Name == "Verbose").Constant;
+        DebugLevel = (int) logLevel.Fields.First(_ => _.Name == "Debug").Constant;
+        ErrorLevel = (int) logLevel.Fields.First(_ => _.Name == "Error").Constant;
+        InformationLevel = (int) logLevel.Fields.First(_ => _.Name == "Information").Constant;
+        WarningLevel = (int) logLevel.Fields.First(_ => _.Name == "Warning").Constant;
+        FatalLevel = (int) logLevel.Fields.First(_ => _.Name == "Fatal").Constant;
 
         PublicationOnly = (int) LazyThreadSafetyMode.PublicationOnly;
 
@@ -45,12 +45,14 @@ public partial class ModuleWeaver
 
         forContextDefinition =
             ModuleDefinition.ImportReference(
-                logManagerType.Methods.First(x => x.Name == "ForContext" && x.HasGenericParameters));
+                logManagerType.Methods.First(_ => _.Name == "ForContext" && _.HasGenericParameters));
 
 
         ForPropertyContextDefinition = ModuleDefinition.ImportReference(loggerDefinition.Methods.First(
-            x => x.Name == "ForContext" && !x.IsStatic && !x.HasGenericParameters &&
-                 x.IsMatch("String", "Object", "Boolean")));
+            _ => _.Name == "ForContext" &&
+                 !_.IsStatic &&
+                 !_.HasGenericParameters &&
+                 _.IsMatch("String", "Object", "Boolean")));
 
         IsEnabledMethod =
             ModuleDefinition.ImportReference(loggerDefinition.FindMethod("IsEnabled", "LogEventLevel"));

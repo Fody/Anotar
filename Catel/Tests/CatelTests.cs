@@ -470,7 +470,7 @@ public class CatelTests
         var instance = (dynamic) Activator.CreateInstance(type);
         Task task = instance.AsyncMethod();
         await task;
-        Assert.Contains(Debugs, x => x.StartsWith("Method: 'Task AsyncMethod()'. Line: ~"));
+        Assert.Contains(Debugs, _ => _.StartsWith("Method: 'Task AsyncMethod()'. Line: ~"));
     }
 
     [Fact]

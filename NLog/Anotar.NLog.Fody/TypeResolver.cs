@@ -6,9 +6,9 @@ public partial class ModuleWeaver
     public void Init()
     {
         var logManagerType = FindTypeDefinition("NLog.LogManager");
-        var getLoggerGenericDefinition = logManagerType.Methods.First(x => x.Name == "GetCurrentClassLogger");
+        var getLoggerGenericDefinition = logManagerType.Methods.First(_ => _.Name == "GetCurrentClassLogger");
         constructLoggerGenericMethod = ModuleDefinition.ImportReference(getLoggerGenericDefinition);
-        var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
+        var getLoggerDefinition = logManagerType.Methods.First(_ => _.Name == "GetLogger" && _.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
         var loggerTypeDefinition = FindTypeDefinition("NLog.Logger");

@@ -6,16 +6,16 @@ public partial class ModuleWeaver
     public void Init()
     {
         var locatorType = FindTypeDefinition("Splat.Locator");
-        var getLocator = locatorType.Methods.First(x => x.Name == "get_Current");
+        var getLocator = locatorType.Methods.First(_ => _.Name == "get_Current");
         GetLocatorMethod = ModuleDefinition.ImportReference(getLocator);
 
         var dependencyResolver = FindTypeDefinition("Splat.IReadonlyDependencyResolver");
-        var getServiceDefinition = dependencyResolver.Methods.First(x => x.Name == "GetService");
+        var getServiceDefinition = dependencyResolver.Methods.First(_ => _.Name == "GetService");
         GetServiceMethod = ModuleDefinition.ImportReference(getServiceDefinition);
 
         var logManagerDefinition = FindTypeDefinition("Splat.ILogManager");
         LogManagerType = ModuleDefinition.ImportReference(logManagerDefinition);
-        var getLoggerDefinition = logManagerDefinition.Methods.First(x => x.Name == "GetLogger");
+        var getLoggerDefinition = logManagerDefinition.Methods.First(_ => _.Name == "GetLogger");
         GetLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
 

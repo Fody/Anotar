@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>6.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <DebugType>full</DebugType>
     <Description>Simplifies logging through a static helper class and some IL manipulation.</Description>
     <PackageTags>Logging, ILWeaving, Fody, Cecil</PackageTags>

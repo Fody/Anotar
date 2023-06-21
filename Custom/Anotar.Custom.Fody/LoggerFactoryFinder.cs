@@ -11,7 +11,7 @@ public partial class ModuleWeaver
         var loggerFactoryAttribute = ModuleDefinition
             .Assembly
             .CustomAttributes
-            .FirstOrDefault(x => x.AttributeType.Name == "LoggerFactoryAttribute");
+            .FirstOrDefault(_ => _.AttributeType.Name == "LoggerFactoryAttribute");
 
         if (loggerFactoryAttribute == null)
         {

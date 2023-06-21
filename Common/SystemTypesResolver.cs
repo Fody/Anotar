@@ -30,9 +30,9 @@ public partial class ModuleWeaver
         FuncInvokeMethod = ModuleDefinition.ImportReference(methodReference);
 
         GetTypeFromHandle = typeType.Methods
-            .First(x => x.Name == "GetTypeFromHandle" &&
-                        x.Parameters.Count == 1 &&
-                        x.Parameters[0].ParameterType.Name == "RuntimeTypeHandle");
+            .First(_ => _.Name == "GetTypeFromHandle" &&
+                        _.Parameters.Count == 1 &&
+                        _.Parameters[0].ParameterType.Name == "RuntimeTypeHandle");
         GetTypeFromHandle = ModuleDefinition.ImportReference(GetTypeFromHandle);
 
         var stringType = FindTypeDefinition("System.String");
@@ -55,13 +55,13 @@ public partial class ModuleWeaver
             }
             foreach (var assemblyModule in candidateAssembly.Modules)
             {
-                var typeDef = assemblyModule.Types.FirstOrDefault(x => x.FullName == typeFullName);
+                var typeDef = assemblyModule.Types.FirstOrDefault(_ => _.FullName == typeFullName);
                 if (typeDef != null)
                 {
                     WriteInfo($"[SystemTypeResolver] Loaded type {typeDef.FullName} from {typeDef.Module.FileName}");
                     return typeDef;
                 }
-                var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(x => x.FullName == typeFullName);
+                var exportedType = assemblyModule.ExportedTypes.FirstOrDefault(_ => _.FullName == typeFullName);
                 var exportedTypeDef = exportedType?.Resolve();
                 if (exportedTypeDef != null)
                 {

@@ -21,7 +21,9 @@ public partial class ModuleWeaver: BaseModuleWeaver
         Init();
         foreach (var type in ModuleDefinition
             .GetTypes()
-            .Where(x => x.BaseType != null && !x.IsEnum && !x.IsInterface))
+            .Where(_ => _.BaseType != null &&
+                        !_.IsEnum &&
+                        !_.IsInterface))
         {
             ProcessType(type);
         }

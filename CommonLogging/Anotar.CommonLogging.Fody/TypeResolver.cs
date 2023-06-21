@@ -7,7 +7,7 @@ public partial class ModuleWeaver
     {
         var logManagerType = FindTypeDefinition("Common.Logging.LogManager");
 
-        var getLoggerDefinition = logManagerType.Methods.First(x => x.Name == "GetLogger" && x.IsMatch("String"));
+        var getLoggerDefinition = logManagerType.Methods.First(_ => _.Name == "GetLogger" && _.IsMatch("String"));
         constructLoggerMethod = ModuleDefinition.ImportReference(getLoggerDefinition);
 
         var loggerTypeDefinition = FindTypeDefinition("Common.Logging.ILog");

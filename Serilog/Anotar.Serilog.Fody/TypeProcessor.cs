@@ -8,7 +8,8 @@ public partial class ModuleWeaver
 {
     void ProcessType(TypeDefinition type)
     {
-        var fieldDefinition = type.Fields.FirstOrDefault(x => x.IsStatic && x.FieldType.FullName == LazyDefinition.FullName);
+        var fieldDefinition = type.Fields.FirstOrDefault(_ => _.IsStatic &&
+                                                              _.FieldType.FullName == LazyDefinition.FullName);
         Action foundAction;
         if (fieldDefinition == null)
         {
