@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net48;net7.0</TargetFrameworks>
@@ -7,6 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
-    <PackageReference Include="NServiceBus" Version="8.0.3" />
+    <PackageReference Include="NServiceBus" Version="8.1.1" />
   </ItemGroup>
 </Project>
