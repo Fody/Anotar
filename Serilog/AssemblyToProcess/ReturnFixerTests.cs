@@ -8,7 +8,6 @@ using Anotar.Serilog;
 
 public class ReturnFixerTests
 {
-
     [LogToDebugOnException]
     public object MethodWithHangingHandlerEnd()
     {
