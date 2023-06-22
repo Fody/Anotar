@@ -5,7 +5,7 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="3.0.0" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <ProjectReference Include="..\Anotar.Serilog\Anotar.Serilog.csproj" />
   </ItemGroup>
