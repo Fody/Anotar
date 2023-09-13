@@ -82,7 +82,7 @@ class OnExceptionProcessor
     {
         if (Method.IsConstructor)
         {
-            return body.Instructions.First(i => i.OpCode == OpCodes.Call).Next;
+            return body.Instructions.First(_ => _.OpCode == OpCodes.Call).Next;
         }
         return body.Instructions.First();
     }

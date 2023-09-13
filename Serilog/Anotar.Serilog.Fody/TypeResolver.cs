@@ -26,7 +26,8 @@ public partial class ModuleWeaver
         var genericFunc = funcType.MakeGenericInstanceType(loggerType);
 
         FuncCtor = ModuleDefinition.ImportReference(genericFunc.Resolve()
-                .Methods.First(m => m.IsConstructor && m.Parameters.Count == 2))
+                .Methods.First(_ => _.IsConstructor &&
+                                    _.Parameters.Count == 2))
             .MakeHostInstanceGeneric(loggerType);
 
         var lazy = ModuleDefinition.ImportReference(FindTypeDefinition("System.Lazy`1"));
@@ -35,12 +36,12 @@ public partial class ModuleWeaver
         LazyCtor =
             ModuleDefinition.ImportReference(resolvedLazy
                     .GetConstructors()
-                    .First(m => m.IsMatch("Func`1","LazyThreadSafetyMode")))
+                    .First(_ => _.IsMatch("Func`1","LazyThreadSafetyMode")))
                 .MakeHostInstanceGeneric(loggerType);
         LazyValue =
             ModuleDefinition.ImportReference(resolvedLazy
                     .Methods
-                    .First(m => m.Name=="get_Value"))
+                    .First(_ => _.Name=="get_Value"))
                 .MakeHostInstanceGeneric(loggerType);
 
         forContextDefinition =

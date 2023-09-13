@@ -62,7 +62,7 @@ public static class CecilExtensions
     {
         if (typeReference is GenericInstanceType genericInstanceType && genericInstanceType.HasGenericArguments)
         {
-            return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(c => c.DisplayName())) + ">";
+            return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(_ => _.DisplayName())) + ">";
         }
         return typeReference.Name;
     }

@@ -6,6 +6,4 @@ namespace Anotar.NLog;
 /// If an <see cref="Exception"/> occurs in the applied method then log it to <c>Error</c>.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-public class LogToErrorOnExceptionAttribute : Attribute
-{
-}
+public class LogToErrorOnExceptionAttribute : Attribute;
