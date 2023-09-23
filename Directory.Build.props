@@ -8,7 +8,7 @@
     <Description>Simplifies logging through a static helper class and some IL manipulation.</Description>
     <PackageTags>Logging, ILWeaving, Fody, Cecil</PackageTags>
     <AssemblyOriginatorKeyFile>$(SolutionDir)key.snk</AssemblyOriginatorKeyFile>
-    <NoWarn>NU5118</NoWarn>
+    <NoWarn>NU5118;NU1902</NoWarn>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Anotar/master/package_icon.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/Fody/Anotar</PackageProjectUrl>
