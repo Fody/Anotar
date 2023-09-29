@@ -58,13 +58,14 @@ public static class CecilExtensions
         return $"{method.ReturnType.DisplayName()} {method.Name}({paramNames})";
     }
 
-    public static string DisplayName(this TypeReference typeReference)
+    public static string DisplayName(this TypeReference type)
     {
-        if (typeReference is GenericInstanceType genericInstanceType && genericInstanceType.HasGenericArguments)
+        if (type is GenericInstanceType {HasGenericArguments: true} genericType)
         {
-            return typeReference.Name.Split('`').First() + "<" + string.Join(", ", genericInstanceType.GenericArguments.Select(_ => _.DisplayName())) + ">";
+            return type.Name.Split('`').First() + "<" + string.Join(", ", genericType.GenericArguments.Select(_ => _.DisplayName())) + ">";
         }
-        return typeReference.Name;
+
+        return type.Name;
     }
 
     static MethodDefinition GetActualMethod(MethodDefinition method)
