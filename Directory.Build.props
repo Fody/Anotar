@@ -13,5 +13,6 @@
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Anotar/master/package_icon.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/Fody/Anotar</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
   </PropertyGroup>
 </Project>
