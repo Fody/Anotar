@@ -26,86 +26,95 @@ public class ClassWithException
         {
         }
     }
+
     public void DebugString()
     {
         try
         {
-           LogTo.Debug("TheMessage");
+            LogTo.Debug("TheMessage");
         }
         catch
         {
         }
     }
+
     public void DebugStringParams()
     {
         try
         {
-        LogTo.Debug("TheMessage {0}",1);
+            LogTo.Debug("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void DebugStringException()
     {
         try
         {
-        LogTo.Debug(new(), "TheMessage");
+            LogTo.Debug(new(), "TheMessage");
         }
         catch
         {
         }
     }
+
     public void Information()
     {
         try
         {
-        LogTo.Information();
+            LogTo.Information();
         }
         catch
         {
         }
     }
+
     public void InformationString()
     {
         try
         {
-        LogTo.Information("TheMessage");
+            LogTo.Information("TheMessage");
         }
         catch
         {
         }
     }
+
     public void InformationStringParams()
     {
         try
         {
-        LogTo.Information("TheMessage {0}", 1);
+            LogTo.Information("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void InformationStringException()
     {
         try
         {
-        LogTo.Information(new(), "TheMessage");
+            LogTo.Information(new(), "TheMessage");
         }
         catch
         {
         }
     }
+
     public void Warning()
     {
         try
         {
-        LogTo.Warning();
+            LogTo.Warning();
         }
         catch
         {
         }
     }
+
     public void WarningString()
     {
         try
@@ -116,101 +125,111 @@ public class ClassWithException
         {
         }
     }
+
     public void WarningStringParams()
     {
         try
         {
-        LogTo.Warning("TheMessage {0}", 1);
+            LogTo.Warning("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void WarningStringException()
     {
         try
         {
-        LogTo.Warning(new(), "TheMessage");
+            LogTo.Warning(new(), "TheMessage");
         }
         catch
         {
         }
     }
+
     public void Error()
     {
         try
         {
-        LogTo.Error();
+            LogTo.Error();
         }
         catch
         {
         }
     }
+
     public void ErrorString()
     {
         try
         {
-        LogTo.Error("TheMessage");
+            LogTo.Error("TheMessage");
         }
         catch
         {
         }
     }
+
     public void ErrorStringParams()
     {
         try
         {
-        LogTo.Error("TheMessage {0}", 1);
+            LogTo.Error("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void ErrorStringException()
     {
         try
         {
-        LogTo.Error(new(), "TheMessage");
+            LogTo.Error(new(), "TheMessage");
         }
         catch
         {
         }
     }
+
     public void Fatal()
     {
         try
         {
-        LogTo.Fatal();
+            LogTo.Fatal();
         }
         catch
         {
         }
     }
+
     public void FatalString()
     {
         try
         {
-        LogTo.Fatal("TheMessage");
+            LogTo.Fatal("TheMessage");
         }
         catch
         {
         }
     }
+
     public void FatalStringParams()
     {
         try
         {
-        LogTo.Fatal("TheMessage {0}", 1);
+            LogTo.Fatal("TheMessage {0}", 1);
         }
         catch
         {
         }
     }
+
     public void FatalStringException()
     {
         try
         {
-        LogTo.Fatal(new(), "TheMessage");
+            LogTo.Fatal(new(), "TheMessage");
         }
         catch
         {
