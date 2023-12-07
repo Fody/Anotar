@@ -115,12 +115,12 @@ public static class CecilExtensions
 
     public static bool IsCompilerGenerated(this ICustomAttributeProvider value)
     {
-        return value.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute");
+        return value.CustomAttributes.Any(_ => _.AttributeType.Name == "CompilerGeneratedAttribute");
     }
 
     public static bool IsCompilerGenerated(this TypeDefinition type)
     {
-        return type.CustomAttributes.Any(a => a.AttributeType.Name == "CompilerGeneratedAttribute") ||
+        return type.CustomAttributes.Any(_ => _.AttributeType.Name == "CompilerGeneratedAttribute") ||
             type.IsNested && type.DeclaringType.IsCompilerGenerated();
     }
 
