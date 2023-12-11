@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="6.8.0" />
     <PackageReference Include="Splat" Version="14.8.6" />
-    <PackageReference Include="Xunit" Version="2.6.2" />
+    <PackageReference Include="Xunit" Version="2.6.3" />
     <PackageReference Include="Verify.Xunit" Version="22.8.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
