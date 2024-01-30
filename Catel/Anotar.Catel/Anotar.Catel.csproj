@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.12.22" />
+    <PackageReference Include="Catel.Core" Version="6.0.2" />
     <PackageReference Include="Fody" Version="6.8.0" PrivateAssets="none" />
     <PackageReference Include="FodyPackaging" Version="6.8.0" PrivateAssets="All" />
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
