@@ -28,13 +28,13 @@ public static class WeaverHelper
             };
             var moduleDefinition = ModuleDefinition.ReadModule(assemblyPath, readerParameters);
 
-            var weavingTask = new ModuleWeaver
+            var weaver = new ModuleWeaver
             {
                 ModuleDefinition = moduleDefinition,
                 AssemblyResolver = assemblyResolver
             };
 
-            weavingTask.Execute();
+            weaver.Execute();
             moduleDefinition.Write(newAssemblyPath);
 
             return newAssemblyPath;
