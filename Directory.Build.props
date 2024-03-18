@@ -14,5 +14,7 @@
     <PackageProjectUrl>https://github.com/Fody/Anotar</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
   </PropertyGroup>
 </Project>
