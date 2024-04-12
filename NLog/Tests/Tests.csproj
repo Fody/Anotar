@@ -9,7 +9,7 @@
     <PackageReference Include="NLog" Version="5.2.8" />
     <PackageReference Include="Xunit" Version="2.7.1" />
     <PackageReference Include="Verify.Xunit" Version="23.7.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <ProjectReference Include="..\Anotar.NLog.Fody\Anotar.NLog.Fody.csproj" />
     <ProjectReference Include="..\Anotar.NLog\Anotar.NLog.csproj" />
