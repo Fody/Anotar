@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net7.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.8.0" PrivateAssets="none" />
-    <PackageReference Include="FodyPackaging" Version="6.8.0" PrivateAssets="All" />
-    <PackageReference Include="NServiceBus" Version="8.2.0" />
+    <PackageReference Include="Fody" Version="6.8.1" PrivateAssets="none" />
+    <PackageReference Include="FodyPackaging" Version="6.8.1" PrivateAssets="All" />
+    <PackageReference Include="NServiceBus" Version="9.0.2" />
 
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
   </ItemGroup>
