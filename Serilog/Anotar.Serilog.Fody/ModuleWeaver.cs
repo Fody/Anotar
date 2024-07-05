@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Fody;
+﻿using Fody;
 
 public partial class ModuleWeaver: BaseModuleWeaver
 {

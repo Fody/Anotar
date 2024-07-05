@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using Mono.Cecil.Cil;
 
@@ -74,17 +72,18 @@ public class LogForwardingProcessor
         var messagePrefix = GetMessagePrefix(instruction);
         if (parameters.Count == 0)
         {
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
                     Instruction.Create(OpCodes.Ldstr, messagePrefix),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod)
-                });
+                ]);
             return;
         }
+
         if (methodReference.IsMatch("Exception", "String", "Object[]"))
         {
             if (messageVar == null)
@@ -92,20 +91,22 @@ public class LogForwardingProcessor
                 messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
+
             if (exceptionVar == null)
             {
                 exceptionVar = new(ModuleWeaver.ExceptionType);
                 Method.Body.Variables.Add(exceptionVar);
             }
+
             if (paramsVar == null)
             {
                 paramsVar = new(ModuleWeaver.ObjectArray);
                 Method.Body.Variables.Add(paramsVar);
             }
 
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Stloc, paramsVar),
                     Instruction.Create(OpCodes.Stloc, messageVar),
                     Instruction.Create(OpCodes.Stloc, exceptionVar),
@@ -118,10 +119,11 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
-                    ModuleWeaver.CreateLogExceptionCallInstruction(),
-                });
+                    ModuleWeaver.CreateLogExceptionCallInstruction()
+                ]);
             return;
         }
+
         if (methodReference.IsMatch("Exception", "Func`1"))
         {
             if (funcVar == null)
@@ -129,6 +131,7 @@ public class LogForwardingProcessor
                 funcVar = new(ModuleWeaver.GenericFunc);
                 Method.Body.Variables.Add(funcVar);
             }
+
             if (exceptionVar == null)
             {
                 exceptionVar = new(ModuleWeaver.ExceptionType);
@@ -136,9 +139,9 @@ public class LogForwardingProcessor
             }
 
             var sectionNop = Instruction.Create(OpCodes.Nop);
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Stloc, funcVar),
                     Instruction.Create(OpCodes.Stloc, exceptionVar),
                     Instruction.Create(OpCodes.Call, isEnabledMethod),
@@ -153,9 +156,10 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
                     ModuleWeaver.CreateLogExceptionCallInstruction(),
                     sectionNop
-                });
+                ]);
             return;
         }
+
         if (methodReference.IsMatch("String", "Object[]"))
         {
             if (messageVar == null)
@@ -163,15 +167,16 @@ public class LogForwardingProcessor
                 messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
+
             if (paramsVar == null)
             {
                 paramsVar = new(ModuleWeaver.ObjectArray);
                 Method.Body.Variables.Add(paramsVar);
             }
 
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Stloc, paramsVar),
                     Instruction.Create(OpCodes.Stloc, messageVar),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
@@ -182,10 +187,11 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.FormatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod),
-                });
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod)
+                ]);
             return;
         }
+
         if (methodReference.IsMatch("String"))
         {
             if (messageVar == null)
@@ -193,9 +199,9 @@ public class LogForwardingProcessor
                 messageVar = new(ModuleWeaver.TypeSystem.StringReference);
                 Method.Body.Variables.Add(messageVar);
             }
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Stloc, messageVar),
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
                     Instruction.Create(OpCodes.Ldstr, messagePrefix),
@@ -203,8 +209,8 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Call, ModuleWeaver.ConcatMethod),
                     Instruction.Create(OpCodes.Ldnull),
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
-                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod),
-                });
+                    Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod)
+                ]);
             return;
         }
         if (methodReference.IsMatch("Func`1"))
@@ -216,9 +222,9 @@ public class LogForwardingProcessor
             }
 
             var sectionNop = Instruction.Create(OpCodes.Nop);
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Stloc, funcVar),
                     Instruction.Create(OpCodes.Call, isEnabledMethod),
                     Instruction.Create(OpCodes.Brfalse_S, sectionNop),
@@ -231,7 +237,7 @@ public class LogForwardingProcessor
                     Instruction.Create(OpCodes.Ldc_I4, logEventLevel),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.WriteMethod),
                     sectionNop
-                });
+                ]);
             return;
         }
         throw new NotImplementedException();

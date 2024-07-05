@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Splat;
 
 public class Logger : ILogger

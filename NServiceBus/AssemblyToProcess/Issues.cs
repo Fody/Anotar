@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Anotar.NServiceBus;
+﻿using Anotar.NServiceBus;
 // ReSharper disable NotAccessedVariable
 // ReSharper disable RedundantAssignment
 

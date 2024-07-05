@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Anotar.Custom;
+﻿namespace Anotar.Custom;
 
 /// <summary>
 /// Used to point to the correct logger factory Template.

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Anotar.CommonLogging;
 #pragma warning disable 1998
 

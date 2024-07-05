@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Anotar.Serilog;
+﻿using Anotar.Serilog;
 // ReSharper disable NotAccessedVariable
 // ReSharper disable RedundantAssignment
 

@@ -1,4 +1,3 @@
-using System;
 using Anotar.CommonLogging;
 #pragma warning disable 1998
 

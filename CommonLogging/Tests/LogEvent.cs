@@ -1,6 +1,4 @@
-﻿using System;
-
-public class LogEvent
+﻿public class LogEvent
 {
     public object[] Args;
     public string Format;

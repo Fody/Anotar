@@ -1,10 +1,8 @@
-using System;
 using System.Diagnostics;
 using Anotar.Splat;
 
 public class OnException
 {
-
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {
@@ -16,6 +14,7 @@ public class OnException
     {
         throw new("Foo");
     }
+
     [LogToFatalOnException]
     public void ToFatal(string param1, int param2)
     {
@@ -27,6 +26,7 @@ public class OnException
     {
         return "a";
     }
+
     [LogToFatalOnException]
     public object ToFatalWithReturn(string param1, int param2)
     {
@@ -55,7 +55,7 @@ public class OnException
         ref uint param18,
         ref ulong param19,
         ref UIntPtr param20
-        )
+    )
     {
         throw new("Foo");
     }
@@ -82,7 +82,7 @@ public class OnException
         ref uint param18,
         ref ulong param19,
         ref UIntPtr param20
-        )
+    )
     {
         throw new("Foo");
     }

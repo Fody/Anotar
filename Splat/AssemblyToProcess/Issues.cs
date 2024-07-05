@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Anotar.Splat;
+﻿using Anotar.Splat;
 // ReSharper disable NotAccessedVariable
 // ReSharper disable RedundantAssignment
 

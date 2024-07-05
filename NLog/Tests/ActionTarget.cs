@@ -1,6 +1,5 @@
-﻿using System;
-using NLog;
-using NLog.Targets;
+﻿using NLog;
+using Target = NLog.Targets.Target;
 
 public sealed class ActionTarget: Target
 {

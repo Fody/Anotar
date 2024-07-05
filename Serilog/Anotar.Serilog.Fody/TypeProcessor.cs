@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
@@ -13,10 +11,9 @@ public partial class ModuleWeaver
         Action foundAction;
         if (fieldDefinition == null)
         {
-            fieldDefinition = new("LazyAnotarLogger", FieldAttributes.Static | FieldAttributes.Private, LazyDefinition)
-            {
-                DeclaringType = type
-            };
+            fieldDefinition = new(
+                "LazyAnotarLogger",
+                FieldAttributes.Static | FieldAttributes.Private, LazyDefinition) {DeclaringType = type};
             foundAction = () => InjectField(type, fieldDefinition);
         }
         else
@@ -34,21 +31,12 @@ public partial class ModuleWeaver
                 continue;
             }
 
-            var onExceptionProcessor = new OnExceptionProcessor
-            {
-                Method = method,
-                LoggerField = fieldReference,
-                FoundUsageInType = () => foundUsage = true,
-                ModuleWeaver = this
-            };
+            var onExceptionProcessor = new OnExceptionProcessor {Method = method, LoggerField = fieldReference, FoundUsageInType = () => foundUsage = true, ModuleWeaver = this};
             onExceptionProcessor.Process();
 
             var logForwardingProcessor = new LogForwardingProcessor
             {
-                FoundUsageInType = () => foundUsage = true,
-                Method = method,
-                ModuleWeaver = this,
-                LoggerField = fieldReference,
+                FoundUsageInType = () => foundUsage = true, Method = method, ModuleWeaver = this, LoggerField = fieldReference,
             };
             logForwardingProcessor.ProcessMethod();
         }

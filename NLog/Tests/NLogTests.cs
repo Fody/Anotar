@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Fody;
 using NLog;
 using NLog.Config;
-using Xunit;
 
 public class NLogTests
 {
@@ -23,7 +18,7 @@ public class NLogTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            ignoreCodes: ["0x80131869"]).Assembly;
         var config = new LoggingConfiguration();
         var target = new ActionTarget
         {

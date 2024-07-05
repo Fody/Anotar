@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using Mono.Cecil.Cil;
 
@@ -198,14 +195,14 @@ public class LogForwardingProcessor
         var instructions = Method.Body.Instructions;
         if (methodReference.Name.StartsWith("get_Is"))
         {
-            instructions.Replace(instruction,
-                new[]
-                {
+            instructions.Replace(
+                instruction,
+                [
                     Instruction.Create(OpCodes.Ldsfld, LoggerField),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.LazyValue),
                     Instruction.Create(OpCodes.Ldc_I4, ModuleWeaver.GetLevelForIsEnabled(methodReference)),
                     Instruction.Create(OpCodes.Callvirt, ModuleWeaver.IsEnabledMethod)
-                });
+                ]);
             return;
         }
 

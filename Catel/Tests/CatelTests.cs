@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Catel.Logging;
 using Fody;
-using Xunit;
 
 public class CatelTests
 {
@@ -20,7 +15,7 @@ public class CatelTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            ignoreCodes: ["0x80131869"]).Assembly;
 
         LogManager.AddListener(new LogListener
         {

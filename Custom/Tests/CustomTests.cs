@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Fody;
-using Xunit;
 
 public class CustomTests
 {
@@ -14,7 +10,7 @@ public class CustomTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] {"0x80131869"}).Assembly;
+            ignoreCodes: ["0x80131869"]).Assembly;
     }
 
     public CustomTests()

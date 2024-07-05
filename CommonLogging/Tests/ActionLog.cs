@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Logging;
+﻿using Common.Logging;
 
 public class ActionLog : ILog
 {
@@ -15,7 +14,7 @@ public class ActionLog : ILog
         actionAdapter.Traces.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] { }
+            Args = []
         });
     }
 
@@ -78,7 +77,7 @@ public class ActionLog : ILog
         actionAdapter.Debugs.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] { }
+            Args = []
         });
     }
 
@@ -141,7 +140,7 @@ public class ActionLog : ILog
         actionAdapter.Informations.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] {}
+            Args = []
         });
     }
 
@@ -204,7 +203,7 @@ public class ActionLog : ILog
         actionAdapter.Warnings.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] { }
+            Args = []
         });
     }
 
@@ -267,7 +266,7 @@ public class ActionLog : ILog
         actionAdapter.Errors.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] { }
+            Args = []
         });
     }
 
@@ -330,7 +329,7 @@ public class ActionLog : ILog
         actionAdapter.Fatals.Add(new()
         {
             Format = message.ToString(),
-            Args = new object[] { }
+            Args = []
         });
     }
 
