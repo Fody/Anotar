@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Anotar.Custom;
+﻿using Anotar.Custom;
 // ReSharper disable NotAccessedVariable
 // ReSharper disable RedundantAssignment
 

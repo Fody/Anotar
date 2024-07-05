@@ -1,10 +1,8 @@
-using System;
 using System.Diagnostics;
 using Anotar.Splat;
 
 public class OnException
 {
-
     [LogToErrorOnException]
     public void ToError(string param1, int param2)
     {

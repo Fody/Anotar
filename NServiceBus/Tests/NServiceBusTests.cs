@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Fody;
 using NServiceBus.Logging;
-using Xunit;
 
 public class NServiceBusTests
 {

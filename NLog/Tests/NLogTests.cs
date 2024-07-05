@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Fody;
 using NLog;
 using NLog.Config;
-using Xunit;
 
 public class NLogTests
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using Catel.Logging;
+﻿using Catel.Logging;
 
 public class LogListener : LogListenerBase
 {

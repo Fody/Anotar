@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace JetBrains.Annotations;
+﻿namespace JetBrains.Annotations;
 
 /// <summary>
 /// Not for external use.

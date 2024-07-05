@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Anotar.Catel;
+﻿using Anotar.Catel;
 // ReSharper disable RedundantAssignment
 
 public class Issues

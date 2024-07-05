@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using Anotar.CommonLogging;
 // ReSharper disable UnusedVariable

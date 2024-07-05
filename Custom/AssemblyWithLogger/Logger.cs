@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 public class Logger
 {
     public void Trace(string format)

@@ -1,5 +1,3 @@
-using System;
-
 public class Lazy<T> where T : class
 {
     Func<T> func;

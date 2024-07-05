@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
 

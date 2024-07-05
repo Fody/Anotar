@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Anotar.Custom;
 // ReSharper disable UnusedMember.Global
 #pragma warning disable 1998

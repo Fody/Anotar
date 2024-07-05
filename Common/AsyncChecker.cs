@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Fody;
+﻿using Fody;
 using Mono.Cecil;
 
 public static class AsyncChecker

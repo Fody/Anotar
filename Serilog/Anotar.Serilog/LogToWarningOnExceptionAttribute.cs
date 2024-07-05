@@ -1,5 +1,3 @@
-using System;
-
 namespace Anotar.Serilog;
 
 /// <summary>

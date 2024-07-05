@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Logging;
+﻿using Common.Logging;
 
 public class ActionLog : ILog
 {

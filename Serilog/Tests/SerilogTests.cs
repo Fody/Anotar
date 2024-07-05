@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Fody;
 using Serilog;
 using Serilog.Events;
-using Xunit;
 
 public class SerilogTests:IDisposable
 {

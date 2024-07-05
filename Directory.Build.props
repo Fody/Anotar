@@ -16,5 +16,6 @@
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 </Project>

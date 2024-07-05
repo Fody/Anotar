@@ -1,5 +1,4 @@
-﻿using System;
-using Serilog.Core;
+﻿using Serilog.Core;
 
 namespace Anotar.Serilog;
 

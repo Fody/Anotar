@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿
 // ReSharper disable UnusedTypeParameter
 
 public class LoggerFactory

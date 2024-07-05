@@ -1,4 +1,3 @@
-using System;
 using Anotar.Serilog;
 using Serilog;
 using Serilog.Core;

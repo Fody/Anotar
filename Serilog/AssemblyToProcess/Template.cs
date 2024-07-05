@@ -1,5 +1,3 @@
-using System;
-using System.Threading;
 using Serilog;
 using Serilog.Events;
 #pragma warning disable 169
