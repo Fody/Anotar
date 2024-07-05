@@ -23,7 +23,7 @@ public class NLogTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            ignoreCodes: ["0x80131869"]).Assembly;
         var config = new LoggingConfiguration();
         var target = new ActionTarget
         {

@@ -17,7 +17,7 @@ public class CommonLoggingTests
         var moduleWeaver = new ModuleWeaver();
         assembly = moduleWeaver.ExecuteTestRun(
             assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: new[] { "0x80131869" }).Assembly;
+            ignoreCodes: ["0x80131869"]).Assembly;
         actionAdapter = new();
         LogManager.Adapter = actionAdapter;
     }
