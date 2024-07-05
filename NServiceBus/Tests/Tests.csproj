@@ -9,10 +9,7 @@
     <PackageReference Include="NServiceBus" Version="9.0.3" />
     <PackageReference Include="Xunit" Version="2.8.1" />
     <PackageReference Include="Verify.Xunit" Version="25.3.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <ProjectReference Include="..\Anotar.NServiceBus.Fody\Anotar.NServiceBus.Fody.csproj" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
