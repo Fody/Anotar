@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="6.8.1" />
     <PackageReference Include="Xunit" Version="2.8.1" />
-    <PackageReference Include="Verify.Xunit" Version="25.1.1" />
+    <PackageReference Include="Verify.Xunit" Version="25.3.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
