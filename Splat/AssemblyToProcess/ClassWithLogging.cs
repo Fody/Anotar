@@ -19,7 +19,7 @@ public class ClassWithLogging
 
     public void DebugStringFunc()
     {
-        LogTo.Debug(()=>"TheMessage");
+        LogTo.Debug(() => "TheMessage");
     }
 
     public void DebugStringParams()
@@ -34,7 +34,7 @@ public class ClassWithLogging
 
     public void DebugStringExceptionFunc()
     {
-        LogTo.DebugException(()=>"TheMessage", new());
+        LogTo.DebugException(() => "TheMessage", new());
     }
 
     public bool IsInfoEnabled()
