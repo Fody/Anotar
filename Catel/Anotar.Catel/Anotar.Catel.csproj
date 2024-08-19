@@ -9,5 +9,6 @@
     <PackageReference Include="Fody" Version="6.8.1" PrivateAssets="none" />
     <PackageReference Include="FodyPackaging" Version="6.8.1" PrivateAssets="All" />
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
 </Project>
