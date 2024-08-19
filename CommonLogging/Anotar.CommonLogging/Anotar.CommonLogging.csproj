@@ -10,5 +10,7 @@
     <PackageReference Include="FodyPackaging" Version="6.8.1" PrivateAssets="All" />
 
     <Compile Include="$(SolutionDir)\Common\StringFormatMethodAttribute.cs" Link="StringFormatMethodAttribute.cs" />
+
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 </Project>
