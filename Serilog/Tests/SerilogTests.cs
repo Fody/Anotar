@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Fody;
 using Serilog;
 using Serilog.Events;
 
+// tests share static logger state
+[NotInParallel]
 public class SerilogTests:IDisposable
 {
     static List<LogEvent> errors;
@@ -85,68 +87,81 @@ public class SerilogTests:IDisposable
         warns = new();
     }
 
-    [Fact]
-    public void ClassWithComplexExpressionInLog()
+    [Test]
+    public async Task ClassWithComplexExpressionInLog()
     {
         var type = assembly.GetType("ClassWithComplexExpressionInLog");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
-        Assert.Single(errors);
+        await Assert.That(errors).HasSingleItem();
         var text = errors.First().MessageTemplate.Text;
-        Assert.Equal("X", text);
+        await Assert.That(text).IsEqualTo("X");
     }
 
-    [Fact(Skip = "Todo")]
-    public void Generic()
+    [Test]
+    [Skip("Todo")]
+    public async Task Generic()
     {
         var type = assembly.GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var logEvent = debugs.Single();
-        Assert.Equal(7, logEvent.LineNumber());
-        Assert.Equal("Void Debug()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.True(logEvent.SourceContext().StartsWith("GenericClass`1"), logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(7);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Debug()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).StartsWith("GenericClass`1");
     }
 
-    [Fact]
-    public void MethodThatReturns()
+    [Test]
+    public async Task MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.Equal("a", instance.MethodThatReturns("x", 6));
+        await Assert.That((string) instance.MethodThatReturns("x", 6)).IsEqualTo("a");
     }
 
-    [Fact]
-    public void WithStaticConstructor()
+    [Test]
+    public async Task WithStaticConstructor()
     {
-        var type = assembly.GetType("ClassWithStaticConstructor");
-        var flags = BindingFlags.Static | BindingFlags.Public;
-        type.GetMethod("StaticMethod", flags).Invoke(null, null);
-        // ReSharper disable once PossibleNullReferenceException
-        var message = (string) type.GetField("Message", flags).GetValue(null);
-        Assert.Equal("Foo", message);
+        // the static constructor replaces the global logger, so restore it for other tests
+        var logger = Log.Logger;
+        string message;
+        try
+        {
+            var type = assembly.GetType("ClassWithStaticConstructor");
+            var flags = BindingFlags.Static | BindingFlags.Public;
+            type.GetMethod("StaticMethod", flags).Invoke(null, null);
+            // ReSharper disable once PossibleNullReferenceException
+            message = (string) type.GetField("Message", flags).GetValue(null);
+        }
+        finally
+        {
+            Log.Logger = logger;
+        }
+
+        await Assert.That(message).IsEqualTo("Foo");
     }
 
-    [Fact(Skip = "Todo")]
-    public void ClassWithExistingField()
+    [Test]
+    [Skip("Todo")]
+    public async Task ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.Single(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static));
+        await Assert.That(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static)).HasSingleItem();
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.Single(debugs);
+        await Assert.That(debugs).HasSingleItem();
         var logEvent = debugs.First();
-        Assert.Equal(17, logEvent.LineNumber());
-        Assert.Equal("Void Debug()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithExistingField", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(17);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Debug()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithExistingField");
     }
 
     // ReSharper disable once UnusedParameter.Local
-    static void CheckException(Action<object> action, List<LogEvent> list, string expected)
+    static async Task CheckException(Action<object> action, List<LogEvent> list, string expected)
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
@@ -154,468 +169,469 @@ public class SerilogTests:IDisposable
         {
             action(instance);
         });
-        Assert.Single(list);
+        await Assert.That(list).HasSingleItem();
         var first = list.First();
-        Assert.True(first.MessageTemplate.Text.StartsWith(expected), first.MessageTemplate.Text);
+        await Assert.That(first.MessageTemplate.Text).StartsWith(expected);
     }
 
-    [Fact]
-    public void OnExceptionToVerbose()
+    [Test]
+    public async Task OnExceptionToVerbose()
     {
         var expected = "Exception occurred in 'Void ToVerbose(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToVerbose("x", 6);
-        CheckException(action, verboses, expected);
+        await CheckException(action, verboses, expected);
     }
 
-    [Fact]
-    public void OnExceptionToVerboseWithReturn()
+    [Test]
+    public async Task OnExceptionToVerboseWithReturn()
     {
         var expected = "Exception occurred in 'Object ToVerboseWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToVerboseWithReturn("x", 6);
-        CheckException(action, verboses, expected);
+        await CheckException(action, verboses, expected);
     }
 
-    [Fact]
-    public void OnExceptionToDebug()
+    [Test]
+    public async Task OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
-        CheckException(action, debugs, expected);
+        await CheckException(action, debugs, expected);
     }
 
-    [Fact]
-    public void OnExceptionToDebugWithReturn()
+    [Test]
+    public async Task OnExceptionToDebugWithReturn()
     {
         var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
-        CheckException(action, debugs, expected);
+        await CheckException(action, debugs, expected);
     }
 
-    [Fact]
-    public void OnExceptionToInfo()
+    [Test]
+    public async Task OnExceptionToInfo()
     {
         var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, informations, expected);
+        await CheckException(action, informations, expected);
     }
 
-    [Fact]
-    public void OnExceptionToInfoWithReturn()
+    [Test]
+    public async Task OnExceptionToInfoWithReturn()
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, informations, expected);
+        await CheckException(action, informations, expected);
     }
 
-    [Fact]
-    public void OnExceptionToWarn()
+    [Test]
+    public async Task OnExceptionToWarn()
     {
         var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
-        CheckException(action, warns, expected);
+        await CheckException(action, warns, expected);
     }
 
-    [Fact]
-    public void OnExceptionToWarnWithReturn()
+    [Test]
+    public async Task OnExceptionToWarnWithReturn()
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-        CheckException(action, warns, expected);
+        await CheckException(action, warns, expected);
     }
 
-    [Fact]
-    public void OnExceptionToError()
+    [Test]
+    public async Task OnExceptionToError()
     {
         var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
-        CheckException(action, errors, expected);
+        await CheckException(action, errors, expected);
     }
 
-    [Fact]
-    public void OnExceptionToErrorWithReturn()
+    [Test]
+    public async Task OnExceptionToErrorWithReturn()
     {
         var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
-        CheckException(action, errors, expected);
+        await CheckException(action, errors, expected);
     }
 
-    [Fact]
-    public void OnExceptionToFatal()
+    [Test]
+    public async Task OnExceptionToFatal()
     {
         var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
-        CheckException(action, fatals, expected);
+        await CheckException(action, fatals, expected);
     }
 
-    [Fact]
-    public void OnExceptionToFatalWithReturn()
+    [Test]
+    public async Task OnExceptionToFatalWithReturn()
     {
         var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-        CheckException(action, fatals, expected);
+        await CheckException(action, fatals, expected);
     }
 
-    [Fact]
-    public void IsVerboseEnabled()
+    [Test]
+    public async Task IsVerboseEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsVerboseEnabled());
+        await Assert.That((bool) instance.IsVerboseEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Verbose()
+    [Test]
+    public async Task Verbose()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Verbose();
         var logEvent = verboses.Single();
-        Assert.Equal(12, logEvent.LineNumber());
-        Assert.Equal("Void Verbose()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(12);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Verbose()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void VerboseString()
+    [Test]
+    public async Task VerboseString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseString();
         var logEvent = verboses.Single();
-        Assert.Equal(17, logEvent.LineNumber());
-        Assert.Equal("Void VerboseString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(17);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void VerboseString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void VerboseStringParams()
+    [Test]
+    public async Task VerboseStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseStringParams();
         var logEvent = verboses.Single();
-        Assert.Equal(22, logEvent.LineNumber());
-        Assert.Equal("Void VerboseStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(22);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void VerboseStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void VerboseStringException()
+    [Test]
+    public async Task VerboseStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.VerboseStringException();
         var logEvent = verboses.Single();
-        Assert.Equal(27, logEvent.LineNumber());
-        Assert.Equal("Void VerboseStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(27);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void VerboseStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void IsDebugEnabled()
+    [Test]
+    public async Task IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsDebugEnabled());
+        await Assert.That((bool) instance.IsDebugEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Debug()
+    [Test]
+    public async Task Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
         var logEvent = debugs.Single();
-        Assert.Equal(36, logEvent.LineNumber());
-        Assert.Equal("Void Debug()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(36);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Debug()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void DebugString()
+    [Test]
+    public async Task DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
         var logEvent = debugs.Single();
-        Assert.Equal(41, logEvent.LineNumber());
-        Assert.Equal("Void DebugString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(41);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void DebugString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void DebugStringParams()
+    [Test]
+    public async Task DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
         var logEvent = debugs.Single();
-        Assert.Equal(46, logEvent.LineNumber());
-        Assert.Equal("Void DebugStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(46);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void DebugStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void DebugStringException()
+    [Test]
+    public async Task DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
         var logEvent = debugs.Single();
-        Assert.Equal(51, logEvent.LineNumber());
-        Assert.Equal("Void DebugStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(51);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void DebugStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void IsInformationEnabled()
+    [Test]
+    public async Task IsInformationEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsInformationEnabled());
+        await Assert.That((bool) instance.IsInformationEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Information()
+    [Test]
+    public async Task Information()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Information();
         var logEvent = informations.Single();
-        Assert.Equal(61, logEvent.LineNumber());
-        Assert.Equal("Void Information()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(61);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Information()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void InformationString()
+    [Test]
+    public async Task InformationString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationString();
         var logEvent = informations.Single();
-        Assert.Equal(66, logEvent.LineNumber());
-        Assert.Equal("Void InformationString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(66);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void InformationString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void InformationStringParams()
+    [Test]
+    public async Task InformationStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringParams();
         var logEvent = informations.Single();
-        Assert.Equal(71, logEvent.LineNumber());
-        Assert.Equal("Void InformationStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(71);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void InformationStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void InformationStringException()
+    [Test]
+    public async Task InformationStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InformationStringException();
         var logEvent = informations.Single();
-        Assert.Equal(76, logEvent.LineNumber());
-        Assert.Equal("Void InformationStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(76);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void InformationStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void IsWarningEnabled()
+    [Test]
+    public async Task IsWarningEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsWarningEnabled());
+        await Assert.That((bool) instance.IsWarningEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Warning()
+    [Test]
+    public async Task Warning()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warning();
         var logEvent = warns.Single();
-        Assert.Equal(86, logEvent.LineNumber());
-        Assert.Equal("Void Warning()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(86);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Warning()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void WarningString()
+    [Test]
+    public async Task WarningString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningString();
         var logEvent = warns.Single();
-        Assert.Equal(91, logEvent.LineNumber());
-        Assert.Equal("Void WarningString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(91);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void WarningString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void WarningStringParams()
+    [Test]
+    public async Task WarningStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringParams();
         var logEvent = warns.Single();
-        Assert.Equal(96, logEvent.LineNumber());
-        Assert.Equal("Void WarningStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(96);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void WarningStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void WarningStringException()
+    [Test]
+    public async Task WarningStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarningStringException();
         var logEvent = warns.Single();
-        Assert.Equal(101, logEvent.LineNumber());
-        Assert.Equal("Void WarningStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(101);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void WarningStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void IsErrorEnabled()
+    [Test]
+    public async Task IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsErrorEnabled());
+        await Assert.That((bool) instance.IsErrorEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Error()
+    [Test]
+    public async Task Error()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
         var logEvent = errors.Single();
-        Assert.Equal(111, logEvent.LineNumber());
-        Assert.Equal("Void Error()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(111);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Error()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void ErrorString()
+    [Test]
+    public async Task ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
         var logEvent = errors.Single();
-        Assert.Equal(116, logEvent.LineNumber());
-        Assert.Equal("Void ErrorString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(116);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void ErrorString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void ErrorStringParams()
+    [Test]
+    public async Task ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
         var logEvent = errors.Single();
-        Assert.Equal(121, logEvent.LineNumber());
-        Assert.Equal("Void ErrorStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(121);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void ErrorStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void ErrorStringException()
+    [Test]
+    public async Task ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
         var logEvent = errors.Single();
-        Assert.Equal(126, logEvent.LineNumber());
-        Assert.Equal("Void ErrorStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(126);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void ErrorStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void IsFatalEnabled()
+    [Test]
+    public async Task IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsFatalEnabled());
+        await Assert.That((bool) instance.IsFatalEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Fatal()
+    [Test]
+    public async Task Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
         var logEvent = fatals.Single();
-        Assert.Equal(136, logEvent.LineNumber());
-        Assert.Equal("Void Fatal()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(136);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void Fatal()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void FatalString()
+    [Test]
+    public async Task FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
         var logEvent = fatals.Single();
-        Assert.Equal(141, logEvent.LineNumber());
-        Assert.Equal("Void FatalString()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(141);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void FatalString()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void FatalStringParams()
+    [Test]
+    public async Task FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
         var logEvent = fatals.Single();
-        Assert.Equal(146, logEvent.LineNumber());
-        Assert.Equal("Void FatalStringParams()", logEvent.MethodName());
-        Assert.Equal("TheMessage {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(146);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void FatalStringParams()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact]
-    public void FatalStringException()
+    [Test]
+    public async Task FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
         var logEvent = fatals.Single();
-        Assert.Equal(151, logEvent.LineNumber());
-        Assert.Equal("Void FatalStringException()", logEvent.MethodName());
-        Assert.Equal("TheMessage", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithLogging", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(151);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void FatalStringException()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("TheMessage");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithLogging");
     }
 
-    [Fact(Skip = "Todo")]
+    [Test]
+    [Skip("Todo")]
     public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
@@ -623,61 +639,61 @@ public class SerilogTests:IDisposable
         Task task = instance.AsyncMethod();
         await task;
         var logEvent = debugs.Single();
-        Assert.Equal(11, logEvent.LineNumber());
-        Assert.Equal("Task AsyncMethod()", logEvent.MethodName());
-        Assert.Equal("Foo", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(11);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Task AsyncMethod()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("Foo");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithCompilerGeneratedClasses");
     }
 
-    [Fact]
-    public void EnumeratorMethod()
+    [Test]
+    public async Task EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
         var logEvent = debugs.Single();
-        Assert.Equal(15, logEvent.LineNumber());
-        Assert.Equal("IEnumerable<Int32> EnumeratorMethod()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(15);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("IEnumerable<Int32> EnumeratorMethod()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithCompilerGeneratedClasses");
     }
 
-    [Fact]
-    public void DelegateMethod()
+    [Test]
+    public async Task DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
         var logEvent = debugs.Single();
-        Assert.Equal(22, logEvent.LineNumber());
-        Assert.Equal("Void DelegateMethod()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(22);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void DelegateMethod()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithCompilerGeneratedClasses");
     }
 
-    [Fact]
-    public void AsyncDelegateMethod()
+    [Test]
+    public async Task AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
         var logEvent = debugs.Single();
-        Assert.Equal(37, logEvent.LineNumber());
-        Assert.Equal("Void AsyncDelegateMethod()", logEvent.MethodName());
-        Assert.Equal("", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(37);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void AsyncDelegateMethod()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithCompilerGeneratedClasses");
     }
 
-    [Fact]
-    public void LambdaMethod()
+    [Test]
+    public async Task LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
         var logEvent = debugs.Single();
-        Assert.Equal(29, logEvent.LineNumber());
-        Assert.Equal("Void LambdaMethod()", logEvent.MethodName());
-        Assert.Equal("Foo {0}", logEvent.MessageTemplate.Text);
-        Assert.Equal("ClassWithCompilerGeneratedClasses", logEvent.SourceContext());
+        await Assert.That(logEvent.LineNumber()).IsEqualTo(29);
+        await Assert.That(logEvent.MethodName()).IsEqualTo("Void LambdaMethod()");
+        await Assert.That(logEvent.MessageTemplate.Text).IsEqualTo("Foo {0}");
+        await Assert.That(logEvent.SourceContext()).IsEqualTo("ClassWithCompilerGeneratedClasses");
     }
 }

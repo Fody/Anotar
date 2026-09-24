@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Fody;
 using NLog;
 using NLog.Config;
 
+// tests share static logger state
+[NotInParallel]
 public class NLogTests
 {
     static Assembly assembly;
@@ -81,50 +83,50 @@ public class NLogTests
         }
     }
 
-    [Fact]
-    public void ClassWithComplexExpressionInLog()
+    [Test]
+    public async Task ClassWithComplexExpressionInLog()
     {
         var type = assembly.GetType("ClassWithComplexExpressionInLog");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Method();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void Method()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void Method()'. Line: ~");
     }
 
-    [Fact]
-    public void MethodThatReturns()
+    [Test]
+    public async Task MethodThatReturns()
     {
         var type = assembly.GetType("OnException");
         var instance = (dynamic) Activator.CreateInstance(type);
 
-        Assert.Equal("a", instance.MethodThatReturns("x", 6));
+        await Assert.That((string) instance.MethodThatReturns("x", 6)).IsEqualTo("a");
     }
 
-    [Fact]
-    public void Generic()
+    [Test]
+    public async Task Generic()
     {
         var type = assembly.GetType("GenericClass`1");
         var constructedType = type.MakeGenericType(typeof(string));
         var instance = (dynamic) Activator.CreateInstance(constructedType);
         instance.Debug();
         var message = Debugs.First();
-        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", message);
+        await Assert.That(message).StartsWith("Method: 'Void Debug()'. Line: ~");
     }
 
 
-    [Fact]
-    public void ClassWithExistingField()
+    [Test]
+    public async Task ClassWithExistingField()
     {
         var type = assembly.GetType("ClassWithExistingField");
-        Assert.Single(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static));
+        await Assert.That(type.GetFields(BindingFlags.NonPublic | BindingFlags.Static)).HasSingleItem();
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void Debug()'. Line: ~");
     }
 
     // ReSharper disable once UnusedParameter.Local
-    static void CheckException(Action<object> action, List<string> list, string expected)
+    static async Task CheckException(Action<object> action, List<string> list, string expected)
     {
         Exception exception = null;
         var type = assembly.GetType("OnException");
@@ -138,566 +140,566 @@ public class NLogTests
             exception = e;
         }
 
-        Assert.NotNull(exception);
-        Assert.Single(list);
+        await Assert.That(exception).IsNotNull();
+        await Assert.That(list).HasSingleItem();
         var first = list.First();
-        Assert.True(first.StartsWith(expected), first);
+        await Assert.That(first).StartsWith(expected);
     }
 
 
-    [Fact]
-    public void OnExceptionToTrace()
+    [Test]
+    public async Task OnExceptionToTrace()
     {
         var expected = "Exception occurred in 'Void ToTrace(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToTrace("x", 6);
-        CheckException(action, Traces, expected);
+        await CheckException(action, Traces, expected);
     }
 
-    [Fact]
-    public void OnExceptionToTraceWithReturn()
+    [Test]
+    public async Task OnExceptionToTraceWithReturn()
     {
         var expected = "Exception occurred in 'Object ToTraceWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToTraceWithReturn("x", 6);
-        CheckException(action, Traces, expected);
+        await CheckException(action, Traces, expected);
     }
 
-    [Fact]
-    public void OnExceptionToDebug()
+    [Test]
+    public async Task OnExceptionToDebug()
     {
         var expected = "Exception occurred in 'Void ToDebug(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebug("x", 6);
-        CheckException(action, Debugs, expected);
+        await CheckException(action, Debugs, expected);
     }
 
-    [Fact]
-    public void OnExceptionToDebugWithReturn()
+    [Test]
+    public async Task OnExceptionToDebugWithReturn()
     {
         var expected = "Exception occurred in 'Object ToDebugWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToDebugWithReturn("x", 6);
-        CheckException(action, Debugs, expected);
+        await CheckException(action, Debugs, expected);
     }
 
-    [Fact]
-    public void OnExceptionToInfo()
+    [Test]
+    public async Task OnExceptionToInfo()
     {
         var expected = "Exception occurred in 'Void ToInfo(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfo("x", 6);
-        CheckException(action, Informations, expected);
+        await CheckException(action, Informations, expected);
     }
 
-    [Fact]
-    public void OnExceptionToInfoWithReturn()
+    [Test]
+    public async Task OnExceptionToInfoWithReturn()
     {
         var expected = "Exception occurred in 'Object ToInfoWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToInfoWithReturn("x", 6);
-        CheckException(action, Informations, expected);
+        await CheckException(action, Informations, expected);
     }
 
-    [Fact]
-    public void OnExceptionToWarn()
+    [Test]
+    public async Task OnExceptionToWarn()
     {
         var expected = "Exception occurred in 'Void ToWarn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarn("x", 6);
-        CheckException(action, Warns, expected);
+        await CheckException(action, Warns, expected);
     }
 
-    [Fact]
-    public void OnExceptionToWarnWithReturn()
+    [Test]
+    public async Task OnExceptionToWarnWithReturn()
     {
         var expected = "Exception occurred in 'Object ToWarnWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToWarnWithReturn("x", 6);
-        CheckException(action, Warns, expected);
+        await CheckException(action, Warns, expected);
     }
 
-    [Fact]
-    public void OnExceptionToError()
+    [Test]
+    public async Task OnExceptionToError()
     {
         var expected = "Exception occurred in 'Void ToError(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToError("x", 6);
-        CheckException(action, Errors, expected);
+        await CheckException(action, Errors, expected);
     }
 
-    [Fact]
-    public void OnExceptionToErrorWithReturn()
+    [Test]
+    public async Task OnExceptionToErrorWithReturn()
     {
         var expected = "Exception occurred in 'Object ToErrorWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToErrorWithReturn("x", 6);
-        CheckException(action, Errors, expected);
+        await CheckException(action, Errors, expected);
     }
 
-    [Fact]
-    public void OnExceptionToFatal()
+    [Test]
+    public async Task OnExceptionToFatal()
     {
         var expected = "Exception occurred in 'Void ToFatal(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatal("x", 6);
-        CheckException(action, Fatals, expected);
+        await CheckException(action, Fatals, expected);
     }
 
-    [Fact]
-    public void OnExceptionToFatalWithReturn()
+    [Test]
+    public async Task OnExceptionToFatalWithReturn()
     {
         var expected = "Exception occurred in 'Object ToFatalWithReturn(String, Int32)'.  param1 'x' param2 '6'";
         Action<dynamic> action = o => o.ToFatalWithReturn("x", 6);
-        CheckException(action, Fatals, expected);
+        await CheckException(action, Fatals, expected);
     }
 
 
-    [Fact]
-    public void IsTraceEnabled()
+    [Test]
+    public async Task IsTraceEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsTraceEnabled());
+        await Assert.That((bool) instance.IsTraceEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Trace()
+    [Test]
+    public async Task Trace()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Trace();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void Trace()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void Trace()'. Line: ~");
     }
 
-    [Fact]
-    public void TraceString()
+    [Test]
+    public async Task TraceString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceString();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void TraceString()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void TraceString()'. Line: ~");
     }
 
-    [Fact]
-    public void TraceStringFunc()
+    [Test]
+    public async Task TraceStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringFunc();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void TraceStringFunc()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void TraceStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void TraceStringParams()
+    [Test]
+    public async Task TraceStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringParams();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void TraceStringParams()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void TraceStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void TraceStringException()
+    [Test]
+    public async Task TraceStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringException();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void TraceStringException()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void TraceStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void TraceStringExceptionFunc()
+    [Test]
+    public async Task TraceStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.TraceStringExceptionFunc();
-        Assert.Single(Traces);
-        Assert.StartsWith("Method: 'Void TraceStringExceptionFunc()'. Line: ~", Traces.First());
+        await Assert.That(Traces).HasSingleItem();
+        await Assert.That(Traces.First()).StartsWith("Method: 'Void TraceStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void IsDebugEnabled()
+    [Test]
+    public async Task IsDebugEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsDebugEnabled());
+        await Assert.That((bool) instance.IsDebugEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Debug()
+    [Test]
+    public async Task Debug()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Debug();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void Debug()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void Debug()'. Line: ~");
     }
 
-    [Fact]
-    public void DebugString()
+    [Test]
+    public async Task DebugString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugString();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void DebugString()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DebugString()'. Line: ~");
     }
 
-    [Fact]
-    public void DebugStringFunc()
+    [Test]
+    public async Task DebugStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringFunc();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void DebugStringFunc()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DebugStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void DebugStringParams()
+    [Test]
+    public async Task DebugStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringParams();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void DebugStringParams()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DebugStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void DebugStringException()
+    [Test]
+    public async Task DebugStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringException();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void DebugStringException()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DebugStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void DebugStringExceptionFunc()
+    [Test]
+    public async Task DebugStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DebugStringExceptionFunc();
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Void DebugStringExceptionFunc()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DebugStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void IsInfoEnabled()
+    [Test]
+    public async Task IsInfoEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsInfoEnabled());
+        await Assert.That((bool) instance.IsInfoEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Info()
+    [Test]
+    public async Task Info()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Info();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void Info()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void Info()'. Line: ~");
     }
 
-    [Fact]
-    public void InfoString()
+    [Test]
+    public async Task InfoString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoString();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void InfoString()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void InfoString()'. Line: ~");
     }
 
-    [Fact]
-    public void InfoStringFunc()
+    [Test]
+    public async Task InfoStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringFunc();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void InfoStringFunc()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void InfoStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void InfoStringParams()
+    [Test]
+    public async Task InfoStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringParams();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void InfoStringParams()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void InfoStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void InfoStringException()
+    [Test]
+    public async Task InfoStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringException();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void InfoStringException()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void InfoStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void InfoStringExceptionFunc()
+    [Test]
+    public async Task InfoStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.InfoStringExceptionFunc();
-        Assert.Single(Informations);
-        Assert.StartsWith("Method: 'Void InfoStringExceptionFunc()'. Line: ~", Informations.First());
+        await Assert.That(Informations).HasSingleItem();
+        await Assert.That(Informations.First()).StartsWith("Method: 'Void InfoStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void IsWarnEnabled()
+    [Test]
+    public async Task IsWarnEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsWarnEnabled());
+        await Assert.That((bool) instance.IsWarnEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Warn()
+    [Test]
+    public async Task Warn()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Warn();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void Warn()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void Warn()'. Line: ~");
     }
 
-    [Fact]
-    public void WarnString()
+    [Test]
+    public async Task WarnString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnString();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void WarnString()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void WarnString()'. Line: ~");
     }
 
-    [Fact]
-    public void WarnStringFunc()
+    [Test]
+    public async Task WarnStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringFunc();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void WarnStringFunc()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void WarnStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void WarnStringParams()
+    [Test]
+    public async Task WarnStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringParams();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void WarnStringParams()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void WarnStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void WarnStringException()
+    [Test]
+    public async Task WarnStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringException();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void WarnStringException()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void WarnStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void WarnStringExceptionFunc()
+    [Test]
+    public async Task WarnStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.WarnStringExceptionFunc();
-        Assert.Single(Warns);
-        Assert.StartsWith("Method: 'Void WarnStringExceptionFunc()'. Line: ~", Warns.First());
+        await Assert.That(Warns).HasSingleItem();
+        await Assert.That(Warns.First()).StartsWith("Method: 'Void WarnStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void IsErrorEnabled()
+    [Test]
+    public async Task IsErrorEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsErrorEnabled());
+        await Assert.That((bool) instance.IsErrorEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Error()
+    [Test]
+    public async Task Error()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Error();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void Error()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void Error()'. Line: ~");
     }
 
-    [Fact]
-    public void ErrorString()
+    [Test]
+    public async Task ErrorString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorString();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void ErrorString()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void ErrorString()'. Line: ~");
     }
 
-    [Fact]
-    public void ErrorStringFunc()
+    [Test]
+    public async Task ErrorStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringFunc();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void ErrorStringFunc()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void ErrorStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void ErrorStringParams()
+    [Test]
+    public async Task ErrorStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringParams();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void ErrorStringParams()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void ErrorStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void ErrorStringException()
+    [Test]
+    public async Task ErrorStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringException();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void ErrorStringException()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void ErrorStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void ErrorStringExceptionFunc()
+    [Test]
+    public async Task ErrorStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.ErrorStringExceptionFunc();
-        Assert.Single(Errors);
-        Assert.StartsWith("Method: 'Void ErrorStringExceptionFunc()'. Line: ~", Errors.First());
+        await Assert.That(Errors).HasSingleItem();
+        await Assert.That(Errors.First()).StartsWith("Method: 'Void ErrorStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void IsFatalEnabled()
+    [Test]
+    public async Task IsFatalEnabled()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
-        Assert.True(instance.IsFatalEnabled());
+        await Assert.That((bool) instance.IsFatalEnabled()).IsTrue();
     }
 
-    [Fact]
-    public void Fatal()
+    [Test]
+    public async Task Fatal()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.Fatal();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void Fatal()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void Fatal()'. Line: ~");
     }
 
-    [Fact]
-    public void FatalString()
+    [Test]
+    public async Task FatalString()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalString();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void FatalString()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void FatalString()'. Line: ~");
     }
 
-    [Fact]
-    public void FatalStringFunc()
+    [Test]
+    public async Task FatalStringFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringFunc();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void FatalStringFunc()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void FatalStringFunc()'. Line: ~");
     }
 
-    [Fact]
-    public void FatalStringParams()
+    [Test]
+    public async Task FatalStringParams()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringParams();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void FatalStringParams()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void FatalStringParams()'. Line: ~");
     }
 
-    [Fact]
-    public void FatalStringException()
+    [Test]
+    public async Task FatalStringException()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringException();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void FatalStringException()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void FatalStringException()'. Line: ~");
     }
 
-    [Fact]
-    public void FatalStringExceptionFunc()
+    [Test]
+    public async Task FatalStringExceptionFunc()
     {
         var type = assembly.GetType("ClassWithLogging");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.FatalStringExceptionFunc();
-        Assert.Single(Fatals);
-        Assert.StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~", Fatals.First());
+        await Assert.That(Fatals).HasSingleItem();
+        await Assert.That(Fatals.First()).StartsWith("Method: 'Void FatalStringExceptionFunc()'. Line: ~");
     }
 
-    [Fact]
+    [Test]
     public async Task AsyncMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         Task task = instance.AsyncMethod();
         await task;
-        Assert.Single(Debugs);
-        Assert.StartsWith("Method: 'Task AsyncMethod()'. Line: ~", Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Task AsyncMethod()'. Line: ~");
     }
 
-    [Fact]
-    public void EnumeratorMethod()
+    [Test]
+    public async Task EnumeratorMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         ((IEnumerable<int>) instance.EnumeratorMethod()).ToList();
-        Assert.Single(Debugs);
-        Assert.True(Debugs.First().StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~"), Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'IEnumerable<Int32> EnumeratorMethod()'. Line: ~");
     }
 
-    [Fact]
-    public void DelegateMethod()
+    [Test]
+    public async Task DelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.DelegateMethod();
-        Assert.Single(Debugs);
-        Assert.True(Debugs.First().StartsWith("Method: 'Void DelegateMethod()'. Line: ~"), Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void DelegateMethod()'. Line: ~");
     }
 
-    [Fact]
-    public void AsyncDelegateMethod()
+    [Test]
+    public async Task AsyncDelegateMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.AsyncDelegateMethod();
-        Assert.Single(Debugs);
-        Assert.True(Debugs.First().StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~"), Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void AsyncDelegateMethod()'. Line: ~");
     }
 
-    [Fact]
-    public void LambdaMethod()
+    [Test]
+    public async Task LambdaMethod()
     {
         var type = assembly.GetType("ClassWithCompilerGeneratedClasses");
         var instance = (dynamic) Activator.CreateInstance(type);
         instance.LambdaMethod();
-        Assert.Single(Debugs);
-        Assert.True(Debugs.First().StartsWith("Method: 'Void LambdaMethod()'. Line: ~"), Debugs.First());
+        await Assert.That(Debugs).HasSingleItem();
+        await Assert.That(Debugs.First()).StartsWith("Method: 'Void LambdaMethod()'. Line: ~");
     }
 }

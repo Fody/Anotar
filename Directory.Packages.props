@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Catel.Core" Version="6.0.3" />
+    <PackageVersion Include="Common.Logging" Version="3.4.1" />
+    <PackageVersion Include="Fody" Version="6.8.1" />
+    <PackageVersion Include="FodyHelpers" Version="6.8.1" />
+    <PackageVersion Include="FodyPackaging" Version="6.8.1" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="NLog" Version="5.3.2" />
+    <PackageVersion Include="NServiceBus" Version="9.1.0" />
+    <PackageVersion Include="Serilog" Version="4.0.0" />
+    <PackageVersion Include="Splat" Version="15.1.1" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageVersion Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <!-- the TUnit metapackage is not used since it brings in a Mono.Cecil that conflicts with the Cecil used by Fody -->
+    <PackageVersion Include="TUnit.Core" Version="1.69.0" />
+    <PackageVersion Include="TUnit.Assertions" Version="1.69.0" />
+    <PackageVersion Include="TUnit.Engine" Version="1.69.0" />
+    <PackageVersion Include="Verify.TUnit" Version="31.28.0" />
+  </ItemGroup>
+</Project>

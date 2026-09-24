@@ -5,8 +5,8 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.NServiceBus\Anotar.NServiceBus.csproj" />
-    <PackageReference Include="NServiceBus" Version="9.1.0" />
+    <PackageReference Include="NServiceBus" />
   </ItemGroup>
 </Project>
