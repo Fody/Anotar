@@ -97,7 +97,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anotar.Splat", "Splat\Anota
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BDDD56A-E73E-498C-AE70-B4BF6D5D9E99}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
 		Directory.Build.props = Directory.Build.props
 		.editorconfig = .editorconfig
 	EndProjectSection
