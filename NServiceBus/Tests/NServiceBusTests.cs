@@ -1,3 +1,4 @@
+#pragma warning disable CS0618 // NServiceBus.Logging is obsolete in v10 but is what the weaver emits
 using System.Reflection;
 using Fody;
 using NServiceBus.Logging;
@@ -7,6 +8,7 @@ using NServiceBus.Logging;
 public class NServiceBusTests
 {
     static Assembly assembly;
+    static Fody.TestResult testResult;
     public static List<string> Errors = new();
     public static List<string> Fatals = new();
     public static List<string> Debugs = new();
@@ -16,9 +18,7 @@ public class NServiceBusTests
     static NServiceBusTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        var testResult = moduleWeaver.ExecuteTestRun(
-            assemblyPath: "AssemblyToProcess.dll",
-            runPeVerify: false);
+        testResult = moduleWeaver.ExecuteTestRun("AssemblyToProcess.dll", runPeVerify: false);
         assembly = testResult.Assembly;
 
         LogManager.UseFactory(new LogCapture(Fatals,
@@ -35,6 +35,13 @@ public class NServiceBusTests
         Debugs.Clear();
         Infos.Clear();
         Warns.Clear();
+    }
+
+    [Test]
+    public async Task WovenAssemblyIsValid()
+    {
+        using var module = Mono.Cecil.ModuleDefinition.ReadModule(testResult.AssemblyPath);
+        await Assert.That(VerifyTests.Cecil.CecilValidator.Validate(module)).IsEmpty();
     }
 
     [Test]

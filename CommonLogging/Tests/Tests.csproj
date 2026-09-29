@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Common.Logging" />
     <PackageReference Include="FodyHelpers" />
+    <PackageReference Include="Verify.Cecil.FodyHelpers" />
     <PackageReference Include="TUnit.Core" />
     <PackageReference Include="TUnit.Assertions" />
     <PackageReference Include="TUnit.Engine" />

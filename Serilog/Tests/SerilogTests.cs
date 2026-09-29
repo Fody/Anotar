@@ -14,6 +14,7 @@ public class SerilogTests:IDisposable
     static List<LogEvent> informations;
     static List<LogEvent> warns;
     static Assembly assembly;
+    static Fody.TestResult testResult;
 
     static void LogEvent(LogEvent eventInfo)
     {
@@ -62,9 +63,8 @@ public class SerilogTests:IDisposable
         informations = new();
         warns = new();
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun(
-            assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: ["0x80131869"]).Assembly;
+        testResult = moduleWeaver.ExecuteTestRun("AssemblyToProcess.dll", runPeVerify: false);
+        assembly = testResult.Assembly;
     }
 
     public SerilogTests()
@@ -85,6 +85,13 @@ public class SerilogTests:IDisposable
         verboses = new();
         informations = new();
         warns = new();
+    }
+
+    [Test]
+    public async Task WovenAssemblyIsValid()
+    {
+        using var module = Mono.Cecil.ModuleDefinition.ReadModule(testResult.AssemblyPath);
+        await Assert.That(VerifyTests.Cecil.CecilValidator.Validate(module)).IsEmpty();
     }
 
     [Test]

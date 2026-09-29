@@ -1,3 +1,4 @@
+#pragma warning disable CS0618 // NServiceBus.Logging is obsolete in v10 but is what the weaver emits
 using NServiceBus.Logging;
 
 public class LogCapture : ILoggerFactory, ILog

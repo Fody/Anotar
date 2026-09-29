@@ -9,7 +9,7 @@ public partial class ModuleWeaver
         GetLocatorMethod = ModuleDefinition.ImportReference(getLocator);
 
         var dependencyResolver = FindTypeDefinition("Splat.IReadonlyDependencyResolver");
-        var getServiceDefinition = dependencyResolver.Methods.First(_ => _.Name == "GetService");
+        var getServiceDefinition = dependencyResolver.FindMethod("GetService", "Type", "String");
         GetServiceMethod = ModuleDefinition.ImportReference(getServiceDefinition);
 
         var logManagerDefinition = FindTypeDefinition("Splat.ILogManager");

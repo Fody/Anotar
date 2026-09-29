@@ -8,6 +8,7 @@ using NLog.Config;
 public class NLogTests
 {
     static Assembly assembly;
+    static Fody.TestResult testResult;
     public static List<string> Errors = new();
     public static List<string> Fatals = new();
     public static List<string> Debugs = new();
@@ -18,9 +19,8 @@ public class NLogTests
     static NLogTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun(
-            assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: ["0x80131869"]).Assembly;
+        testResult = moduleWeaver.ExecuteTestRun("AssemblyToProcess.dll", runPeVerify: false);
+        assembly = testResult.Assembly;
         var config = new LoggingConfiguration();
         var target = new ActionTarget
         {
@@ -81,6 +81,13 @@ public class NLogTests
             return;
 // ReSharper restore RedundantJumpStatement
         }
+    }
+
+    [Test]
+    public async Task WovenAssemblyIsValid()
+    {
+        using var module = Mono.Cecil.ModuleDefinition.ReadModule(testResult.AssemblyPath);
+        await Assert.That(VerifyTests.Cecil.CecilValidator.Validate(module)).IsEmpty();
     }
 
     [Test]

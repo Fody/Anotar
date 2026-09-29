@@ -7,14 +7,14 @@ using Fody;
 public class CommonLoggingTests
 {
     static Assembly assembly;
+    static Fody.TestResult testResult;
     static ActionAdapter actionAdapter;
 
     static CommonLoggingTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun(
-            assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: ["0x80131869"]).Assembly;
+        testResult = moduleWeaver.ExecuteTestRun("AssemblyToProcess.dll", runPeVerify: false);
+        assembly = testResult.Assembly;
         actionAdapter = new();
         LogManager.Adapter = actionAdapter;
     }
@@ -27,6 +27,13 @@ public class CommonLoggingTests
         actionAdapter.Informations.Clear();
         actionAdapter.Warnings.Clear();
         actionAdapter.Traces.Clear();
+    }
+
+    [Test]
+    public async Task WovenAssemblyIsValid()
+    {
+        using var module = Mono.Cecil.ModuleDefinition.ReadModule(testResult.AssemblyPath);
+        await Assert.That(VerifyTests.Cecil.CecilValidator.Validate(module)).IsEmpty();
     }
 
     [Test]

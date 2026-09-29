@@ -30,6 +30,8 @@ public partial class ModuleWeaver : BaseModuleWeaver
         yield return "System.Runtime";
         yield return "System.Core";
         yield return "Splat";
+        yield return "Splat.Core";
+        yield return "Splat.Logging";
     }
 
     public override bool ShouldCleanReference => true;

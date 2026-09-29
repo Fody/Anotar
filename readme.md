@@ -12,7 +12,6 @@ Simplifies logging through a static class and some IL manipulation
 
 ## Supported Logging Libraries
 
-* [Catel](http://www.catelproject.com/)
 * Custom (for frameworks/toolkits with custom logging)
 * [CommonLogging](http://netcommon.sourceforge.net/)
 * [NLog](http://nlog-project.org/)
@@ -47,7 +46,6 @@ Add `<Anotar.xxx/>` to [FodyWeavers.xml](https://github.com/Fody/Home/blob/maste
 
 ## NuGets
 
-* Catel package <http://nuget.org/packages/Anotar.Catel.Fody> [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Catel.Fody.svg)](https://www.nuget.org/packages/Anotar.Catel.Fody/)
 * CommonLogging package <http://nuget.org/packages/Anotar.CommonLogging.Fody> [![NuGet Status](http://img.shields.io/nuget/v/Anotar.CommonLogging.Fody.svg)](https://www.nuget.org/packages/Anotar.CommonLogging.Fody/)
 * Custom package <http://nuget.org/packages/Anotar.Custom.Fody> [![NuGet Status](http://img.shields.io/nuget/v/Anotar.Custom.Fody.svg)](https://www.nuget.org/packages/Anotar.Custom.Fody/)
 * NLog package <http://nuget.org/packages/Anotar.NLog.Fody> [![NuGet Status](http://img.shields.io/nuget/v/Anotar.NLog.Fody.svg)](https://www.nuget.org/packages/Anotar.NLog.Fody/)
@@ -70,20 +68,6 @@ public class MyClass
 ```
 
 ### What gets compiled
-
-#### In Catel
-
-```c#
-public class MyClass
-{
-    static ILog logger = LogManager.GetLogger(typeof(MyClass));
-
-    void MyMethod()
-    {
-        logger.WriteWithData("Method: 'Void MyMethod()'. Line: ~12. TheMessage", null, LogEvent.Debug);
-    }
-}
-```
 
 #### In CommonLogging
 

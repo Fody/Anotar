@@ -3,7 +3,6 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Catel.Core" Version="7.0.1" />
     <PackageVersion Include="Common.Logging" Version="3.4.1" />
     <PackageVersion Include="Fody" Version="6.9.3" />
     <PackageVersion Include="FodyHelpers" Version="6.9.3" />
@@ -20,5 +19,6 @@
     <PackageVersion Include="TUnit.Assertions" Version="1.71.0" />
     <PackageVersion Include="TUnit.Engine" Version="1.71.0" />
     <PackageVersion Include="Verify.TUnit" Version="33.1.5" />
+    <PackageVersion Include="Verify.Cecil.FodyHelpers" Version="0.1.0" />
   </ItemGroup>
 </Project>

@@ -7,14 +7,14 @@ using Splat;
 public class SplatTests: IDisposable
 {
     static Assembly assembly;
+    static Fody.TestResult testResult;
     static Logger currentLogger = new();
 
     static SplatTests()
     {
         var moduleWeaver = new ModuleWeaver();
-        assembly = moduleWeaver.ExecuteTestRun(
-            assemblyPath: "AssemblyToProcess.dll",
-            ignoreCodes: ["0x80131869"]).Assembly;
+        testResult = moduleWeaver.ExecuteTestRun("AssemblyToProcess.dll", runPeVerify: false);
+        assembly = testResult.Assembly;
 
         Locator.CurrentMutable.Register(() => new FuncLogManager(GetLogger), typeof(ILogManager));
     }
@@ -27,6 +27,13 @@ public class SplatTests: IDisposable
     public void Dispose()
     {
         currentLogger.Clear();
+    }
+
+    [Test]
+    public async Task WovenAssemblyIsValid()
+    {
+        using var module = Mono.Cecil.ModuleDefinition.ReadModule(testResult.AssemblyPath);
+        await Assert.That(VerifyTests.Cecil.CecilValidator.Validate(module)).IsEmpty();
     }
 
     [Test]

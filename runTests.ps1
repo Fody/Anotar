@@ -2,7 +2,6 @@ $ErrorActionPreference = 'Stop'
 
 # TUnit test projects are executables. They are run with 'dotnet run' for each target framework.
 $projects = @(
-    'Catel\Tests\Tests.csproj',
     'CommonLogging\Tests\Tests.csproj',
     'Custom\Tests\Tests.csproj',
     'NLog\Tests\Tests.csproj',

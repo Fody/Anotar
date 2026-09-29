@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FodyHelpers" />
+    <PackageReference Include="Verify.Cecil.FodyHelpers" />
     <PackageReference Include="NLog" />
     <PackageReference Include="TUnit.Core" />
     <PackageReference Include="TUnit.Assertions" />
