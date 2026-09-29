@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <DisableFody>true</DisableFody>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
@@ -16,7 +16,6 @@
     <PackageReference Include="TUnit.Assertions" />
     <PackageReference Include="TUnit.Engine" />
     <PackageReference Include="Verify.TUnit" />
-    <PackageReference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Anotar.Catel.Fody\Anotar.Catel.Fody.csproj" />
     <ProjectReference Include="..\Anotar.Catel\Anotar.Catel.csproj" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
